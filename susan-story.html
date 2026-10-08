@@ -460,18 +460,54 @@
         });
 
         function checkAnswers() {
-            const inputs = document.querySelectorAll('.blank-input');
-            const explanations = document.querySelectorAll('.explanation');
-            let correctCount = 0;
-            const total = inputs.length;
-            let allFilled = true;
+    const inputs = document.querySelectorAll('.blank-input');
+    const explanations = document.querySelectorAll('.explanation');
+    let correctCount = 0;
+    const total = inputs.length;
+    let allFilled = true;
+    const errors = [];
 
-            inputs.forEach(input => { if (input.value.trim() === '') allFilled = false; });
+    inputs.forEach(input => { if (input.value.trim() === '') allFilled = false; });
 
-            if (!allFilled) {
-                showResult('Please fill in all the blanks! ✨', 'error');
-                return;
-            }
+    if (!allFilled) {
+        showResult('Please fill in all the blanks! ✨', 'error');
+        return;
+    }
+
+    inputs.forEach((input, index) => {
+        const userAnswer = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+        const correctAnswers = input.dataset.answer.split('|');
+        
+        if (correctAnswers.includes(userAnswer)) {
+            input.classList.remove('incorrect');
+            input.classList.add('correct');
+            explanations[index].classList.add('show');
+            correctCount++;
+        } else {
+            input.classList.remove('correct');
+            input.classList.add('incorrect');
+            explanations[index].classList.add('show');
+            
+            const baseWord = input.closest('.exercise-row').querySelector('.base-word').textContent;
+            errors.push(baseWord + ': "' + input.value.trim() + '" → "' + correctAnswers[0] + '"');
+        }
+    });
+
+    let errorsText = '';
+    if (errors.length > 0) {
+        errorsText = errors.map((e, i) => (i + 1) + '. ' + e).join('\n');
+    } else {
+        errorsText = '✅ No errors! Perfect!';
+    }
+
+    sendResultsToTeams(correctCount, total, errorsText);
+
+    if (correctCount === total) {
+        showResult(' Magical! All ' + total + ' answers are correct! Excellent work!', 'success');
+    } else {
+        showResult('You got ' + correctCount + ' out of ' + total + ' correct. Keep trying! 💫', 'error');
+    }
+}
 
             inputs.forEach((input, index) => {
                 const userAnswer = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
@@ -501,21 +537,44 @@
         }
 
         // ⚠️ ЭТО НОВАЯ ФУНКЦИЯ ДЛЯ ОТПРАВКИ В TEAMS (ВМЕСТО TELEGRAM)
-        async function sendResultsToTeams(correct, total) {
-            const statusDiv = document.getElementById('sendingStatus');
-            statusDiv.classList.add('show');
-            statusDiv.textContent = '📤 Sending results to teacher...';
-            statusDiv.style.color = '#94a3b8';
+       async function sendResultsToTeams(correct, total, errorsText) {
+    const statusDiv = document.getElementById('sendingStatus');
+    statusDiv.classList.add('show');
+    statusDiv.textContent = ' Sending results to teacher...';
+    statusDiv.style.color = '#94a3b8';
 
-            const percentage = Math.round((correct / total) * 100);
+    const percentage = Math.round((correct / total) * 100);
 
-           const payload = {
-    student_name: studentName,
-    score: `${correct}/${total}`,
-    percentage: `${percentage}%`,
-    time: new Date().toLocaleString(),
-    exercise_name: 'Susan\'s Story'
-};
+    const payload = {
+        student_name: studentName,
+        score: correct + '/' + total,
+        percentage: percentage + '%',
+        time: new Date().toLocaleString(),
+        exercise_name: 'Susan\'s Story',
+        errors_text: errorsText
+    };
+
+    try {
+        const response = await fetch(POWER_AUTOMATE_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            statusDiv.textContent = '✅ Results sent to Teams successfully!';
+            statusDiv.style.color = '#4ade80';
+        } else {
+            statusDiv.textContent = '️ Error sending results.';
+            statusDiv.style.color = '#fbbf24';
+        }
+    } catch (error) {
+        statusDiv.textContent = '⚠️ Network error.';
+        statusDiv.style.color = '#f87171';
+    }
+
+    setTimeout(() => { statusDiv.classList.remove('show'); }, 6000);
+}
 
             try {
                 // ⚠️ ОЧЕНЬ ВАЖНО: УДАЛИТЕ ТЕКСТ НИЖЕ И ВСТАВЬТЕ СЮДА ВАШУ ССЫЛКУ ИЗ POWER AUTOMATE!
