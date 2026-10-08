@@ -390,12 +390,13 @@
             statusDiv.style.color = '#94a3b8';
 
             const percentage = Math.round((correct / total) * 100);
-            const payload = {
-                student_name: studentName,
-                score: `${correct}/${total}`,
-                percentage: `${percentage}%`,
-                time: new Date().toLocaleString()
-            };
+const payload = {
+    student_name: studentName,
+    score: `${correct}/${total}`,
+    percentage: `${percentage}%`,
+    time: new Date().toLocaleString(),
+    exercise_name: 'Dana Miller'
+};
 
             try {
                 const response = await fetch(POWER_AUTOMATE_URL, {
