@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juliya Magic Teacher - Grammar Exercises</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            min-height: 100vh; color: #f8fafc;
+        }
+        .stars-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+        .star {
+            position: absolute; background: white; border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite; opacity: 0;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: var(--max-opacity); transform: scale(1); }
+        }
+        .main-wrapper {
+            position: relative; z-index: 1; max-width: 900px;
+            margin: 0 auto; padding: 60px 20px;
+        }
+        .header { text-align: center; margin-bottom: 50px; }
+        .header h1 {
+            font-family: 'Comfortaa', cursive; font-size: 3em; font-weight: 700;
+            background: linear-gradient(135deg, #c084fc 0%, #60a5fa 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+        .header p { font-size: 1.2em; color: #94a3b8; }
+        .exercises-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .exercise-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px; padding: 30px;
+            text-decoration: none; color: #f8fafc;
+            transition: all 0.3s ease; display: block;
+        }
+        .exercise-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(192, 132, 252, 0.5);
+            box-shadow: 0 12px 40px rgba(192, 132, 252, 0.3);
+        }
+        .exercise-card .emoji { font-size: 3em; margin-bottom: 15px; }
+        .exercise-card h2 {
+            font-family: 'Comfortaa', cursive; font-size: 1.5em;
+            margin-bottom: 10px; color: #c084fc;
+        }
+        .exercise-card p { color: #94a3b8; line-height: 1.5; }
+        .exercise-card .tag {
+            display: inline-block; margin-top: 15px; padding: 5px 12px;
+            background: rgba(192, 132, 252, 0.2); border-radius: 20px;
+            font-size: 0.85em; color: #e9d5ff;
+        }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars-container" id="starsContainer"></div>
+    <div class="main-wrapper">
+        <div class="header">
+            <h1>✨ Juliya Magic Teacher ✨</h1>
+            <p>Choose a grammar exercise to practice!</p>
+        </div>
+        <div class="exercises-grid">
+            <a href="susan-story.html" class="exercise-card">
+                <div class="emoji">🚌</div>
+                <h2>Susan's Story</h2>
+                <p>Susan's father travels abroad. Practice Past Simple, comparatives, and Passive Voice.</p>
+                <span class="tag">9 questions</span>
+            </a>
+            <a href="dana-miller/index.html" class="exercise-card">
+                <div class="emoji">🎸</div>
+                <h2>Dana Miller</h2>
+                <p>A bus driver in Philadelphia. Practice Past Simple, plurals, and Future in the Past.</p>
+                <span class="tag">9 questions</span>
+            </a>
+        </div>
+    </div>
+    <script>
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            for (let i = 0; i < 150; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.setProperty('--max-opacity', Math.random() * 0.7 + 0.3);
+                star.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(star);
+            }
+        }
+        createStars();
+    </script>
+</body>
+</html>
