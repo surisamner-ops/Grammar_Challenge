@@ -73,10 +73,9 @@
             text-decoration: none; color: #f8fafc;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: block;
-            opacity: 0; /* Скрыто до начала анимации */
+            opacity: 0;
         }
         
-        /* Каскадное появление карточек */
         .exercise-card:nth-child(1) { animation: fadeInUp 0.8s ease-out 0.3s forwards; }
         .exercise-card:nth-child(2) { animation: fadeInUp 0.8s ease-out 0.5s forwards; }
         .exercise-card:nth-child(3) { animation: fadeInUp 0.8s ease-out 0.7s forwards; }
@@ -86,7 +85,7 @@
             transform: translateY(-10px) scale(1.03);
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(192, 132, 252, 0.8);
-            box-shadow: 0 15px 40px rgba(192, 132, 252, 0.4); /* Магическое свечение */
+            box-shadow: 0 15px 40px rgba(192, 132, 252, 0.4);
         }
         .exercise-card .emoji { 
             font-size: 3.5em; 
@@ -94,7 +93,6 @@
             display: inline-block;
             animation: floatEmoji 3s ease-in-out infinite;
         }
-        /* Разная задержка парения для естественности */
         .exercise-card:nth-child(1) .emoji { animation-delay: 0s; }
         .exercise-card:nth-child(2) .emoji { animation-delay: 1s; }
         .exercise-card:nth-child(3) .emoji { animation-delay: 2s; }
@@ -141,7 +139,7 @@
             justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         .footer-link {
             display: flex;
@@ -163,9 +161,30 @@
             box-shadow: 0 8px 20px rgba(192, 132, 252, 0.3);
             color: #e9d5ff;
         }
-        .footer-link .icon {
-            font-size: 1.3em;
+        .footer-link .icon { font-size: 1.3em; }
+
+        /* ✨ Новая кнопка ссылки на основной сайт ✨ */
+        .main-site-link {
+            display: inline-block;
+            margin: 10px 0 30px;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, rgba(192, 132, 252, 0.15), rgba(96, 165, 250, 0.15));
+            border: 1px solid rgba(192, 132, 252, 0.4);
+            border-radius: 50px;
+            color: #e9d5ff;
+            text-decoration: none;
+            font-family: 'Comfortaa', cursive;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
         }
+        .main-site-link:hover {
+            background: linear-gradient(135deg, rgba(192, 132, 252, 0.3), rgba(96, 165, 250, 0.3));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(192, 132, 252, 0.4);
+            color: #ffffff;
+        }
+
         .footer-copyright {
             color: #94a3b8;
             font-size: 0.9em;
@@ -175,9 +194,7 @@
             color: #c084fc;
             text-decoration: none;
         }
-        .footer-copyright a:hover {
-            text-decoration: underline;
-        }
+        .footer-copyright a:hover { text-decoration: underline; }
 
         @media (max-width: 768px) {
             .header h1 { font-size: 2em; }
@@ -195,7 +212,6 @@
         </div>
         
         <div class="exercises-grid">
-            <!-- Карточка 1 -->
             <a href="susan-story.html" class="exercise-card">
                 <div class="emoji">🚌</div>
                 <h2>Susan's Story</h2>
@@ -203,7 +219,6 @@
                 <span class="tag">9 questions</span>
             </a>
             
-            <!-- Карточка 2 -->
             <a href="dana-miller/index.html" class="exercise-card">
                 <div class="emoji">🎸</div>
                 <h2>Dana Miller</h2>
@@ -211,7 +226,6 @@
                 <span class="tag">9 questions</span>
             </a>
             
-            <!-- Карточка 3 -->
             <a href="violin-orchestra/index.html" class="exercise-card">
                 <div class="emoji">🎻</div>
                 <h2>Violin Orchestra</h2>
@@ -219,7 +233,6 @@
                 <span class="tag">9 questions</span>
             </a>
             
-            <!-- Карточка 4 -->
             <a href="matilda-library/index.html" class="exercise-card">
                 <div class="emoji">📚</div>
                 <h2>Matilda's Library</h2>
@@ -228,30 +241,37 @@
             </a>
         </div>
 
-      <!-- ✨ CONTACT SECTION ✨ -->
-<footer class="footer">
-    <div class="footer-content">
-        <h3>✨ Contact Me ✨</h3>
-        <div class="footer-links">
-            <a href="mailto:suri_samner@mail.ru" class="footer-link">
-                <span class="icon">📧</span>
-                <span>suri_samner@mail.ru</span>
-            </a>
-            <a href="https://t.me/+79160601011" class="footer-link" target="_blank">
-                <span class="icon">✈️</span>
-                <span>Telegram</span>
-            </a>
-            <a href="tel:+79160601011" class="footer-link">
-                <span class="icon">📱</span>
-                <span>+7 (916) 060-10-11</span>
-            </a>
-        </div>
-        <div class="footer-copyright">
-            © 2026 <strong>Juliya Magic Teacher</strong>. All rights reserved.<br>
-            <span style="font-size: 0.85em; opacity: 0.7;">Made with 💜 for English learners</span>
-        </div>
+        <!-- ✨ CONTACT SECTION ✨ -->
+        <footer class="footer">
+            <div class="footer-content">
+                <h3>✨ Contact Me ✨</h3>
+                <div class="footer-links">
+                    <a href="mailto:suri_samner@mail.ru" class="footer-link">
+                        <span class="icon">📧</span>
+                        <span>suri_samner@mail.ru</span>
+                    </a>
+                    <a href="https://t.me/+79160601011" class="footer-link" target="_blank">
+                        <span class="icon">✈️</span>
+                        <span>Telegram</span>
+                    </a>
+                    <a href="tel:+79160601011" class="footer-link">
+                        <span class="icon">📱</span>
+                        <span>+7 (916) 060-10-11</span>
+                    </a>
+                </div>
+                
+                <!-- ССЫЛКА НА ОСНОВНОЙ САЙТ -->
+                <a href="https://surisamner-ops.github.io/Juliya_Magic_Teacher-/" target="_blank" class="main-site-link">
+                    🌐 Visit my main website to learn more about my lessons!
+                </a>
+
+                <div class="footer-copyright">
+                    © 2026 <strong>Juliya Magic Teacher</strong>. All rights reserved.<br>
+                    <span style="font-size: 0.85em; opacity: 0.7;">Made with 💜 for English learners</span>
+                </div>
+            </div>
+        </footer>
     </div>
-</footer>
     
     <script>
         function createStars() {
@@ -269,8 +289,6 @@
                 star.style.animationDelay = Math.random() * 5 + 's';
                 container.appendChild(star);
             }
-            
-            // Добавляем пару падающих звезд для дополнительной магии
             for (let i = 0; i < 3; i++) {
                 const shootingStar = document.createElement('div');
                 shootingStar.style.position = 'absolute';
@@ -284,8 +302,6 @@
                 container.appendChild(shootingStar);
             }
         }
-        
-        // Добавляем стиль для падающих звезд динамически
         const style = document.createElement('style');
         style.innerHTML = `
             @keyframes shootingStar {
@@ -296,7 +312,6 @@
             }
         `;
         document.head.appendChild(style);
-        
         createStars();
     </script>
 </body>
