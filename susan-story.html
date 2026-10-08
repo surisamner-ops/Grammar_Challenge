@@ -509,12 +509,13 @@
 
             const percentage = Math.round((correct / total) * 100);
 
-            const payload = {
-                student_name: studentName,
-                score: `${correct}/${total}`,
-                percentage: `${percentage}%`,
-                time: new Date().toLocaleString()
-            };
+           const payload = {
+    student_name: studentName,
+    score: `${correct}/${total}`,
+    percentage: `${percentage}%`,
+    time: new Date().toLocaleString(),
+    exercise_name: 'Susan\'s Story'
+};
 
             try {
                 // ⚠️ ОЧЕНЬ ВАЖНО: УДАЛИТЕ ТЕКСТ НИЖЕ И ВСТАВЬТЕ СЮДА ВАШУ ССЫЛКУ ИЗ POWER AUTOMATE!
