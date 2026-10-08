@@ -10,7 +10,7 @@
         body {
             font-family: 'Inter', sans-serif;
             background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-            min-height: 100vh; color: #f8fafc;
+            min-height: 100vh; color: #f8fafc; overflow-x: hidden;
         }
         .stars-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -24,21 +24,46 @@
             0%, 100% { opacity: 0; transform: scale(0.5); }
             50% { opacity: var(--max-opacity); transform: scale(1); }
         }
+        
+        /* ✨ Анимация появления снизу */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 💫 Анимация перелива заголовка */
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* 🎈 Анимация парения эмодзи */
+        @keyframes floatEmoji {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
         .main-wrapper {
             position: relative; z-index: 1; max-width: 900px;
             margin: 0 auto; padding: 60px 20px;
         }
-        .header { text-align: center; margin-bottom: 50px; }
+        .header { 
+            text-align: center; margin-bottom: 50px; 
+            animation: fadeInUp 1s ease-out forwards;
+        }
         .header h1 {
             font-family: 'Comfortaa', cursive; font-size: 3em; font-weight: 700;
-            background: linear-gradient(135deg, #c084fc 0%, #60a5fa 100%);
+            background: linear-gradient(90deg, #c084fc, #ffffff, #60a5fa, #c084fc);
+            background-size: 200% auto;
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shimmer 4s linear infinite;
             margin-bottom: 15px;
         }
         .header p { font-size: 1.2em; color: #94a3b8; }
+        
         .exercises-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            gap: 30px;
         }
         .exercise-card {
             background: rgba(255, 255, 255, 0.06);
@@ -46,27 +71,53 @@
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 20px; padding: 30px;
             text-decoration: none; color: #f8fafc;
-            transition: all 0.3s ease; display: block;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: block;
+            opacity: 0; /* Скрыто до начала анимации */
         }
+        
+        /* Каскадное появление карточек */
+        .exercise-card:nth-child(1) { animation: fadeInUp 0.8s ease-out 0.3s forwards; }
+        .exercise-card:nth-child(2) { animation: fadeInUp 0.8s ease-out 0.5s forwards; }
+        .exercise-card:nth-child(3) { animation: fadeInUp 0.8s ease-out 0.7s forwards; }
+
         .exercise-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-10px) scale(1.03);
             background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(192, 132, 252, 0.5);
-            box-shadow: 0 12px 40px rgba(192, 132, 252, 0.3);
+            border-color: rgba(192, 132, 252, 0.8);
+            box-shadow: 0 15px 40px rgba(192, 132, 252, 0.4); /* Магическое свечение */
         }
-        .exercise-card .emoji { font-size: 3em; margin-bottom: 15px; }
+        .exercise-card .emoji { 
+            font-size: 3.5em; 
+            margin-bottom: 15px; 
+            display: inline-block;
+            animation: floatEmoji 3s ease-in-out infinite;
+        }
+        /* Разная задержка парения для естественности */
+        .exercise-card:nth-child(1) .emoji { animation-delay: 0s; }
+        .exercise-card:nth-child(2) .emoji { animation-delay: 1s; }
+        .exercise-card:nth-child(3) .emoji { animation-delay: 2s; }
+
         .exercise-card h2 {
             font-family: 'Comfortaa', cursive; font-size: 1.5em;
             margin-bottom: 10px; color: #c084fc;
+            transition: color 0.3s ease;
         }
+        .exercise-card:hover h2 { color: #e9d5ff; }
         .exercise-card p { color: #94a3b8; line-height: 1.5; }
         .exercise-card .tag {
-            display: inline-block; margin-top: 15px; padding: 5px 12px;
-            background: rgba(192, 132, 252, 0.2); border-radius: 20px;
-            font-size: 0.85em; color: #e9d5ff;
+            display: inline-block; margin-top: 15px; padding: 6px 14px;
+            background: rgba(192, 132, 252, 0.15); border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 20px; font-size: 0.85em; color: #e9d5ff;
+            transition: all 0.3s ease;
+        }
+        .exercise-card:hover .tag {
+            background: rgba(192, 132, 252, 0.3);
+            transform: scale(1.05);
         }
         @media (max-width: 768px) {
             .header h1 { font-size: 2em; }
+            .exercises-grid { gap: 20px; }
         }
     </style>
 </head>
@@ -77,6 +128,7 @@
             <h1>✨ Juliya Magic Teacher ✨</h1>
             <p>Choose a grammar exercise to practice!</p>
         </div>
+        
         <div class="exercises-grid">
             <a href="susan-story.html" class="exercise-card">
                 <div class="emoji">🚌</div>
@@ -84,20 +136,23 @@
                 <p>Susan's father travels abroad. Practice Past Simple, comparatives, and Passive Voice.</p>
                 <span class="tag">9 questions</span>
             </a>
+            
             <a href="dana-miller/index.html" class="exercise-card">
                 <div class="emoji">🎸</div>
                 <h2>Dana Miller</h2>
                 <p>A bus driver in Philadelphia. Practice Past Simple, plurals, and Future in the Past.</p>
                 <span class="tag">9 questions</span>
             </a>
+            
             <a href="violin-orchestra/index.html" class="exercise-card">
-    <div class="emoji">🎻</div>
-    <h2>Violin Orchestra</h2>
-    <p>A music festival in France. Practice Past Simple, Passive Voice, and Future in the Past.</p>
-    <span class="tag">9 questions</span>
-</a>
+                <div class="emoji">🎻</div>
+                <h2>Violin Orchestra</h2>
+                <p>A music festival in France. Practice Past Simple, Passive Voice, and Future in the Past.</p>
+                <span class="tag">9 questions</span>
+            </a>
         </div>
     </div>
+    
     <script>
         function createStars() {
             const container = document.getElementById('starsContainer');
@@ -114,7 +169,34 @@
                 star.style.animationDelay = Math.random() * 5 + 's';
                 container.appendChild(star);
             }
+            
+            // Добавляем пару падающих звезд для дополнительной магии
+            for (let i = 0; i < 3; i++) {
+                const shootingStar = document.createElement('div');
+                shootingStar.style.position = 'absolute';
+                shootingStar.style.width = '100px';
+                shootingStar.style.height = '2px';
+                shootingStar.style.background = 'linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,0))';
+                shootingStar.style.top = Math.random() * 50 + '%';
+                shootingStar.style.left = '-' + Math.random() * 20 + '%';
+                shootingStar.style.transform = 'rotate(-45deg)';
+                shootingStar.style.animation = `shootingStar ${Math.random() * 3 + 4}s linear ${Math.random() * 10}s infinite`;
+                container.appendChild(shootingStar);
+            }
         }
+        
+        // Добавляем стиль для падающих звезд динамически
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes shootingStar {
+                0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0; }
+                10% { opacity: 1; }
+                90% { opacity: 1; }
+                100% { transform: translateX(150vw) translateY(150vh) rotate(-45deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+        
         createStars();
     </script>
 </body>
