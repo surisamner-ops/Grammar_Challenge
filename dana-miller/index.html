@@ -46,14 +46,54 @@
         .header p { font-size: 1.1em; color: var(--text-muted); }
         .back-link {
             display: inline-block; margin-bottom: 20px; color: #c084fc;
-            text-decoration: none; font-weight: 600;
+            text-decoration: none; font-weight: 600; transition: all 0.3s ease;
         }
-        .back-link:hover { color: #e9d5ff; }
+        .back-link:hover { color: #e9d5ff; transform: translateX(-5px); }
+        
+        /* === Форма ввода имени === */
+        .student-form {
+            background: var(--glass-bg); backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border); border-radius: 24px;
+            padding: 40px; text-align: center; max-width: 500px;
+            margin: 0 auto 40px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            animation: slideIn 0.8s ease;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .student-form h2 {
+            font-family: 'Comfortaa', cursive; font-size: 1.8em;
+            margin-bottom: 20px; color: #c084fc;
+        }
+        .student-form p { margin-bottom: 25px; color: var(--text-muted); font-size: 1.05em; }
+        .name-input {
+            width: 100%; max-width: 300px; padding: 14px 20px;
+            background: rgba(0, 0, 0, 0.3); border: 2px solid rgba(192, 132, 252, 0.3);
+            border-radius: 12px; color: #fff; font-family: 'Inter', sans-serif;
+            font-size: 1.1em; text-align: center; transition: all 0.3s ease; margin-bottom: 20px;
+        }
+        .name-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+        .name-input:focus {
+            outline: none; border-color: #c084fc;
+            background: rgba(0, 0, 0, 0.5); box-shadow: 0 0 20px rgba(192, 132, 252, 0.3);
+        }
+        .btn-start {
+            padding: 14px 40px; background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 100%);
+            color: white; border: none; border-radius: 50px;
+            font-family: 'Comfortaa', cursive; font-size: 1.1em; font-weight: 700;
+            cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(167, 139, 250, 0.4);
+        }
+        .btn-start:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 8px 30px rgba(167, 139, 250, 0.6); }
+        
         .exercise-card {
             background: var(--glass-bg); backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border); border-radius: 24px;
             padding: 35px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            display: none;
         }
+        .exercise-card.show { display: block; animation: slideIn 0.8s ease; }
         .exercise-row {
             display: flex; align-items: center; justify-content: space-between;
             gap: 24px; padding: 20px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06);
@@ -87,7 +127,7 @@
         .blank-input::placeholder { color: rgba(255, 255, 255, 0.25); }
         .blank-input:focus {
             outline: none; border-color: #c084fc;
-            box-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
+            box-shadow: 0 0 20px rgba(192, 132, 252, 0.4); transform: scale(1.08);
         }
         .blank-input.correct {
             border-color: var(--success-color); background: rgba(74, 222, 128, 0.15);
@@ -146,7 +186,7 @@
         .sending-status.show { display: block; }
         @media (max-width: 768px) {
             .header h1 { font-size: 1.8em; }
-            .exercise-card { padding: 25px 20px; }
+            .exercise-card, .student-form { padding: 25px 20px; }
             .exercise-row { flex-direction: column; align-items: flex-start; gap: 12px; }
             .base-word { width: 100%; max-width: 200px; align-self: center; }
             .blank-input { width: 120px; }
@@ -161,7 +201,18 @@
             <h1>✨ Dana's Story ✨</h1>
             <p>Put the words in the correct grammatical form.</p>
         </div>
-        <div class="exercise-card">
+
+        <!-- Форма ввода имени -->
+        <div class="student-form" id="studentForm">
+            <h2>🌟 Welcome!</h2>
+            <p>Please enter your name to start the exercise</p>
+            <input type="text" class="name-input" id="studentName" placeholder="Your name" maxlength="50">
+            <br>
+            <button class="btn-start" onclick="startExercise()">Start Exercise ✨</button>
+        </div>
+
+        <!-- Упражнение (скрыто до ввода имени) -->
+        <div class="exercise-card" id="exerciseCard">
             <div class="exercise-row">
                 <div class="sentence-text">
                     Dana Miller was a bus driver in the city of Philadelphia. Her working hours
@@ -176,7 +227,7 @@
                     It was a hard job and very few
                     <input type="text" class="blank-input" data-answer="women" placeholder="...">
                     worked as bus drivers in those days but Dana loved her job very much.
-                    <div class="explanation"> <strong>Explanation:</strong> Use the <strong>irregular plural</strong> of 'woman' → 'women' (few + plural noun).</div>
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use the <strong>irregular plural</strong> of 'woman' → 'women' (few + plural noun).</div>
                 </div>
                 <div class="base-word">WOMAN</div>
             </div>
@@ -221,7 +272,7 @@
                     Dana
                     <input type="text" class="blank-input" data-answer="didn't like|did not like" placeholder="...">
                     sweets and pastries very much, but she could never resist those biscuits.
-                    <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Past Simple negative</strong> 'didn't like' because the story is in the past tense.</div>
+                    <div class="explanation"> <strong>Explanation:</strong> Use <strong>Past Simple negative</strong> 'didn't like' because the story is in the past tense.</div>
                 </div>
                 <div class="base-word">NOT / LIKE</div>
             </div>
@@ -253,7 +304,7 @@
     </div>
     <script>
         // ⚠️ ВАЖНО: ВСТАВЬТЕ СЮДА ВАШУ ССЫЛКУ ИЗ POWER AUTOMATE
-        const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
+        const POWER_AUTOMATE_URL = 'ВСТАВЬТЕ_СЮДА_ВАШУ_ССЫЛКУ_ИЗ_POWER_AUTOMATE';
 
         let studentName = '';
 
@@ -275,6 +326,25 @@
         }
         createStars();
 
+        // Запуск упражнения после ввода имени
+        function startExercise() {
+            const nameInput = document.getElementById('studentName');
+            studentName = nameInput.value.trim();
+            if (studentName === '') {
+                nameInput.style.borderColor = '#f87171';
+                nameInput.style.animation = 'shake 0.4s ease';
+                setTimeout(() => { nameInput.style.animation = ''; }, 400);
+                return;
+            }
+            document.getElementById('studentForm').style.display = 'none';
+            document.getElementById('exerciseCard').classList.add('show');
+        }
+
+        // Enter для запуска
+        document.getElementById('studentName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') startExercise();
+        });
+
         function checkAnswers() {
             const inputs = document.querySelectorAll('.blank-input');
             const explanations = document.querySelectorAll('.explanation');
@@ -285,15 +355,8 @@
             inputs.forEach(input => { if (input.value.trim() === '') allFilled = false; });
 
             if (!allFilled) {
-                showResult('Please fill in all the blanks! ✨', 'error');
+                showResult('Please fill in all the blanks! ', 'error');
                 return;
-            }
-
-            if (!studentName) {
-                studentName = prompt('Please enter your name:');
-                if (!studentName || studentName.trim() === '') {
-                    studentName = 'Anonymous Student';
-                }
             }
 
             inputs.forEach((input, index) => {
@@ -323,7 +386,7 @@
         async function sendResultsToTeams(correct, total) {
             const statusDiv = document.getElementById('sendingStatus');
             statusDiv.classList.add('show');
-            statusDiv.textContent = ' Sending results to teacher...';
+            statusDiv.textContent = '📤 Sending results to teacher...';
             statusDiv.style.color = '#94a3b8';
 
             const percentage = Math.round((correct / total) * 100);
@@ -349,7 +412,7 @@
                     statusDiv.style.color = '#fbbf24';
                 }
             } catch (error) {
-                statusDiv.textContent = '⚠️ Network error.';
+                statusDiv.textContent = '️ Network error.';
                 statusDiv.style.color = '#f87171';
             }
 
