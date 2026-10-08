@@ -170,7 +170,7 @@
             <div class="exercise-row">
                 <div class="sentence-text">
                     Susan's father often had to go to different countries on business. That evening, he came home
-                    <input type="text" class="blank-input" data-answer="later" placeholder="...">
+                    <input type="text" class="blank-input" data-answer="later" data-rule="Comparative form" placeholder="...">
                     than usual.
                     <div class="explanation">💡 <strong>Explanation:</strong> Use the <strong>comparative form</strong> of 'late' → 'later' because of 'than usual'.</div>
                 </div>
@@ -179,7 +179,7 @@
             <div class="exercise-row">
                 <div class="sentence-text">
                     He looked tired. Susan
-                    <input type="text" class="blank-input" data-answer="knew" placeholder="...">
+                    <input type="text" class="blank-input" data-answer="knew" data-rule="Past Simple" placeholder="...">
                     that the next week her father was going to China to discuss a new project.
                     <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Past Simple</strong> of 'know' → 'knew'.</div>
                 </div>
@@ -188,7 +188,7 @@
             <div class="exercise-row">
                 <div class="sentence-text">
                     At dinner, her father asked Susan if she
-                    <input type="text" class="blank-input" data-answer="wanted" placeholder="...">
+                    <input type="text" class="blank-input" data-answer="wanted" data-rule="Past Simple" placeholder="...">
                     to go with him.
                     <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Past Simple</strong> of 'want' → 'wanted'.</div>
                 </div>
@@ -197,7 +197,7 @@
             <div class="exercise-row">
                 <div class="sentence-text">
                     It was a bit unexpected but Susan liked the idea at once. It was her
-                    <input type="text" class="blank-input" data-answer="sixteenth" placeholder="...">
+                    <input type="text" class="blank-input" data-answer="sixteenth" data-rule="Ordinal number" placeholder="...">
                     birthday in a few days.
                     <div class="explanation">💡 <strong>Explanation:</strong> Use the <strong>ordinal number</strong> 'sixteenth' (16th) for birthdays.</div>
                 </div>
@@ -206,7 +206,7 @@
             <div class="exercise-row">
                 <div class="sentence-text">
                     And Susan thought it
-                    <input type="text" class="blank-input" data-answer="would be" placeholder="...">
+                    <input type="text" class="blank-input" data-answer="would be" data-rule="Future in the Past" placeholder="...">
                     fun to celebrate it abroad.
                     <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>would be</strong> for future in the past.</div>
                 </div>
@@ -215,7 +215,7 @@
             <div class="exercise-row">
                 <div class="sentence-text">
                     However, there was one thing she wanted to clear up before the trip: "I
-                    <input type="text" class="blank-input" data-answer="don't want|do not want" placeholder="...">
+                    <input type="text" class="blank-input" data-answer="don't want|do not want" data-rule="Present Simple negative" placeholder="...">
                     to sit in the hotel all the time alone."
                     <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Present Simple negative</strong> 'don't want' for direct speech.</div>
                 </div>
@@ -224,16 +224,16 @@
             <div class="exercise-row">
                 <div class="sentence-text">
                     "You won't have to," her father reassured Susan. "I
-                    <input type="text" class="blank-input" data-answer="have prepared" placeholder="...">
+                    <input type="text" class="blank-input" data-answer="have prepared" data-rule="Present Perfect" placeholder="...">
                     all the project papers already."
-                    <div class="explanation"> <strong>Explanation:</strong> Use <strong>Present Perfect</strong> 'have prepared' because of 'already'.</div>
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Present Perfect</strong> 'have prepared' because of 'already'.</div>
                 </div>
                 <div class="base-word">PREPARE</div>
             </div>
             <div class="exercise-row">
                 <div class="sentence-text">
                     "Remember to take some comfortable shoes. Otherwise your
-                    <input type="text" class="blank-input" data-answer="feet" placeholder="...">
+                    <input type="text" class="blank-input" data-answer="feet" data-rule="Irregular plural" placeholder="...">
                     will hurt after the long excursions."
                     <div class="explanation">💡 <strong>Explanation:</strong> Use the <strong>plural form</strong> 'feet' (irregular plural of 'foot').</div>
                 </div>
@@ -242,7 +242,7 @@
             <div class="exercise-row">
                 <div class="sentence-text">
                     Half an hour later everything
-                    <input type="text" class="blank-input" data-answer="was packed" placeholder="...">
+                    <input type="text" class="blank-input" data-answer="was packed" data-rule="Past Simple Passive" placeholder="...">
                     in a suitcase and Susan called her best friend to tell her the news.
                     <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Past Simple Passive</strong> 'was packed' because 'everything' receives the action.</div>
                 </div>
@@ -257,7 +257,8 @@
         </div>
     </div>
     <script>
-        const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
+        // ⚠️ ВАЖНО: ВСТАВЬТЕ СЮДА ВАШУ ССЫЛКУ ИЗ POWER AUTOMATE
+        const POWER_AUTOMATE_URL = 'ВСТАВЬТЕ_СЮДА_ВАШУ_ССЫЛКУ_ИЗ_POWER_AUTOMATE';
         let studentName = '';
 
         function createStars() {
@@ -312,6 +313,8 @@
             inputs.forEach((input, index) => {
                 const userAnswer = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
                 const correctAnswers = input.dataset.answer.split('|');
+                const grammarRule = input.dataset.rule || 'Unknown rule';
+                
                 if (correctAnswers.includes(userAnswer)) {
                     input.classList.remove('incorrect');
                     input.classList.add('correct');
@@ -321,14 +324,15 @@
                     input.classList.remove('correct');
                     input.classList.add('incorrect');
                     explanations[index].classList.add('show');
+                    
                     const baseWord = input.closest('.exercise-row').querySelector('.base-word').textContent;
-                    errors.push(baseWord + ': "' + input.value.trim() + '" → "' + correctAnswers[0] + '"');
+                    errors.push(baseWord + ': "' + input.value.trim() + '" → "' + correctAnswers[0] + '" [' + grammarRule + ']');
                 }
             });
 
             let errorsText = '';
             if (errors.length > 0) {
-                errorsText = errors.map((e, i) => (i + 1) + '. ' + e).join('\n');
+                errorsText = errors.map((e, i) => (i + 1) + '. ' + e).join('\n\n');
             } else {
                 errorsText = '✅ No errors! Perfect!';
             }
@@ -338,7 +342,7 @@
             if (correctCount === total) {
                 showResult('🎉 Magical! All ' + total + ' answers are correct! Excellent work!', 'success');
             } else {
-                showResult('You got ' + correctCount + ' out of ' + total + ' correct. Keep trying! ', 'error');
+                showResult('You got ' + correctCount + ' out of ' + total + ' correct. Keep trying! 💫', 'error');
             }
         }
 
@@ -374,7 +378,7 @@
                     statusDiv.style.color = '#fbbf24';
                 }
             } catch (error) {
-                statusDiv.textContent = '⚠️ Network error.';
+                statusDiv.textContent = '️ Network error.';
                 statusDiv.style.color = '#f87171';
             }
 
