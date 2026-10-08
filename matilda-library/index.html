@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Challenge - Matilda's Library</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            min-height: 100vh; color: #f8fafc; overflow-x: hidden;
+        }
+        .stars-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+        .star {
+            position: absolute; background: white; border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite; opacity: 0;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: var(--max-opacity); transform: scale(1); }
+        }
+        .main-wrapper {
+            position: relative; z-index: 1; max-width: 900px;
+            margin: 0 auto; padding: 40px 20px;
+        }
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 {
+            font-family: 'Comfortaa', cursive; font-size: 2.5em; font-weight: 700;
+            background: linear-gradient(135deg, #c084fc 0%, #60a5fa 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .header p { font-size: 1.1em; color: #94a3b8; }
+        .back-link {
+            display: inline-block; margin-bottom: 20px; color: #c084fc;
+            text-decoration: none; font-weight: 600;
+        }
+        .back-link:hover { color: #e9d5ff; }
+        .student-form {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px; padding: 40px; text-align: center;
+            max-width: 500px; margin: 0 auto 40px;
+        }
+        .student-form h2 {
+            font-family: 'Comfortaa', cursive; font-size: 1.8em;
+            margin-bottom: 20px; color: #c084fc;
+        }
+        .student-form p { margin-bottom: 25px; color: #94a3b8; }
+        .name-input {
+            width: 100%; max-width: 300px; padding: 14px 20px;
+            background: rgba(0, 0, 0, 0.3); border: 2px solid rgba(192, 132, 252, 0.3);
+            border-radius: 12px; color: #fff; font-size: 1.1em;
+            text-align: center; margin-bottom: 20px;
+        }
+        .name-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+        .name-input:focus {
+            outline: none; border-color: #c084fc;
+            box-shadow: 0 0 20px rgba(192, 132, 252, 0.3);
+        }
+        .btn-start {
+            padding: 14px 40px;
+            background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 100%);
+            color: white; border: none; border-radius: 50px;
+            font-family: 'Comfortaa', cursive; font-size: 1.1em; font-weight: 700;
+            cursor: pointer;
+        }
+        .btn-start:hover { transform: translateY(-3px); }
+        .exercise-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px; padding: 35px;
+            display: none;
+        }
+        .exercise-card.show { display: block; }
+        
+        /* ️ Стили для таймера */
+        .timer-bar {
+            position: sticky; top: 10px; z-index: 100;
+            background: rgba(192, 132, 252, 0.15);
+            border: 1px solid rgba(192, 132, 252, 0.4);
+            border-radius: 50px; padding: 10px 25px;
+            text-align: center; margin-bottom: 25px;
+            font-family: 'Comfortaa', cursive; font-size: 1.1em;
+            color: #e9d5ff; backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: center; gap: 15px;
+        }
+        .timer-bar .timer-icon { font-size: 1.3em; }
+        .timer-bar .tab-warning {
+            color: #fbbf24; font-weight: 700;
+            animation: pulse 1s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .exercise-row {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 24px; padding: 20px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            line-height: 1.7; font-size: 1.05em;
+        }
+        .exercise-row:last-child { border-bottom: none; }
+        .sentence-text { flex: 1; }
+        .base-word {
+            flex-shrink: 0; width: 130px; text-align: center;
+            background: rgba(192, 132, 252, 0.12); border: 1px solid rgba(192, 132, 252, 0.3);
+            padding: 10px 16px; border-radius: 12px; font-weight: 700;
+            color: #e9d5ff;
+        }
+        .blank-input {
+            width: 130px; padding: 6px 12px; background: rgba(0, 0, 0, 0.3);
+            border: 2px dashed rgba(192, 132, 252, 0.4); border-radius: 8px;
+            color: #fff; font-size: 0.95em; font-weight: 600; text-align: center;
+            display: inline-block; vertical-align: middle; margin: 0 4px;
+        }
+        .blank-input::placeholder { color: rgba(255, 255, 255, 0.25); }
+        .blank-input:focus { outline: none; border-color: #c084fc; }
+        .blank-input.correct {
+            border-color: #4ade80; background: rgba(74, 222, 128, 0.15);
+            color: #86efac; border-style: solid;
+        }
+        .blank-input.incorrect {
+            border-color: #f87171; background: rgba(248, 113, 113, 0.15);
+            color: #fca5a5; border-style: solid;
+        }
+        .explanation {
+            margin-top: 12px; padding: 14px 18px;
+            background: rgba(96, 165, 250, 0.1); border-left: 4px solid #60a5fa;
+            border-radius: 8px; font-size: 0.9em; color: #bfdbfe;
+            display: none;
+        }
+        .explanation.show { display: block; }
+        .controls { display: flex; gap: 16px; justify-content: center; margin-top: 35px; flex-wrap: wrap; }
+        .btn {
+            padding: 14px 32px; border: none; border-radius: 50px;
+            font-family: 'Comfortaa', cursive; font-size: 1em; font-weight: 700;
+            cursor: pointer;
+        }
+        .btn-check {
+            background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 100%);
+            color: white;
+        }
+        .btn-reset {
+            background: rgba(255, 255, 255, 0.08); color: #f8fafc;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .result-message {
+            text-align: center; padding: 18px; border-radius: 16px;
+            margin-top: 25px; font-size: 1.15em; font-weight: 600; display: none;
+        }
+        .result-message.success {
+            background: rgba(74, 222, 128, 0.12); border: 1px solid #4ade80;
+            color: #86efac; display: block;
+        }
+        .result-message.error {
+            background: rgba(248, 113, 113, 0.12); border: 1px solid #f87171;
+            color: #fca5a5; display: block;
+        }
+        .sending-status {
+            text-align: center; margin-top: 15px; font-size: 0.95em;
+            color: #94a3b8; display: none;
+        }
+        .sending-status.show { display: block; }
+    </style>
+</head>
+<body>
+    <div class="stars-container" id="starsContainer"></div>
+    <div class="main-wrapper">
+        <a href="../index.html" class="back-link">← Back to exercises</a>
+        <div class="header">
+            <h1> Matilda's Library</h1>
+            <p>Put the words in the correct grammatical form.</p>
+        </div>
+
+        <div class="student-form" id="studentForm">
+            <h2>🌟 Welcome!</h2>
+            <p>Please enter your name to start the exercise</p>
+            <input type="text" class="name-input" id="studentName" placeholder="Your name">
+            <br>
+            <button class="btn-start" onclick="startExercise()">Start Exercise ✨</button>
+        </div>
+
+        <div class="exercise-card" id="exerciseCard">
+            <!-- ⏱️ Таймер -->
+            <div class="timer-bar" id="timerBar">
+                <span class="timer-icon">⏱️</span>
+                <span id="timerDisplay">00:00</span>
+                <span id="tabWarning" class="tab-warning" style="display: none;">
+                    ⚠️ Tab switches: <span id="tabSwitchCount">0</span>
+                </span>
+            </div>
+
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    Mr. and Mrs. Wormwood were our neighbours. They had two
+                    <input type="text" class="blank-input" data-answer="children" data-rule="Plural noun" placeholder="...">
+                    .
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use the <strong>plural form</strong> 'children' (irregular plural of 'child') because of 'two'.</div>
+                </div>
+                <div class="base-word">CHILD</div>
+            </div>
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    Their son Michael
+                    <input type="text" class="blank-input" data-answer="didn't differ|did not differ" data-rule="Past Simple negative" placeholder="...">
+                    from the other children very much, but their daughter Matilda was a brilliant child.
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Past Simple negative</strong> 'didn't differ' because the story is in the past tense.</div>
+                </div>
+                <div class="base-word">NOT/DIFFER</div>
+            </div>
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    By the time she was five, Matilda was able to read very well. She studied every magazine and newspaper that she
+                    <input type="text" class="blank-input" data-answer="could find" data-rule="Past Simple (modal)" placeholder="...">
+                    around the house.
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Past Simple</strong> of 'can' → 'could' because the story is in the past.</div>
+                </div>
+                <div class="base-word">CAN</div>
+            </div>
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    Actually, she read
+                    <input type="text" class="blank-input" data-answer="better" data-rule="Comparative form" placeholder="...">
+                    than most school pupils.
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use the <strong>comparative form</strong> 'better' (from 'well') because of 'than'.</div>
+                </div>
+                <div class="base-word">WELL</div>
+            </div>
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    One afternoon when the parents were out of the house, Matilda put on
+                    <input type="text" class="blank-input" data-answer="her" data-rule="Possessive adjective" placeholder="...">
+                    dress and shoes and went to the library.
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use the <strong>possessive adjective</strong> 'her' (from 'she') to show possession.</div>
+                </div>
+                <div class="base-word">SHE</div>
+            </div>
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    The librarian was surprised to see such a small child. "Are you here for the
+                    <input type="text" class="blank-input" data-answer="first" data-rule="Ordinal number" placeholder="...">
+                    time? Would you like me to find a nice book with lots of pictures for you?"
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use the <strong>ordinal number</strong> 'first' (from 'one') to indicate order.</div>
+                </div>
+                <div class="base-word">ONE</div>
+            </div>
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    "No, thank you, I
+                    <input type="text" class="blank-input" data-answer="have found|found" data-rule="Present Perfect / Past Simple" placeholder="...">
+                    what I need," answered Matilda showing a thick book of fairy tales.
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Present Perfect</strong> 'have found' for a completed action with present result, or <strong>Past Simple</strong> 'found'.</div>
+                </div>
+                <div class="base-word">FIND</div>
+            </div>
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    Then she added, "I
+                    <input type="text" class="blank-input" data-answer="will come|'ll come" data-rule="Future Simple" placeholder="...">
+                    for a new book as soon as I finish this one".
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Future Simple</strong> 'will come' for a future intention/promise.</div>
+                </div>
+                <div class="base-word">COME</div>
+            </div>
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    "I wish all children
+                    <input type="text" class="blank-input" data-answer="liked" data-rule="Past Simple after 'I wish'" placeholder="...">
+                    reading so much," the librarian said. From that day on Matilda went to the library every afternoon.
+                    <div class="explanation">💡 <strong>Explanation:</strong> After "I wish" we use <strong>Past Simple</strong> to talk about an unreal present situation.</div>
+                </div>
+                <div class="base-word">LIKE</div>
+            </div>
+            <div class="controls">
+                <button class="btn btn-check" onclick="checkAnswers()">✨ Check Answers</button>
+                <button class="btn btn-reset" onclick="resetExercise()">↺ Reset</button>
+            </div>
+            <div id="resultMessage" class="result-message"></div>
+            <div class="sending-status" id="sendingStatus"></div>
+        </div>
+    </div>
+    <script>
+        // ⚠️ ВАЖНО: ВСТАВЬТЕ СЮДА ВАШУ ССЫЛКУ ИЗ POWER AUTOMATE
+        const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
+        
+        let studentName = '';
+        let startTime = null;
+        let timerInterval = null;
+        let tabSwitchCount = 0;
+        let isExerciseActive = false;
+
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            for (let i = 0; i < 150; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.setProperty('--max-opacity', Math.random() * 0.7 + 0.3);
+                star.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(star);
+            }
+        }
+        createStars();
+
+        function startExercise() {
+            const nameInput = document.getElementById('studentName');
+            studentName = nameInput.value.trim();
+            if (studentName === '') {
+                nameInput.style.borderColor = '#f87171';
+                alert('Please enter your name!');
+                return;
+            }
+            document.getElementById('studentForm').style.display = 'none';
+            document.getElementById('exerciseCard').classList.add('show');
+            
+            // ⏱️ Запускаем таймер
+            startTime = Date.now();
+            isExerciseActive = true;
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        // ⏱️ Обновление таймера каждую секунду
+        function updateTimer() {
+            if (!isExerciseActive) return;
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            const display = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+            document.getElementById('timerDisplay').textContent = display;
+        }
+
+        //  Отслеживание переключения вкладок
+        document.addEventListener('visibilitychange', function() {
+            if (!isExerciseActive) return;
+            
+            if (document.hidden) {
+                // Ученик ушёл с вкладки
+                tabSwitchCount++;
+                document.getElementById('tabSwitchCount').textContent = tabSwitchCount;
+                document.getElementById('tabWarning').style.display = 'inline';
+                
+                // Показываем предупреждение
+                alert('⚠️ WARNING: You left the exercise tab!\n\nThis has been recorded and will be sent to your teacher.\nTab switches: ' + tabSwitchCount);
+            }
+        });
+
+        //  Дополнительное отслеживание потери фокуса
+        window.addEventListener('blur', function() {
+            if (!isExerciseActive) return;
+            // blur срабатывает чаще, чем visibilitychange
+            // Но чтобы не спамить, используем только visibilitychange для подсчёта
+        });
+
+        function checkAnswers() {
+            const inputs = document.querySelectorAll('.blank-input');
+            const explanations = document.querySelectorAll('.explanation');
+            let correctCount = 0;
+            const total = inputs.length;
+            let allFilled = true;
+            const errors = [];
+
+            inputs.forEach(input => { if (input.value.trim() === '') allFilled = false; });
+
+            if (!allFilled) {
+                showResult('Please fill in all the blanks!', 'error');
+                return;
+            }
+
+            // ⏱️ Останавливаем таймер
+            isExerciseActive = false;
+            clearInterval(timerInterval);
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            const timeSpent = minutes + ' min ' + seconds + ' sec';
+
+            inputs.forEach((input, index) => {
+                const userAnswer = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+                const correctAnswers = input.dataset.answer.split('|');
+                const grammarRule = input.dataset.rule || 'Unknown rule';
+                
+                if (correctAnswers.includes(userAnswer)) {
+                    input.classList.remove('incorrect');
+                    input.classList.add('correct');
+                    explanations[index].classList.add('show');
+                    correctCount++;
+                } else {
+                    input.classList.remove('correct');
+                    input.classList.add('incorrect');
+                    explanations[index].classList.add('show');
+                    
+                    const baseWord = input.closest('.exercise-row').querySelector('.base-word').textContent;
+                    errors.push(baseWord + ': "' + input.value.trim() + '" → "' + correctAnswers[0] + '" [' + grammarRule + ']');
+                }
+            });
+
+            let errorsText = '';
+            if (errors.length > 0) {
+                errorsText = errors.map((e, i) => (i + 1) + '. ' + e).join('<br><br>');
+            } else {
+                errorsText = '✅ No errors! Perfect!';
+            }
+
+            sendResultsToTeams(correctCount, total, errorsText, timeSpent);
+
+            if (correctCount === total) {
+                showResult('🎉 Magical! All ' + total + ' answers are correct! Excellent work! Time: ' + timeSpent, 'success');
+            } else {
+                showResult('You got ' + correctCount + ' out of ' + total + ' correct. Time: ' + timeSpent + '. Keep trying! 💫', 'error');
+            }
+        }
+
+        async function sendResultsToTeams(correct, total, errorsText, timeSpent) {
+            const statusDiv = document.getElementById('sendingStatus');
+            statusDiv.classList.add('show');
+            statusDiv.textContent = '📤 Sending results to teacher...';
+            statusDiv.style.color = '#94a3b8';
+
+            const percentage = Math.round((correct / total) * 100);
+
+            const payload = {
+                student_name: studentName,
+                score: correct + '/' + total,
+                percentage: percentage + '%',
+                time: new Date().toLocaleString(),
+                exercise_name: 'Matilda\'s Library',
+                errors_text: errorsText,
+                time_spent: timeSpent,
+                tab_switches: tabSwitchCount === 0 ? '0 (no switches)' : tabSwitchCount + ' switch(es) detected ⚠️'
+            };
+
+            try {
+                const response = await fetch(POWER_AUTOMATE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    statusDiv.textContent = '✅ Results sent to Teams successfully!';
+                    statusDiv.style.color = '#4ade80';
+                } else {
+                    statusDiv.textContent = '⚠️ Error sending results.';
+                    statusDiv.style.color = '#fbbf24';
+                }
+            } catch (error) {
+                statusDiv.textContent = '⚠️ Network error.';
+                statusDiv.style.color = '#f87171';
+            }
+
+            setTimeout(() => { statusDiv.classList.remove('show'); }, 6000);
+        }
+
+        function resetExercise() {
+            const inputs = document.querySelectorAll('.blank-input');
+            const explanations = document.querySelectorAll('.explanation');
+            inputs.forEach(input => { input.value = ''; input.classList.remove('correct', 'incorrect'); });
+            explanations.forEach(exp => { exp.classList.remove('show'); });
+            const resultDiv = document.getElementById('resultMessage');
+            resultDiv.className = 'result-message';
+            resultDiv.style.display = 'none';
+            
+            // Сброс таймера
+            startTime = Date.now();
+            tabSwitchCount = 0;
+            document.getElementById('tabSwitchCount').textContent = '0';
+            document.getElementById('tabWarning').style.display = 'none';
+            isExerciseActive = true;
+            clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('resultMessage');
+            resultDiv.textContent = message;
+            resultDiv.className = 'result-message ' + type;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
