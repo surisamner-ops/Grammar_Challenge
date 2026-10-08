@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Challenge - Dana Miller</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --success-color: #4ade80;
+            --error-color: #f87171;
+            --glass-bg: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            min-height: 100vh; color: var(--text-light); overflow-x: hidden;
+        }
+        .stars-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+        .star {
+            position: absolute; background: white; border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite; opacity: 0;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: var(--max-opacity); transform: scale(1); }
+        }
+        .main-wrapper {
+            position: relative; z-index: 1; max-width: 900px;
+            margin: 0 auto; padding: 40px 20px;
+        }
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 {
+            font-family: 'Comfortaa', cursive; font-size: 2.5em; font-weight: 700;
+            background: linear-gradient(135deg, #c084fc 0%, #60a5fa 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .header p { font-size: 1.1em; color: var(--text-muted); }
+        .back-link {
+            display: inline-block; margin-bottom: 20px; color: #c084fc;
+            text-decoration: none; font-weight: 600;
+        }
+        .back-link:hover { color: #e9d5ff; }
+        .exercise-card {
+            background: var(--glass-bg); backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border); border-radius: 24px;
+            padding: 35px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        .exercise-row {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 24px; padding: 20px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            line-height: 1.7; font-size: 1.05em;
+        }
+        .exercise-row:hover {
+            background: rgba(255, 255, 255, 0.02); border-radius: 12px;
+            padding-left: 15px; padding-right: 15px;
+        }
+        .exercise-row:last-child { border-bottom: none; }
+        .sentence-text { flex: 1; color: var(--text-light); }
+        .base-word {
+            flex-shrink: 0; width: 130px; text-align: center;
+            background: rgba(192, 132, 252, 0.12); border: 1px solid rgba(192, 132, 252, 0.3);
+            padding: 10px 16px; border-radius: 12px; font-weight: 700;
+            color: #e9d5ff; font-size: 0.95em;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .blank-input {
+            width: 130px; padding: 6px 12px; background: rgba(0, 0, 0, 0.3);
+            border: 2px dashed rgba(192, 132, 252, 0.4); border-radius: 8px;
+            color: #fff; font-family: 'Inter', sans-serif; font-size: 0.95em;
+            font-weight: 600; text-align: center;
+            display: inline-block; vertical-align: middle; margin: 0 4px;
+        }
+        .blank-input::placeholder { color: rgba(255, 255, 255, 0.25); }
+        .blank-input:focus {
+            outline: none; border-color: #c084fc;
+            box-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
+        }
+        .blank-input.correct {
+            border-color: var(--success-color); background: rgba(74, 222, 128, 0.15);
+            color: #86efac; border-style: solid;
+        }
+        .blank-input.incorrect {
+            border-color: var(--error-color); background: rgba(248, 113, 113, 0.15);
+            color: #fca5a5; border-style: solid; animation: shake 0.4s ease;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+        .explanation {
+            margin-top: 12px; padding: 14px 18px;
+            background: rgba(96, 165, 250, 0.1); border-left: 4px solid #60a5fa;
+            border-radius: 8px; font-size: 0.9em; color: #bfdbfe;
+            line-height: 1.6; display: none;
+        }
+        .explanation.show { display: block; }
+        .explanation strong { color: #93c5fd; }
+        .controls { display: flex; gap: 16px; justify-content: center; margin-top: 35px; flex-wrap: wrap; }
+        .btn {
+            padding: 14px 32px; border: none; border-radius: 50px;
+            font-family: 'Comfortaa', cursive; font-size: 1em; font-weight: 700;
+            cursor: pointer; transition: all 0.3s ease;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn-check {
+            background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 100%);
+            color: white; box-shadow: 0 4px 20px rgba(167, 139, 250, 0.4);
+        }
+        .btn-check:hover { transform: translateY(-3px) scale(1.05); }
+        .btn-reset {
+            background: rgba(255, 255, 255, 0.08); color: var(--text-light);
+            border: 1px solid var(--glass-border);
+        }
+        .btn-reset:hover { background: rgba(255, 255, 255, 0.15); }
+        .result-message {
+            text-align: center; padding: 18px; border-radius: 16px;
+            margin-top: 25px; font-size: 1.15em; font-weight: 600; display: none;
+        }
+        .result-message.success {
+            background: rgba(74, 222, 128, 0.12); border: 1px solid var(--success-color);
+            color: #86efac; display: block;
+        }
+        .result-message.error {
+            background: rgba(248, 113, 113, 0.12); border: 1px solid var(--error-color);
+            color: #fca5a5; display: block;
+        }
+        .sending-status {
+            text-align: center; margin-top: 15px; font-size: 0.95em;
+            color: var(--text-muted); display: none;
+        }
+        .sending-status.show { display: block; }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+            .exercise-card { padding: 25px 20px; }
+            .exercise-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .base-word { width: 100%; max-width: 200px; align-self: center; }
+            .blank-input { width: 120px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars-container" id="starsContainer"></div>
+    <div class="main-wrapper">
+        <a href="../index.html" class="back-link">← Back to exercises</a>
+        <div class="header">
+            <h1>✨ Dana's Story ✨</h1>
+            <p>Put the words in the correct grammatical form.</p>
+        </div>
+        <div class="exercise-card">
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    Dana Miller was a bus driver in the city of Philadelphia. Her working hours
+                    <input type="text" class="blank-input" data-answer="were" placeholder="...">
+                    from 10.00 pm till 6.00 am.
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Past Simple</strong> of 'be' → 'were' because 'hours' is plural and the story is in the past.</div>
+                </div>
+                <div class="base-word">BE</div>
+            </div>
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    It was a hard job and very few
+                    <input type="text" class="blank-input" data-answer="women" placeholder="...">
+                    worked as bus drivers in those days but Dana loved her job very much.
+                    <div class="explanation"> <strong>Explanation:</strong> Use the <strong>irregular plural</strong> of 'woman' → 'women' (few + plural noun).</div>
+                </div>
+                <div class="base-word">WOMAN</div>
+            </div>
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    One of her regular passengers was a guitar player. Every Friday night he got on the bus carrying his guitar. The guitar
+                    <input type="text" class="blank-input" data-answer="was made" placeholder="...">
+                    of wood, not plastic, and Dana liked the way it sounded.
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Past Simple Passive</strong> 'was made' because the guitar receives the action.</div>
+                </div>
+                <div class="base-word">MAKE</div>
+            </div>
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    "You should come to see our show," the guitarist kept saying to Dana. "I
+                    <input type="text" class="blank-input" data-answer="will see|'ll see" placeholder="...">
+                    it one day," Dana promised each time.
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Future Simple</strong> 'will see' for a promise about the future.</div>
+                </div>
+                <div class="base-word">SEE</div>
+            </div>
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    ...but she never said when exactly she
+                    <input type="text" class="blank-input" data-answer="would come" placeholder="...">
+                    .
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Future in the Past</strong> 'would come' because it's reported speech in the past tense.</div>
+                </div>
+                <div class="base-word">COME</div>
+            </div>
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    Another passenger who often used Dana's bus was a Biscuit Lady. She worked at the biscuit factory and often
+                    <input type="text" class="blank-input" data-answer="gave" placeholder="...">
+                    Dana a small bag of biscuits.
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Past Simple</strong> of 'give' → 'gave' to describe a repeated action in the past.</div>
+                </div>
+                <div class="base-word">GIVE</div>
+            </div>
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    Dana
+                    <input type="text" class="blank-input" data-answer="didn't like|did not like" placeholder="...">
+                    sweets and pastries very much, but she could never resist those biscuits.
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Past Simple negative</strong> 'didn't like' because the story is in the past tense.</div>
+                </div>
+                <div class="base-word">NOT / LIKE</div>
+            </div>
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    "How was
+                    <input type="text" class="blank-input" data-answer="your" placeholder="...">
+                    night?" Dana's husband liked to ask her when she came home.
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use the <strong>possessive adjective</strong> 'your' (from 'you') to show possession.</div>
+                </div>
+                <div class="base-word">YOU</div>
+            </div>
+            <div class="exercise-row">
+                <div class="sentence-text">
+                    "I wish I
+                    <input type="text" class="blank-input" data-answer="enjoyed" placeholder="...">
+                    my work as much as you enjoy yours," her husband said.
+                    <div class="explanation">💡 <strong>Explanation:</strong> After "I wish" we use <strong>Past Simple</strong> to talk about an unreal present situation.</div>
+                </div>
+                <div class="base-word">ENJOY</div>
+            </div>
+            <div class="controls">
+                <button class="btn btn-check" onclick="checkAnswers()">✨ Check Answers</button>
+                <button class="btn btn-reset" onclick="resetExercise()">↺ Reset</button>
+            </div>
+            <div id="resultMessage" class="result-message"></div>
+            <div class="sending-status" id="sendingStatus"></div>
+        </div>
+    </div>
+    <script>
+        // ⚠️ ВАЖНО: ВСТАВЬТЕ СЮДА ВАШУ ССЫЛКУ ИЗ POWER AUTOMATE
+        const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
+
+        let studentName = '';
+
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            for (let i = 0; i < 150; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.setProperty('--max-opacity', Math.random() * 0.7 + 0.3);
+                star.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(star);
+            }
+        }
+        createStars();
+
+        function checkAnswers() {
+            const inputs = document.querySelectorAll('.blank-input');
+            const explanations = document.querySelectorAll('.explanation');
+            let correctCount = 0;
+            const total = inputs.length;
+            let allFilled = true;
+
+            inputs.forEach(input => { if (input.value.trim() === '') allFilled = false; });
+
+            if (!allFilled) {
+                showResult('Please fill in all the blanks! ✨', 'error');
+                return;
+            }
+
+            if (!studentName) {
+                studentName = prompt('Please enter your name:');
+                if (!studentName || studentName.trim() === '') {
+                    studentName = 'Anonymous Student';
+                }
+            }
+
+            inputs.forEach((input, index) => {
+                const userAnswer = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+                const correctAnswers = input.dataset.answer.split('|');
+                if (correctAnswers.includes(userAnswer)) {
+                    input.classList.remove('incorrect');
+                    input.classList.add('correct');
+                    explanations[index].classList.add('show');
+                    correctCount++;
+                } else {
+                    input.classList.remove('correct');
+                    input.classList.add('incorrect');
+                    explanations[index].classList.add('show');
+                }
+            });
+
+            sendResultsToTeams(correctCount, total);
+
+            if (correctCount === total) {
+                showResult('🎉 Magical! All ' + total + ' answers are correct! Excellent work!', 'success');
+            } else {
+                showResult('You got ' + correctCount + ' out of ' + total + ' correct. Keep trying! 💫', 'error');
+            }
+        }
+
+        async function sendResultsToTeams(correct, total) {
+            const statusDiv = document.getElementById('sendingStatus');
+            statusDiv.classList.add('show');
+            statusDiv.textContent = ' Sending results to teacher...';
+            statusDiv.style.color = '#94a3b8';
+
+            const percentage = Math.round((correct / total) * 100);
+            const payload = {
+                student_name: studentName,
+                score: `${correct}/${total}`,
+                percentage: `${percentage}%`,
+                time: new Date().toLocaleString()
+            };
+
+            try {
+                const response = await fetch(POWER_AUTOMATE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    statusDiv.textContent = '✅ Results sent to Teams successfully!';
+                    statusDiv.style.color = '#4ade80';
+                } else {
+                    statusDiv.textContent = '⚠️ Error sending results.';
+                    statusDiv.style.color = '#fbbf24';
+                }
+            } catch (error) {
+                statusDiv.textContent = '⚠️ Network error.';
+                statusDiv.style.color = '#f87171';
+            }
+
+            setTimeout(() => { statusDiv.classList.remove('show'); }, 6000);
+        }
+
+        function resetExercise() {
+            const inputs = document.querySelectorAll('.blank-input');
+            const explanations = document.querySelectorAll('.explanation');
+            inputs.forEach(input => { input.value = ''; input.classList.remove('correct', 'incorrect'); });
+            explanations.forEach(exp => { exp.classList.remove('show'); });
+            const resultDiv = document.getElementById('resultMessage');
+            resultDiv.className = 'result-message';
+            resultDiv.style.display = 'none';
+        }
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('resultMessage');
+            resultDiv.textContent = message;
+            resultDiv.className = 'result-message ' + type;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
