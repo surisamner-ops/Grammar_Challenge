@@ -80,6 +80,28 @@
             display: none;
         }
         .exercise-card.show { display: block; }
+        
+        /* ️ Стили для таймера */
+        .timer-bar {
+            position: sticky; top: 10px; z-index: 100;
+            background: rgba(192, 132, 252, 0.15);
+            border: 1px solid rgba(192, 132, 252, 0.4);
+            border-radius: 50px; padding: 10px 25px;
+            text-align: center; margin-bottom: 25px;
+            font-family: 'Comfortaa', cursive; font-size: 1.1em;
+            color: #e9d5ff; backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: center; gap: 15px;
+        }
+        .timer-bar .timer-icon { font-size: 1.3em; }
+        .timer-bar .tab-warning {
+            color: #fbbf24; font-weight: 700;
+            animation: pulse 1s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
         .exercise-row {
             display: flex; align-items: center; justify-content: space-between;
             gap: 24px; padding: 20px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06);
@@ -154,7 +176,7 @@
     <div class="main-wrapper">
         <a href="../index.html" class="back-link">← Back to exercises</a>
         <div class="header">
-            <h1> Violin Orchestra 🎻</h1>
+            <h1> Violin Orchestra</h1>
             <p>Put the words in the correct grammatical form.</p>
         </div>
 
@@ -167,6 +189,15 @@
         </div>
 
         <div class="exercise-card" id="exerciseCard">
+            <!-- ⏱️ ТАЙМЕР -->
+            <div class="timer-bar" id="timerBar">
+                <span class="timer-icon">️</span>
+                <span id="timerDisplay">00:00</span>
+                <span id="tabWarning" class="tab-warning" style="display: none;">
+                    ⚠️ Tab switches: <span id="tabSwitchCount">0</span>
+                </span>
+            </div>
+
             <div class="exercise-row">
                 <div class="sentence-text">
                     I play the violin in the college orchestra. Last month we
@@ -181,7 +212,7 @@
                     I worried a lot before we left for France as I had never been away from home for so long. Mum tried to encourage
                     <input type="text" class="blank-input" data-answer="me" data-rule="Object pronoun" placeholder="...">
                     .
-                    <div class="explanation">💡 <strong>Explanation:</strong> Use the <strong>object pronoun</strong> 'me' (from 'I') after the verb 'encourage'.</div>
+                    <div class="explanation"> <strong>Explanation:</strong> Use the <strong>object pronoun</strong> 'me' (from 'I') after the verb 'encourage'.</div>
                 </div>
                 <div class="base-word">I</div>
             </div>
@@ -226,7 +257,7 @@
                     "If it goes on like this, I
                     <input type="text" class="blank-input" data-answer="will catch|'ll catch" data-rule="Future Simple" placeholder="...">
                     a cold," I told my roommate, Cathy.
-                    <div class="explanation"> <strong>Explanation:</strong> Use <strong>Future Simple</strong> 'will catch' for a prediction about the future.</div>
+                    <div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Future Simple</strong> 'will catch' for a prediction about the future.</div>
                 </div>
                 <div class="base-word">CATCH</div>
             </div>
@@ -259,7 +290,12 @@
     <script>
         // ⚠️ ВАЖНО: ВСТАВЬТЕ СЮДА ВАШУ ССЫЛКУ ИЗ POWER AUTOMATE
         const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
+        
         let studentName = '';
+        let startTime = null;
+        let timerInterval = null;
+        let tabSwitchCount = 0;
+        let isExerciseActive = false;
 
         function createStars() {
             const container = document.getElementById('starsContainer');
@@ -289,10 +325,33 @@
             }
             document.getElementById('studentForm').style.display = 'none';
             document.getElementById('exerciseCard').classList.add('show');
+            
+            // ⏱️ Запускаем таймер
+            startTime = Date.now();
+            isExerciseActive = true;
+            timerInterval = setInterval(updateTimer, 1000);
         }
 
-        document.getElementById('studentName').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') startExercise();
+        // ⏱️ Обновление таймера каждую секунду
+        function updateTimer() {
+            if (!isExerciseActive) return;
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            const display = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+            document.getElementById('timerDisplay').textContent = display;
+        }
+
+        // 👁️ Отслеживание переключения вкладок
+        document.addEventListener('visibilitychange', function() {
+            if (!isExerciseActive) return;
+            
+            if (document.hidden) {
+                tabSwitchCount++;
+                document.getElementById('tabSwitchCount').textContent = tabSwitchCount;
+                document.getElementById('tabWarning').style.display = 'inline';
+                alert('️ WARNING: You left the exercise tab!\n\nThis has been recorded and will be sent to your teacher.\nTab switches: ' + tabSwitchCount);
+            }
         });
 
         function checkAnswers() {
@@ -309,6 +368,14 @@
                 showResult('Please fill in all the blanks!', 'error');
                 return;
             }
+
+            // ⏱️ Останавливаем таймер
+            isExerciseActive = false;
+            clearInterval(timerInterval);
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            const timeSpent = minutes + ' min ' + seconds + ' sec';
 
             inputs.forEach((input, index) => {
                 const userAnswer = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
@@ -337,16 +404,16 @@
                 errorsText = '✅ No errors! Perfect!';
             }
 
-            sendResultsToTeams(correctCount, total, errorsText);
+            sendResultsToTeams(correctCount, total, errorsText, timeSpent);
 
             if (correctCount === total) {
-                showResult('🎉 Magical! All ' + total + ' answers are correct! Excellent work!', 'success');
+                showResult('🎉 Magical! All ' + total + ' answers are correct! Excellent work! Time: ' + timeSpent, 'success');
             } else {
-                showResult('You got ' + correctCount + ' out of ' + total + ' correct. Keep trying! 💫', 'error');
+                showResult('You got ' + correctCount + ' out of ' + total + ' correct. Time: ' + timeSpent + '. Keep trying! 💫', 'error');
             }
         }
 
-        async function sendResultsToTeams(correct, total, errorsText) {
+        async function sendResultsToTeams(correct, total, errorsText, timeSpent) {
             const statusDiv = document.getElementById('sendingStatus');
             statusDiv.classList.add('show');
             statusDiv.textContent = '📤 Sending results to teacher...';
@@ -360,7 +427,9 @@
                 percentage: percentage + '%',
                 time: new Date().toLocaleString(),
                 exercise_name: 'Violin Orchestra',
-                errors_text: errorsText
+                errors_text: errorsText,
+                time_spent: timeSpent,
+                tab_switches: tabSwitchCount === 0 ? '0 (no switches)' : tabSwitchCount + ' switch(es) detected ⚠️'
             };
 
             try {
@@ -374,7 +443,7 @@
                     statusDiv.textContent = '✅ Results sent to Teams successfully!';
                     statusDiv.style.color = '#4ade80';
                 } else {
-                    statusDiv.textContent = '️ Error sending results.';
+                    statusDiv.textContent = '⚠️ Error sending results.';
                     statusDiv.style.color = '#fbbf24';
                 }
             } catch (error) {
@@ -393,6 +462,15 @@
             const resultDiv = document.getElementById('resultMessage');
             resultDiv.className = 'result-message';
             resultDiv.style.display = 'none';
+            
+            // Сброс таймера и счётчика
+            startTime = Date.now();
+            tabSwitchCount = 0;
+            document.getElementById('tabSwitchCount').textContent = '0';
+            document.getElementById('tabWarning').style.display = 'none';
+            isExerciseActive = true;
+            clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
         }
 
         function showResult(message, type) {
