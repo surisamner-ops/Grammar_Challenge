@@ -31,7 +31,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 💫 Анимация перелива заголовка */
+        /*  Анимация перелива заголовка */
         @keyframes shimmer {
             0% { background-position: -200% center; }
             100% { background-position: 200% center; }
@@ -80,6 +80,7 @@
         .exercise-card:nth-child(1) { animation: fadeInUp 0.8s ease-out 0.3s forwards; }
         .exercise-card:nth-child(2) { animation: fadeInUp 0.8s ease-out 0.5s forwards; }
         .exercise-card:nth-child(3) { animation: fadeInUp 0.8s ease-out 0.7s forwards; }
+        .exercise-card:nth-child(4) { animation: fadeInUp 0.8s ease-out 0.9s forwards; }
 
         .exercise-card:hover {
             transform: translateY(-10px) scale(1.03);
@@ -97,6 +98,7 @@
         .exercise-card:nth-child(1) .emoji { animation-delay: 0s; }
         .exercise-card:nth-child(2) .emoji { animation-delay: 1s; }
         .exercise-card:nth-child(3) .emoji { animation-delay: 2s; }
+        .exercise-card:nth-child(4) .emoji { animation-delay: 3s; }
 
         .exercise-card h2 {
             font-family: 'Comfortaa', cursive; font-size: 1.5em;
@@ -130,6 +132,7 @@
         </div>
         
         <div class="exercises-grid">
+            <!-- Карточка 1 -->
             <a href="susan-story.html" class="exercise-card">
                 <div class="emoji">🚌</div>
                 <h2>Susan's Story</h2>
@@ -137,6 +140,7 @@
                 <span class="tag">9 questions</span>
             </a>
             
+            <!-- Карточка 2 -->
             <a href="dana-miller/index.html" class="exercise-card">
                 <div class="emoji">🎸</div>
                 <h2>Dana Miller</h2>
@@ -144,18 +148,21 @@
                 <span class="tag">9 questions</span>
             </a>
             
+            <!-- Карточка 3 -->
             <a href="violin-orchestra/index.html" class="exercise-card">
-                <div class="emoji">🎻</div>
+                <div class="emoji"></div>
                 <h2>Violin Orchestra</h2>
                 <p>A music festival in France. Practice Past Simple, Passive Voice, and Future in the Past.</p>
                 <span class="tag">9 questions</span>
             </a>
+            
+            <!-- Карточка 4 -->
             <a href="matilda-library/index.html" class="exercise-card">
-    <div class="emoji">📚</div>
-    <h2>Matilda's Library</h2>
-    <p>A brilliant child discovers the library. Practice Past Simple, comparatives, and modals.</p>
-    <span class="tag">9 questions</span>
-</a>
+                <div class="emoji">📚</div>
+                <h2>Matilda's Library</h2>
+                <p>A brilliant child discovers the library. Practice Past Simple, comparatives, and modals.</p>
+                <span class="tag">9 questions</span>
+            </a>
         </div>
     </div>
     
