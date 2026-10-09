@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 Leaderboard - Juliya Magic Teacher</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            min-height: 100vh; color: #f8fafc; overflow-x: hidden;
+        }
+        .stars-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+        .star {
+            position: absolute; background: white; border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite; opacity: 0;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: var(--max-opacity); transform: scale(1); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes floatEmoji {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        
+        .main-wrapper {
+            position: relative; z-index: 1; max-width: 1000px;
+            margin: 0 auto; padding: 60px 20px;
+        }
+        .header {
+            text-align: center; margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        .header h1 {
+            font-family: 'Comfortaa', cursive; font-size: 3em; font-weight: 700;
+            background: linear-gradient(90deg, #ffd93d, #ff6b9d, #c084fc, #60a5fa);
+            background-size: 300% auto;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shimmer 5s linear infinite;
+            margin-bottom: 10px;
+        }
+        .header p { font-size: 1.1em; color: #94a3b8; }
+        .back-link {
+            display: inline-block; margin-bottom: 20px; color: #c084fc;
+            text-decoration: none; font-weight: 600;
+        }
+        .back-link:hover { color: #e9d5ff; }
+        
+        /* Фильтры */
+        .filters {
+            display: flex; justify-content: center; gap: 10px;
+            margin-bottom: 30px; flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.2s forwards; opacity: 0;
+        }
+        .filter-btn {
+            padding: 10px 18px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 50px;
+            color: #e9d5ff;
+            font-family: 'Comfortaa', cursive;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, rgba(192, 132, 252, 0.3), rgba(96, 165, 250, 0.3));
+            border-color: #c084fc;
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
+        }
+        
+        /* Таблица */
+        .leaderboard-container {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 30px;
+            animation: fadeInUp 1s ease-out 0.4s forwards; opacity: 0;
+        }
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .leaderboard-table th {
+            font-family: 'Comfortaa', cursive;
+            color: #c084fc;
+            padding: 15px 10px;
+            text-align: left;
+            border-bottom: 2px solid rgba(192, 132, 252, 0.3);
+            font-size: 0.95em;
+        }
+        .leaderboard-table td {
+            padding: 15px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            color: #e9d5ff;
+        }
+        .leaderboard-table tbody tr:hover {
+            background: rgba(192, 132, 252, 0.1);
+            transform: translateX(5px);
+            transition: all 0.3s ease;
+        }
+        
+        .rank {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.3em;
+            font-weight: 700;
+            width: 40px;
+        }
+        .rank-1 { color: #ffd93d; text-shadow: 0 0 15px rgba(255, 217, 61, 0.6); }
+        .rank-2 { color: #c0c0c0; text-shadow: 0 0 10px rgba(192, 192, 192, 0.5); }
+        .rank-3 { color: #cd7f32; text-shadow: 0 0 10px rgba(205, 127, 50, 0.5); }
+        
+        .player-name { font-weight: 600; color: #ffffff; }
+        .exercise-name { color: #94a3b8; font-size: 0.9em; }
+        .score-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: linear-gradient(135deg, rgba(192, 132, 252, 0.2), rgba(96, 165, 250, 0.2));
+            border: 1px solid rgba(192, 132, 252, 0.4);
+            border-radius: 20px;
+            font-weight: 600;
+            color: #e9d5ff;
+        }
+        .percentage {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+        .percentage.high { color: #4ade80; }
+        .percentage.medium { color: #fbbf24; }
+        .percentage.low { color: #f87171; }
+        
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
+            font-size: 1.1em;
+        }
+        .loading .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(192, 132, 252, 0.2);
+            border-top-color: #c084fc;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
+        }
+        .empty-state .emoji {
+            font-size: 4em;
+            display: block;
+            margin-bottom: 15px;
+            animation: floatEmoji 3s ease-in-out infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2em; }
+            .leaderboard-table th, .leaderboard-table td {
+                padding: 10px 5px;
+                font-size: 0.85em;
+            }
+            .leaderboard-container { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars-container" id="starsContainer"></div>
+    <div class="main-wrapper">
+        <a href="index.html" class="back-link">← Back to exercises</a>
+        <div class="header">
+            <h1> Leaderboard</h1>
+            <p>Top students of Juliya Magic Teacher!</p>
+        </div>
+        
+        <div class="filters" id="filters">
+            <button class="filter-btn active" data-filter="all">All Exercises</button>
+            <button class="filter-btn" data-filter="Susan's Story">Susan's Story</button>
+            <button class="filter-btn" data-filter="Dana Miller">Dana Miller</button>
+            <button class="filter-btn" data-filter="Violin Orchestra">Violin Orchestra</button>
+            <button class="filter-btn" data-filter="Matilda's Library">Matilda's Library</button>
+            <button class="filter-btn" data-filter="Tic Tac Toe">Tic Tac Toe</button>
+            <button class="filter-btn" data-filter="Passive Voice">Passive Voice</button>
+        </div>
+        
+        <div class="leaderboard-container">
+            <div id="leaderboardContent">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading leaderboard...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCybdydUS2PDlskYqe2_jdbTns0MB_6e45CLWCkpr6jLB-d1zHm5ebBifFNLFoKhwr/exec';
+        
+        let allData = [];
+        let currentFilter = 'all';
+        
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            for (let i = 0; i < 150; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.setProperty('--max-opacity', Math.random() * 0.7 + 0.3);
+                star.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(star);
+            }
+        }
+        createStars();
+        
+        async function loadLeaderboard() {
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL);
+                const data = await response.json();
+                allData = data;
+                renderLeaderboard();
+            } catch (error) {
+                document.getElementById('leaderboardContent').innerHTML = `
+                    <div class="empty-state">
+                        <span class="emoji">😔</span>
+                        <p>Could not load leaderboard. Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function filterData(data, filter) {
+            if (filter === 'all') return data;
+            return data.filter(item => {
+                const exercise = item.Exercise || item.exercise_name || '';
+                return exercise.toLowerCase().includes(filter.toLowerCase());
+            });
+        }
+        
+        function renderLeaderboard() {
+            const filtered = filterData(allData, currentFilter);
+            
+            if (filtered.length === 0) {
+                document.getElementById('leaderboardContent').innerHTML = `
+                    <div class="empty-state">
+                        <span class="emoji"></span>
+                        <p>No results yet for this exercise. Be the first!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const sorted = filtered.sort((a, b) => {
+                const pa = parseInt((a.Percentage || a.percentage || '0%').replace('%', ''));
+                const pb = parseInt((b.Percentage || b.percentage || '0%').replace('%', ''));
+                return pb - pa;
+            });
+            
+            let html = '<table class="leaderboard-table"><thead><tr>';
+            html += '<th>Rank</th><th>Student</th><th>Exercise</th><th>Score</th><th>Accuracy</th>';
+            html += '</tr></thead><tbody>';
+            
+            sorted.forEach((item, index) => {
+                const rank = index + 1;
+                const name = item.Name || item.student_name || 'Anonymous';
+                const exercise = item.Exercise || item.exercise_name || 'Unknown';
+                const score = item.Score || item.score || '-';
+                const percentage = (item.Percentage || item.percentage || '0%').replace('%', '');
+                const percentNum = parseInt(percentage);
+                
+                let rankClass = '';
+                let rankDisplay = rank;
+                if (rank === 1) { rankClass = 'rank-1'; rankDisplay = '🥇'; }
+                else if (rank === 2) { rankClass = 'rank-2'; rankDisplay = '🥈'; }
+                else if (rank === 3) { rankClass = 'rank-3'; rankDisplay = '🥉'; }
+                
+                let percentClass = 'low';
+                if (percentNum >= 80) percentClass = 'high';
+                else if (percentNum >= 50) percentClass = 'medium';
+                
+                html += `<tr>
+                    <td class="rank ${rankClass}">${rankDisplay}</td>
+                    <td class="player-name">${name}</td>
+                    <td class="exercise-name">${exercise}</td>
+                    <td><span class="score-badge">${score}</span></td>
+                    <td class="percentage ${percentClass}">${percentage}%</td>
+                </tr>`;
+            });
+            
+            html += '</tbody></table>';
+            document.getElementById('leaderboardContent').innerHTML = html;
+        }
+        
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderLeaderboard();
+            });
+        });
+        
+        loadLeaderboard();
+        setInterval(loadLeaderboard, 30000);
+    </script>
+</body>
+</html>
