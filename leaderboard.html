@@ -242,6 +242,7 @@
             const script = document.createElement('script');
             
             window[callbackName] = function(data) {
+                console.log('Data received:', data); // Для отладки
                 allData = data;
                 renderLeaderboard();
                 delete window[callbackName];
@@ -266,12 +267,11 @@
         function filterData(data, filter) {
             if (filter === 'all') return data;
             return data.filter(item => {
-                const exercise = item.Exercise || item.exercise_name || '';
+                const exercise = item.Exercise || '';
                 return exercise.toLowerCase().includes(filter.toLowerCase());
             });
         }
         
-        // ✅ ИСПРАВЛЕННАЯ ФУНКЦИЯ - работает с любыми названиями колонок
         function renderLeaderboard() {
             const filtered = filterData(allData, currentFilter);
             
@@ -286,9 +286,8 @@
             }
             
             const sorted = filtered.sort((a, b) => {
-                // Получаем процент из любого возможного поля
-                const pa = parseInt(String(a.Percentage || a.percentage || a['Percentage'] || '0%').replace('%', '')) || 0;
-                const pb = parseInt(String(b.Percentage || b.percentage || b['Percentage'] || '0%').replace('%', '')) || 0;
+                const pa = parseInt(String(a.Percentage || '0%').replace('%', '')) || 0;
+                const pb = parseInt(String(b.Percentage || '0%').replace('%', '')) || 0;
                 return pb - pa;
             });
             
@@ -298,13 +297,10 @@
             
             sorted.forEach((item, index) => {
                 const rank = index + 1;
-                
-                // Получаем данные из любого возможного поля
-                const name = item.Name || item.name || item.student_name || 'Anonymous';
-                const exercise = item.Exercise || item.exercise || item.exercise_name || 'Unknown';
-                const score = item.Score || item.score || '-';
-                const percentageRaw = String(item.Percentage || item.percentage || item['Percentage'] || '0%').replace('%', '');
-                const percentage = percentageRaw || '0';
+                const name = item.Name || 'Anonymous';
+                const exercise = item.Exercise || 'Unknown';
+                const score = item.Score || '-';
+                const percentage = String(item.Percentage || '0%').replace('%', '');
                 const percentNum = parseInt(percentage) || 0;
                 
                 let rankClass = '';
