@@ -6,7 +6,7 @@
     <title>✨ Past Tenses Tic Tac Toe</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Outfit:wght@300;400;600;800&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-deep: #0f0c29;
@@ -291,13 +291,8 @@
             box-shadow: 0 10px 30px rgba(123, 104, 238, 0.3);
         }
 
-        .cell:hover:not(.taken):not(.disabled)::after {
-            opacity: 1;
-        }
-        
-        .cell:active:not(.taken):not(.disabled) {
-            transform: scale(0.97);
-        }
+        .cell:hover:not(.taken):not(.disabled)::after { opacity: 1; }
+        .cell:active:not(.taken):not(.disabled) { transform: scale(0.97); }
 
         .cell.taken { cursor: default; }
         .cell.disabled {
@@ -409,9 +404,7 @@
             overflow: hidden;
         }
 
-        .modal-overlay.active .quiz-modal {
-            transform: translateY(0);
-        }
+        .modal-overlay.active .quiz-modal { transform: translateY(0); }
 
         .quiz-modal::before {
             content: '';
@@ -432,10 +425,7 @@
             border-bottom: 1px solid var(--glass-border);
         }
 
-        .quiz-icon {
-            font-size: 1.8rem;
-            animation: bounce 2s ease infinite;
-        }
+        .quiz-icon { font-size: 1.8rem; animation: bounce 2s ease infinite; }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
@@ -544,11 +534,7 @@
             transition: var(--transition-smooth);
         }
 
-        .quiz-feedback.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        .quiz-feedback.show { opacity: 1; transform: translateY(0); }
         .quiz-feedback.correct { color: var(--success); }
         .quiz-feedback.incorrect { color: var(--error); }
 
@@ -629,9 +615,7 @@
             text-align: center;
             font-size: 1.4rem;
         }
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
+        .form-group { margin-bottom: 1.2rem; }
         label {
             display: block;
             margin-bottom: 0.5rem;
@@ -702,20 +686,136 @@
             }
         }
 
-        .sending-status {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #94a3b8;
+        /* ✨ ФОРМА ВВОДА ИМЕНИ ✨ */
+        .name-form-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 12, 41, 0.95);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            padding: 1rem;
+        }
+
+        .name-form-overlay.hidden {
             display: none;
+        }
+
+        .name-form {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: var(--shadow-glow), var(--shadow-soft);
+            text-align: center;
+        }
+
+        .name-form h2 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .name-form p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            background: rgba(255,255,255,0.08);
+            border: 2px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-primary);
             font-family: var(--font-body);
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            transition: var(--transition-smooth);
         }
+
+        .name-input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .name-input:focus {
+            outline: none;
+            border-color: var(--accent-secondary);
+            box-shadow: 0 0 0 3px rgba(123, 104, 238, 0.3);
+            background: rgba(255,255,255,0.12);
+        }
+
+        .start-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 107, 157, 0.5);
+        }
+
+        .sending-status {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(15px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            z-index: 150;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+        }
+
         .sending-status.show {
-            display: block;
+            opacity: 1;
+            visibility: visible;
         }
+
+        .sending-status.success { color: var(--success); border-color: var(--success); }
+        .sending-status.error { color: var(--error); border-color: var(--error); }
     </style>
 </head>
 <body>
+    <!-- ✨ ФОРМА ВВОДА ИМЕНИ ✨ -->
+    <div class="name-form-overlay" id="nameFormOverlay">
+        <div class="name-form">
+            <div style="font-size: 3rem; margin-bottom: 1rem; animation: float 3s ease-in-out infinite;">⏳</div>
+            <h2>Past Tenses Tic Tac Toe</h2>
+            <p>Please enter your name to start the game</p>
+            <input type="text" class="name-input" id="studentName" placeholder="Your name" autocomplete="off">
+            <button class="start-btn" onclick="startGame()">Start Game ✨</button>
+        </div>
+    </div>
+
     <div id="stars-container"></div>
     <canvas id="confetti-canvas"></canvas>
 
@@ -728,7 +828,7 @@
             <div class="controls">
                 <button class="btn" onclick="game.resetRound()" aria-label="Start New Round">🔄 New</button>
                 <button class="btn primary" onclick="ui.openSettings()" aria-label="Customize Game">⚙️ Settings</button>
-                <button class="btn" onclick="game.resetScores()" aria-label="Reset Scores">️ Reset</button>
+                <button class="btn" onclick="game.resetScores()" aria-label="Reset Scores">🗑️ Reset</button>
             </div>
         </header>
 
@@ -738,7 +838,6 @@
             </div>
 
             <div class="board-container" id="board" role="grid" aria-label="Tic Tac Toe Board"></div>
-            <div class="sending-status" id="sendingStatus"></div>
         </main>
 
         <footer>
@@ -760,7 +859,7 @@
     <div class="modal-overlay" id="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-title">
         <div class="quiz-modal">
             <div class="quiz-header">
-                <span class="quiz-icon"></span>
+                <span class="quiz-icon">📚</span>
                 <span class="quiz-title" id="quiz-title">Grammar Challenge!</span>
             </div>
             
@@ -770,9 +869,7 @@
                 <div class="progress-dot"></div>
             </div>
             
-            <div class="quiz-question" id="quiz-question">
-                Loading question...
-            </div>
+            <div class="quiz-question" id="quiz-question">Loading question...</div>
             
             <div class="quiz-options" id="quiz-options" role="radiogroup"></div>
             
@@ -783,6 +880,8 @@
             </div>
         </div>
     </div>
+
+    <div class="sending-status" id="sendingStatus"></div>
 
     <dialog id="settings-dialog">
         <h2>⚙️ Game Settings</h2>
@@ -813,7 +912,7 @@
             <div class="form-group">
                 <label for="first-move">First Move</label>
                 <select id="first-move">
-                    <option value="X">Player 1 / </option>
+                    <option value="X">Player 1 / ✨</option>
                     <option value="O">Player 2 / 🌙</option>
                 </select>
             </div>
@@ -831,31 +930,45 @@
     </dialog>
 
     <script>
-        const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
+        const POWER_AUTOMATE_URL = 'ВСТАВЬТЕ_СЮДА_ВАШУ_ССЫЛКУ_ИЗ_POWER_AUTOMATE';
         let studentName = '';
         let roundStats = { correct: 0, incorrect: 0, total: 0 };
 
+        // ✨ ФУНКЦИЯ СТАРТА ИГРЫ С ИМЕНЕМ ✨
+        function startGame() {
+            const nameInput = document.getElementById('studentName');
+            studentName = nameInput.value.trim();
+            if (studentName === '') {
+                nameInput.style.borderColor = 'var(--error)';
+                nameInput.style.animation = 'shake 0.4s ease';
+                setTimeout(() => { nameInput.style.animation = ''; }, 400);
+                return;
+            }
+            document.getElementById('nameFormOverlay').classList.add('hidden');
+            game.init();
+        }
+
+        document.getElementById('studentName').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') startGame();
+        });
+
         const starSystem = {
             container: document.getElementById('stars-container'),
-            
             init() {
                 this.createStars();
                 this.createShootingStars();
             },
-
             createStars() {
                 const count = 120;
                 for (let i = 0; i < count; i++) {
                     const star = document.createElement('div');
                     star.className = 'star';
-                    
                     const size = Math.random() * 3 + 1;
                     const left = Math.random() * 100;
                     const top = Math.random() * 100;
                     const duration = Math.random() * 3 + 2;
                     const delay = Math.random() * 5;
                     const opacity = Math.random() * 0.5 + 0.3;
-                    
                     star.style.cssText = `
                         width: ${size}px;
                         height: ${size}px;
@@ -865,11 +978,9 @@
                         --delay: ${delay}s;
                         --opacity: ${opacity};
                     `;
-                    
                     this.container.appendChild(star);
                 }
             },
-
             createShootingStars() {
                 setInterval(() => {
                     if (Math.random() > 0.7) {
@@ -914,7 +1025,6 @@
             const opt2 = parts.pop();
             const opt1 = parts.pop();
             const questionText = parts.join(','); 
-            
             return {
                 question: questionText,
                 options: [opt1, opt2, opt3],
@@ -929,7 +1039,6 @@
             feedbackEl: document.getElementById('quiz-feedback'),
             submitBtn: document.getElementById('quiz-submit'),
             progressDots: document.querySelectorAll('.progress-dot'),
-            
             currentQuestion: null,
             selectedOption: null,
             attemptCount: 0,
@@ -947,12 +1056,10 @@
             loadRandomQuestion() {
                 this.currentQuestion = quizData[Math.floor(Math.random() * quizData.length)];
                 this.selectedOption = null;
-                
                 const parts = this.currentQuestion.question.split('___');
                 this.questionEl.innerHTML = parts.length > 1 
                     ? `${parts[0]}<span>___</span>${parts[1] || ''}`
                     : this.currentQuestion.question;
-                
                 this.optionsEl.innerHTML = '';
                 const letters = ['A', 'B', 'C'];
                 this.currentQuestion.options.forEach((opt, idx) => {
@@ -970,7 +1077,6 @@
                     };
                     this.optionsEl.appendChild(btn);
                 });
-                
                 this.feedbackEl.textContent = '';
                 this.feedbackEl.className = 'quiz-feedback';
                 this.submitBtn.disabled = true;
@@ -979,12 +1085,10 @@
             
             selectOption(index, element) {
                 if (this.feedbackEl.classList.contains('show')) return;
-                
                 document.querySelectorAll('.quiz-option').forEach(el => {
                     el.classList.remove('selected');
                     el.setAttribute('aria-checked', 'false');
                 });
-                
                 element.classList.add('selected');
                 element.setAttribute('aria-checked', 'true');
                 this.selectedOption = index;
@@ -999,10 +1103,8 @@
             
             async submitAnswer() {
                 if (this.selectedOption === null) return;
-                
                 const options = document.querySelectorAll('.quiz-option');
                 const isCorrect = this.selectedOption === this.currentQuestion.correct;
-                
                 options.forEach(el => el.style.pointerEvents = 'none');
                 this.submitBtn.disabled = true;
                 roundStats.total++;
@@ -1012,7 +1114,6 @@
                     this.showFeedback('Absolutely right! ✨', 'correct');
                     roundStats.correct++;
                     confetti.burst(30, { x: window.innerWidth/2, y: window.innerHeight/2 });
-                    
                     setTimeout(() => {
                         this.hideModal();
                         if (this.resolve) this.resolve(true);
@@ -1020,11 +1121,10 @@
                 } else {
                     options[this.selectedOption].classList.add('incorrect');
                     options[this.currentQuestion.correct].classList.add('correct');
-                    this.showFeedback("Let's give it a try! 💪", 'incorrect');
+                    this.showFeedback("Let's give it a try! ", 'incorrect');
                     roundStats.incorrect++;
                     this.attemptCount++;
                     this.updateProgress();
-                    
                     setTimeout(() => {
                         if (this.attemptCount < 3) {
                             this.loadRandomQuestion();
@@ -1043,12 +1143,10 @@
                 this.feedbackEl.textContent = text;
                 this.feedbackEl.classList.add('show', type);
             },
-            
             showModal() {
                 this.modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
             },
-            
             hideModal() {
                 this.modal.classList.remove('active');
                 document.body.style.overflow = '';
@@ -1089,7 +1187,6 @@
                 ui.hideBanner();
                 ui.updateStatus(`Player ${this.currentPlayer}'s Turn`);
                 roundStats = { correct: 0, incorrect: 0, total: 0 };
-                
                 if (this.settings.mode === 'pve' && this.currentPlayer === 'O') {
                     await this.makeAiMove();
                 }
@@ -1103,31 +1200,25 @@
 
             async handleCellClick(index) {
                 if (!this.gameActive || this.board[index] || this.pendingMove !== null) return;
-                
                 this.pendingMove = index;
                 ui.disableBoard(true);
-                
                 if (this.settings.quizEnabled) {
                     await quiz.askQuestion();
                 }
-                
                 if (this.gameActive && this.pendingMove !== null) {
                     this.executeMove(this.pendingMove);
                     this.pendingMove = null;
-                    
                     if (this.gameActive && this.settings.mode === 'pve' && this.currentPlayer === 'O') {
                         ui.disableBoard(true);
                         await this.makeAiMove();
                     }
                 }
-                
                 ui.disableBoard(false);
             },
 
             executeMove(index) {
                 this.board[index] = this.currentPlayer;
                 ui.renderCell(index, this.currentPlayer);
-                
                 if (this.checkWin()) {
                     this.endGame(false);
                 } else if (this.board.every(cell => cell !== null)) {
@@ -1157,7 +1248,7 @@
                 } else {
                     this.scores[this.currentPlayer]++;
                     const winnerName = this.settings.mode === 'pve' && this.currentPlayer === 'O' ? "AI" : `Player ${this.currentPlayer}`;
-                    const emojis = { X: '✨', O: '' };
+                    const emojis = { X: '✨', O: '🌙' };
                     ui.showBanner(`${winnerName} ${emojis[this.currentPlayer] || '🏆'} Wins!`, true);
                     confetti.start();
                 }
@@ -1168,10 +1259,8 @@
             async makeAiMove() {
                 if (!this.gameActive) return;
                 await new Promise(r => setTimeout(r, 500));
-
                 let moveIndex;
                 const difficulty = this.settings.aiDifficulty;
-
                 if (difficulty === 'reckless') {
                     moveIndex = this.getRandomMove();
                 } else if (difficulty === 'pragmatic') {
@@ -1183,7 +1272,6 @@
                 } else {
                     moveIndex = this.getBestMove();
                 }
-
                 this.executeMove(moveIndex);
                 ui.disableBoard(false);
             },
@@ -1213,7 +1301,6 @@
             minimax(board, depth, isMaximizing) {
                 const result = this.checkWinnerForMinimax(board);
                 if (result !== null) return result;
-
                 if (isMaximizing) {
                     let bestScore = -Infinity;
                     for (let i = 0; i < 9; i++) {
@@ -1260,14 +1347,12 @@
                     cell.setAttribute('role', 'gridcell');
                     cell.setAttribute('aria-label', `Cell ${i + 1}, empty`);
                     cell.tabIndex = 0;
-                    
                     cell.addEventListener('keydown', (e) => {
                         if ((e.key === 'Enter' || e.key === ' ') && !cell.classList.contains('taken')) {
                             e.preventDefault();
                             game.handleCellClick(i);
                         }
                     });
-                    
                     cell.addEventListener('click', () => game.handleCellClick(i));
                     boardEl.appendChild(cell);
                 }
@@ -1288,10 +1373,7 @@
                 document.getElementById('ai-diff-group').style.display = game.settings.mode === 'pve' ? 'block' : 'none';
                 this.dialog.showModal();
             },
-            
-            closeSettings() {
-                this.dialog.close();
-            },
+            closeSettings() { this.dialog.close(); },
 
             saveSettings() {
                 game.settings.glyphs = document.getElementById('glyph-select').value;
@@ -1299,9 +1381,7 @@
                 game.settings.aiDifficulty = document.getElementById('ai-diff-select').value;
                 game.settings.firstMove = document.getElementById('first-move').value;
                 game.settings.quizEnabled = document.getElementById('quiz-toggle').checked;
-                
                 document.getElementById('ai-diff-group').style.display = game.settings.mode === 'pve' ? 'block' : 'none';
-                
                 this.updateLabels();
                 game.resetRound();
                 this.closeSettings();
@@ -1313,10 +1393,9 @@
                 const glyphs = {
                     standard: { X: 'X', O: 'O' },
                     magic: { X: '✨', O: '🌙' },
-                    knight: { X: '⚔', O: '' }
+                    knight: { X: '⚔', O: '🛡' }
                 };
                 const g = glyphs[game.settings.glyphs];
-                
                 if (game.settings.mode === 'pve') {
                     p1Label.textContent = `You (${g.X})`;
                     p2Label.textContent = `AI (${g.O})`;
@@ -1330,16 +1409,13 @@
                 const cell = document.querySelector(`.cell[data-index='${index}']`);
                 cell.classList.add('taken');
                 cell.setAttribute('aria-label', `Cell ${index + 1}, taken by ${player}`);
-                
                 const span = document.createElement('span');
                 span.className = `glyph ${player.toLowerCase()}`;
-                
                 const glyphs = {
                     standard: { X: 'X', O: 'O' },
                     magic: { X: '✨', O: '🌙' },
-                    knight: { X: '⚔', O: '' }
+                    knight: { X: '⚔', O: '🛡' }
                 };
-                
                 span.textContent = glyphs[game.settings.glyphs][player];
                 cell.appendChild(span);
             },
@@ -1370,9 +1446,7 @@
                 this.banner.classList.add('visible');
             },
 
-            hideBanner() {
-                this.banner.classList.remove('visible');
-            },
+            hideBanner() { this.banner.classList.remove('visible'); },
 
             updateScoreboard() {
                 document.getElementById('score-x').textContent = game.scores.X;
@@ -1380,20 +1454,19 @@
                 document.getElementById('score-draw').textContent = game.scores.draw;
             },
 
-            updateStatus(msg) {
-                // Could add toast notification here
-            }
+            updateStatus(msg) {}
         };
 
+        // 📤 ОТПРАВКА РЕЗУЛЬТАТОВ В TEAMS
         async function sendResultsToTeams(isDraw) {
             const statusDiv = document.getElementById('sendingStatus');
             statusDiv.classList.add('show');
             statusDiv.textContent = '📤 Sending results to teacher...';
-            statusDiv.style.color = '#94a3b8';
+            statusDiv.className = 'sending-status show';
 
             let resultText = '';
             if (isDraw) {
-                resultText = "It's a Draw 🤝";
+                resultText = "It's a Draw ";
             } else {
                 resultText = `Player ${game.currentPlayer === 'X' ? '✨' : '🌙'} Wins!`;
             }
@@ -1419,17 +1492,17 @@
                     body: JSON.stringify(payload)
                 });
                 if (response.ok) {
-                    statusDiv.textContent = '✅ Results sent to Teams successfully!';
-                    statusDiv.style.color = '#4ade80';
+                    statusDiv.textContent = '✅ Results sent to Teams!';
+                    statusDiv.className = 'sending-status show success';
                 } else {
-                    statusDiv.textContent = '️ Error sending results.';
-                    statusDiv.style.color = '#fbbf24';
+                    statusDiv.textContent = '⚠️ Error sending results.';
+                    statusDiv.className = 'sending-status show error';
                 }
             } catch (error) {
                 statusDiv.textContent = '⚠️ Network error.';
-                statusDiv.style.color = '#f87171';
+                statusDiv.className = 'sending-status show error';
             }
-            setTimeout(() => { statusDiv.classList.remove('show'); }, 6000);
+            setTimeout(() => { statusDiv.classList.remove('show'); }, 5000);
         }
 
         document.getElementById('mode-select').addEventListener('change', (e) => {
@@ -1448,16 +1521,13 @@
                 this.resize();
                 window.addEventListener('resize', () => this.resize());
             },
-
             resize() {
                 this.canvas.width = window.innerWidth;
                 this.canvas.height = window.innerHeight;
             },
-
             start(duration = 4000) {
                 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                 if (prefersReducedMotion) return;
-
                 this.particles = [];
                 for (let i = 0; i < 150; i++) {
                     this.particles.push({
@@ -1475,15 +1545,12 @@
                 this.animate();
                 setTimeout(() => this.stop(), duration);
             },
-
             burst(count = 50, pos = { x: window.innerWidth/2, y: window.innerHeight/2 }) {
                 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                 if (prefersReducedMotion) return;
-
                 for (let i = 0; i < count; i++) {
                     this.particles.push({
-                        x: pos.x,
-                        y: pos.y,
+                        x: pos.x, y: pos.y,
                         size: Math.random() * 6 + 3,
                         color: this.colors[Math.floor(Math.random() * this.colors.length)],
                         speedY: (Math.random() - 0.5) * 4,
@@ -1496,25 +1563,20 @@
                 }
                 if (!this.animationId) this.animate();
             },
-
             animate() {
                 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                
                 this.particles = this.particles.filter(p => {
                     if (p.life !== undefined) {
                         p.life--;
                         if (p.life <= 0) return false;
                     }
-                    
                     p.y += p.speedY;
                     p.x += p.speedX;
                     p.rotation += p.rotationSpeed;
-
                     this.ctx.save();
                     this.ctx.translate(p.x, p.y);
                     this.ctx.rotate((p.rotation * Math.PI) / 180);
                     this.ctx.fillStyle = p.color;
-                    
                     if (p.shape === 'circle') {
                         this.ctx.beginPath();
                         this.ctx.arc(0, 0, p.size/2, 0, Math.PI * 2);
@@ -1523,17 +1585,14 @@
                         this.ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
                     }
                     this.ctx.restore();
-
                     return p.y < this.canvas.height + 20;
                 });
-
                 if (this.particles.length > 0) {
                     this.animationId = requestAnimationFrame(() => this.animate());
                 } else {
                     this.animationId = null;
                 }
             },
-
             stop() {
                 cancelAnimationFrame(this.animationId);
                 this.animationId = null;
@@ -1543,7 +1602,6 @@
 
         starSystem.init();
         confetti.init();
-        game.init();
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 's' && e.ctrlKey) {
