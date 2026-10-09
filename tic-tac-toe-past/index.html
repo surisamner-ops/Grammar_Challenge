@@ -1471,19 +1471,16 @@
                 resultText = `Player ${game.currentPlayer === 'X' ? '✨' : '🌙'} Wins!`;
             }
 
-            const payload = {
-                student_name: studentName || 'Anonymous',
-                score: `${game.scores.X} : ${game.scores.O} (Draws: ${game.scores.draw})`,
-                percentage: roundStats.total > 0 ? Math.round((roundStats.correct / roundStats.total) * 100) + '%' : '0%',
-                time: new Date().toLocaleString(),
-                exercise_name: 'Past Tenses Tic Tac Toe',
-                round_result: resultText,
-                questions_answered: roundStats.total,
-                correct_answers: roundStats.correct,
-                incorrect_answers: roundStats.incorrect,
-                time_spent: 'N/A',
-                tab_switches: '0 (no tracking)'
-            };
+           const payload = {
+    student_name: studentName || 'Anonymous',
+    score: `${game.scores.X} : ${game.scores.O} (Draws: ${game.scores.draw})`,
+    percentage: roundStats.total > 0 ? Math.round((roundStats.correct / roundStats.total) * 100) + '%' : '0%',
+    time: new Date().toLocaleString(),
+    exercise_name: 'Past Tenses Tic Tac Toe',
+    errors_text: `Round: ${resultText} | Questions: ${roundStats.total} | Correct: ${roundStats.correct} | Incorrect: ${roundStats.incorrect}`,
+    time_spent: 'Game mode',
+    tab_switches: '0 (no tracking)'
+};
 
             try {
                 const response = await fetch(POWER_AUTOMATE_URL, {
