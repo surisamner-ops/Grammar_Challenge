@@ -72,7 +72,7 @@
 
         .exercises-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
 
-        /* === ОДИНАКОВАЯ ВЫСОТА КАРТОЧЕК === */
+        /* === ИСПРАВЛЕННЫЕ КАРТОЧКИ === */
         .exercise-card, .game-card {
             background: rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(16px);
@@ -82,10 +82,11 @@
             text-decoration: none; 
             color: #f8fafc;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; /* Делаем карточку флекс-контейнером */
-            flex-direction: column; /* Элементы внутри выстраиваются в колонку */
-            height: 100%; /* Растягиваем на всю высоту ячейки сетки */
-            position: relative; /* Для позиционирования бейджа */
+            display: flex;
+            flex-direction: column;
+            height: auto; /* Естественная высота */
+            min-height: 280px; /* Минимальная высота для красоты */
+            position: relative;
             opacity: 0;
             animation: fadeInUp 0.6s ease-out forwards;
         }
@@ -110,12 +111,20 @@
             transition: color 0.3s ease;
         }
         .exercise-card:hover h2 { color: #e9d5ff; }
-        .exercise-card p { color: #94a3b8; line-height: 1.5; font-size: 0.95em; flex-grow: 1; } /* flex-grow: 1 толкает тег вниз */
+        
+        /* Описание растягивается и прижимает тег к низу */
+        .exercise-card p, .game-card-description { 
+            color: #94a3b8; 
+            line-height: 1.5; 
+            font-size: 0.95em; 
+            flex-grow: 1;
+            margin-bottom: 15px;
+        }
         
         .exercise-card .tag, .game-card .game-tag {
             display: inline-flex; 
             align-items: center;
-            margin-top: auto; /* АВТОМАТИЧЕСКИ ПРИЖИМАЕТ ТЕГ К НИЗУ КАРТОЧКИ */
+            margin-top: auto; /* Прижимает к низу */
             padding: 6px 14px;
             background: rgba(192, 132, 252, 0.15); 
             border: 1px solid rgba(192, 132, 252, 0.3);
@@ -130,7 +139,6 @@
             transform: scale(1.05);
         }
 
-        /* === БЕЙДЖ "COMPLETED" === */
         .completed-badge {
             position: absolute;
             top: 15px;
@@ -142,7 +150,7 @@
             border-radius: 20px;
             font-size: 0.8em;
             font-weight: 700;
-            display: none; /* Скрыт по умолчанию */
+            display: none;
             align-items: center;
             gap: 5px;
             box-shadow: 0 0 15px rgba(74, 222, 128, 0.3);
@@ -154,14 +162,14 @@
             border: 1px solid rgba(192, 132, 252, 0.3);
             overflow: hidden;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            padding: 0; /* Убираем padding для картинки */
         }
         .game-card-image { width: 100%; height: 200px; object-fit: cover; display: block; border-bottom: 1px solid rgba(192, 132, 252, 0.2); transition: transform 0.4s ease; }
         .game-card:hover .game-card-image { transform: scale(1.05); }
         .game-card-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
         .game-card-title { font-family: 'Fredoka', sans-serif; font-size: 1.6em; font-weight: 600; margin-bottom: 12px; background: linear-gradient(135deg, #ffd93d, #ff6b9d); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: flex; align-items: center; gap: 10px; }
         .game-card-title .emoji { font-size: 1.2em; -webkit-text-fill-color: initial; animation: floatEmoji 3s ease-in-out infinite; }
-        .game-card-description { color: #c4b5fd; line-height: 1.6; font-size: 1em; margin-bottom: 20px; flex-grow: 1; }
-        .game-card .play-button { display: inline-flex; align-items: center; gap: 10px; padding: 12px 28px; background: linear-gradient(135deg, #7b68ee, #ff6b9d); color: white; border-radius: 50px; font-family: 'Comfortaa', cursive; font-weight: 700; font-size: 1em; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(123, 104, 238, 0.4); align-self: flex-start; }
+        .game-card .play-button { display: inline-flex; align-items: center; gap: 10px; padding: 12px 28px; background: linear-gradient(135deg, #7b68ee, #ff6b9d); color: white; border-radius: 50px; font-family: 'Comfortaa', cursive; font-weight: 700; font-size: 1em; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(123, 104, 238, 0.4); align-self: flex-start; margin-bottom: 15px; }
         .game-card .play-button:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(255, 107, 157, 0.6); }
 
         .footer { margin-top: 40px; padding: 20px 20px; text-align: center; background: linear-gradient(135deg, rgba(192, 132, 252, 0.08), rgba(96, 165, 250, 0.08)); background-size: 200% 200%; animation: gradientShift 6s ease infinite, glow 3s ease-in-out infinite; border: 1px solid rgba(192, 132, 252, 0.2); backdrop-filter: blur(15px); border-radius: 16px; position: relative; overflow: hidden; }
@@ -264,7 +272,7 @@
                         </a>
                         <a href="topic-passive-voice/index.html" class="exercise-card">
                             <span class="completed-badge" id="badge-passive">✓ Completed</span>
-                            <div class="emoji">🏛️</div>
+                            <div class="emoji">️</div>
                             <h2>Active & Passive Voice</h2>
                             <p>The Magic Museum story. Practice Past, Present, Future Simple Passive and Present Perfect Passive.</p>
                             <span class="tag">9 questions • Grammar Drill</span>
@@ -292,7 +300,7 @@
                 <a href="tel:+79160601011" class="footer-link"><span class="icon">📱</span><span>+7 (916) 060-10-11</span></a>
             </div>
             <a href="https://surisamner-ops.github.io/Juliya_Magic_Teacher-/" target="_blank" class="main-site-link">🌐 Visit my main website to learn more!</a>
-            <div class="footer-copyright">© 2026 <strong>Juliya Magic Teacher</strong>. All rights reserved.<br><span style="font-size: 0.9em; opacity: 0.9;">Made with 💜 for English learners</span></div>
+            <div class="footer-copyright">© 2026 <strong>Juliya Magic Teacher</strong>. All rights reserved.<br><span style="font-size: 0.9em; opacity: 0.9;">Made with  for English learners</span></div>
         </footer>
     </div>
     
@@ -356,7 +364,6 @@
             }
         });
 
-        // === ПРОВЕРКА ПРОГРЕССА ПРОХОЖДЕНИЯ ===
         function checkProgress() {
             const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive'];
             exercises.forEach(ex => {
@@ -366,10 +373,8 @@
                 }
             });
         }
-        // Запускаем проверку при загрузке страницы
         document.addEventListener('DOMContentLoaded', checkProgress);
 
-        // МИНИ-ЛИДЕРБОРД
         const MINI_LEADERBOARD_URL = 'https://script.google.com/macros/s/AKfycbwCybdydUS2PDlskYqe2_jdbTns0MB_6e45CLWCkpr6jLB-d1zHm5ebBifFNLFoKhwr/exec';
         function loadMiniLeaderboard() {
             const callbackName = 'miniCallback' + Date.now();
@@ -408,9 +413,9 @@
             sorted.forEach((student, index) => {
                 const rank = index + 1;
                 let rankClass = '', rankDisplay = rank;
-                if (rank === 1) { rankClass = 'side-rank-1'; rankDisplay = '🥇'; }
+                if (rank === 1) { rankClass = 'side-rank-1'; rankDisplay = ''; }
                 else if (rank === 2) { rankClass = 'side-rank-2'; rankDisplay = '🥈'; }
-                else if (rank === 3) { rankClass = 'side-rank-3'; rankDisplay = '🥉'; }
+                else if (rank === 3) { rankClass = 'side-rank-3'; rankDisplay = ''; }
                 html += `<div class="side-item"><div class="side-rank ${rankClass}">${rankDisplay}</div><div class="side-info"><div class="side-name">${student.name}</div></div><div class="side-score">${student.score}%</div></div>`;
             });
             document.getElementById('miniLeaderboardContent').innerHTML = html;
