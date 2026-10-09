@@ -25,19 +25,14 @@
             50% { opacity: var(--max-opacity); transform: scale(1); }
         }
         
-        /* ✨ Анимация появления снизу */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* 💫 Анимация перелива заголовка */
         @keyframes shimmer {
             0% { background-position: -200% center; }
             100% { background-position: 200% center; }
         }
-
-        /* 🎈 Анимация парения эмодзи */
         @keyframes floatEmoji {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-12px); }
@@ -61,6 +56,28 @@
         }
         .header p { font-size: 1.2em; color: #94a3b8; }
         
+        /* Стили для заголовков секций */
+        .section-wrapper {
+            margin-bottom: 60px;
+        }
+        .section-title {
+            font-family: 'Comfortaa', cursive;
+            font-size: 1.8em;
+            color: #e9d5ff;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #c084fc, #60a5fa);
+            margin: 12px auto 0;
+            border-radius: 2px;
+        }
+
         .exercises-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
@@ -76,10 +93,10 @@
             opacity: 0;
         }
         
-        .exercise-card:nth-child(1) { animation: fadeInUp 0.8s ease-out 0.3s forwards; }
-        .exercise-card:nth-child(2) { animation: fadeInUp 0.8s ease-out 0.5s forwards; }
-        .exercise-card:nth-child(3) { animation: fadeInUp 0.8s ease-out 0.7s forwards; }
-        .exercise-card:nth-child(4) { animation: fadeInUp 0.8s ease-out 0.9s forwards; }
+        .exercise-card:nth-child(1) { animation: fadeInUp 0.8s ease-out 0.2s forwards; }
+        .exercise-card:nth-child(2) { animation: fadeInUp 0.8s ease-out 0.4s forwards; }
+        .exercise-card:nth-child(3) { animation: fadeInUp 0.8s ease-out 0.6s forwards; }
+        .exercise-card:nth-child(4) { animation: fadeInUp 0.8s ease-out 0.8s forwards; }
 
         .exercise-card:hover {
             transform: translateY(-10px) scale(1.03);
@@ -88,9 +105,7 @@
             box-shadow: 0 15px 40px rgba(192, 132, 252, 0.4);
         }
         .exercise-card .emoji { 
-            font-size: 3.5em; 
-            margin-bottom: 15px; 
-            display: inline-block;
+            font-size: 3em; margin-bottom: 15px; display: inline-block;
             animation: floatEmoji 3s ease-in-out infinite;
         }
         .exercise-card:nth-child(1) .emoji { animation-delay: 0s; }
@@ -99,12 +114,12 @@
         .exercise-card:nth-child(4) .emoji { animation-delay: 3s; }
 
         .exercise-card h2 {
-            font-family: 'Comfortaa', cursive; font-size: 1.5em;
+            font-family: 'Comfortaa', cursive; font-size: 1.4em;
             margin-bottom: 10px; color: #c084fc;
             transition: color 0.3s ease;
         }
         .exercise-card:hover h2 { color: #e9d5ff; }
-        .exercise-card p { color: #94a3b8; line-height: 1.5; }
+        .exercise-card p { color: #94a3b8; line-height: 1.5; font-size: 0.95em; }
         .exercise-card .tag {
             display: inline-block; margin-top: 15px; padding: 6px 14px;
             background: rgba(192, 132, 252, 0.15); border: 1px solid rgba(192, 132, 252, 0.3);
@@ -116,9 +131,9 @@
             transform: scale(1.05);
         }
 
-        /* ✨ Стили для подвала с контактами ✨ */
+        /* Стили для подвала */
         .footer {
-            margin-top: 80px;
+            margin-top: 40px;
             padding: 40px 20px;
             text-align: center;
             background: rgba(255, 255, 255, 0.03);
@@ -135,71 +150,43 @@
             margin-bottom: 25px;
         }
         .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
+            display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;
         }
         .footer-link {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #f8fafc;
-            text-decoration: none;
-            font-size: 1.05em;
-            transition: all 0.3s ease;
-            padding: 12px 24px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50px;
+            display: flex; align-items: center; gap: 10px;
+            color: #f8fafc; text-decoration: none; font-size: 1.05em;
+            transition: all 0.3s ease; padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05); border-radius: 50px;
             border: 1px solid rgba(255, 255, 255, 0.12);
         }
         .footer-link:hover {
-            background: rgba(192, 132, 252, 0.2);
-            border-color: #c084fc;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(192, 132, 252, 0.3);
+            background: rgba(192, 132, 252, 0.2); border-color: #c084fc;
+            transform: translateY(-3px); box-shadow: 0 8px 20px rgba(192, 132, 252, 0.3);
             color: #e9d5ff;
         }
         .footer-link .icon { font-size: 1.3em; }
 
-        /* ✨ Новая кнопка ссылки на основной сайт ✨ */
         .main-site-link {
-            display: inline-block;
-            margin: 10px 0 30px;
-            padding: 14px 32px;
+            display: inline-block; margin: 10px 0 30px; padding: 14px 32px;
             background: linear-gradient(135deg, rgba(192, 132, 252, 0.15), rgba(96, 165, 250, 0.15));
-            border: 1px solid rgba(192, 132, 252, 0.4);
-            border-radius: 50px;
-            color: #e9d5ff;
-            text-decoration: none;
-            font-family: 'Comfortaa', cursive;
-            font-weight: 600;
-            font-size: 1.05em;
-            transition: all 0.3s ease;
+            border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 50px;
+            color: #e9d5ff; text-decoration: none; font-family: 'Comfortaa', cursive;
+            font-weight: 600; font-size: 1.05em; transition: all 0.3s ease;
         }
         .main-site-link:hover {
             background: linear-gradient(135deg, rgba(192, 132, 252, 0.3), rgba(96, 165, 250, 0.3));
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(192, 132, 252, 0.4);
-            color: #ffffff;
+            transform: translateY(-3px); box-shadow: 0 8px 25px rgba(192, 132, 252, 0.4); color: #ffffff;
         }
 
-        .footer-copyright {
-            color: #94a3b8;
-            font-size: 0.9em;
-            line-height: 1.6;
-        }
-        .footer-copyright a {
-            color: #c084fc;
-            text-decoration: none;
-        }
+        .footer-copyright { color: #94a3b8; font-size: 0.9em; line-height: 1.6; }
+        .footer-copyright a { color: #c084fc; text-decoration: none; }
         .footer-copyright a:hover { text-decoration: underline; }
 
         @media (max-width: 768px) {
             .header h1 { font-size: 2em; }
             .exercises-grid { gap: 20px; }
             .footer-links { flex-direction: column; align-items: center; }
+            .section-title { font-size: 1.5em; }
         }
     </style>
 </head>
@@ -211,37 +198,52 @@
             <p>Choose a grammar exercise to practice!</p>
         </div>
         
-        <div class="exercises-grid">
-            <a href="susan-story.html" class="exercise-card">
-                <div class="emoji">🚌</div>
-                <h2>Susan's Story</h2>
-                <p>Susan's father travels abroad. Practice Past Simple, comparatives, and Passive Voice.</p>
-                <span class="tag">9 questions</span>
-            </a>
-            
-            <a href="dana-miller/index.html" class="exercise-card">
-                <div class="emoji">🎸</div>
-                <h2>Dana Miller</h2>
-                <p>A bus driver in Philadelphia. Practice Past Simple, plurals, and Future in the Past.</p>
-                <span class="tag">9 questions</span>
-            </a>
-            
-            <a href="violin-orchestra/index.html" class="exercise-card">
-                <div class="emoji">🎻</div>
-                <h2>Violin Orchestra</h2>
-                <p>A music festival in France. Practice Past Simple, Passive Voice, and Future in the Past.</p>
-                <span class="tag">9 questions</span>
-            </a>
-            
-            <a href="matilda-library/index.html" class="exercise-card">
-                <div class="emoji">📚</div>
-                <h2>Matilda's Library</h2>
-                <p>A brilliant child discovers the library. Practice Past Simple, comparatives, and modals.</p>
-                <span class="tag">9 questions</span>
-            </a>
+        <!-- СЕКЦИЯ 1: GSE Mastery Tasks (ОГЭ задания) -->
+        <div class="section-wrapper">
+            <h2 class="section-title">🏆 GSE Mastery Tasks</h2>
+            <div class="exercises-grid">
+                <a href="susan-story.html" class="exercise-card">
+                    <div class="emoji">🚌</div>
+                    <h2>Susan's Story</h2>
+                    <p>Susan's father travels abroad. Practice Past Simple, comparatives, and Passive Voice.</p>
+                    <span class="tag">9 questions • OGE Format</span>
+                </a>
+                
+                <a href="dana-miller/index.html" class="exercise-card">
+                    <div class="emoji">🎸</div>
+                    <h2>Dana Miller</h2>
+                    <p>A bus driver in Philadelphia. Practice Past Simple, plurals, and Future in the Past.</p>
+                    <span class="tag">9 questions • OGE Format</span>
+                </a>
+                
+                <a href="violin-orchestra/index.html" class="exercise-card">
+                    <div class="emoji">🎻</div>
+                    <h2>Violin Orchestra</h2>
+                    <p>A music festival in France. Practice Past Simple, Passive Voice, and Future in the Past.</p>
+                    <span class="tag">9 questions • OGE Format</span>
+                </a>
+                
+                <a href="matilda-library/index.html" class="exercise-card">
+                    <div class="emoji">📚</div>
+                    <h2>Matilda's Library</h2>
+                    <p>A brilliant child discovers the library. Practice Past Simple, comparatives, and modals.</p>
+                    <span class="tag">9 questions • OGE Format</span>
+                </a>
+            </div>
         </div>
 
-        <!-- ✨ CONTACT SECTION ✨ -->
+        <!-- СЕКЦИЯ 2: Targeted Grammar Practice (для будущих заданий) -->
+        <div class="section-wrapper">
+            <h2 class="section-title">🎯 Targeted Grammar Practice</h2>
+            <div class="exercises-grid">
+                <!-- Здесь будут тематические задания -->
+                <p style="text-align: center; color: #94a3b8; grid-column: 1 / -1; padding: 40px; font-size: 1.1em;">
+                     Coming soon! Practice specific grammar topics will be added here.
+                </p>
+            </div>
+        </div>
+
+        <!-- CONTACT SECTION -->
         <footer class="footer">
             <div class="footer-content">
                 <h3>✨ Contact Me ✨</h3>
@@ -260,7 +262,6 @@
                     </a>
                 </div>
                 
-                <!-- ССЫЛКА НА ОСНОВНОЙ САЙТ -->
                 <a href="https://surisamner-ops.github.io/Juliya_Magic_Teacher-/" target="_blank" class="main-site-link">
                     🌐 Visit my main website to learn more about my lessons!
                 </a>
