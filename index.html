@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juliya Magic Teacher - Grammar Exercises</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -62,21 +62,16 @@
             0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
             50% { opacity: 1; transform: scale(1) rotate(180deg); }
         }
-        
-        /* ✨ НОВЫЕ АНИМАЦИИ ДЛЯ ЖИВОГО ЭФФЕКТА ✨ */
         @keyframes float {
             0%, 100% { transform: translateY(0) translateX(0); }
             25% { transform: translateY(-20px) translateX(10px); }
             50% { transform: translateY(-10px) translateX(-10px); }
             75% { transform: translateY(-25px) translateX(5px); }
         }
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        @keyframes magicParticles {
+            0% { opacity: 0; transform: translateY(0) translateX(0) scale(0); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-100px) translateX(50px) scale(1); }
         }
         @keyframes glow {
             0%, 100% { 
@@ -88,31 +83,14 @@
                             0 0 80px rgba(96, 165, 250, 0.5);
             }
         }
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
+
+        .floating-element {
+            position: fixed; pointer-events: none; z-index: 0; opacity: 0.3;
+            animation: float 8s ease-in-out infinite;
         }
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes magicParticles {
-            0% { 
-                opacity: 0; 
-                transform: translateY(0) translateX(0) scale(0);
-            }
-            50% { 
-                opacity: 1;
-            }
-            100% { 
-                opacity: 0; 
-                transform: translateY(-100px) translateX(50px) scale(1);
-            }
-        }
+        .floating-element:nth-child(1) { top: 20%; left: 10%; font-size: 2em; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 60%; right: 15%; font-size: 1.5em; animation-delay: 2s; }
+        .floating-element:nth-child(3) { bottom: 30%; left: 20%; font-size: 1.8em; animation-delay: 4s; }
 
         .main-wrapper {
             position: relative; z-index: 1; max-width: 1000px;
@@ -136,7 +114,6 @@
             text-shadow: 0 0 20px rgba(192, 132, 252, 0.3);
         }
         
-        /* ✨ ЯРКИЕ МАГИЧЕСКИЕ ВКЛАДКИ ✨ */
         .tabs-container {
             display: flex;
             justify-content: center;
@@ -241,7 +218,6 @@
             animation: neonPulse 2s ease-in-out infinite;
         }
 
-        /* Стили для секций */
         .tab-content {
             display: none;
             animation: slideDown 0.6s ease-out forwards;
@@ -274,6 +250,7 @@
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
         }
+
         .exercise-card {
             background: rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(16px);
@@ -324,6 +301,97 @@
             transform: scale(1.05);
         }
 
+        .game-card {
+            background: linear-gradient(135deg, rgba(15, 12, 41, 0.9), rgba(48, 43, 99, 0.9));
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            text-decoration: none;
+            color: #f8fafc;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: block;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        .game-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(192, 132, 252, 0.8);
+            box-shadow: 0 15px 50px rgba(192, 132, 252, 0.4);
+        }
+        .game-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            border-bottom: 1px solid rgba(192, 132, 252, 0.2);
+            transition: transform 0.4s ease;
+        }
+        .game-card:hover .game-card-image {
+            transform: scale(1.05);
+        }
+        .game-card-content {
+            padding: 25px;
+        }
+        .game-card-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.6em;
+            font-weight: 600;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ffd93d, #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .game-card-title .emoji {
+            font-size: 1.2em;
+            -webkit-text-fill-color: initial;
+            animation: floatEmoji 3s ease-in-out infinite;
+        }
+        .game-card-description {
+            color: #c4b5fd;
+            line-height: 1.6;
+            font-size: 1em;
+            margin-bottom: 20px;
+            min-height: 50px;
+        }
+        .game-card .play-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #7b68ee, #ff6b9d);
+            color: white;
+            border-radius: 50px;
+            font-family: 'Comfortaa', cursive;
+            font-weight: 700;
+            font-size: 1em;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(123, 104, 238, 0.4);
+        }
+        .game-card .play-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(255, 107, 157, 0.6);
+        }
+        .game-card .play-button .play-icon {
+            font-size: 1.2em;
+        }
+        .game-card .game-tag {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 5px 12px;
+            background: rgba(255, 217, 61, 0.15);
+            border: 1px solid rgba(255, 217, 61, 0.4);
+            border-radius: 20px;
+            font-size: 0.8em;
+            color: #ffd93d;
+            font-weight: 600;
+        }
+
         .coming-soon {
             text-align: center;
             padding: 80px 20px;
@@ -343,7 +411,6 @@
             filter: drop-shadow(0 0 20px rgba(192, 132, 252, 0.8));
         }
 
-        /* ✨ УМЕНЬШЕННЫЙ КОМПАКТНЫЙ ПОДВАЛ ✨ */
         .footer {
             margin-top: 60px;
             padding: 30px 25px;
@@ -368,15 +435,8 @@
             animation: sparkle 3s ease-in-out infinite;
             filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.8));
         }
-        .footer::before {
-            top: 10px;
-            left: 20px;
-        }
-        .footer::after {
-            bottom: 10px;
-            right: 20px;
-            animation-delay: 1.5s;
-        }
+        .footer::before { top: 10px; left: 20px; }
+        .footer::after { bottom: 10px; right: 20px; animation-delay: 1.5s; }
 
         .footer h3 {
             font-family: 'Comfortaa', cursive;
@@ -434,9 +494,7 @@
                 transparent);
             transition: left 0.5s ease;
         }
-        .footer-link:hover::before {
-            left: 100%;
-        }
+        .footer-link:hover::before { left: 100%; }
         
         .footer-link:hover {
             background: linear-gradient(135deg, 
@@ -494,9 +552,7 @@
                 transparent);
             transition: left 0.6s ease;
         }
-        .main-site-link:hover::before {
-            left: 100%;
-        }
+        .main-site-link:hover::before { left: 100%; }
         
         .main-site-link:hover {
             background: linear-gradient(135deg, 
@@ -531,33 +587,6 @@
             color: #e9d5ff;
         }
 
-        /* ✨ ПАРЯЩИЕ ДЕКОРАТИВНЫЕ ЭЛЕМЕНТЫ ✨ */
-        .floating-element {
-            position: fixed;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.3;
-            animation: float 8s ease-in-out infinite;
-        }
-        .floating-element:nth-child(1) {
-            top: 20%;
-            left: 10%;
-            font-size: 2em;
-            animation-delay: 0s;
-        }
-        .floating-element:nth-child(2) {
-            top: 60%;
-            right: 15%;
-            font-size: 1.5em;
-            animation-delay: 2s;
-        }
-        .floating-element:nth-child(3) {
-            bottom: 30%;
-            left: 20%;
-            font-size: 1.8em;
-            animation-delay: 4s;
-        }
-
         @media (max-width: 768px) {
             .header h1 { font-size: 2.2em; }
             .header p { font-size: 1.1em; }
@@ -575,13 +604,15 @@
             .footer h3 { font-size: 1.3em; }
             .footer-link { padding: 8px 16px; font-size: 0.9em; }
             .main-site-link { padding: 10px 22px; font-size: 0.9em; }
+            .game-card-image { height: 160px; }
+            .game-card-content { padding: 20px; }
+            .game-card-title { font-size: 1.3em; }
         }
     </style>
 </head>
 <body>
-    <!-- ✨ ПАРЯЩИЕ ДЕКОРАТИВНЫЕ ЭЛЕМЕНТЫ ✨ -->
     <div class="floating-element">⭐</div>
-    <div class="floating-element">🌟</div>
+    <div class="floating-element"></div>
     <div class="floating-element">✨</div>
 
     <div class="stars-container" id="starsContainer"></div>
@@ -591,23 +622,20 @@
             <p>Choose a grammar exercise to practice!</p>
         </div>
         
-        <!-- ✨ ЯРКИЕ МАГИЧЕСКИЕ ВКЛАДКИ ✨ -->
         <div class="tabs-container">
             <button class="tab-button" onclick="switchTab('gse')">
-                <span class="tab-emoji">🏆</span>
+                <span class="tab-emoji"></span>
                 <span>GSE Tasks</span>
                 <span class="badge">4</span>
             </button>
             <button class="tab-button" onclick="switchTab('practice')">
-                <span class="tab-emoji"></span>
+                <span class="tab-emoji">🎯</span>
                 <span>Targeted Practice</span>
-                <span class="badge">Soon</span>
             </button>
         </div>
 
-        <!-- ВКЛАДКА 1: GSE TASKS -->
         <div id="gse" class="tab-content">
-            <h2 class="section-title">🏆 GSE Mastery Tasks</h2>
+            <h2 class="section-title"> GSE Mastery Tasks</h2>
             <div class="exercises-grid">
                 <a href="susan-story.html" class="exercise-card">
                     <div class="emoji">🚌</div>
@@ -617,7 +645,7 @@
                 </a>
                 
                 <a href="dana-miller/index.html" class="exercise-card">
-                    <div class="emoji">🎸</div>
+                    <div class="emoji"></div>
                     <h2>Dana Miller</h2>
                     <p>A bus driver in Philadelphia. Practice Past Simple, plurals, and Future in the Past.</p>
                     <span class="tag">9 questions • OGE Format</span>
@@ -639,29 +667,36 @@
             </div>
         </div>
 
-        <!-- ВКЛАДКА 2: TARGETED PRACTICE -->
-      <div id="practice" class="tab-content">
-    <h2 class="section-title">🎯 Targeted Grammar Practice</h2>
-    <div class="exercises-grid">
-        <!-- Карточка 1: Past Tenses Tic-Tac-Toe -->
-        <a href="tic-tac-toe-past/index.html" class="exercise-card">
-            <div class="emoji">⏳</div>
-            <h2>Past Tenses Quest</h2>
-            <p>Play Tic-Tac-Toe! Answer grammar questions about Past Simple, Past Continuous, and Past Perfect to make your move.</p>
-            <span class="tag">Interactive Game • No Skipping!</span>
-        </a>
-        
-        <!-- Карточка 2: Active & Passive Voice (из предыдущего шага) -->
-        <a href="topic-passive-voice/index.html" class="exercise-card">
-            <div class="emoji">🏛️</div>
-            <h2>Active & Passive Voice</h2>
-            <p>The Magic Museum story. Practice Past, Present, Future Simple Passive and Present Perfect Passive.</p>
-            <span class="tag">9 questions • Grammar Drill</span>
-        </a>
-    </div>
-</div>
+        <div id="practice" class="tab-content">
+            <h2 class="section-title"> Targeted Grammar Practice</h2>
+            <div class="exercises-grid">
+                <a href="tic-tac-toe-past/index.html" class="game-card">
+                    <img src="tic-tac-toe.png" alt="Past Tenses Tic Tac Toe Game" class="game-card-image">
+                    <div class="game-card-content">
+                        <h3 class="game-card-title">
+                            <span class="emoji">⏳</span>
+                            Past Tenses Tic Tac Toe
+                        </h3>
+                        <p class="game-card-description">
+                            Play Tic-Tac-Toe with an English twist! Answer grammar questions about Past Simple, Past Continuous, and Past Perfect to place your ✨ or . Fun for all levels!
+                        </p>
+                        <div class="play-button">
+                            <span class="play-icon">▶</span>
+                            Play Now
+                        </div>
+                        <div class="game-tag">Interactive Game • No Skipping!</div>
+                    </div>
+                </a>
 
-        <!-- ✨ КОМПАКТНЫЙ МАГИЧЕСКИЙ ПОДВАЛ ✨ -->
+                <a href="topic-passive-voice/index.html" class="exercise-card">
+                    <div class="emoji">🏛️</div>
+                    <h2>Active & Passive Voice</h2>
+                    <p>The Magic Museum story. Practice Past, Present, Future Simple Passive and Present Perfect Passive.</p>
+                    <span class="tag">9 questions • Grammar Drill</span>
+                </a>
+            </div>
+        </div>
+
         <footer class="footer">
             <div class="footer-content">
                 <h3>✨ Contact Me ✨</h3>
@@ -686,29 +721,24 @@
 
                 <div class="footer-copyright">
                     © 2026 <strong>Juliya Magic Teacher</strong>. All rights reserved.<br>
-                    <span style="font-size: 0.9em; opacity: 0.9;">Made with 💜 for English learners</span>
+                    <span style="font-size: 0.9em; opacity: 0.9;">Made with  for English learners</span>
                 </div>
             </div>
         </footer>
     </div>
     
     <script>
-        // Функция переключения вкладок
         function switchTab(tabName) {
             const allTabs = document.querySelectorAll('.tab-content');
-            allTabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
+            allTabs.forEach(tab => { tab.classList.remove('active'); });
             
             const allButtons = document.querySelectorAll('.tab-button');
-            allButtons.forEach(button => {
-                button.classList.remove('active');
-            });
+            allButtons.forEach(button => { button.classList.remove('active'); });
             
             document.getElementById(tabName).classList.add('active');
             event.currentTarget.classList.add('active');
             
-            const cards = document.querySelectorAll('#' + tabName + ' .exercise-card');
+            const cards = document.querySelectorAll('#' + tabName + ' .exercise-card, #' + tabName + ' .game-card');
             cards.forEach((card, index) => {
                 card.style.animation = 'none';
                 card.offsetHeight;
@@ -716,11 +746,8 @@
             });
         }
 
-        // ✨ СОЗДАЁМ МНОГО ЗВЁЗД И ЧАСТИЦ ДЛЯ ЖИВОГО ЭФФЕКТА ✨
         function createStars() {
             const container = document.getElementById('starsContainer');
-            
-            // Создаём 250 звёзд разных размеров
             for (let i = 0; i < 250; i++) {
                 const star = document.createElement('div');
                 star.classList.add('star');
@@ -734,22 +761,19 @@
                 star.style.animationDelay = Math.random() * 5 + 's';
                 container.appendChild(star);
             }
-            
-            // Создаём 8 падающих комет
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 5; i++) {
                 const shootingStar = document.createElement('div');
                 shootingStar.style.position = 'absolute';
-                shootingStar.style.width = '120px';
-                shootingStar.style.height = '2px';
-                shootingStar.style.background = 'linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,0))';
+                shootingStar.style.width = '150px';
+                shootingStar.style.height = '1px';
+                shootingStar.style.background = 'linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.3) 30%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.3) 70%, rgba(255,255,255,0))';
                 shootingStar.style.top = Math.random() * 50 + '%';
                 shootingStar.style.left = '-' + Math.random() * 20 + '%';
-                shootingStar.style.transform = 'rotate(-45deg)';
-                shootingStar.style.animation = `shootingStar ${Math.random() * 3 + 4}s linear ${Math.random() * 10}s infinite`;
+                shootingStar.style.transform = 'rotate(-35deg)';
+                shootingStar.style.filter = 'blur(0.5px)';
+                shootingStar.style.animation = `shootingStar ${Math.random() * 6 + 10}s ease-in-out ${Math.random() * 15}s infinite`;
                 container.appendChild(shootingStar);
             }
-
-            // Создаём магические частицы
             for (let i = 0; i < 15; i++) {
                 const particle = document.createElement('div');
                 particle.style.position = 'absolute';
@@ -764,33 +788,19 @@
                 container.appendChild(particle);
             }
         }
-        
         const style = document.createElement('style');
         style.innerHTML = `
             @keyframes shootingStar {
-                0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0; }
-                10% { opacity: 1; }
-                90% { opacity: 1; }
-                100% { transform: translateX(150vw) translateY(150vh) rotate(-45deg); opacity: 0; }
-            }
-            @keyframes magicParticles {
-                0% { 
-                    opacity: 0; 
-                    transform: translateY(0) translateX(0) scale(0);
-                }
-                50% { 
-                    opacity: 1;
-                }
-                100% { 
-                    opacity: 0; 
-                    transform: translateY(-100px) translateX(50px) scale(1);
-                }
+                0% { transform: translateX(0) translateY(0) rotate(-35deg); opacity: 0; }
+                15% { opacity: 0.6; }
+                50% { opacity: 0.9; }
+                85% { opacity: 0.6; }
+                100% { transform: translateX(150vw) translateY(100vh) rotate(-35deg); opacity: 0; }
             }
         `;
         document.head.appendChild(style);
         createStars();
 
-        // ✨ ДОБАВЛЯЕМ ИНТЕРАКТИВНОСТЬ - ЗВЁЗДЫ РЕАГИРУЮТ НА МЫШЬ ✨
         document.addEventListener('mousemove', (e) => {
             if (Math.random() > 0.95) {
                 const spark = document.createElement('div');
@@ -806,10 +816,7 @@
                 spark.style.boxShadow = '0 0 10px rgba(192, 132, 252, 0.8)';
                 spark.style.animation = 'magicParticles 1s ease-out forwards';
                 document.body.appendChild(spark);
-                
-                setTimeout(() => {
-                    spark.remove();
-                }, 1000);
+                setTimeout(() => { spark.remove(); }, 1000);
             }
         });
     </script>
