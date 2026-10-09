@@ -1172,11 +1172,11 @@
                 [0, 4, 8], [2, 4, 6]
             ],
 
-            init() {
-                this.renderBoard();
-                this.updateLabels();
-                this.resetRound();
-            },
+        init() {
+    this.renderBoard();
+    ui.updateLabels();
+    this.resetRound();
+},
 
             async resetRound() {
                 this.board.fill(null);
