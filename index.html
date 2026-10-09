@@ -77,12 +77,12 @@
         .side-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; margin-bottom: 6px; transition: all 0.3s ease; }
         .side-item:hover { background: rgba(192, 132, 252, 0.1); }
         
-        /* ИСПРАВЛЕННЫЕ МЕДАЛИ ЧЕРЕЗ CSS */
+        /* МЕДАЛИ ЧЕРЕЗ CSS - НАДЁЖНО! */
         .side-rank { 
             font-family: 'Fredoka', sans-serif; 
-            font-size: 1.1em; 
+            font-size: 1.3em; 
             font-weight: 700; 
-            width: 24px; 
+            width: 30px; 
             text-align: center; 
             flex-shrink: 0;
             display: inline-flex;
@@ -93,15 +93,15 @@
             color: #ffd93d; 
             text-shadow: 0 0 10px rgba(255, 217, 61, 0.6);
         }
-        .side-rank-1::before { content: ''; }
+        .side-rank-1::before { content: '\1F947'; }
         .side-rank-2 { 
             color: #c0c0c0;
         }
-        .side-rank-2::before { content: '🥈'; }
+        .side-rank-2::before { content: '\1F948'; }
         .side-rank-3 { 
             color: #cd7f32;
         }
-        .side-rank-3::before { content: '🥉'; }
+        .side-rank-3::before { content: '\1F949'; }
         
         .side-info { flex: 1; min-width: 0; }
         .side-name { font-weight: 600; color: #ffffff; font-size: 0.88em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -125,7 +125,13 @@
         .section-title { font-family: 'Comfortaa', cursive; font-size: 2em; color: #e9d5ff; text-align: center; margin-bottom: 40px; position: relative; text-shadow: 0 0 20px rgba(192, 132, 252, 0.5); }
         .section-title::after { content: ''; display: block; width: 120px; height: 4px; background: linear-gradient(90deg, #c084fc, #60a5fa, #c084fc); margin: 15px auto 0; border-radius: 2px; box-shadow: 0 0 20px rgba(192, 132, 252, 0.6); }
 
-        .exercises-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        /* РАЗНЫЙ РАЗМЕР КАРТОЧЕК */
+        .exercises-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 30px;
+            align-items: start;
+        }
 
         .exercise-card, .game-card {
             background: rgba(255, 255, 255, 0.06);
@@ -292,7 +298,7 @@
                         </a>
                         <a href="dana-miller/index.html" class="exercise-card">
                             <span class="completed-badge" id="badge-dana">✓ Completed</span>
-                            <div class="emoji">🎸</div>
+                            <div class="emoji"></div>
                             <h2>Dana Miller</h2>
                             <p>A bus driver in Philadelphia. Practice Past Simple, plurals, and Future in the Past.</p>
                             <span class="tag">9 questions • OGE Format</span>
@@ -306,7 +312,7 @@
                         </a>
                         <a href="matilda-library/index.html" class="exercise-card">
                             <span class="completed-badge" id="badge-matilda">✓ Completed</span>
-                            <div class="emoji"></div>
+                            <div class="emoji">📚</div>
                             <h2>Matilda's Library</h2>
                             <p>A brilliant child discovers the library. Practice Past Simple, comparatives, and modals.</p>
                             <span class="tag">9 questions • OGE Format</span>
@@ -322,7 +328,7 @@
                             <img src="tic-tac-toe.png" alt="Past Tenses Tic Tac Toe Game" class="game-card-image">
                             <div class="game-card-content">
                                 <h3 class="game-card-title">
-                                    <span class="emoji">⏳</span>
+                                    <span class="emoji"></span>
                                     Past Tenses Tic Tac Toe
                                 </h3>
                                 <p class="game-card-description">
@@ -348,7 +354,7 @@
             
             <div class="side-leaderboard">
                 <div class="side-leaderboard-header">
-                    <h3>🏆 Top 5</h3>
+                    <h3> Top 5</h3>
                     <a href="leaderboard.html" class="view-all">View All →</a>
                 </div>
                 <div id="miniLeaderboardContent">
@@ -360,12 +366,12 @@
         <footer class="footer">
             <h3>✨ Contact Me ✨</h3>
             <div class="footer-links">
-                <a href="mailto:suri_samner@mail.ru" class="footer-link"><span class="icon">📧</span><span>suri_samner@mail.ru</span></a>
+                <a href="mailto:suri_samner@mail.ru" class="footer-link"><span class="icon"></span><span>suri_samner@mail.ru</span></a>
                 <a href="https://t.me/+79160601011" class="footer-link" target="_blank"><span class="icon">✈️</span><span>Telegram</span></a>
                 <a href="tel:+79160601011" class="footer-link"><span class="icon">📱</span><span>+7 (916) 060-10-11</span></a>
             </div>
-            <a href="https://surisamner-ops.github.io/Juliya_Magic_Teacher-/" target="_blank" class="main-site-link">🌐 Visit my main website to learn more!</a>
-            <div class="footer-copyright">© 2026 <strong>Juliya Magic Teacher</strong>. All rights reserved.<br><span style="font-size: 0.9em; opacity: 0.9;">Made with  for English learners</span></div>
+            <a href="https://surisamner-ops.github.io/Juliya_Magic_Teacher-/" target="_blank" class="main-site-link"> Visit my main website to learn more!</a>
+            <div class="footer-copyright">© 2026 <strong>Juliya Magic Teacher</strong>. All rights reserved.<br><span style="font-size: 0.9em; opacity: 0.9;">Made with 💜 for English learners</span></div>
         </footer>
     </div>
     
