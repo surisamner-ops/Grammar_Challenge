@@ -201,7 +201,7 @@
             try {
                 await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ student_name: studentName, exercise_name: exerciseName, score: correct + '/' + total, percentage: percentage + '%', time: new Date().toLocaleString(), time_spent: timeSpent }) });
             } catch (e) { console.log('Sheets error:', e); }
-
+localStorage.setItem('grammar_ex_violin', 'true');
             setTimeout(() => { statusDiv.classList.remove('show'); }, 6000);
         }
 
