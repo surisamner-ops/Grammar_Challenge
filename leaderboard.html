@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Leaderboard - Juliya Magic Teacher</title>
+    <title>🏆 Leaderboard - Juliya Magic Teacher</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -237,7 +237,6 @@
         }
         createStars();
         
-        //  ИСПРАВЛЕННАЯ ФУНКЦИЯ ЗАГРУЗКИ (JSONP для обхода CORS)
         function loadLeaderboard() {
             const callbackName = 'callback' + Date.now();
             const script = document.createElement('script');
@@ -272,6 +271,7 @@
             });
         }
         
+        // ✅ ИСПРАВЛЕННАЯ ФУНКЦИЯ (добавлено String() для защиты от ошибок)
         function renderLeaderboard() {
             const filtered = filterData(allData, currentFilter);
             
@@ -286,8 +286,8 @@
             }
             
             const sorted = filtered.sort((a, b) => {
-                const pa = parseInt((a.Percentage || a.percentage || '0%').replace('%', ''));
-                const pb = parseInt((b.Percentage || b.percentage || '0%').replace('%', ''));
+                const pa = parseInt(String(a.Percentage || a.percentage || '0%').replace('%', ''));
+                const pb = parseInt(String(b.Percentage || b.percentage || '0%').replace('%', ''));
                 return pb - pa;
             });
             
@@ -300,7 +300,7 @@
                 const name = item.Name || item.student_name || 'Anonymous';
                 const exercise = item.Exercise || item.exercise_name || 'Unknown';
                 const score = item.Score || item.score || '-';
-                const percentage = (item.Percentage || item.percentage || '0%').replace('%', '');
+                const percentage = String(item.Percentage || item.percentage || '0%').replace('%', '');
                 const percentNum = parseInt(percentage);
                 
                 let rankClass = '';
