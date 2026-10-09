@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>✨ Past Tenses Quest: Tic-Tac-Toe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0f0c29; --bg-mid: #302b63; --bg-light: #24243e;
+            --glass-bg: rgba(255, 255, 255, 0.08); --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-highlight: rgba(255, 255, 255, 0.25); --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.75); --accent-primary: #ff6b9d;
+            --accent-secondary: #7b68ee; --accent-gold: #ffd93d;
+            --success: #00d9a5; --error: #ff6b6b;
+            --shadow-glow: 0 0 30px rgba(123, 104, 238, 0.4);
+            --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --font-display: 'Fredoka', sans-serif; --font-body: 'Outfit', sans-serif;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            margin: 0; padding: 0;
+            background: linear-gradient(135deg, var(--bg-deep), var(--bg-mid), var(--bg-light));
+            background-size: 400% 400%; animation: gradientShift 20s ease infinite;
+            color: var(--text-primary); font-family: var(--font-body);
+            height: 100vh; display: flex; flex-direction: column; overflow: hidden; position: relative;
+        }
+        @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        #stars-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+        .star { position: absolute; background: #fff; border-radius: 50%; animation: twinkle var(--duration, 3s) ease-in-out infinite var(--delay, 0s); opacity: var(--opacity, 0.8); box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.6); }
+        @keyframes twinkle { 0%, 100% { opacity: var(--opacity, 0.3); transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
+        .app-container { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100%; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: var(--glass-bg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); box-shadow: var(--shadow-soft); }
+        .logo { display: flex; align-items: center; gap: 0.75rem; }
+        .logo-icon { font-size: 1.8rem; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        h1 { font-family: var(--font-display); font-size: 1.3rem; margin: 0; background: linear-gradient(135deg, var(--accent-gold), var(--accent-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
+        .controls { display: flex; gap: 0.5rem; }
+        .btn { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 12px; font-family: var(--font-body); font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: var(--transition-smooth); display: flex; align-items: center; gap: 0.4rem; backdrop-filter: blur(10px); text-decoration: none; }
+        .btn:hover { background: var(--glass-highlight); border-color: var(--accent-secondary); transform: translateY(-2px); }
+        .btn.primary { background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary)); border: none; color: white; }
+        main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; position: relative; }
+        #victory-banner { height: 0; overflow: hidden; transition: height 0.4s ease; margin-bottom: 0; text-align: center; width: 100%; max-width: 500px; }
+        #victory-banner.visible { height: 4rem; margin-bottom: 1rem; }
+        #victory-text { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg, var(--accent-gold), var(--accent-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 2px; opacity: 0; transform: translateY(-10px); transition: all 0.3s ease 0.1s; }
+        #victory-banner.visible #victory-text { opacity: 1; transform: translateY(0); }
+        .board-container { width: 92vmin; height: 92vmin; max-width: 520px; max-height: 520px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 2vmin; padding: 2vmin; background: var(--glass-bg); border-radius: 24px; border: 1px solid var(--glass-border); backdrop-filter: blur(20px); box-shadow: var(--shadow-glow), var(--shadow-soft); position: relative; }
+        .cell { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: clamp(2.5rem, 11vmin, 4.5rem); cursor: pointer; transition: var(--transition-smooth); position: relative; user-select: none; }
+        .cell:hover:not(.taken):not(.disabled) { background: rgba(255, 255, 255, 0.12); border-color: var(--accent-secondary); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(123, 104, 238, 0.3); }
+        .cell.taken { cursor: default; }
+        .cell.disabled { cursor: not-allowed; opacity: 0.5; pointer-events: none; filter: grayscale(0.8); }
+        .cell.win { background: linear-gradient(135deg, rgba(255,217,61,0.3), rgba(255,107,157,0.3)) !important; border-color: var(--accent-gold) !important; box-shadow: 0 0 30px rgba(255, 217, 61, 0.5) !important; animation: winPulse 1.5s ease-in-out infinite; }
+        @keyframes winPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .glyph { font-family: var(--font-display); font-weight: 700; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; z-index: 2; }
+        .glyph.x { color: var(--accent-primary); } .glyph.o { color: var(--accent-secondary); }
+        @keyframes popIn { from { transform: scale(0) rotate(-20deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
+        footer { background: var(--glass-bg); padding: 1rem 1.5rem; display: flex; justify-content: space-around; align-items: center; backdrop-filter: blur(20px); border-top: 1px solid var(--glass-border); }
+        .score-box { text-align: center; min-width: 75px; padding: 0.5rem; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid var(--glass-border); }
+        .score-label { font-size: 0.7rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.3rem; font-weight: 600; }
+        .score-val { font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: var(--accent-gold); }
+        
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 12, 41, 0.9); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; visibility: hidden; transition: var(--transition-smooth); padding: 1rem; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .quiz-modal { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 2rem; width: 100%; max-width: 500px; box-shadow: var(--shadow-glow), var(--shadow-soft); transform: translateY(20px); transition: transform 0.3s ease; position: relative; }
+        .modal-overlay.active .quiz-modal { transform: translateY(0); }
+        .quiz-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--glass-border); }
+        .quiz-icon { font-size: 1.8rem; animation: bounce 2s ease infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .quiz-title { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--accent-gold); }
+        .quiz-question { font-size: 1.1rem; line-height: 1.5; margin-bottom: 1.5rem; font-weight: 400; }
+        .quiz-question span { color: var(--accent-primary); font-weight: 600; border-bottom: 2px solid var(--accent-primary); }
+        .quiz-options { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
+        .quiz-option { background: rgba(255,255,255,0.08); border: 2px solid var(--glass-border); border-radius: 12px; padding: 0.9rem 1.2rem; cursor: pointer; transition: var(--transition-smooth); font-size: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+        .quiz-option:hover { background: rgba(255,255,255,0.15); border-color: var(--accent-secondary); transform: translateX(5px); }
+        .quiz-option.selected { background: rgba(123, 104, 238, 0.3); border-color: var(--accent-secondary); }
+        .quiz-option.correct { background: rgba(0, 217, 165, 0.25); border-color: var(--success); animation: correctPulse 0.5s ease; }
+        .quiz-option.incorrect { background: rgba(255, 107, 107, 0.25); border-color: var(--error); animation: shake 0.4s ease; }
+        @keyframes correctPulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        .quiz-option-letter { background: var(--accent-secondary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; }
+        .quiz-feedback { min-height: 2.5rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-weight: 700; font-size: 1.1rem; opacity: 0; transform: translateY(10px); transition: var(--transition-smooth); text-align: center; }
+        .quiz-feedback.show { opacity: 1; transform: translateY(0); }
+        .quiz-feedback.correct { color: var(--success); }
+        .quiz-feedback.incorrect { color: var(--error); }
+        .quiz-actions { display: flex; gap: 0.75rem; justify-content: center; }
+        .quiz-btn { padding: 0.75rem 2rem; border-radius: 12px; font-weight: 600; cursor: pointer; transition: var(--transition-smooth); border: none; font-family: var(--font-body); font-size: 1rem; }
+        .quiz-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+        .quiz-btn.submit { background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary)); color: white; width: 100%; }
+        .quiz-btn.submit:hover:not(:disabled) { box-shadow: 0 6px 25px rgba(255, 107, 157, 0.5); transform: translateY(-2px); }
+        .quiz-progress { display: flex; gap: 0.3rem; margin-bottom: 1rem; justify-content: center; }
+        .progress-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--glass-border); transition: var(--transition-smooth); }
+        .progress-dot.active { background: var(--accent-gold); transform: scale(1.3); }
+        #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 99; }
+        @media (max-width: 400px) { .controls { gap: 0.3rem; } .btn { padding: 0.4rem 0.7rem; font-size: 0.8rem; } .score-val { font-size: 1.6rem; } }
+    </style>
+</head>
+<body>
+    <div id="stars-container"></div>
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <span class="logo-icon">⏳</span>
+                <h1>Past Tenses Quest</h1>
+            </div>
+            <div class="controls">
+                <a href="../index.html" class="btn">← Back</a>
+                <button class="btn" onclick="game.resetRound()">🔄 New Round</button>
+                <button class="btn" onclick="game.resetScores()">🗑️ Reset</button>
+            </div>
+        </header>
+
+        <main>
+            <div id="victory-banner"><div id="victory-text"></div></div>
+            <div class="board-container" id="board" role="grid" aria-label="Tic Tac Toe Board"></div>
+        </main>
+
+        <footer>
+            <div class="score-box"><div class="score-label">Player 1 (✨)</div><div class="score-val" id="score-x">0</div></div>
+            <div class="score-box"><div class="score-label">Draws</div><div class="score-val" id="score-draw">0</div></div>
+            <div class="score-box"><div class="score-label">Player 2 (🌙)</div><div class="score-val" id="score-o">0</div></div>
+        </footer>
+    </div>
+
+    <div class="modal-overlay" id="quiz-modal" role="dialog" aria-modal="true">
+        <div class="quiz-modal">
+            <div class="quiz-header">
+                <span class="quiz-icon">📚</span>
+                <span class="quiz-title" id="quiz-title">Grammar Challenge!</span>
+            </div>
+            <div class="quiz-progress" id="quiz-progress">
+                <div class="progress-dot active"></div><div class="progress-dot"></div><div class="progress-dot"></div>
+            </div>
+            <div class="quiz-question" id="quiz-question">Loading question...</div>
+            <div class="quiz-options" id="quiz-options" role="radiogroup"></div>
+            <div class="quiz-feedback" id="quiz-feedback" role="status" aria-live="polite"></div>
+            <div class="quiz-actions">
+                <!-- КНОПКА SKIP ПОЛНОСТЬЮ УДАЛЕНА -->
+                <button class="quiz-btn submit" id="quiz-submit" onclick="quiz.submitAnswer()" disabled>Submit Answer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const starSystem = {
+            container: document.getElementById('stars-container'),
+            init() {
+                for (let i = 0; i < 120; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.cssText = `width: ${Math.random() * 3 + 1}px; height: ${Math.random() * 3 + 1}px; left: ${Math.random() * 100}%; top: ${Math.random() * 100}%; --duration: ${Math.random() * 3 + 2}s; --delay: ${Math.random() * 5}s; --opacity: ${Math.random() * 0.5 + 0.3};`;
+                    this.container.appendChild(star);
+                }
+            }
+        };
+
+        const rawQuizData = [
+            "Yesterday I ___ to the park with my friends.,go,went,gone,2",
+            "While I ___ my homework, my mom called me.,did,was doing,had done,2",
+            "When we arrived at the cinema, the film had already ___. ,start,started,starting,2",
+            "She ___ a beautiful song at the party last night.,sang,was singing,had sung,1",
+            "At 8 PM yesterday, I ___ dinner with my family.,had,was having,had had,2",
+            "They ___ to London before they moved to Paris.,went,had gone,was going,2",
+            "What ___ you doing when I called you?,did,were,had,2",
+            "He ___ his keys, so he couldn't enter the house.,lost,was losing,had lost,3",
+            "We ___ a great time at the beach last summer.,had,was having,had had,1",
+            "While they ___ football, it started to rain.,played,were playing,had played,2",
+            "I had never ___ such a funny movie before.,see,saw,seen,3",
+            "My sister ___ her birthday party when I came home.,had,was having,had had,2",
+            "After she ___ her homework, she went out to play.,finished,was finishing,had finished,3",
+            "___ you visit your grandparents last weekend?,Did,Were,Had,1",
+            "The sun ___ when we left the house.,shone,was shining,had shone,2",
+            "He ___ in this city for five years before he moved.,lived,was living,had lived,3",
+            "What ___ you doing at 7 o'clock yesterday evening?,did,were,had,2",
+            "They ___ the museum before it closed.,visited,were visiting,had visited,3",
+            "I ___ my phone while I was walking to school.,dropped,was dropping,had dropped,1",
+            "She ___ English for two years before she came to Moscow.,studied,was studying,had studied,3"
+        ];
+
+        const quizData = rawQuizData.map(q => {
+            const parts = q.split(',');
+            const correctIndex = parseInt(parts.pop()); 
+            const opt3 = parts.pop(); const opt2 = parts.pop(); const opt1 = parts.pop();
+            return { question: parts.join(','), options: [opt1, opt2, opt3], correct: correctIndex - 1 };
+        });
+
+        const quiz = {
+            modal: document.getElementById('quiz-modal'),
+            questionEl: document.getElementById('quiz-question'),
+            optionsEl: document.getElementById('quiz-options'),
+            feedbackEl: document.getElementById('quiz-feedback'),
+            submitBtn: document.getElementById('quiz-submit'),
+            progressDots: document.querySelectorAll('.progress-dot'),
+            currentQuestion: null, selectedOption: null, attemptCount: 0, resolve: null,
+            
+            async askQuestion() {
+                return new Promise((resolve) => {
+                    this.resolve = resolve;
+                    this.attemptCount = 0;
+                    this.loadRandomQuestion();
+                    this.showModal();
+                });
+            },
+            
+            loadRandomQuestion() {
+                this.currentQuestion = quizData[Math.floor(Math.random() * quizData.length)];
+                this.selectedOption = null;
+                const parts = this.currentQuestion.question.split('___');
+                this.questionEl.innerHTML = parts.length > 1 ? `${parts[0]}<span>___</span>${parts[1] || ''}` : this.currentQuestion.question;
+                this.optionsEl.innerHTML = '';
+                const letters = ['A', 'B', 'C'];
+                this.currentQuestion.options.forEach((opt, idx) => {
+                    const btn = document.createElement('div');
+                    btn.className = 'quiz-option';
+                    btn.innerHTML = `<span class="quiz-option-letter">${letters[idx]}</span> ${opt}`;
+                    btn.onclick = () => this.selectOption(idx, btn);
+                    this.optionsEl.appendChild(btn);
+                });
+                this.feedbackEl.textContent = '';
+                this.feedbackEl.className = 'quiz-feedback';
+                this.submitBtn.disabled = true;
+                this.updateProgress();
+            },
+            
+            selectOption(index, element) {
+                if (this.feedbackEl.classList.contains('show')) return;
+                document.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
+                element.classList.add('selected');
+                this.selectedOption = index;
+                this.submitBtn.disabled = false;
+            },
+            
+            updateProgress() {
+                this.progressDots.forEach((dot, idx) => dot.classList.toggle('active', idx <= Math.min(this.attemptCount, 2)));
+            },
+            
+            async submitAnswer() {
+                if (this.selectedOption === null) return;
+                const options = document.querySelectorAll('.quiz-option');
+                const isCorrect = this.selectedOption === this.currentQuestion.correct;
+                options.forEach(el => el.style.pointerEvents = 'none');
+                this.submitBtn.disabled = true;
+                
+                if (isCorrect) {
+                    options[this.selectedOption].classList.add('correct');
+                    this.showFeedback('Absolutely right! ✨ Making your move...', 'correct');
+                    confetti.burst(30, { x: window.innerWidth/2, y: window.innerHeight/2 });
+                    setTimeout(() => { this.hideModal(); if (this.resolve) this.resolve(true); }, 1500);
+                } else {
+                    options[this.selectedOption].classList.add('incorrect');
+                    options[this.currentQuestion.correct].classList.add('correct');
+                    this.showFeedback("Not quite! Let's try another question. 💪", 'incorrect');
+                    this.attemptCount++;
+                    this.updateProgress();
+                    setTimeout(() => {
+                        // УБРАНО ПРАВИЛО 3-х ПОПЫТОК. ТЕПЕРЬ ДАЕТСЯ НОВЫЙ ВОПРОС, ПОКА НЕ ОТВЕТЯТ ВЕРНО.
+                        this.loadRandomQuestion();
+                    }, 2000);
+                }
+            },
+            
+            showFeedback(text, type) {
+                this.feedbackEl.textContent = text;
+                this.feedbackEl.classList.add('show', type);
+            },
+            showModal() { this.modal.classList.add('active'); document.body.style.overflow = 'hidden'; },
+            hideModal() { this.modal.classList.remove('active'); document.body.style.overflow = ''; }
+        };
+
+        const game = {
+            board: Array(9).fill(null), currentPlayer: 'X', gameActive: true, pendingMove: null,
+            scores: { X: 0, O: 0, draw: 0 },
+            winningCombos: [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]],
+
+            init() { this.renderBoard(); this.resetRound(); },
+            resetRound() {
+                this.board.fill(null); this.gameActive = true; this.pendingMove = null; this.currentPlayer = 'X';
+                document.querySelectorAll('.cell').forEach(cell => { cell.innerHTML = ''; cell.classList.remove('taken', 'win', 'disabled'); });
+                document.getElementById('victory-banner').classList.remove('visible');
+            },
+            resetScores() { this.scores = { X: 0, O: 0, draw: 0 }; this.updateScoreboard(); this.resetRound(); },
+
+            async handleCellClick(index) {
+                if (!this.gameActive || this.board[index] || this.pendingMove !== null) return;
+                this.pendingMove = index;
+                document.querySelectorAll('.cell:not(.taken)').forEach(c => c.classList.add('disabled'));
+                
+                await quiz.askQuestion();
+                
+                if (this.gameActive && this.pendingMove !== null) {
+                    this.executeMove(this.pendingMove);
+                    this.pendingMove = null;
+                }
+                document.querySelectorAll('.cell:not(.taken)').forEach(c => c.classList.remove('disabled'));
+            },
+
+            executeMove(index) {
+                this.board[index] = this.currentPlayer;
+                const cell = document.querySelector(`.cell[data-index='${index}']`);
+                cell.classList.add('taken');
+                const span = document.createElement('span');
+                span.className = `glyph ${this.currentPlayer.toLowerCase()}`;
+                span.textContent = this.currentPlayer === 'X' ? '✨' : '🌙';
+                cell.appendChild(span);
+                
+                if (this.checkWin()) { this.endGame(false); } 
+                else if (this.board.every(cell => cell !== null)) { this.endGame(true); } 
+                else { this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X'; }
+            },
+
+            checkWin() {
+                return this.winningCombos.some(combo => {
+                    const [a, b, c] = combo;
+                    if (this.board[a] && this.board[a] === this.board[b] && this.board[a] === this.board[c]) {
+                        combo.forEach(i => document.querySelector(`.cell[data-index='${i}']`).classList.add('win'));
+                        return true;
+                    }
+                    return false;
+                });
+            },
+
+            endGame(isDraw) {
+                this.gameActive = false;
+                const banner = document.getElementById('victory-banner');
+                const text = document.getElementById('victory-text');
+                if (isDraw) {
+                    this.scores.draw++; text.textContent = "It's a Draw! 🤝";
+                } else {
+                    this.scores[this.currentPlayer]++;
+                    text.textContent = `Player ${this.currentPlayer} ${this.currentPlayer === 'X' ? '✨' : '🌙'} Wins!`;
+                    confetti.start();
+                }
+                banner.classList.add('visible');
+                this.updateScoreboard();
+            },
+
+            renderBoard() {
+                const boardEl = document.getElementById('board');
+                for (let i = 0; i < 9; i++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell'; cell.dataset.index = i;
+                    cell.addEventListener('click', () => game.handleCellClick(i));
+                    boardEl.appendChild(cell);
+                }
+            },
+            updateScoreboard() {
+                document.getElementById('score-x').textContent = this.scores.X;
+                document.getElementById('score-o').textContent = this.scores.O;
+                document.getElementById('score-draw').textContent = this.scores.draw;
+            }
+        };
+
+        const confetti = {
+            canvas: document.getElementById('confetti-canvas'), ctx: null, particles: [], animationId: null,
+            colors: ['#ffd93d', '#ff6b9d', '#7b68ee', '#00d9a5', '#ffffff'],
+            init() { this.ctx = this.canvas.getContext('2d'); this.resize(); window.addEventListener('resize', () => this.resize()); },
+            resize() { this.canvas.width = window.innerWidth; this.canvas.height = window.innerHeight; },
+            start(duration = 3000) {
+                this.particles = [];
+                for (let i = 0; i < 150; i++) {
+                    this.particles.push({ x: Math.random() * this.canvas.width, y: Math.random() * this.canvas.height - this.canvas.height, size: Math.random() * 8 + 4, color: this.colors[Math.floor(Math.random() * this.colors.length)], speedY: Math.random() * 3 + 2, speedX: Math.random() * 2 - 1, rotation: Math.random() * 360, rotationSpeed: Math.random() * 10 - 5, shape: Math.random() > 0.5 ? 'circle' : 'square' });
+                }
+                this.animate(); setTimeout(() => this.stop(), duration);
+            },
+            burst(count = 50, pos = { x: window.innerWidth/2, y: window.innerHeight/2 }) {
+                for (let i = 0; i < count; i++) {
+                    this.particles.push({ x: pos.x, y: pos.y, size: Math.random() * 6 + 3, color: this.colors[Math.floor(Math.random() * this.colors.length)], speedY: (Math.random() - 0.5) * 4, speedX: (Math.random() - 0.5) * 4, rotation: Math.random() * 360, rotationSpeed: Math.random() * 10 - 5, shape: Math.random() > 0.5 ? 'circle' : 'square', life: 60 });
+                }
+                if (!this.animationId) this.animate();
+            },
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.particles = this.particles.filter(p => {
+                    if (p.life !== undefined) { p.life--; if (p.life <= 0) return false; }
+                    p.y += p.speedY; p.x += p.speedX; p.rotation += p.rotationSpeed;
+                    this.ctx.save(); this.ctx.translate(p.x, p.y); this.ctx.rotate((p.rotation * Math.PI) / 180); this.ctx.fillStyle = p.color;
+                    if (p.shape === 'circle') { this.ctx.beginPath(); this.ctx.arc(0, 0, p.size/2, 0, Math.PI * 2); this.ctx.fill(); } 
+                    else { this.ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size); }
+                    this.ctx.restore();
+                    return p.y < this.canvas.height + 20;
+                });
+                if (this.particles.length > 0) this.animationId = requestAnimationFrame(() => this.animate()); else this.animationId = null;
+            },
+            stop() { cancelAnimationFrame(this.animationId); this.animationId = null; this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); }
+        };
+
+        starSystem.init(); confetti.init(); game.init();
+    </script>
+</body>
+</html>
