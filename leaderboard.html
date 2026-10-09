@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏆 Leaderboard - Juliya Magic Teacher</title>
+    <title> Leaderboard - Juliya Magic Teacher</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -60,7 +60,6 @@
         }
         .back-link:hover { color: #e9d5ff; }
         
-        /* Фильтры */
         .filters {
             display: flex; justify-content: center; gap: 10px;
             margin-bottom: 30px; flex-wrap: wrap;
@@ -84,7 +83,6 @@
             box-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
         }
         
-        /* Таблица */
         .leaderboard-container {
             background: rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(16px);
@@ -191,7 +189,7 @@
     <div class="main-wrapper">
         <a href="index.html" class="back-link">← Back to exercises</a>
         <div class="header">
-            <h1> Leaderboard</h1>
+            <h1>🏆 Leaderboard</h1>
             <p>Top students of Juliya Magic Teacher!</p>
         </div>
         
@@ -239,20 +237,31 @@
         }
         createStars();
         
-        async function loadLeaderboard() {
-            try {
-                const response = await fetch(GOOGLE_SCRIPT_URL);
-                const data = await response.json();
+        //  ИСПРАВЛЕННАЯ ФУНКЦИЯ ЗАГРУЗКИ (JSONP для обхода CORS)
+        function loadLeaderboard() {
+            const callbackName = 'callback' + Date.now();
+            const script = document.createElement('script');
+            
+            window[callbackName] = function(data) {
                 allData = data;
                 renderLeaderboard();
-            } catch (error) {
+                delete window[callbackName];
+                document.body.removeChild(script);
+            };
+            
+            script.src = GOOGLE_SCRIPT_URL + '?callback=' + callbackName;
+            script.onerror = function() {
                 document.getElementById('leaderboardContent').innerHTML = `
                     <div class="empty-state">
                         <span class="emoji">😔</span>
                         <p>Could not load leaderboard. Please try again later.</p>
                     </div>
                 `;
-            }
+                delete window[callbackName];
+                document.body.removeChild(script);
+            };
+            
+            document.body.appendChild(script);
         }
         
         function filterData(data, filter) {
