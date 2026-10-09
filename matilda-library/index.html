@@ -24,6 +24,25 @@
             0%, 100% { opacity: 0; transform: scale(0.5); }
             50% { opacity: var(--max-opacity); transform: scale(1); }
         }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(-10px) translateX(-10px); }
+            75% { transform: translateY(-25px) translateX(5px); }
+        }
+        @keyframes magicParticles {
+            0% { opacity: 0; transform: translateY(0) translateX(0) scale(0); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-100px) translateX(50px) scale(1); }
+        }
+        .floating-element {
+            position: fixed; pointer-events: none; z-index: 0; opacity: 0.3;
+            animation: float 8s ease-in-out infinite;
+        }
+        .floating-element:nth-child(1) { top: 20%; left: 10%; font-size: 2em; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 60%; right: 15%; font-size: 1.5em; animation-delay: 2s; }
+        .floating-element:nth-child(3) { bottom: 30%; left: 20%; font-size: 1.8em; animation-delay: 4s; }
+
         .main-wrapper {
             position: relative; z-index: 1; max-width: 900px;
             margin: 0 auto; padding: 40px 20px;
@@ -80,8 +99,6 @@
             display: none;
         }
         .exercise-card.show { display: block; }
-        
-        /* ️ Стили для таймера */
         .timer-bar {
             position: sticky; top: 10px; z-index: 100;
             background: rgba(192, 132, 252, 0.15);
@@ -101,7 +118,6 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
-        
         .exercise-row {
             display: flex; align-items: center; justify-content: space-between;
             gap: 24px; padding: 20px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06);
@@ -172,11 +188,16 @@
     </style>
 </head>
 <body>
+    <!--  ПАРЯЩИЕ ДЕКОРАТИВНЫЕ ЭЛЕМЕНТЫ ✨ -->
+    <div class="floating-element">⭐</div>
+    <div class="floating-element">🌟</div>
+    <div class="floating-element">✨</div>
+
     <div class="stars-container" id="starsContainer"></div>
     <div class="main-wrapper">
         <a href="../index.html" class="back-link">← Back to exercises</a>
         <div class="header">
-            <h1> Matilda's Library</h1>
+            <h1>📚 Matilda's Library</h1>
             <p>Put the words in the correct grammatical form.</p>
         </div>
 
@@ -189,12 +210,11 @@
         </div>
 
         <div class="exercise-card" id="exerciseCard">
-            <!-- ⏱️ Таймер -->
             <div class="timer-bar" id="timerBar">
                 <span class="timer-icon">⏱️</span>
                 <span id="timerDisplay">00:00</span>
                 <span id="tabWarning" class="tab-warning" style="display: none;">
-                    ⚠️ Tab switches: <span id="tabSwitchCount">0</span>
+                    ️ Tab switches: <span id="tabSwitchCount">0</span>
                 </span>
             </div>
 
@@ -281,25 +301,24 @@
             </div>
             <div class="controls">
                 <button class="btn btn-check" onclick="checkAnswers()">✨ Check Answers</button>
-                <button class="btn btn-reset" onclick="resetExercise()">↺ Reset</button>
+                <button class="btn btn-reset" onclick="resetExercise()"> Reset</button>
             </div>
             <div id="resultMessage" class="result-message"></div>
             <div class="sending-status" id="sendingStatus"></div>
         </div>
     </div>
     <script>
-        // ⚠️ ВАЖНО: ВСТАВЬТЕ СЮДА ВАШУ ССЫЛКУ ИЗ POWER AUTOMATE
-        const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
-        
+        const POWER_AUTOMATE_URL = 'ВСТАВЬТЕ_СЮДА_ВАШУ_ССЫЛКУ_ИЗ_POWER_AUTOMATE';
         let studentName = '';
         let startTime = null;
         let timerInterval = null;
         let tabSwitchCount = 0;
         let isExerciseActive = false;
 
+        // ✨ СОЗДАЁМ МАГИЧЕСКИЙ ФОН ✨
         function createStars() {
             const container = document.getElementById('starsContainer');
-            for (let i = 0; i < 150; i++) {
+            for (let i = 0; i < 250; i++) {
                 const star = document.createElement('div');
                 star.classList.add('star');
                 star.style.left = Math.random() * 100 + '%';
@@ -312,8 +331,69 @@
                 star.style.animationDelay = Math.random() * 5 + 's';
                 container.appendChild(star);
             }
+            for (let i = 0; i < 8; i++) {
+                const shootingStar = document.createElement('div');
+                shootingStar.style.position = 'absolute';
+                shootingStar.style.width = '120px';
+                shootingStar.style.height = '2px';
+                shootingStar.style.background = 'linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,0))';
+                shootingStar.style.top = Math.random() * 50 + '%';
+                shootingStar.style.left = '-' + Math.random() * 20 + '%';
+                shootingStar.style.transform = 'rotate(-45deg)';
+                shootingStar.style.animation = `shootingStar ${Math.random() * 3 + 4}s linear ${Math.random() * 10}s infinite`;
+                container.appendChild(shootingStar);
+            }
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = '4px';
+                particle.style.height = '4px';
+                particle.style.background = 'rgba(192, 132, 252, 0.8)';
+                particle.style.borderRadius = '50%';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.boxShadow = '0 0 10px rgba(192, 132, 252, 0.8)';
+                particle.style.animation = `magicParticles ${Math.random() * 4 + 3}s ease-in-out ${Math.random() * 5}s infinite`;
+                container.appendChild(particle);
+            }
         }
+        
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes shootingStar {
+                0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0; }
+                10% { opacity: 1; }
+                90% { opacity: 1; }
+                100% { transform: translateX(150vw) translateY(150vh) rotate(-45deg); opacity: 0; }
+            }
+            @keyframes magicParticles {
+                0% { opacity: 0; transform: translateY(0) translateX(0) scale(0); }
+                50% { opacity: 1; }
+                100% { opacity: 0; transform: translateY(-100px) translateX(50px) scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
         createStars();
+
+        // ✨ ИНТЕРАКТИВНЫЕ ИСКРЫ ПРИ ДВИЖЕНИИ МЫШИ ✨
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() > 0.95) {
+                const spark = document.createElement('div');
+                spark.style.position = 'fixed';
+                spark.style.left = e.clientX + 'px';
+                spark.style.top = e.clientY + 'px';
+                spark.style.width = '3px';
+                spark.style.height = '3px';
+                spark.style.background = 'rgba(192, 132, 252, 0.8)';
+                spark.style.borderRadius = '50%';
+                spark.style.pointerEvents = 'none';
+                spark.style.zIndex = '9999';
+                spark.style.boxShadow = '0 0 10px rgba(192, 132, 252, 0.8)';
+                spark.style.animation = 'magicParticles 1s ease-out forwards';
+                document.body.appendChild(spark);
+                setTimeout(() => { spark.remove(); }, 1000);
+            }
+        });
 
         function startExercise() {
             const nameInput = document.getElementById('studentName');
@@ -325,14 +405,11 @@
             }
             document.getElementById('studentForm').style.display = 'none';
             document.getElementById('exerciseCard').classList.add('show');
-            
-            // ⏱️ Запускаем таймер
             startTime = Date.now();
             isExerciseActive = true;
             timerInterval = setInterval(updateTimer, 1000);
         }
 
-        // ⏱️ Обновление таймера каждую секунду
         function updateTimer() {
             if (!isExerciseActive) return;
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
@@ -342,26 +419,14 @@
             document.getElementById('timerDisplay').textContent = display;
         }
 
-        //  Отслеживание переключения вкладок
         document.addEventListener('visibilitychange', function() {
             if (!isExerciseActive) return;
-            
             if (document.hidden) {
-                // Ученик ушёл с вкладки
                 tabSwitchCount++;
                 document.getElementById('tabSwitchCount').textContent = tabSwitchCount;
                 document.getElementById('tabWarning').style.display = 'inline';
-                
-                // Показываем предупреждение
                 alert('⚠️ WARNING: You left the exercise tab!\n\nThis has been recorded and will be sent to your teacher.\nTab switches: ' + tabSwitchCount);
             }
-        });
-
-        //  Дополнительное отслеживание потери фокуса
-        window.addEventListener('blur', function() {
-            if (!isExerciseActive) return;
-            // blur срабатывает чаще, чем visibilitychange
-            // Но чтобы не спамить, используем только visibilitychange для подсчёта
         });
 
         function checkAnswers() {
@@ -379,7 +444,6 @@
                 return;
             }
 
-            // ⏱️ Останавливаем таймер
             isExerciseActive = false;
             clearInterval(timerInterval);
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
@@ -401,7 +465,6 @@
                     input.classList.remove('correct');
                     input.classList.add('incorrect');
                     explanations[index].classList.add('show');
-                    
                     const baseWord = input.closest('.exercise-row').querySelector('.base-word').textContent;
                     errors.push(baseWord + ': "' + input.value.trim() + '" → "' + correctAnswers[0] + '" [' + grammarRule + ']');
                 }
@@ -457,7 +520,7 @@
                     statusDiv.style.color = '#fbbf24';
                 }
             } catch (error) {
-                statusDiv.textContent = '⚠️ Network error.';
+                statusDiv.textContent = '️ Network error.';
                 statusDiv.style.color = '#f87171';
             }
 
@@ -472,8 +535,6 @@
             const resultDiv = document.getElementById('resultMessage');
             resultDiv.className = 'result-message';
             resultDiv.style.display = 'none';
-            
-            // Сброс таймера
             startTime = Date.now();
             tabSwitchCount = 0;
             document.getElementById('tabSwitchCount').textContent = '0';
