@@ -126,6 +126,14 @@
         
         .player-name { font-weight: 600; color: #ffffff; }
         .exercise-name { color: #94a3b8; font-size: 0.9em; }
+        .exercise-count {
+            font-size: 0.75em;
+            color: #c084fc;
+            margin-left: 8px;
+            background: rgba(192, 132, 252, 0.15);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
         .score-badge {
             display: inline-block;
             padding: 5px 12px;
@@ -242,7 +250,6 @@
             const script = document.createElement('script');
             
             window[callbackName] = function(data) {
-                console.log('Data received:', data); // Для отладки
                 allData = data;
                 renderLeaderboard();
                 delete window[callbackName];
@@ -267,11 +274,12 @@
         function filterData(data, filter) {
             if (filter === 'all') return data;
             return data.filter(item => {
-                const exercise = item.Exercise || '';
+                const exercise = item.Exercise || item.exercise_name || '';
                 return exercise.toLowerCase().includes(filter.toLowerCase());
             });
         }
         
+        // ✅ ИСПРАВЛЕННАЯ ФУНКЦИЯ: All Exercises = средний балл, конкретное задание = отдельные результаты
         function renderLeaderboard() {
             const filtered = filterData(allData, currentFilter);
             
@@ -285,23 +293,50 @@
                 return;
             }
             
-            const sorted = filtered.sort((a, b) => {
-                const pa = parseInt(String(a.Percentage || '0%').replace('%', '')) || 0;
-                const pb = parseInt(String(b.Percentage || '0%').replace('%', '')) || 0;
-                return pb - pa;
-            });
+            let displayData = [];
+            let showExerciseColumn = true;
             
+            if (currentFilter === 'all') {
+                // ГРУППИРУЕМ ПО УЧЕНИКУ И СЧИТАЕМ СРЕДНИЙ БАЛЛ
+                showExerciseColumn = false;
+                const studentResults = {};
+                filtered.forEach(item => {
+                    const name = item.Name || item.student_name || 'Anonymous';
+                    const percentage = parseInt(String(item.Percentage || item.percentage || '0%').replace('%', '')) || 0;
+                    if (!studentResults[name]) {
+                        studentResults[name] = [];
+                    }
+                    studentResults[name].push(percentage);
+                });
+                
+                displayData = Object.entries(studentResults)
+                    .map(([name, scores]) => ({
+                        name,
+                        percentage: Math.round(scores.reduce((a, b) => a + b, 0) / scores.length),
+                        exercises: scores.length
+                    }))
+                    .sort((a, b) => b.percentage - a.percentage);
+            } else {
+                // ПОКАЗЫВАЕМ КАЖДОЕ ЗАДАНИЕ ОТДЕЛЬНО
+                displayData = filtered.map(item => ({
+                    name: item.Name || item.student_name || 'Anonymous',
+                    exercise: item.Exercise || item.exercise_name || 'Unknown',
+                    score: item.Score || item.score || '-',
+                    percentage: parseInt(String(item.Percentage || item.percentage || '0%').replace('%', '')) || 0
+                })).sort((a, b) => b.percentage - a.percentage);
+            }
+            
+            // Формируем таблицу
             let html = '<table class="leaderboard-table"><thead><tr>';
-            html += '<th>Rank</th><th>Student</th><th>Exercise</th><th>Score</th><th>Accuracy</th>';
+            html += '<th>Rank</th><th>Student</th>';
+            if (showExerciseColumn) html += '<th>Exercise</th><th>Score</th>';
+            else html += '<th>Avg Score</th>';
+            html += '<th>Accuracy</th>';
             html += '</tr></thead><tbody>';
             
-            sorted.forEach((item, index) => {
+            displayData.forEach((item, index) => {
                 const rank = index + 1;
-                const name = item.Name || 'Anonymous';
-                const exercise = item.Exercise || 'Unknown';
-                const score = item.Score || '-';
-                const percentage = String(item.Percentage || '0%').replace('%', '');
-                const percentNum = parseInt(percentage) || 0;
+                const percentNum = item.percentage;
                 
                 let rankClass = '';
                 let rankDisplay = rank;
@@ -315,10 +350,19 @@
                 
                 html += `<tr>
                     <td class="rank ${rankClass}">${rankDisplay}</td>
-                    <td class="player-name">${name}</td>
-                    <td class="exercise-name">${exercise}</td>
-                    <td><span class="score-badge">${score}</span></td>
-                    <td class="percentage ${percentClass}">${percentage}%</td>
+                    <td class="player-name">${item.name}`;
+                
+                if (currentFilter === 'all') {
+                    // Показываем количество заданий
+                    html += `<span class="exercise-count">${item.exercises} exercise${item.exercises > 1 ? 's' : ''}</span>`;
+                    html += `</td><td><span class="score-badge">${item.percentage}% avg</span></td>`;
+                } else {
+                    html += `</td>
+                    <td class="exercise-name">${item.exercise}</td>
+                    <td><span class="score-badge">${item.score}</span></td>`;
+                }
+                
+                html += `<td class="percentage ${percentClass}">${item.percentage}%</td>
                 </tr>`;
             });
             
