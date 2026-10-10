@@ -194,7 +194,7 @@
             sendResultsToTeams(correctCount, total, errorsText, timeSpent);
             
             // ✅ СОХРАНЯЕМ ФАКТ ВЫПОЛНЕНИЯ ЗАДАНИЯ
-            localStorage.setItem('ted-story-completed', 'true');
+          localStorage.setItem('grammar_ex_ted', 'true');
             
             if (correctCount === total) { showResult(' Magical! All ' + total + ' answers are correct! Excellent work! Time: ' + timeSpent, 'success'); } 
             else { showResult('You got ' + correctCount + ' out of ' + total + ' correct. Time: ' + timeSpent + '. Keep trying! 💫', 'error'); }
