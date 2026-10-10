@@ -244,6 +244,13 @@
                             <p>Kate arranges a party to celebrate holidays. Practice Past Simple, Past Continuous, Future Simple, and Present Perfect.</p>
                             <span class="tag">9 questions • OGE Format</span>
                         </a>
+                        <a href="london-exchange/index.html" class="exercise-card">
+    <span class="completed-badge" id="badge-london">✓ Completed</span>
+    <div class="emoji">🇬🇧</div>
+    <h2>London Exchange</h2>
+    <p>A student exchange programme in Britain. Practice plurals, comparatives, Future in the Past, and Passive Voice.</p>
+    <span class="tag">9 questions • OGE Format</span>
+</a>
                     </div>
                 </div>
 
@@ -402,7 +409,7 @@
         });
 
 function checkProgress() {
-      const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted', 'kate', 'memory-tenses'];
+      const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted', 'kate', 'memory-tenses', 'london'];
     exercises.forEach(ex => {
         if (localStorage.getItem('grammar_ex_' + ex) === 'true') {
             const badge = document.getElementById('badge-' + ex);
