@@ -72,7 +72,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* SVG ЗВЁЗДОЧКИ В ЗАГОЛОВКЕ */
         .sparkle-svg {
             display: inline-block;
             width: 45px;
@@ -287,7 +286,6 @@
             animation: neonPulse 2s ease-in-out infinite;
         }
 
-        /* SPINNER ПРИ ПЕРЕКЛЮЧЕНИИ ВКЛАДОК */
         .tab-spinner {
             display: none;
             justify-content: center;
@@ -342,10 +340,12 @@
             border-radius: 20px; padding: 30px;
             text-decoration: none; color: #f8fafc;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: block;
+            display: flex;
+            flex-direction: column;
             opacity: 0;
             animation: fadeInUp 0.6s ease-out forwards;
             position: relative;
+            min-height: 280px;
         }
         .exercise-card:nth-child(1) { animation-delay: 0.1s; }
         .exercise-card:nth-child(2) { animation-delay: 0.2s; }
@@ -369,12 +369,13 @@
             transition: color 0.3s ease;
         }
         .exercise-card:hover h2 { color: #e9d5ff; }
-        .exercise-card p { color: #94a3b8; line-height: 1.5; font-size: 0.95em; }
+        .exercise-card p { color: #94a3b8; line-height: 1.5; font-size: 0.95em; flex-grow: 1; }
         .exercise-card .tag {
             display: inline-block; margin-top: 15px; padding: 6px 14px;
             background: rgba(192, 132, 252, 0.15); border: 1px solid rgba(192, 132, 252, 0.3);
             border-radius: 20px; font-size: 0.85em; color: #e9d5ff;
             transition: all 0.3s ease;
+            align-self: flex-start;
         }
         .exercise-card:hover .tag {
             background: rgba(192, 132, 252, 0.3);
@@ -407,7 +408,8 @@
             text-decoration: none;
             color: #f8fafc;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: block;
+            display: flex;
+            flex-direction: column;
             opacity: 0;
             animation: fadeInUp 0.6s ease-out forwards;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
@@ -427,7 +429,7 @@
             transition: transform 0.4s ease;
         }
         .game-card:hover .game-card-image { transform: scale(1.05); }
-        .game-card-content { padding: 25px; }
+        .game-card-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
         .game-card-title {
             font-family: 'Fredoka', sans-serif;
             font-size: 1.6em;
@@ -451,7 +453,7 @@
             line-height: 1.6;
             font-size: 1em;
             margin-bottom: 20px;
-            min-height: 50px;
+            flex-grow: 1;
         }
         .game-card .play-button {
             display: inline-flex;
@@ -467,6 +469,7 @@
             text-decoration: none;
             transition: all 0.3s ease;
             box-shadow: 0 4px 20px rgba(123, 104, 238, 0.4);
+            align-self: flex-start;
         }
         .game-card .play-button:hover {
             transform: translateY(-2px);
@@ -482,6 +485,7 @@
             font-size: 0.8em;
             color: #ffd93d;
             font-weight: 600;
+            align-self: flex-start;
         }
 
         .footer {
@@ -611,13 +615,12 @@
 </head>
 <body>
     <div class="floating-element">⭐</div>
-    <div class="floating-element"></div>
+    <div class="floating-element">🌟</div>
     <div class="floating-element">✨</div>
 
     <div class="stars-container" id="starsContainer"></div>
     <div class="main-wrapper">
         <div class="header">
-            <!-- SVG ЗВЁЗДОЧКИ ВМЕСТО ЭМОДЗИ -->
             <h1>
                 <svg class="sparkle-svg left" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="#c084fc"/>
@@ -644,7 +647,6 @@
                     </button>
                 </div>
 
-                <!-- SPINNER -->
                 <div class="tab-spinner" id="tabSpinner">
                     <div class="spinner"></div>
                 </div>
@@ -661,14 +663,14 @@
                         </a>
                         <a href="dana-miller/index.html" class="exercise-card" data-exercise="dana-miller">
                             <div class="completed-badge">✓ Completed</div>
-                            <div class="emoji">🎸</div>
+                            <div class="emoji"></div>
                             <h2>Dana Miller</h2>
                             <p>A bus driver in Philadelphia. Practice Past Simple, plurals, and Future in the Past.</p>
                             <span class="tag">9 questions • OGE Format</span>
                         </a>
                         <a href="violin-orchestra/index.html" class="exercise-card" data-exercise="violin-orchestra">
                             <div class="completed-badge">✓ Completed</div>
-                            <div class="emoji"></div>
+                            <div class="emoji">🎻</div>
                             <h2>Violin Orchestra</h2>
                             <p>A music festival in France. Practice Past Simple, Passive Voice, and Future in the Past.</p>
                             <span class="tag">9 questions • OGE Format</span>
@@ -702,7 +704,7 @@
                                     Past Tenses Tic Tac Toe
                                 </h3>
                                 <p class="game-card-description">
-                                    Play Tic-Tac-Toe with an English twist! Answer grammar questions about Past Simple, Past Continuous, and Past Perfect to place your ✨ or . Fun for all levels!
+                                    Play Tic-Tac-Toe with an English twist! Answer grammar questions about Past Simple, Past Continuous, and Past Perfect to place your ✨ or 🌙. Fun for all levels!
                                 </p>
                                 <div class="play-button">
                                     <span class="play-icon">▶</span>
@@ -750,22 +752,20 @@
                 </a>
             </div>
             <a href="https://surisamner-ops.github.io/Juliya_Magic_Teacher-/" target="_blank" class="main-site-link">
-                 Visit my main website to learn more about my lessons!
+                🌐 Visit my main website to learn more about my lessons!
             </a>
             <div class="footer-copyright">
                 © 2026 <strong>Juliya Magic Teacher</strong>. All rights reserved.<br>
-                <span style="font-size: 0.9em; opacity: 0.9;">Made with 💜 for English learners</span>
+                <span style="font-size: 0.9em; opacity: 0.9;">Made with  for English learners</span>
             </div>
         </footer>
     </div>
     
     <script>
-        // SPINNER ПРИ ПЕРЕКЛЮЧЕНИИ ВКЛАДОК
         function switchTab(tabName) {
             const allTabs = document.querySelectorAll('.tab-content');
             const spinner = document.getElementById('tabSpinner');
             
-            // Скрываем все вкладки и показываем spinner
             allTabs.forEach(tab => { tab.classList.remove('active'); });
             spinner.classList.add('show');
             
@@ -773,7 +773,6 @@
             allButtons.forEach(button => { button.classList.remove('active'); });
             event.currentTarget.classList.add('active');
             
-            // Через 400мс показываем контент
             setTimeout(() => {
                 spinner.classList.remove('show');
                 document.getElementById(tabName).classList.add('active');
@@ -903,7 +902,7 @@
                 let rankClass = '';
                 let rankDisplay = rank;
                 if (rank === 1) { rankClass = 'side-rank-1'; rankDisplay = '🥇'; }
-                else if (rank === 2) { rankClass = 'side-rank-2'; rankDisplay = ''; }
+                else if (rank === 2) { rankClass = 'side-rank-2'; rankDisplay = '🥈'; }
                 else if (rank === 3) { rankClass = 'side-rank-3'; rankDisplay = '🥉'; }
                 
                 html += `
