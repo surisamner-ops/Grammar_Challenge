@@ -337,6 +337,23 @@
         <div class="game-tag">Interactive Game • Past Tenses</div>
     </div>
 </a>
+                                            <!-- Conditionals Level 1 -->
+                    <a href="conditionals-level-1/index.html" class="exercise-card">
+                        <span class="completed-badge" id="badge-conditionals-l1">✓ Completed</span>
+                        <div class="emoji">🌈</div>
+                        <h2>Conditionals Level 1</h2>
+                        <p>Start with First and Second Conditionals. Perfect for beginners!</p>
+                        <span class="tag">10 questions • Beginner</span>
+                    </a>
+
+                    <!-- Conditionals Level 2 -->
+                    <a href="conditionals-level-2/index.html" class="exercise-card">
+                        <span class="completed-badge" id="badge-conditionals-l2">✓ Completed</span>
+                        <div class="emoji">🎯</div>
+                        <h2>Conditionals Level 2</h2>
+                        <p>Master all types: Zero, First, Second, and Third Conditionals!</p>
+                        <span class="tag">10 questions • Advanced</span>
+                    </a>
                     </div>
                 </div>
             </div>
@@ -447,7 +464,7 @@
         });
 
 function checkProgress() {
-         const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted', 'kate', 'memory-tenses', 'london', 'alison', 'annie', 'emma', 'travel-catcher'];
+           const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted', 'kate', 'memory-tenses', 'london', 'alison', 'annie', 'emma', 'travel-catcher', 'conditionals-l1', 'conditionals-l2'];
     exercises.forEach(ex => {
         if (localStorage.getItem('grammar_ex_' + ex) === 'true') {
             const badge = document.getElementById('badge-' + ex);
