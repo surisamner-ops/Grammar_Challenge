@@ -60,26 +60,26 @@
     </style>
 </head>
 <body>
-    <div class="floating-element">⭐</div><div class="floating-element"></div><div class="floating-element">✨</div>
+    <div class="floating-element">⭐</div><div class="floating-element">🌟</div><div class="floating-element">✨</div>
     <div class="stars-container" id="starsContainer"></div>
     <div class="main-wrapper">
         <a href="../index.html" class="back-link">← Back to exercises</a>
         <div class="header"><h1>✨ Ted's Story ✨</h1><p>Put the words in the correct grammatical form.</p></div>
         <div class="student-form" id="studentForm">
-            <h2> Welcome!</h2><p>Please enter your name to start the exercise</p>
+            <h2>🌟 Welcome!</h2><p>Please enter your name to start the exercise</p>
             <input type="text" class="name-input" id="studentName" placeholder="Your name"><br>
-            <button class="btn-start" onclick="startExercise()">Start Exercise </button>
+            <button class="btn-start" onclick="startExercise()">Start Exercise ✨</button>
         </div>
         <div class="exercise-card" id="exerciseCard">
             <div class="timer-bar" id="timerBar">
-                <span class="timer-icon">️</span><span id="timerDisplay">00:00</span>
+                <span class="timer-icon">⏱️</span><span id="timerDisplay">00:00</span>
                 <span id="tabWarning" class="tab-warning" style="display: none;">⚠️ Tab switches: <span id="tabSwitchCount">0</span></span>
             </div>
             <div class="exercise-row"><div class="sentence-text">It was late at night but the light was on in Ted's room. When I <input type="text" class="blank-input" data-answer="came" data-rule="Past Simple" placeholder="..."> in, he didn't even turn to me.<div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Past Simple</strong> of 'come' → 'came' to describe a completed action in the past.</div></div><div class="base-word">COME</div></div>
             <div class="exercise-row"><div class="sentence-text">I looked at his monitor and realized that he <input type="text" class="blank-input" data-answer="was surfing" data-rule="Past Continuous" placeholder="..."> the Internet for job vacancies.<div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Past Continuous</strong> 'was surfing' to describe an ongoing action in the past (he was in the middle of surfing).</div></div><div class="base-word">SURF</div></div>
             <div class="exercise-row"><div class="sentence-text">"Why do you need a job?" I asked. "You <input type="text" class="blank-input" data-answer="were employed" data-rule="Past Simple Passive" placeholder="..."> by Mr. Green only a week ago as far as I remember."<div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Past Simple Passive</strong> 'were employed' because of 'a week ago' and 'by Mr. Green' (passive construction).</div></div><div class="base-word">EMPLOY</div></div>
             <div class="exercise-row"><div class="sentence-text">"Yes, I was. I got a job of a waiter in his restaurant. But I <input type="text" class="blank-input" data-answer="had lost" data-rule="Past Perfect" placeholder="..."> that job already. They said I was rude to a client."<div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Past Perfect</strong> 'had lost' because of 'already' — the action happened before another past action.</div></div><div class="base-word">LOSE</div></div>
-            <div class="exercise-row"><div class="sentence-text">"Were you?" I was surprised since Ted was the <input type="text" class="blank-input" data-answer="most patient" data-rule="Superlative adjective" placeholder="..."> and tolerant person I'd ever met.<div class="explanation"> <strong>Explanation:</strong> Use the <strong>superlative form</strong> 'most patient' because of 'the' and 'I'd ever met' (comparison with all people).</div></div><div class="base-word">PATIENT</div></div>
+            <div class="exercise-row"><div class="sentence-text">"Were you?" I was surprised since Ted was the <input type="text" class="blank-input" data-answer="most patient" data-rule="Superlative adjective" placeholder="..."> and tolerant person I'd ever met.<div class="explanation">💡 <strong>Explanation:</strong> Use the <strong>superlative form</strong> 'most patient' because of 'the' and 'I'd ever met' (comparison with all people).</div></div><div class="base-word">PATIENT</div></div>
             <div class="exercise-row"><div class="sentence-text">"Yes, it was probably rude of <input type="text" class="blank-input" data-answer="me" data-rule="Object pronoun" placeholder="..."> to tell those ladies that I wouldn't bring them anything else.<div class="explanation">💡 <strong>Explanation:</strong> Use the <strong>object pronoun</strong> 'me' (from 'I') after the preposition 'of'.</div></div><div class="base-word">I</div></div>
             <div class="exercise-row"><div class="sentence-text">Just imagine – they had changed their order three times! Each time they tried a dish, they <input type="text" class="blank-input" data-answer="didn't like|did not like" data-rule="Past Simple negative" placeholder="..."> it.<div class="explanation">💡 <strong>Explanation:</strong> Use <strong>Past Simple negative</strong> 'didn't like' because the story is in the past tense.</div></div><div class="base-word">NOT / LIKE</div></div>
             <div class="exercise-row"><div class="sentence-text">When they said that for the <input type="text" class="blank-input" data-answer="fourth" data-rule="Ordinal number" placeholder="..."> time, I lost control.<div class="explanation">💡 <strong>Explanation:</strong> Use the <strong>ordinal number</strong> 'fourth' (from 'four') to indicate order.</div></div><div class="base-word">FOUR</div></div>
@@ -96,6 +96,17 @@
         const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCybdydUS2PDlskYqe2_jdbTns0MB_6e45CLWCkpr6jLB-d1zHm5ebBifFNLFoKhwr/exec';
         let studentName = ''; let startTime = null; let timerInterval = null; let tabSwitchCount = 0; let isExerciseActive = false;
+
+        // Проверяем, было ли задание уже пройдено
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('ted-story-completed') === 'true') {
+                const form = document.getElementById('studentForm');
+                const welcomeText = form.querySelector('h2');
+                welcomeText.innerHTML = '✨ Welcome Back! ✨';
+                const p = form.querySelector('p');
+                p.textContent = "You've already completed this exercise. You can try again!";
+            }
+        });
 
         function createStars() {
             const container = document.getElementById('starsContainer');
@@ -155,7 +166,7 @@
             if (document.hidden) {
                 tabSwitchCount++; document.getElementById('tabSwitchCount').textContent = tabSwitchCount;
                 document.getElementById('tabWarning').style.display = 'inline';
-                alert('️ WARNING: You left the exercise tab!\n\nThis has been recorded.\nTab switches: ' + tabSwitchCount);
+                alert('⚠️ WARNING: You left the exercise tab!\n\nThis has been recorded.\nTab switches: ' + tabSwitchCount);
             }
         });
 
@@ -181,8 +192,12 @@
             });
             let errorsText = errors.length > 0 ? errors.map((e, i) => (i + 1) + '. ' + e).join('<br><br>') : '✅ No errors! Perfect!';
             sendResultsToTeams(correctCount, total, errorsText, timeSpent);
-            if (correctCount === total) { showResult('🎉 Magical! All ' + total + ' answers are correct! Excellent work! Time: ' + timeSpent, 'success'); } 
-            else { showResult('You got ' + correctCount + ' out of ' + total + ' correct. Time: ' + timeSpent + '. Keep trying! ', 'error'); }
+            
+            // ✅ СОХРАНЯЕМ ФАКТ ВЫПОЛНЕНИЯ ЗАДАНИЯ
+            localStorage.setItem('ted-story-completed', 'true');
+            
+            if (correctCount === total) { showResult(' Magical! All ' + total + ' answers are correct! Excellent work! Time: ' + timeSpent, 'success'); } 
+            else { showResult('You got ' + correctCount + ' out of ' + total + ' correct. Time: ' + timeSpent + '. Keep trying! 💫', 'error'); }
         }
 
         async function sendResultsToTeams(correct, total, errorsText, timeSpent) {
@@ -191,12 +206,12 @@
             const percentage = Math.round((correct / total) * 100);
             const exerciseName = "Ted's Story";
 
-            const payload = { student_name: studentName, score: correct + '/' + total, percentage: percentage + '%', time: new Date().toLocaleString(), exercise_name: exerciseName, errors_text: errorsText, time_spent: timeSpent, tab_switches: tabSwitchCount === 0 ? '0 (no switches)' : tabSwitchCount + ' switch(es) detected ⚠️' };
+            const payload = { student_name: studentName, score: correct + '/' + total, percentage: percentage + '%', time: new Date().toLocaleString(), exercise_name: exerciseName, errors_text: errorsText, time_spent: timeSpent, tab_switches: tabSwitchCount === 0 ? '0 (no switches)' : tabSwitchCount + ' switch(es) detected ️' };
 
             try {
                 await fetch(POWER_AUTOMATE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 statusDiv.textContent = '✅ Results sent to Teams!'; statusDiv.style.color = '#4ade80';
-            } catch (error) { statusDiv.textContent = '⚠️ Teams error.'; statusDiv.style.color = '#f87171'; }
+            } catch (error) { statusDiv.textContent = '️ Teams error.'; statusDiv.style.color = '#f87171'; }
 
             try {
                 await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ student_name: studentName, exercise_name: exerciseName, score: correct + '/' + total, percentage: percentage + '%', time: new Date().toLocaleString(), time_spent: timeSpent }) });
