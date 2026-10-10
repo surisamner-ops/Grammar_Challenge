@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave a Review - Juliya Magic Teacher</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            min-height: 100vh;
+            color: #f8fafc;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Звёзды и анимации как на главной */
+        .stars-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--duration) ease-in-out infinite; opacity: 0; }
+        @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: var(--max-opacity); transform: scale(1); } }
+        @keyframes float { 0%, 100% { transform: translateY(0) translateX(0); } 25% { transform: translateY(-20px) translateX(10px); } 50% { transform: translateY(-10px) translateX(-10px); } 75% { transform: translateY(-25px) translateX(5px); } }
+        
+        .floating-element { position: fixed; pointer-events: none; z-index: 0; opacity: 0.3; animation: float 8s ease-in-out infinite; font-size: 2em; }
+        .floating-element:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 60%; right: 15%; animation-delay: 2s; }
+        .floating-element:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 4s; }
+
+        .main-wrapper { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; padding: 40px 20px; }
+        
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 { 
+            font-family: 'Comfortaa', cursive; 
+            font-size: 2.5em; 
+            font-weight: 700; 
+            background: linear-gradient(135deg, #c084fc 0%, #60a5fa 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            margin-bottom: 10px; 
+        }
+        .header p { font-size: 1.1em; color: #94a3b8; }
+        
+        .back-link { 
+            display: inline-flex; align-items: center; gap: 8px;
+            margin-bottom: 20px; color: #c084fc; text-decoration: none; 
+            font-weight: 600; font-family: 'Comfortaa', cursive; font-size: 1.1em;
+            transition: all 0.3s;
+        }
+        .back-link:hover { color: #e9d5ff; transform: translateX(-5px); }
+
+        /* Стеклянная карточка формы */
+        .review-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 0 40px rgba(192, 132, 252, 0.1);
+        }
+
+        .form-group { margin-bottom: 30px; }
+        .form-group label {
+            display: block; font-family: 'Comfortaa', cursive; font-size: 1.1em;
+            color: #c084fc; margin-bottom: 12px; font-weight: 600;
+        }
+        .form-group label .required { color: #f87171; }
+
+        /* Поля ввода */
+        .name-input, .review-textarea {
+            width: 100%; padding: 16px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(192, 132, 252, 0.3);
+            border-radius: 16px; color: #fff; font-size: 1em; font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+        .name-input::placeholder, .review-textarea::placeholder { color: rgba(255, 255, 255, 0.3); }
+        .name-input:focus, .review-textarea:focus {
+            outline: none; border-color: #c084fc;
+            box-shadow: 0 0 25px rgba(192, 132, 252, 0.3);
+        }
+        .review-textarea { min-height: 120px; resize: vertical; }
+
+        /* Выбор секции (две большие кнопки) */
+        .section-options { display: flex; gap: 15px; }
+        .section-btn {
+            flex: 1; padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(192, 132, 252, 0.3);
+            border-radius: 16px; color: #fff;
+            font-family: 'Comfortaa', cursive; font-size: 1.1em; font-weight: 700;
+            cursor: pointer; transition: all 0.3s; text-align: center;
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+        }
+        .section-btn:hover {
+            border-color: #c084fc; background: rgba(192, 132, 252, 0.1);
+            transform: translateY(-3px); box-shadow: 0 10px 30px rgba(192, 132, 252, 0.2);
+        }
+        .section-btn.selected {
+            border-color: #4ade80; background: rgba(74, 222, 128, 0.15);
+            color: #86efac; box-shadow: 0 0 30px rgba(74, 222, 128, 0.2);
+        }
+        .section-btn .emoji { font-size: 2em; }
+
+        /* Звёзды рейтинга */
+        .star-rating { display: flex; gap: 10px; font-size: 2.5em; cursor: pointer; justify-content: center; }
+        .star-rating .star-icon { color: rgba(255, 255, 255, 0.2); transition: all 0.2s; }
+        .star-rating .star-icon:hover, .star-rating .star-icon.active { color: #fbbf24; transform: scale(1.15); text-shadow: 0 0 15px rgba(251, 191, 36, 0.6); }
+        .rating-text { text-align: center; color: #94a3b8; font-size: 0.95em; margin-top: 10px; min-height: 20px; }
+
+        /* Варианты эффективности */
+        .help-options { display: flex; gap: 12px; flex-wrap: wrap; }
+        .help-option {
+            flex: 1; min-width: 120px; padding: 16px;
+            background: rgba(0, 0, 0, 0.3); border: 2px solid rgba(192, 132, 252, 0.3);
+            border-radius: 16px; color: #fff; font-weight: 600; cursor: pointer;
+            transition: all 0.3s; text-align: center;
+        }
+        .help-option:hover { border-color: #c084fc; background: rgba(192, 132, 252, 0.1); }
+        .help-option.selected { border-color: #4ade80; background: rgba(74, 222, 128, 0.15); color: #86efac; }
+        .help-option .emoji { font-size: 1.5em; display: block; margin-bottom: 5px; }
+
+        /* Кнопка отправки */
+        .btn-submit {
+            width: 100%; padding: 18px;
+            background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 100%);
+            color: white; border: none; border-radius: 50px;
+            font-family: 'Comfortaa', cursive; font-size: 1.15em; font-weight: 700;
+            cursor: pointer; transition: all 0.3s; margin-top: 10px;
+            box-shadow: 0 5px 20px rgba(167, 139, 250, 0.4);
+        }
+        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(167, 139, 250, 0.6); }
+        .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .sending-status { text-align: center; margin-top: 15px; font-size: 0.95em; color: #94a3b8; display: none; }
+        .sending-status.show { display: block; }
+
+        .success-message {
+            text-align: center; padding: 40px;
+            background: rgba(74, 222, 128, 0.1); border: 1px solid #4ade80;
+            border-radius: 24px; color: #86efac; font-size: 1.3em; font-weight: 600;
+            display: none; animation: fadeInUp 0.5s ease-out;
+        }
+        .success-message.show { display: block; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.8em; }
+            .review-card { padding: 25px; }
+            .section-options { flex-direction: column; }
+            .help-options { flex-direction: column; }
+            .help-option { min-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-element">⭐</div>
+    <div class="floating-element">🌟</div>
+    <div class="floating-element">✨</div>
+    <div class="stars-container" id="starsContainer"></div>
+    
+    <div class="main-wrapper">
+        <a href="index.html" class="back-link">← Back to exercises</a>
+        
+        <div class="header">
+            <h1>💬 Leave a Review</h1>
+            <p>Help me make the exercises better! Your feedback is very important.</p>
+        </div>
+        
+        <div class="review-card" id="reviewForm">
+            <!-- Имя -->
+            <div class="form-group">
+                <label>Your name <span class="required">*</span></label>
+                <input type="text" class="name-input" id="reviewerName" placeholder="Enter your name">
+            </div>
+            
+            <!-- Выбор секции (вместо списка) -->
+            <div class="form-group">
+                <label>Which section did you do? <span class="required">*</span></label>
+                <div class="section-options">
+                    <div class="section-btn" data-value="GSE Tasks">
+                        <span class="emoji">🏆</span>
+                        GSE Tasks
+                    </div>
+                    <div class="section-btn" data-value="Targeted Practice">
+                        <span class="emoji">🎯</span>
+                        Targeted Practice
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Рейтинг -->
+            <div class="form-group">
+                <label>How do you rate it? <span class="required">*</span></label>
+                <div class="star-rating" id="starRating">
+                    <span class="star-icon" data-value="1">★</span>
+                    <span class="star-icon" data-value="2">★</span>
+                    <span class="star-icon" data-value="3">★</span>
+                    <span class="star-icon" data-value="4">★</span>
+                    <span class="star-icon" data-value="5">★</span>
+                </div>
+                <div class="rating-text" id="ratingText">Click a star to rate</div>
+            </div>
+            
+            <!-- Эффективность -->
+            <div class="form-group">
+                <label>Did it help you? <span class="required">*</span></label>
+                <div class="help-options">
+                    <div class="help-option" data-value="yes">
+                        <span class="emoji">✅</span> Yes, a lot!
+                    </div>
+                    <div class="help-option" data-value="somewhat">
+                        <span class="emoji">🤔</span> A little bit
+                    </div>
+                    <div class="help-option" data-value="no">
+                        <span class="emoji">❌</span> Not really
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Комментарий -->
+            <div class="form-group">
+                <label>Your comments (optional)</label>
+                <textarea class="review-textarea" id="reviewComment" placeholder="What did you like? What was difficult?"></textarea>
+            </div>
+            
+            <button class="btn-submit" onclick="submitReview()">Send Review ✨</button>
+            <div class="sending-status" id="sendingStatus"></div>
+        </div>
+        
+        <div class="success-message" id="successMessage">
+            🎉 Thank you! Your feedback helps me create better magic. 💜
+        </div>
+    </div>
+    
+    <script>
+        const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCybdydUS2PDlskYqe2_jdbTns0MB_6e45CLWCkpr6jLB-d1zHm5ebBifFNLFoKhwr/exec';
+        
+        let selectedSection = '';
+        let selectedRating = 0;
+        let selectedHelp = '';
+        
+        const ratingTexts = {
+            1: '😞 Poor - needs improvement',
+            2: '😐 Below average',
+            3: '🙂 Okay, but could be better',
+            4: '😊 Good exercise!',
+            5: '🤩 Excellent! Loved it!'
+        };
+        
+        // Создание звёзд на фоне
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            for (let i = 0; i < 250; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.setProperty('--max-opacity', Math.random() * 0.7 + 0.3);
+                star.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(star);
+            }
+        }
+        createStars();
+        
+        // Выбор секции
+        document.querySelectorAll('.section-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.section-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedSection = btn.dataset.value;
+            });
+        });
+        
+        // Выбор звёзд
+        const starIcons = document.querySelectorAll('.star-rating .star-icon');
+        starIcons.forEach(star => {
+            star.addEventListener('click', () => {
+                selectedRating = parseInt(star.dataset.value);
+                updateStars();
+            });
+            star.addEventListener('mouseenter', () => {
+                const hoverValue = parseInt(star.dataset.value);
+                starIcons.forEach((s, i) => {
+                    s.style.color = i < hoverValue ? '#fbbf24' : 'rgba(255, 255, 255, 0.2)';
+                });
+            });
+        });
+        document.getElementById('starRating').addEventListener('mouseleave', updateStars);
+        
+        function updateStars() {
+            starIcons.forEach((s, i) => {
+                if (i < selectedRating) { s.classList.add('active'); s.style.color = '#fbbf24'; } 
+                else { s.classList.remove('active'); s.style.color = 'rgba(255, 255, 255, 0.2)'; }
+            });
+            document.getElementById('ratingText').textContent = selectedRating > 0 ? ratingTexts[selectedRating] : 'Click a star to rate';
+        }
+        
+        // Выбор эффективности
+        document.querySelectorAll('.help-option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                document.querySelectorAll('.help-option').forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                selectedHelp = opt.dataset.value;
+            });
+        });
+        
+        // Отправка
+        async function submitReview() {
+            const name = document.getElementById('reviewerName').value.trim();
+            const comment = document.getElementById('reviewComment').value.trim();
+            const statusDiv = document.getElementById('sendingStatus');
+            
+            if (!name) { alert('Please enter your name!'); return; }
+            if (!selectedSection) { alert('Please choose a section!'); return; }
+            if (selectedRating === 0) { alert('Please rate it!'); return; }
+            if (!selectedHelp) { alert('Please tell us if it helped!'); return; }
+            
+            const helpText = { 'yes': 'Yes, a lot!', 'somewhat': 'A little bit', 'no': 'Not really' };
+            
+            statusDiv.classList.add('show');
+            statusDiv.textContent = '📤 Sending your review...';
+            
+            const payload = {
+                student_name: name,
+                exercise_name: 'REVIEW: ' + selectedSection,
+                score: selectedRating + '/5',
+                percentage: (selectedRating * 20) + '%',
+                time: new Date().toLocaleString(),
+                time_spent: 'Helped: ' + helpText[selectedHelp] + (comment ? ' | ' + comment : '')
+            };
+            
+            try {
+                await fetch(POWER_AUTOMATE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                statusDiv.textContent = '✅ Review sent to Teams!';
+                statusDiv.style.color = '#4ade80';
+            } catch (error) {
+                statusDiv.textContent = '⚠️ Teams error, but saved locally.';
+                statusDiv.style.color = '#fbbf24';
+            }
+            
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            } catch (e) { console.log('Sheets error:', e); }
+            
+            document.getElementById('reviewForm').style.display = 'none';
+            document.getElementById('successMessage').classList.add('show');
+            setTimeout(() => { statusDiv.classList.remove('show'); }, 6000);
+        }
+    </script>
+</body>
+</html>
