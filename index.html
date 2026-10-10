@@ -187,7 +187,7 @@
                     <button class="tab-button" onclick="switchTab('gse')">
                         <span class="tab-emoji">&#x1F3C6;</span>
                         <span>GSE Tasks</span>
-                        <span class="badge">7</span>
+                        <span class="badge">8</span>
                     </button>
                     <button class="tab-button" onclick="switchTab('practice')">
                         <span class="tab-emoji">&#x1F3AF;</span>
@@ -251,6 +251,13 @@
     <p>A student exchange programme in Britain. Practice plurals, comparatives, Future in the Past, and Passive Voice.</p>
     <span class="tag">9 questions • OGE Format</span>
 </a>
+                   <a href="alison-jewelry/index.html" class="exercise-card">
+    <span class="completed-badge" id="badge-alison">✓ Completed</span>
+    <div class="emoji">💎</div>
+    <h2>Alison's Jewelry Box</h2>
+    <p>A story about sister's jewelry box. Practice comparatives, Passive Voice, Second Conditional, and Past Simple.</p>
+    <span class="tag">9 questions • OGE Format</span>
+</a>     
                     </div>
                 </div>
 
@@ -409,7 +416,7 @@
         });
 
 function checkProgress() {
-      const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted', 'kate', 'memory-tenses', 'london'];
+      const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted', 'kate', 'memory-tenses', 'london', 'alison'];
     exercises.forEach(ex => {
         if (localStorage.getItem('grammar_ex_' + ex) === 'true') {
             const badge = document.getElementById('badge-' + ex);
