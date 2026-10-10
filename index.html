@@ -919,16 +919,51 @@
             document.getElementById('miniLeaderboardContent').innerHTML = html;
         }
 
-        function checkCompletedExercises() {
-            const exercises = [
-                { key: 'susan-story-completed', selector: '[data-exercise="susan-story"]' },
-                { key: 'dana-miller-completed', selector: '[data-exercise="dana-miller"]' },
-                { key: 'violin-orchestra-completed', selector: '[data-exercise="violin-orchestra"]' },
-                { key: 'matilda-library-completed', selector: '[data-exercise="matilda-library"]' },
-                { key: 'ted-story-completed', selector: '[data-exercise="ted-story"]' },
-                { key: 'passive-voice-completed', selector: '[data-exercise="passive-voice"]' },
-                { key: 'tic-tac-toe-completed', selector: '[data-exercise="tic-tac-toe"]' }
-            ];
+       function checkCompletedExercises() {
+    const exercises = [
+        { 
+            keys: ['susan-story-completed', 'grammar_ex_susan'], 
+            selector: '[data-exercise="susan-story"]' 
+        },
+        { 
+            keys: ['dana-miller-completed', 'grammar_ex_dana'], 
+            selector: '[data-exercise="dana-miller"]' 
+        },
+        { 
+            keys: ['violin-orchestra-completed', 'grammar_ex_violin'], 
+            selector: '[data-exercise="violin-orchestra"]' 
+        },
+        { 
+            keys: ['matilda-library-completed', 'grammar_ex_matilda'], 
+            selector: '[data-exercise="matilda-library"]' 
+        },
+        { 
+            keys: ['ted-story-completed', 'grammar_ex_ted'], 
+            selector: '[data-exercise="ted-story"]' 
+        },
+        { 
+            keys: ['passive-voice-completed', 'grammar_ex_passive'], 
+            selector: '[data-exercise="passive-voice"]' 
+        },
+        { 
+            keys: ['tic-tac-toe-completed', 'grammar_ex_tictactoe'], 
+            selector: '[data-exercise="tic-tac-toe"]' 
+        }
+    ];
+    
+    exercises.forEach(ex => {
+        const isCompleted = ex.keys.some(key => localStorage.getItem(key) === 'true');
+        if (isCompleted) {
+            const card = document.querySelector(ex.selector);
+            if (card) {
+                const badge = card.querySelector('.completed-badge');
+                if (badge) {
+                    badge.style.display = 'flex';
+                }
+            }
+        }
+    });
+}
             
             exercises.forEach(ex => {
                 if (localStorage.getItem(ex.key) === 'true') {
