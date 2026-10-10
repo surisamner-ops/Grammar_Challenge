@@ -320,6 +320,23 @@
                                 <div class="game-tag">2 Players • Interactive Quiz</div>
                             </div>
                         </a>
+                        <a href="travel-grammar-catcher/index.html" class="game-card">
+    <img src="travel-grammar-catcher/travel-catcher.png" alt="Travel Grammar Catcher" class="game-card-image">
+    <div class="game-card-content">
+        <h3 class="game-card-title">
+            <span class="emoji">✈️</span>
+            Travel Grammar Catcher
+        </h3>
+        <p class="game-card-description">
+            Catch falling travel items in your basket! Answer grammar quizzes about Past Tenses every 5 points. Reach 50 points to win!
+        </p>
+        <div class="play-button">
+            <span class="play-icon">▶</span>
+            Play Now
+        </div>
+        <div class="game-tag">Interactive Game • Past Tenses</div>
+    </div>
+</a>
                     </div>
                 </div>
             </div>
@@ -430,7 +447,7 @@
         });
 
 function checkProgress() {
-      const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted', 'kate', 'memory-tenses', 'london', 'alison', 'annie', 'emma'];
+         const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted', 'kate', 'memory-tenses', 'london', 'alison', 'annie', 'emma', 'travel-catcher'];
     exercises.forEach(ex => {
         if (localStorage.getItem('grammar_ex_' + ex) === 'true') {
             const badge = document.getElementById('badge-' + ex);
