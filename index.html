@@ -188,7 +188,7 @@
                     <button class="tab-button" onclick="switchTab('gse')">
                         <span class="tab-emoji">&#x1F3C6;</span>
                         <span>GSE Tasks</span>
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                     </button>
                     <button class="tab-button" onclick="switchTab('practice')">
                         <span class="tab-emoji">&#x1F3AF;</span>
@@ -232,6 +232,13 @@
                             <p>A brilliant child discovers the library. Practice Past Simple, comparatives, and modals.</p>
                             <span class="tag">9 questions • OGE Format</span>
                         </a>
+                        <a href="ted-story/index.html" class="exercise-card">
+    <span class="completed-badge" id="badge-ted">✓ Completed</span>
+    <div class="emoji">💻</div>
+    <h2>Ted's Story</h2>
+    <p>Ted is looking for a new job. Practice Past Simple, Past Continuous, Past Perfect, Passive Voice, and superlatives.</p>
+    <span class="tag">9 questions • OGE Format</span>
+</a>
                     </div>
                 </div>
 
@@ -375,7 +382,7 @@
         });
 
 function checkProgress() {
-    const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive'];
+    const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted'];
     exercises.forEach(ex => {
         if (localStorage.getItem('grammar_ex_' + ex) === 'true') {
             const badge = document.getElementById('badge-' + ex);
