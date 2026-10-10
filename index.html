@@ -374,17 +374,21 @@
             }
         });
 
-        function checkProgress() {
-            const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive'];
-            exercises.forEach(ex => {
-                if (localStorage.getItem('grammar_ex_' + ex) === 'true') {
-                    const badge = document.getElementById('badge-' + ex);
-                    if (badge) badge.style.display = 'flex';
-                }
-            });
+function checkProgress() {
+    const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive'];
+    exercises.forEach(ex => {
+        if (localStorage.getItem('grammar_ex_' + ex) === 'true') {
+            const badge = document.getElementById('badge-' + ex);
+            if (badge) badge.style.display = 'flex';
         }
-        document.addEventListener('DOMContentLoaded', checkProgress);
+    });
+}
 
+// Вызываем СРАЗУ при загрузке (даже если DOMContentLoaded уже прошёл)
+checkProgress();
+
+// И ещё раз при полной загрузке страницы
+document.addEventListener('DOMContentLoaded', checkProgress);
         const MINI_LEADERBOARD_URL = 'https://script.google.com/macros/s/AKfycbwCybdydUS2PDlskYqe2_jdbTns0MB_6e45CLWCkpr6jLB-d1zHm5ebBifFNLFoKhwr/exec';
         function loadMiniLeaderboard() {
             const callbackName = 'miniCallback' + Date.now();
