@@ -187,7 +187,7 @@
                     <button class="tab-button" onclick="switchTab('gse')">
                         <span class="tab-emoji">&#x1F3C6;</span>
                         <span>GSE Tasks</span>
-                        <span class="badge">8</span>
+                        <span class="badge">10</span>
                     </button>
                     <button class="tab-button" onclick="switchTab('practice')">
                         <span class="tab-emoji">&#x1F3AF;</span>
@@ -258,6 +258,20 @@
     <p>A story about sister's jewelry box. Practice comparatives, Passive Voice, Second Conditional, and Past Simple.</p>
     <span class="tag">9 questions • OGE Format</span>
 </a>     
+                        <a href="annies-lamp/index.html" class="exercise-card">
+    <span class="completed-badge" id="badge-annie">✓ Completed</span>
+    <div class="emoji">🔮</div>
+    <h2>Annie's Magic Lamp</h2>
+    <p>A Christmas birthday and a magic lamp. Practice Past Simple, Passive Voice, comparatives, and First Conditional.</p>
+    <span class="tag">9 questions • OGE Format</span>
+</a>
+<a href="emmas-job/index.html" class="exercise-card">
+    <span class="completed-badge" id="badge-emma">✓ Completed</span>
+    <div class="emoji">💼</div>
+    <h2>Emma's New Job</h2>
+    <p>A new job in a big company. Practice Past Simple, superlatives, ordinal numbers, and Present Perfect.</p>
+    <span class="tag">9 questions • OGE Format</span>
+</a>
                     </div>
                 </div>
 
@@ -416,7 +430,7 @@
         });
 
 function checkProgress() {
-      const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted', 'kate', 'memory-tenses', 'london', 'alison'];
+      const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted', 'kate', 'memory-tenses', 'london', 'alison', 'annie', 'emma'];
     exercises.forEach(ex => {
         if (localStorage.getItem('grammar_ex_' + ex) === 'true') {
             const badge = document.getElementById('badge-' + ex);
