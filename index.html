@@ -278,24 +278,26 @@
                             <span class="tag">9 questions • Grammar Drill</span>
                         </a>
                     </div>
-            <a href="memory-tenses/index.html" class="game-card">
-                <img src="https://img.freepik.com/premium-vector/memory-game-concept-illustration_114360-10573.jpg" alt="Memory Game" class="game-card-image">
-                <div class="game-card-content">
-                    <h3 class="game-card-title">
-                        <span class="emoji">🧠</span>
-                        Present Tenses Memory
-                    </h3>
-                    <p class="game-card-description">
-                        Match travel pairs and prove your knowledge of Present Simple, Present Continuous, and Present Perfect! Play against a friend or AI.
-                    </p>
-                    <div class="play-button">
-                        <span class="play-icon">▶</span>
-                        Play Now
-                    </div>
-                    <div class="game-tag">2 Players • Interactive Quiz</div>
-                </div>
-            </a>
-        </div>
+         <!-- ✅ КАРТОЧКА MEMORY ДОЛЖНА БЫТЬ ЗДЕСЬ, ВНУТРИ СЕТКИ -->
+                        <a href="memory-tenses/index.html" class="game-card">
+                            <img src="https://img.freepik.com/premium-vector/memory-game-concept-illustration_114360-10573.jpg" alt="Memory Game" class="game-card-image">
+                            <div class="game-card-content">
+                                <h3 class="game-card-title">
+                                    <span class="emoji">🧠</span>
+                                    Present Tenses Memory
+                                </h3>
+                                <p class="game-card-description">
+                                    Match travel pairs and prove your knowledge of Present Simple, Present Continuous, and Present Perfect! Play against a friend or AI.
+                                </p>
+                                <div class="play-button">
+                                    <span class="play-icon">▶</span>
+                                    Play Now
+                                </div>
+                                <div class="game-tag">2 Players • Interactive Quiz</div>
+                            </div>
+                        </a>
+                    </div> <!-- ✅ ЭТОТ </div> ЗАКРЫВАЕТ exercises-grid. ОН ДОЛЖЕН БЫТЬ ПОСЛЕ КАРТОЧКИ MEMORY! -->
+                </div> <!-- ✅ ЭТОТ </div> ЗАКРЫВАЕТ вкладку practice -->
             <div class="side-leaderboard">
                 <div class="side-leaderboard-header">
                     <h3>🏆 Top 5</h3>
@@ -404,7 +406,7 @@
         });
 
 function checkProgress() {
-   const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted', 'kate'];
+      const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted', 'kate', 'memory-tenses'];
     exercises.forEach(ex => {
         if (localStorage.getItem('grammar_ex_' + ex) === 'true') {
             const badge = document.getElementById('badge-' + ex);
