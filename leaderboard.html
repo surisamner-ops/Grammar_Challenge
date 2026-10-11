@@ -368,7 +368,15 @@
                 const studentResults = {};
                 filtered.forEach(item => {
                     const name = item.Name || item.student_name || 'Anonymous';
-                    const percentage = parseInt(String(item.Percentage || item.percentage || '0%').replace('%', '')) || 0;
+                    let rawPercentage = item.Percentage || item.percentage || '0%';
+let percentage = 0;
+if (typeof rawPercentage === 'string' && rawPercentage.includes('%')) {
+    percentage = parseInt(rawPercentage.replace('%', '')) || 0;
+} else if (typeof rawPercentage === 'number') {
+    percentage = rawPercentage;
+} else {
+    percentage = parseInt(rawPercentage) || 0;
+}
                     if (!studentResults[name]) {
                         studentResults[name] = [];
                     }
