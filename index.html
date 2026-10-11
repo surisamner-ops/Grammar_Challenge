@@ -605,17 +605,18 @@
         window.scrollBy({ top: 800, behavior: 'smooth' });
     }
 });
-    // Инициализация стрелки при загрузке
-   const scrollHeight = document.body.scrollHeight;
-const scrollTop = window.scrollY;
-const windowHeight = window.innerHeight;
-const distanceToEnd = scrollHeight - scrollTop - windowHeight;
-
-if (distanceToEnd < 300) {
-    backToTopBtn.textContent = '↑';
-} else {
-    backToTopBtn.textContent = '↓';
-}
+   // Инициализация стрелки после полной загрузки
+window.addEventListener('load', () => {
+    const scrollHeight = document.body.scrollHeight;
+    const windowHeight = window.innerHeight;
+    const distanceToEnd = scrollHeight - windowHeight;
+    
+    if (distanceToEnd < 300) {
+        backToTopBtn.textContent = '↑';
+    } else {
+        backToTopBtn.textContent = '↓';
+    }
+});
     // 2. Логика Поиска по карточкам
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', function() {
