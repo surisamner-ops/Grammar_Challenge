@@ -40,7 +40,7 @@
         .exercise-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 20px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); line-height: 1.7; font-size: 1.05em; }
         .exercise-row:last-child { border-bottom: none; }
         .sentence-text { flex: 1; }
-        .base-word { flex-shrink: 0; width: 130px; text-align: center; background: rgba(192, 132, 252, 0.12); border: 1px solid rgba(192, 132, 252, 0.3); padding: 10px 16px; border-radius: 12px; font-weight: 700; color: #e9d5ff; }
+        .base-word { flex-shrink: 0; min-width: 130px; max-width: 180px; width: auto; text-align: center; background: rgba(192, 132, 252, 0.12); border: 1px solid rgba(192, 132, 252, 0.3); padding: 10px 16px; border-radius: 12px; font-weight: 700; color: #e9d5ff; }
         .blank-input { width: 130px; padding: 6px 12px; background: rgba(0, 0, 0, 0.3); border: 2px dashed rgba(192, 132, 252, 0.4); border-radius: 8px; color: #fff; font-size: 0.95em; font-weight: 600; text-align: center; display: inline-block; vertical-align: middle; margin: 0 4px; }
         .blank-input::placeholder { color: rgba(255, 255, 255, 0.25); }
         .blank-input:focus { outline: none; border-color: #c084fc; }
