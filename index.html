@@ -283,15 +283,15 @@
         /* --- 3. Стили для кнопки "Наверх" --- */
         .back-to-top-btn {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 55px;
-            height: 55px;
+    bottom: 30px;
+    right: 30px;
+    width: 70px;
+    height: 70px;
             background: linear-gradient(135deg, #c084fc, #60a5fa);
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             color: white;
-            font-size: 1.5em;
+            font-size: 2em;
             font-weight: bold;
             cursor: pointer;
             opacity: 0;
@@ -591,6 +591,8 @@
     });
         // ОБНОВЛЕННАЯ ФУНКЦИЯ СО СПИННЕРОМ
         function switchTab(tabName) {
+            // Запоминаем активный раздел
+localStorage.setItem('lastActiveTab', tabName);
             const allTabs = document.querySelectorAll('.tab-content');
             const spinner = document.getElementById('tabSpinner');
 
@@ -627,7 +629,16 @@
                 });
             }, 250);
         }
-
+// Автоматически открываем последний активный раздел при загрузке
+window.addEventListener('DOMContentLoaded', function() {
+    const lastTab = localStorage.getItem('lastActiveTab');
+    if (lastTab) {
+        const tabButton = document.querySelector(`.tab-button[onclick*="${lastTab}"]`);
+        if (tabButton) {
+            tabButton.click();
+        }
+    }
+});
         function createStars() {
             const container = document.getElementById('starsContainer');
             for (let i = 0; i < 250; i++) {
