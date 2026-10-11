@@ -577,30 +577,48 @@
     
     // Кнопка видна всегда
     backToTopBtn.classList.add('visible');
-    
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 1000) {
-            backToTopBtn.textContent = '↑';
-        } else {
-            backToTopBtn.textContent = '↓';
-        }
-    });
-    backToTopBtn.addEventListener('click', () => {
-    if (window.scrollY > 1000) {
-        // Прокрутка наверх
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-        // Прокрутка вниз на 800px
-        window.scrollBy({ top: 800, behavior: 'smooth' });
-    }
-});
+    // Вычисляем, сколько осталось до конца страницы
+    const scrollHeight = document.body.scrollHeight;
+    const scrollTop = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const distanceToEnd = scrollHeight - scrollTop - windowHeight;
     
-    // Инициализация стрелки при загрузке
-    if (window.scrollY > 1000) {
+    // Кнопка меняется на ↑ только когда до конца осталось меньше 300px
+    if (distanceToEnd < 300) {
         backToTopBtn.textContent = '↑';
     } else {
         backToTopBtn.textContent = '↓';
     }
+});
+    backToTopBtn.addEventListener('click', () => {
+    const scrollHeight = document.body.scrollHeight;
+    const scrollTop = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const distanceToEnd = scrollHeight - scrollTop - windowHeight;
+    
+    if (distanceToEnd < 300) {
+        // Прокрутка наверх
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        // Прокрутка до конца
+        window.scrollTo({ 
+            top: document.body.scrollHeight, 
+            behavior: 'smooth' 
+        });
+    }
+});
+    // Инициализация стрелки при загрузке
+   const scrollHeight = document.body.scrollHeight;
+const scrollTop = window.scrollY;
+const windowHeight = window.innerHeight;
+const distanceToEnd = scrollHeight - scrollTop - windowHeight;
+
+if (distanceToEnd < 300) {
+    backToTopBtn.textContent = '↑';
+} else {
+    backToTopBtn.textContent = '↓';
+}
     // 2. Логика Поиска по карточкам
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', function() {
