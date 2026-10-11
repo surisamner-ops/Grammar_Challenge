@@ -313,6 +313,13 @@
     transform: translateY(-5px) scale(1.1);
     box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6);
 }
+        .floating-element svg {
+    animation: twinkle 3s ease-in-out infinite;
+}
+@keyframes twinkle {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
     </style>
 </head>
 <body>
