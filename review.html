@@ -151,6 +151,55 @@
             .help-options { flex-direction: column; }
             .help-option { min-width: 100%; }
         }
+                .back-to-exercises-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #c084fc, #60a5fa);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(192, 132, 252, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            opacity: 0.9;
+        }
+        .back-to-exercises-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6);
+            opacity: 1;
+        }
+        .back-to-exercises-btn .btn-text {
+            position: absolute;
+            left: 85px;
+            background: rgba(192, 132, 252, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(192, 132, 252, 0.4);
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-family: 'Comfortaa', cursive;
+            font-size: 1em;
+            font-weight: 600;
+            color: #e9d5ff;
+            white-space: nowrap;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            letter-spacing: 0.5px;
+        }
+        .back-to-exercises-btn:hover .btn-text {
+            opacity: 1;
+            transform: translateX(5px);
+        }
     </style>
 </head>
 <body>
@@ -160,8 +209,10 @@
     <div class="stars-container" id="starsContainer"></div>
     
     <div class="main-wrapper">
-        <a href="index.html" class="back-link">← Back to exercises</a>
-        
+        <a href="index.html" class="back-to-exercises-btn">
+    <span>←</span>
+    <span class="btn-text">Back to main page</span>
+</a>
         <div class="header">
             <h1>Share Your Feedback</h1>
             <p>Help me make the exercises better! Your feedback is very important.</p>
