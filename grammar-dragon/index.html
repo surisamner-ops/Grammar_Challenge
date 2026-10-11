@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defeat the Grammar Dragon - Grammar Challenge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0a0e27; --bg-mid: #1a1f3a; --bg-light: #0a0e27;
+            --glass-bg: rgba(255, 255, 255, 0.05); --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-highlight: rgba(255, 255, 255, 0.25); --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.75); --accent-primary: #c084fc;
+            --accent-secondary: #60a5fa; --accent-gold: #fbbf24;
+            --success: #4ade80; --error: #f87171;
+            --shadow-glow: 0 0 30px rgba(192, 132, 252, 0.4);
+            --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --font-display: 'Fredoka', sans-serif; --font-body: 'Comfortaa', cursive;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, var(--bg-deep), var(--bg-mid), var(--bg-light));
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        
+        .space-background {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(120, 50, 200, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(50, 100, 200, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(200, 50, 150, 0.1) 0%, transparent 50%);
+        }
+        
+        .stars { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; overflow: hidden; }
+        .star {
+            position: absolute; background: #fff; border-radius: 50%;
+            animation: twinkle var(--duration, 3s) ease-in-out infinite var(--delay, 0s);
+            opacity: var(--opacity, 0.8); box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.6);
+        }
+        @keyframes twinkle { 0%, 100% { opacity: var(--opacity, 0.3); transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
+        .star.shooting {
+            width: 2px !important; height: 60px !important; border-radius: 1px;
+            background: linear-gradient(to bottom, transparent, #fff, transparent);
+            animation: shoot 2s linear forwards; opacity: 0;
+        }
+        @keyframes shoot { 0% { transform: translate(0, 0) rotate(45deg); opacity: 1; } 100% { transform: translate(100vw, 100vh) rotate(45deg); opacity: 0; } }
+
+        .game-container { position: relative; z-index: 2; max-width: 950px; margin: 0 auto; padding: 30px 20px; }
+        
+        .back-to-exercises-btn {
+            position: fixed; top: 20px; left: 20px; width: 60px; height: 60px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 50%;
+            color: white; font-size: 1.4em; font-weight: bold; cursor: pointer;
+            z-index: 9999; box-shadow: var(--shadow-glow);
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; transition: var(--transition-smooth);
+        }
+        .back-to-exercises-btn:hover { transform: scale(1.15) rotate(360deg); box-shadow: 0 0 60px rgba(192, 132, 252, 1); }
+
+        .battle-arena {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; padding: 25px;
+            background: var(--glass-bg); backdrop-filter: blur(30px);
+            border: 2px solid var(--glass-border); border-radius: 25px;
+            box-shadow: var(--shadow-glow), var(--shadow-soft);
+            position: relative; overflow: hidden;
+        }
+        .battle-arena::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(192, 132, 252, 0.1), transparent);
+            animation: rotate 10s linear infinite;
+        }
+        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .player-side, .boss-side { text-align: center; flex: 1; position: relative; z-index: 1; }
+        .character { margin-bottom: 8px; animation: float 3s ease-in-out infinite; filter: drop-shadow(0 0 25px rgba(192, 132, 252, 0.9)); }
+        @keyframes float { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-12px) scale(1.05); } }
+        
+        .health-bar {
+            width: 100%; max-width: 200px; height: 22px; background: rgba(0, 0, 0, 0.5);
+            border-radius: 11px; overflow: hidden; margin: 8px auto;
+            border: 2px solid rgba(255, 255, 255, 0.2); box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); position: relative;
+        }
+        .health-fill {
+            height: 100%; transition: width 0.5s ease; border-radius: 9px; position: relative; overflow: hidden;
+        }
+        .health-fill::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .player-health { background: linear-gradient(90deg, #4ade80, #22c55e, #4ade80); background-size: 200% 100%; animation: healthGlow 2s ease-in-out infinite; box-shadow: 0 0 30px #4ade80; }
+        @keyframes healthGlow { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        .boss-health { background: linear-gradient(90deg, #f87171, #ef4444, #f87171); background-size: 200% 100%; animation: healthGlow 2s ease-in-out infinite; box-shadow: 0 0 30px #f87171; }
+        
+        .health-text { font-family: var(--font-display); font-size: 1.1em; font-weight: 700; margin-top: 5px; text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+        
+        .vs-text {
+            font-family: var(--font-display); font-size: 2.5em; font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-gold), #f59e0b, var(--accent-gold));
+            background-size: 200% 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin: 0 20px; animation: vsPulse 1.5s ease-in-out infinite, gradientShift 3s ease infinite;
+            filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.8)); position: relative; z-index: 1;
+        }
+        @keyframes vsPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        
+        .timer-container { margin: 15px auto; max-width: 400px; }
+        .timer-bar {
+            width: 100%; height: 14px; background: rgba(0, 0, 0, 0.5); border-radius: 7px;
+            overflow: hidden; border: 2px solid rgba(255, 255, 255, 0.2); box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        .timer-fill {
+            height: 100%; background: linear-gradient(90deg, #4ade80, #22c55e);
+            transition: width 0.1s linear, background 0.3s; border-radius: 5px; box-shadow: 0 0 15px currentColor;
+        }
+        .timer-fill.warning { background: linear-gradient(90deg, #fbbf24, #f59e0b); animation: timerPulse 0.5s ease-in-out infinite; }
+        .timer-fill.danger { background: linear-gradient(90deg, #f87171, #ef4444); animation: timerPulse 0.25s ease-in-out infinite; }
+        @keyframes timerPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        .timer-text {
+            text-align: center; font-family: var(--font-display); font-size: 1.3em; font-weight: 700;
+            margin-top: 8px; text-shadow: 0 0 15px currentColor;
+        }
+        .timer-text.warning { color: #fbbf24; }
+        .timer-text.danger { color: #f87171; animation: timerPulse 0.25s ease-in-out infinite; }
+        
+        .combo-display {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-family: var(--font-display); font-size: 4em; font-weight: 700; color: var(--accent-gold);
+            text-shadow: 0 0 40px rgba(251, 191, 36, 0.8), 0 0 80px rgba(251, 191, 36, 0.5);
+            pointer-events: none; z-index: 1000; opacity: 0; animation: comboPop 1s forwards;
+        }
+        @keyframes comboPop {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3) rotate(-10deg); }
+            30% { opacity: 1; transform: translate(-50%, -50%) scale(1.3) rotate(5deg); }
+            60% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+            100% { opacity: 0; transform: translate(-50%, -80%) scale(0.8); }
+        }
+        
+        .score-display {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            padding: 10px 25px; background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.3));
+            border: 2px solid rgba(251, 191, 36, 0.6); border-radius: 50px;
+            font-family: var(--font-display); font-size: 1.2em; font-weight: 700; color: var(--accent-gold);
+            z-index: 9998; backdrop-filter: blur(20px); box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+        }
+        
+        .music-btn {
+            position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 50%; font-size: 1.8em;
+            cursor: pointer; z-index: 9999; box-shadow: var(--shadow-glow);
+            display: flex; align-items: center; justify-content: center; transition: var(--transition-smooth);
+        }
+        .music-btn:hover { transform: scale(1.15); box-shadow: 0 0 50px rgba(192, 132, 252, 0.9); }
+        .music-btn.muted { opacity: 0.5; }
+        
+        .question-card {
+            background: var(--glass-bg); backdrop-filter: blur(30px);
+            border: 2px solid var(--glass-border); border-radius: 25px;
+            padding: 30px; margin-bottom: 20px; box-shadow: var(--shadow-glow), var(--shadow-soft);
+            position: relative; overflow: hidden;
+        }
+        .question-card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(96, 165, 250, 0.1), transparent);
+            animation: rotate 15s linear infinite;
+        }
+        
+        .question-text {
+            font-size: 1.25em; line-height: 1.6; margin-bottom: 20px; text-align: center;
+            font-weight: 600; position: relative; z-index: 1; text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        .time-marker {
+            display: inline-block; padding: 3px 10px; background: rgba(251, 191, 36, 0.2);
+            border: 1px solid rgba(251, 191, 36, 0.5); border-radius: 8px;
+            color: var(--accent-gold); font-weight: 700; font-size: 0.9em; margin: 0 5px;
+        }
+        .blank {
+            display: inline-block; min-width: 140px; padding: 6px 18px;
+            border-bottom: 3px dashed var(--accent-primary); color: var(--accent-primary); font-weight: 700;
+            background: rgba(192, 132, 252, 0.15); border-radius: 10px;
+            box-shadow: 0 0 20px rgba(192, 132, 252, 0.3); animation: blankPulse 2s ease-in-out infinite;
+        }
+        @keyframes blankPulse { 0%, 100% { box-shadow: 0 0 20px rgba(192, 132, 252, 0.3); } 50% { box-shadow: 0 0 40px rgba(192, 132, 252, 0.6); } }
+        
+        .answers { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; position: relative; z-index: 1; }
+        .answer-btn {
+            padding: 18px; background: linear-gradient(135deg, rgba(192, 132, 252, 0.15), rgba(96, 165, 250, 0.15));
+            border: 2px solid var(--glass-border); border-radius: 18px; color: white;
+            font-family: var(--font-body); font-size: 1.05em; font-weight: 600; cursor: pointer;
+            transition: var(--transition-smooth); box-shadow: 0 0 30px rgba(192, 132, 252, 0.2); position: relative; overflow: hidden;
+        }
+        .answer-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 0 40px rgba(192, 132, 252, 0.4); border-color: var(--accent-primary); }
+        .answer-btn.correct {
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.4), rgba(34, 197, 94, 0.4));
+            border-color: var(--success); animation: correctExplosion 0.6s; box-shadow: 0 0 50px rgba(74, 222, 128, 0.8);
+        }
+        .answer-btn.wrong {
+            background: linear-gradient(135deg, rgba(248, 113, 113, 0.4), rgba(239, 68, 68, 0.4));
+            border-color: var(--error); animation: shake 0.6s; box-shadow: 0 0 50px rgba(248, 113, 113, 0.8);
+        }
+        @keyframes correctExplosion { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-10px); } 40%, 80% { transform: translateX(10px); } }
+        
+        .explanation {
+            margin-top: 18px; padding: 18px; background: rgba(96, 165, 250, 0.1);
+            border-left: 5px solid var(--accent-secondary); border-radius: 12px;
+            font-size: 0.95em; color: #e0e7ff; line-height: 1.6; display: none;
+            animation: slideIn 0.5s ease; box-shadow: 0 0 30px rgba(96, 165, 250, 0.3); position: relative; z-index: 1;
+        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }
+        .explanation.show { display: block; }
+        .explanation.error { border-left-color: var(--error); background: rgba(248, 113, 113, 0.1); box-shadow: 0 0 30px rgba(248, 113, 113, 0.3); }
+        .explanation.success { border-left-color: var(--success); background: rgba(74, 222, 128, 0.1); box-shadow: 0 0 30px rgba(74, 222, 128, 0.3); }
+        .explanation .grammar-formula {
+            display: inline-block; padding: 5px 12px; background: rgba(192, 132, 252, 0.3);
+            border: 2px solid var(--accent-primary); border-radius: 8px; font-weight: 700;
+            color: #e9d5ff; margin: 6px 0; font-family: var(--font-display);
+            box-shadow: 0 0 15px rgba(192, 132, 252, 0.5); font-size: 0.95em;
+        }
+        .explanation .correct-answer { color: var(--success); font-weight: 700; font-size: 1.1em; text-shadow: 0 0 10px rgba(74, 222, 128, 0.5); }
+        .explanation .wrong-answer { color: var(--error); text-decoration: line-through; opacity: 0.7; }
+        
+        .overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 14, 39, 0.98); backdrop-filter: blur(30px);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 100; text-align: center; padding: 20px;
+        }
+        .overlay.hidden { display: none; }
+        .overlay h2 {
+            font-family: var(--font-display); font-size: 3em;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary), var(--accent-primary));
+            background-size: 200% 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 20px; animation: gradientShift 3s ease infinite; filter: drop-shadow(0 0 40px rgba(192, 132, 252, 0.8));
+        }
+        .overlay p { font-size: 1.2em; color: #c7d2fe; margin-bottom: 30px; max-width: 600px; line-height: 1.7; text-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+        
+        .btn-start {
+            padding: 20px 55px; background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 50%, #a78bfa 100%);
+            background-size: 200% 100%; border: none; border-radius: 50px; color: white;
+            font-family: var(--font-body); font-size: 1.3em; font-weight: 700; cursor: pointer;
+            transition: var(--transition-smooth); box-shadow: 0 0 50px rgba(167, 139, 250, 0.6);
+            animation: gradientShift 3s ease infinite;
+        }
+        .btn-start:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 0 80px rgba(167, 139, 250, 1); }
+        
+        .name-input {
+            padding: 16px 28px; background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(192, 132, 252, 0.5); border-radius: 50px; color: white;
+            font-family: var(--font-body); font-size: 1.15em; text-align: center;
+            margin-bottom: 22px; width: 350px; max-width: 90%; transition: var(--transition-smooth);
+            box-shadow: 0 0 30px rgba(192, 132, 252, 0.3);
+        }
+        .name-input:focus { outline: none; border-color: var(--accent-primary); box-shadow: 0 0 50px rgba(192, 132, 252, 0.6); background: rgba(255, 255, 255, 0.15); transform: scale(1.05); }
+        .name-input::placeholder { color: #a0aec0; }
+        
+        .damage-effect {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 5em; font-weight: 700; color: var(--error);
+            text-shadow: 0 0 60px rgba(248, 113, 113, 1);
+            animation: damagePop 1.2s forwards; pointer-events: none; z-index: 50;
+        }
+        @keyframes damagePop {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.2) rotate(0deg); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.5) rotate(180deg); }
+            100% { opacity: 0; transform: translate(-50%, -150%) scale(1) rotate(360deg); }
+        }
+        
+        .player-name-display {
+            position: fixed; top: 20px; right: 20px; padding: 10px 22px;
+            background: linear-gradient(135deg, rgba(192, 132, 252, 0.4), rgba(96, 165, 250, 0.4));
+            border: 2px solid rgba(192, 132, 252, 0.6); border-radius: 50px;
+            font-family: var(--font-display); font-weight: 600; z-index: 9998; font-size: 1.05em;
+            backdrop-filter: blur(20px); box-shadow: 0 0 40px rgba(192, 132, 252, 0.5);
+        }
+        .player-name-display.hidden { display: none; }
+        
+        .particle {
+            position: fixed; width: 6px; height: 6px; border-radius: 50%;
+            pointer-events: none; z-index: 1000; animation: particleExplode 0.8s forwards;
+        }
+        @keyframes particleExplode {
+            0% { opacity: 1; transform: translate(0, 0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0); }
+        }
+        
+        .screen-shake { animation: screenShake 0.5s; }
+        @keyframes screenShake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); } 20%, 40%, 60%, 80% { transform: translateX(5px); } }
+        
+        .sending-status {
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            backdrop-filter: blur(15px); padding: 10px 20px; border-radius: 50px;
+            font-size: 0.9rem; color: var(--text-secondary); z-index: 150;
+            opacity: 0; visibility: hidden; transition: var(--transition-smooth);
+        }
+        .sending-status.show { opacity: 1; visibility: visible; }
+        .sending-status.success { color: var(--success); border-color: var(--success); }
+        .sending-status.error { color: var(--error); border-color: var(--error); }
+        
+        @media (max-width: 768px) {
+            .battle-arena { flex-direction: column; gap: 15px; padding: 20px; }
+            .vs-text { margin: 10px 0; font-size: 2em; }
+            .character svg { width: 70px; height: 70px; }
+            .question-text { font-size: 1.1em; }
+            .question-card { padding: 20px; }
+            .overlay h2 { font-size: 2.2em; }
+            .answers { grid-template-columns: 1fr; }
+            .combo-display { font-size: 3em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="space-background"></div>
+    <div class="stars" id="stars-container"></div>
+    
+    <a href="../index.html" class="back-to-exercises-btn" onclick="localStorage.setItem('lastActiveTab', 'targeted'); localStorage.setItem('returnFromExercise', 'true')">←</a>
+    
+    <div class="player-name-display hidden" id="playerNameDisplay"></div>
+    <div class="score-display hidden" id="scoreDisplay">⭐ Score: 0</div>
+    <button class="music-btn muted" id="musicBtn" title="Toggle Music">🔇</button>
+    <div class="sending-status" id="sendingStatus"></div>
+    
+    <div class="game-container" id="gameContainer">
+        <div class="battle-arena">
+            <div class="player-side">
+                <div class="character">
+                    <svg width="100" height="100" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <radialGradient id="helmetGrad" cx="50%" cy="30%"><stop offset="0%" style="stop-color:#e0f2fe;stop-opacity:1" /><stop offset="70%" style="stop-color:#7dd3fc;stop-opacity:1" /><stop offset="100%" style="stop-color:#0284c7;stop-opacity:1" /></radialGradient>
+                            <radialGradient id="catBodyGrad" cx="50%" cy="30%"><stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" /><stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" /></radialGradient>
+                            <radialGradient id="visorGrad" cx="50%" cy="40%"><stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:0.9" /><stop offset="100%" style="stop-color:#0f172a;stop-opacity:0.95" /></radialGradient>
+                        </defs>
+                        <ellipse cx="60" cy="115" rx="35" ry="5" fill="rgba(0,0,0,0.3)"/>
+                        <ellipse cx="60" cy="85" rx="35" ry="30" fill="url(#catBodyGrad)"/>
+                        <ellipse cx="60" cy="85" rx="35" ry="30" fill="rgba(255,255,255,0.2)"/>
+                        <circle cx="60" cy="45" r="38" fill="url(#helmetGrad)"/>
+                        <ellipse cx="45" cy="30" rx="15" ry="10" fill="rgba(255,255,255,0.6)"/>
+                        <ellipse cx="60" cy="48" rx="28" ry="22" fill="url(#visorGrad)"/>
+                        <ellipse cx="50" cy="48" rx="8" ry="10" fill="#ffffff"/>
+                        <ellipse cx="70" cy="48" rx="8" ry="10" fill="#ffffff"/>
+                        <circle cx="52" cy="50" r="5" fill="#1e293b"/>
+                        <circle cx="72" cy="50" r="5" fill="#1e293b"/>
+                        <circle cx="54" cy="48" r="2" fill="#ffffff"/>
+                        <circle cx="74" cy="48" r="2" fill="#ffffff"/>
+                        <ellipse cx="60" cy="58" rx="3" ry="2" fill="#ec4899"/>
+                        <path d="M 55 62 Q 60 65 65 62" stroke="#1e293b" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <path d="M 30 25 L 25 10 L 40 20 Z" fill="#fbbf24"/>
+                        <path d="M 90 25 L 95 10 L 80 20 Z" fill="#fbbf24"/>
+                        <line x1="60" y1="7" x2="60" y2="15" stroke="#94a3b8" stroke-width="3"/>
+                        <circle cx="60" cy="5" r="4" fill="#ef4444"/>
+                        <circle cx="60" cy="5" r="2" fill="#fca5a5"/>
+                    </svg>
+                </div>
+                <div class="health-bar"><div class="health-fill player-health" id="playerHealth" style="width: 100%"></div></div>
+                <div class="health-text" id="playerHealthText">❤️❤️❤️</div>
+            </div>
+            
+            <div class="vs-text">VS</div>
+            
+            <div class="boss-side">
+                <div class="character">
+                    <svg width="110" height="110" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <radialGradient id="dragonBody3D" cx="40%" cy="30%"><stop offset="0%" style="stop-color:#d8b4fe;stop-opacity:1" /><stop offset="30%" style="stop-color:#a855f7;stop-opacity:1" /><stop offset="70%" style="stop-color:#7c3aed;stop-opacity:1" /><stop offset="100%" style="stop-color:#4c1d95;stop-opacity:1" /></radialGradient>
+                            <radialGradient id="dragonHead3D" cx="45%" cy="35%"><stop offset="0%" style="stop-color:#e9d5ff;stop-opacity:1" /><stop offset="40%" style="stop-color:#a855f7;stop-opacity:1" /><stop offset="100%" style="stop-color:#581c87;stop-opacity:1" /></radialGradient>
+                            <radialGradient id="wingGrad3D" cx="50%" cy="30%"><stop offset="0%" style="stop-color:#f472b6;stop-opacity:0.9" /><stop offset="50%" style="stop-color:#ec4899;stop-opacity:0.85" /><stop offset="100%" style="stop-color:#be185d;stop-opacity:0.95" /></radialGradient>
+                            <radialGradient id="fireGrad3D" cx="50%" cy="50%"><stop offset="0%" style="stop-color:#fef08a;stop-opacity:1" /><stop offset="30%" style="stop-color:#fbbf24;stop-opacity:1" /><stop offset="60%" style="stop-color:#f97316;stop-opacity:1" /><stop offset="100%" style="stop-color:#dc2626;stop-opacity:0.9" /></radialGradient>
+                            <radialGradient id="hornGrad" cx="50%" cy="30%"><stop offset="0%" style="stop-color:#f472b6;stop-opacity:1" /><stop offset="100%" style="stop-color:#db2777;stop-opacity:1" /></radialGradient>
+                            <filter id="eyeGlow"><feGaussianBlur stdDeviation="2" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                        </defs>
+                        <ellipse cx="60" cy="118" rx="42" ry="7" fill="rgba(0,0,0,0.5)"/>
+                        <ellipse cx="60" cy="116" rx="38" ry="5" fill="rgba(124, 58, 237, 0.3)"/>
+                        <path d="M 15 55 Q 0 25 10 70 Q 15 85 30 75 Z" fill="url(#wingGrad3D)" opacity="0.9"/>
+                        <path d="M 105 55 Q 120 25 110 70 Q 105 85 90 75 Z" fill="url(#wingGrad3D)" opacity="0.9"/>
+                        <path d="M 15 55 L 10 70" stroke="#ec4899" stroke-width="1.5" opacity="0.6"/>
+                        <path d="M 20 60 L 15 72" stroke="#ec4899" stroke-width="1.5" opacity="0.6"/>
+                        <path d="M 105 55 L 110 70" stroke="#ec4899" stroke-width="1.5" opacity="0.6"/>
+                        <path d="M 100 60 L 105 72" stroke="#ec4899" stroke-width="1.5" opacity="0.6"/>
+                        <path d="M 95 80 Q 115 85 112 95 Q 108 102 100 98" stroke="url(#dragonBody3D)" stroke-width="12" fill="none" stroke-linecap="round"/>
+                        <path d="M 112 95 L 118 90 L 114 98 Z" fill="#ec4899"/>
+                        <ellipse cx="60" cy="78" rx="40" ry="34" fill="url(#dragonBody3D)"/>
+                        <ellipse cx="48" cy="68" rx="22" ry="18" fill="rgba(255,255,255,0.2)"/>
+                        <ellipse cx="45" cy="65" rx="15" ry="12" fill="rgba(255,255,255,0.15)"/>
+                        <ellipse cx="70" cy="85" rx="18" ry="15" fill="rgba(0,0,0,0.2)"/>
+                        <path d="M 25 72 Q 60 78 95 72" stroke="#ec4899" stroke-width="2.5" fill="none" opacity="0.7"/>
+                        <path d="M 28 82 Q 60 88 92 82" stroke="#a855f7" stroke-width="2.5" fill="none" opacity="0.7"/>
+                        <path d="M 32 90 Q 60 95 88 90" stroke="#d8b4fe" stroke-width="2" fill="none" opacity="0.5"/>
+                        <circle cx="60" cy="42" r="34" fill="url(#dragonHead3D)"/>
+                        <ellipse cx="48" cy="32" rx="18" ry="14" fill="rgba(255,255,255,0.25)"/>
+                        <ellipse cx="45" cy="30" rx="12" ry="10" fill="rgba(255,255,255,0.2)"/>
+                        <path d="M 32 18 L 24 2 L 40 14 Z" fill="url(#hornGrad)"/>
+                        <path d="M 88 18 L 96 2 L 80 14 Z" fill="url(#hornGrad)"/>
+                        <path d="M 32 18 L 28 8 L 36 14 Z" fill="#f9a8d4" opacity="0.6"/>
+                        <path d="M 88 18 L 92 8 L 84 14 Z" fill="#f9a8d4" opacity="0.6"/>
+                        <circle cx="24" cy="2" r="3" fill="#f472b6"/>
+                        <circle cx="96" cy="2" r="3" fill="#f472b6"/>
+                        <path d="M 38 32 L 52 36" stroke="#1e1b4b" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M 82 32 L 68 36" stroke="#1e1b4b" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="48" cy="40" r="10" fill="#1e1b4b"/>
+                        <circle cx="72" cy="40" r="10" fill="#1e1b4b"/>
+                        <circle cx="50" cy="42" r="6" fill="#ef4444" filter="url(#eyeGlow)"/>
+                        <circle cx="74" cy="42" r="6" fill="#ef4444" filter="url(#eyeGlow)"/>
+                        <ellipse cx="50" cy="42" rx="2.5" ry="5" fill="#000000"/>
+                        <ellipse cx="74" cy="42" rx="2.5" ry="5" fill="#000000"/>
+                        <circle cx="52" cy="40" r="2" fill="#ffffff"/>
+                        <circle cx="76" cy="40" r="2" fill="#ffffff"/>
+                        <circle cx="48" cy="44" r="1" fill="#ffffff" opacity="0.7"/>
+                        <circle cx="72" cy="44" r="1" fill="#ffffff" opacity="0.7"/>
+                        <circle cx="55" cy="54" r="3.5" fill="#1e1b4b"/>
+                        <circle cx="65" cy="54" r="3.5" fill="#1e1b4b"/>
+                        <circle cx="55" cy="52" r="2" fill="rgba(168, 85, 247, 0.5)"/>
+                        <circle cx="65" cy="52" r="2" fill="rgba(168, 85, 247, 0.5)"/>
+                        <path d="M 42 60 Q 60 72 78 60" stroke="#1e1b4b" stroke-width="3" fill="none"/>
+                        <path d="M 48 62 L 50 68 L 52 62" fill="#ffffff"/>
+                        <path d="M 56 64 L 58 70 L 60 64" fill="#ffffff"/>
+                        <path d="M 64 64 L 66 70 L 68 64" fill="#ffffff"/>
+                        <path d="M 72 62 L 74 68 L 76 62" fill="#ffffff"/>
+                        <path d="M 52 64 Q 60 85 68 64" fill="url(#fireGrad3D)"/>
+                        <path d="M 55 66 Q 60 80 65 66" fill="#fbbf24"/>
+                        <path d="M 57 68 Q 60 76 63 68" fill="#fef08a"/>
+                        <ellipse cx="40" cy="100" rx="8" ry="10" fill="url(#dragonBody3D)"/>
+                        <ellipse cx="80" cy="100" rx="8" ry="10" fill="url(#dragonBody3D)"/>
+                        <path d="M 36 105 L 34 110 L 38 107" fill="#1e1b4b"/>
+                        <path d="M 40 106 L 40 111 L 42 107" fill="#1e1b4b"/>
+                        <path d="M 44 105 L 46 110 L 42 107" fill="#1e1b4b"/>
+                        <path d="M 76 105 L 74 110 L 78 107" fill="#1e1b4b"/>
+                        <path d="M 80 106 L 80 111 L 82 107" fill="#1e1b4b"/>
+                        <path d="M 84 105 L 86 110 L 82 107" fill="#1e1b4b"/>
+                    </svg>
+                </div>
+                <div class="health-bar"><div class="health-fill boss-health" id="bossHealth" style="width: 100%"></div></div>
+                <div class="health-text" id="bossHealthText">Cyber Dragon (15 HP)</div>
+            </div>
+        </div>
+        
+        <div class="timer-container">
+            <div class="timer-bar"><div class="timer-fill" id="timerFill" style="width: 100%"></div></div>
+            <div class="timer-text" id="timerText">⏱️ 12s</div>
+        </div>
+        
+        <div class="question-card" id="questionCard">
+            <div class="question-text" id="questionText">Loading...</div>
+            <div class="answers" id="answersContainer"></div>
+            <div class="explanation" id="explanation"></div>
+        </div>
+    </div>
+    
+    <div class="overlay" id="nameScreen">
+        <h2>⚔️ Defeat the Grammar Dragon!</h2>
+        <p>Help Astro Cat defeat the Cyber Dragon! The Dragon has <b>15 HP</b>. Answer <b>FAST</b> (under 5s) to avoid the Dragon's Wrath! You have 3 hearts.</p>
+        <input type="text" class="name-input" id="playerNameInput" placeholder="Enter your name, hero..." maxlength="20">
+        <button class="btn-start" onclick="startGame()">Start Battle</button>
+    </div>
+    
+    <div class="overlay hidden" id="endScreen">
+        <h2 id="endTitle">Victory!</h2>
+        <p id="endMessage">You defeated the Grammar Dragon!</p>
+        <button class="btn-start" onclick="location.href='../index.html'">Back to Exercises</button>
+    </div>
+
+    <script>
+        // ===== ОТПРАВКА В TEAMS =====
+        const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
+        
+        async function sendResultsToTeams(victory) {
+            const statusDiv = document.getElementById('sendingStatus');
+            statusDiv.classList.add('show'); 
+            statusDiv.textContent = '📤 Sending results to teacher...'; 
+            statusDiv.className = 'sending-status show';
+
+            const resultText = victory ? "Victory! 🎉" : "Defeated... 💔";
+            const exerciseName = "Grammar Dragon Battle";
+            const totalQuestions = currentQuestion;
+            const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) + '%' : '0%';
+
+            const payload = {
+                student_name: playerName || 'Anonymous',
+                score: `${score} points`,
+                percentage: percentage,
+                time: new Date().toLocaleString(),
+                exercise_name: exerciseName,
+                round_result: resultText,
+                questions_answered: totalQuestions,
+                correct_answers: correctAnswers,
+                incorrect_answers: incorrectAnswers,
+                time_spent: 'N/A',
+                tab_switches: '0 (no tracking)'
+            };
+
+            try {
+                const response = await fetch(POWER_AUTOMATE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (response.ok) { 
+                    statusDiv.textContent = '✅ Results sent to Teams!'; 
+                    statusDiv.className = 'sending-status show success'; 
+                } else { 
+                    statusDiv.textContent = '⚠️ Error sending results.'; 
+                    statusDiv.className = 'sending-status show error'; 
+                }
+            } catch (error) { 
+                statusDiv.textContent = '⚠️ Network error.'; 
+                statusDiv.className = 'sending-status show error'; 
+            }
+
+            setTimeout(() => { statusDiv.classList.remove('show'); }, 5000);
+        }
+
+        // ===== ЗВУКОВАЯ СИСТЕМА =====
+        let audioCtx = null;
+        let isMusicPlaying = false;
+        let musicMuted = true;
+        
+        function getAudioCtx() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            return audioCtx;
+        }
+        
+        function playTone(frequency, duration, type = 'sine', volume = 0.2) {
+            try {
+                const ctx = getAudioCtx();
+                const now = ctx.currentTime;
+                const oscillator = ctx.createOscillator();
+                const gainNode = ctx.createGain();
+                oscillator.type = type;
+                oscillator.frequency.setValueAtTime(frequency, now);
+                gainNode.gain.setValueAtTime(volume, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, now + duration);
+                oscillator.connect(gainNode);
+                gainNode.connect(ctx.destination);
+                oscillator.start(now);
+                oscillator.stop(now + duration);
+                setTimeout(() => { try { oscillator.disconnect(); gainNode.disconnect(); } catch(e) {} }, duration * 1000 + 100);
+            } catch(e) {}
+        }
+        
+        function playCorrectSound() { playTone(523.25, 0.1, 'sine', 0.25); setTimeout(() => playTone(659.25, 0.1, 'sine', 0.25), 60); setTimeout(() => playTone(783.99, 0.2, 'sine', 0.25), 120); }
+        function playWrongSound() { playTone(200, 0.2, 'sawtooth', 0.15); setTimeout(() => playTone(150, 0.3, 'sawtooth', 0.15), 100); }
+        function playVictorySound() { [523.25, 659.25, 783.99, 1046.50].forEach((note, i) => { setTimeout(() => playTone(note, 0.2, 'sine', 0.25), i * 100); }); }
+        function playDefeatSound() { [400, 350, 300, 250].forEach((note, i) => { setTimeout(() => playTone(note, 0.3, 'triangle', 0.2), i * 150); }); }
+        function playDamageSound() { playTone(100, 0.15, 'square', 0.15); setTimeout(() => playTone(80, 0.2, 'square', 0.15), 80); }
+        function playClickSound() { playTone(800, 0.04, 'sine', 0.1); }
+        function playQuestionSound() { playTone(440, 0.08, 'sine', 0.15); setTimeout(() => playTone(554.37, 0.08, 'sine', 0.15), 60); }
+        function playTickSound() { playTone(1000, 0.03, 'sine', 0.08); }
+        function playComboSound(level) {
+            const baseFreq = 400 + (level * 100);
+            [baseFreq, baseFreq + 200, baseFreq + 400].forEach((note, i) => { setTimeout(() => playTone(note, 0.15, 'sine', 0.2), i * 50); });
+        }
+        
+        const melodyNotes = [
+            { note: 261.63, duration: 0.4 }, { note: 329.63, duration: 0.4 }, { note: 392.00, duration: 0.4 }, { note: 523.25, duration: 0.6 },
+            { note: 392.00, duration: 0.4 }, { note: 329.63, duration: 0.4 }, { note: 440.00, duration: 0.4 }, { note: 392.00, duration: 0.6 }
+        ];
+        let musicScheduleTimeout = null;
+        let currentNoteIndex = 0;
+        
+        function playNextMusicNote() {
+            if (!isMusicPlaying || musicMuted) return;
+            const ctx = getAudioCtx();
+            const note = melodyNotes[currentNoteIndex];
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(note.note, now);
+            gain.gain.setValueAtTime(0, now);
+            gain.gain.linearRampToValueAtTime(0.12, now + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + note.duration);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + note.duration);
+            setTimeout(() => { try { osc.disconnect(); gain.disconnect(); } catch(e) {} }, note.duration * 1000 + 50);
+            currentNoteIndex = (currentNoteIndex + 1) % melodyNotes.length;
+            const totalDuration = melodyNotes.reduce((sum, n) => sum + n.duration, 0);
+            musicScheduleTimeout = setTimeout(playNextMusicNote, totalDuration * 1000);
+        }
+        
+        function startBackgroundMusic() {
+            if (isMusicPlaying) return;
+            isMusicPlaying = true;
+            currentNoteIndex = 0;
+            getAudioCtx();
+            playNextMusicNote();
+            updateMusicButton();
+        }
+        
+        function stopBackgroundMusic() {
+            isMusicPlaying = false;
+            if (musicScheduleTimeout) { clearTimeout(musicScheduleTimeout); musicScheduleTimeout = null; }
+        }
+        
+        function toggleMusic() {
+            musicMuted = !musicMuted;
+            updateMusicButton();
+            if (musicMuted) { stopBackgroundMusic(); } 
+            else { getAudioCtx(); if (!isMusicPlaying) startBackgroundMusic(); }
+        }
+        
+        function updateMusicButton() {
+            const btn = document.getElementById('musicBtn');
+            if (musicMuted) { btn.textContent = '🔇'; btn.classList.add('muted'); } 
+            else { btn.textContent = '🔊'; btn.classList.remove('muted'); }
+        }
+        
+        document.getElementById('musicBtn').addEventListener('click', toggleMusic);
+        document.addEventListener('click', () => { getAudioCtx(); }, { once: true });
+        document.addEventListener('touchstart', () => { getAudioCtx(); }, { once: true });
+
+        let gameTimeouts = [];
+        let shootingStarInterval = null;
+        let questionTimer = null;
+        let timeLeft = 12;
+        const TIME_PER_QUESTION = 12;
+        
+        function clearAllTimeouts() {
+            gameTimeouts.forEach(t => clearTimeout(t));
+            gameTimeouts = [];
+            if (questionTimer) { clearInterval(questionTimer); questionTimer = null; }
+        }
+        
+        function safeSetTimeout(fn, delay) {
+            const id = setTimeout(() => { gameTimeouts = gameTimeouts.filter(t => t !== id); fn(); }, delay);
+            gameTimeouts.push(id);
+            return id;
+        }
+        
+        function createStars() {
+            const container = document.getElementById('stars-container');
+            const count = 120;
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div'); star.className = 'star';
+                const size = Math.random() * 3 + 1; const left = Math.random() * 100; const top = Math.random() * 100;
+                const duration = Math.random() * 3 + 2; const delay = Math.random() * 5; const opacity = Math.random() * 0.5 + 0.3;
+                star.style.cssText = `width: ${size}px; height: ${size}px; left: ${left}%; top: ${top}%; --duration: ${duration}s; --delay: ${delay}s; --opacity: ${opacity};`;
+                container.appendChild(star);
+            }
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    const star = document.createElement('div'); star.className = 'star shooting';
+                    star.style.left = Math.random() * 100 + '%'; star.style.top = Math.random() * 30 + '%';
+                    container.appendChild(star); setTimeout(() => star.remove(), 2000);
+                }
+            }, 3000);
+        }
+        createStars();
+        
+        function createParticles(x, y, color) {
+            const existing = document.querySelectorAll('.particle');
+            if (existing.length > 30) existing[0].remove();
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = x + 'px'; particle.style.top = y + 'px';
+                particle.style.background = color; particle.style.boxShadow = `0 0 10px ${color}`;
+                const angle = (Math.PI * 2 * i) / 15;
+                const velocity = Math.random() * 80 + 40;
+                particle.style.setProperty('--tx', Math.cos(angle) * velocity + 'px');
+                particle.style.setProperty('--ty', Math.sin(angle) * velocity + 'px');
+                document.body.appendChild(particle);
+                safeSetTimeout(() => particle.remove(), 800);
+            }
+        }
+        
+        function showCombo(level) {
+            const combo = document.createElement('div');
+            combo.className = 'combo-display';
+            combo.textContent = `🔥 COMBO x${level}!`;
+            document.body.appendChild(combo);
+            safeSetTimeout(() => combo.remove(), 1000);
+        }
+        
+        const allQuestions = [
+            { text: '<span class="time-marker">Yesterday</span>, my TikTok video ___ by 10,000 people.', answers: ["was watched", "watched", "has watched"], correct: 0, grammar: "was/were + V3", explanation: "Past Simple Passive. 'Yesterday' = Past Simple. The video received the action." },
+            { text: 'The new Fortnite update ___ <span class="time-marker">last week</span>.', answers: ["released", "was released", "has released"], correct: 1, grammar: "was/were + V3", explanation: "Past Simple Passive. 'Last week' = Past Simple. The update was released by developers." },
+            { text: 'My phone ___ <span class="time-marker">while I was playing</span> Minecraft.', answers: ["broke", "was broken", "has broken"], correct: 1, grammar: "was/were + V3", explanation: "Past Simple Passive. 'While I was playing' = specific moment in the past." },
+            { text: 'Homework ___ by students <span class="time-marker">every day</span>.', answers: ["does", "is done", "did"], correct: 1, grammar: "am/is/are + V3", explanation: "Present Simple Passive. 'Every day' = regular action. Use 'am/is/are + V3'." },
+            { text: 'The concert tickets ___ out <span class="time-marker">in 5 minutes</span>!', answers: ["sold", "were sold", "have sold"], correct: 1, grammar: "was/were + V3", explanation: "Past Simple Passive. 'In 5 minutes' = completed action in the past." },
+            { text: 'My Instagram account ___ hacked <span class="time-marker">last month</span>.', answers: ["got", "was", "has been"], correct: 1, grammar: "was/were + V3", explanation: "Past Simple Passive. 'Last month' = Past Simple. Use 'was/were + V3'." },
+            { text: 'The school cafeteria ___ renovated <span class="time-marker">last summer</span>.', answers: ["renovated", "was renovated", "has renovated"], correct: 1, grammar: "was/were + V3", explanation: "Past Simple Passive. 'Last summer' = Past Simple. The cafeteria was renovated." },
+            { text: 'English ___ in many countries <span class="time-marker">around the world</span>.', answers: ["speaks", "is spoken", "spoke"], correct: 1, grammar: "am/is/are + V3", explanation: "Present Simple Passive. General fact. Use 'am/is/are + V3'." },
+            { text: 'The new Marvel movie ___ by millions of fans <span class="time-marker">already</span>.', answers: ["has watched", "has been watched", "watched"], correct: 1, grammar: "has/have been + V3", explanation: "Present Perfect Passive. 'Already' = Present Perfect. Use 'has/have been + V3'." },
+            { text: 'My favorite song ___ on the radio <span class="time-marker">right now</span>.', answers: ["plays", "is being played", "played"], correct: 1, grammar: "am/is/are being + V3", explanation: "Present Continuous Passive. 'Right now' = action in progress. Use 'am/is/are being + V3'." },
+            { text: 'The WiFi ___ fixed by the technician <span class="time-marker">tomorrow</span>.', answers: ["will fix", "will be fixed", "fixes"], correct: 1, grammar: "will be + V3", explanation: "Future Simple Passive. 'Tomorrow' = Future. Use 'will be + V3'." },
+            { text: 'All the cookies ___ by my little brother <span class="time-marker">an hour ago</span>!', answers: ["ate", "were eaten", "have eaten"], correct: 1, grammar: "was/were + V3", explanation: "Past Simple Passive. 'An hour ago' = Past Simple. The cookies were eaten." },
+            { text: 'The test results ___ by the teacher <span class="time-marker">yet</span>.', answers: ["haven't announced", "haven't been announced", "didn't announce"], correct: 1, grammar: "has/have been + V3", explanation: "Present Perfect Passive (negative). 'Yet' = Present Perfect. Use 'hasn't/haven't been + V3'." },
+            { text: 'The new iPhone ___ in California <span class="time-marker">every year</span>.', answers: ["designed", "is designed", "designs"], correct: 1, grammar: "am/is/are + V3", explanation: "Present Simple Passive. 'Every year' = regular action. Use 'am/is/are + V3'." },
+            { text: 'My homework ___ <span class="time-marker">before the lesson started</span>.', answers: ["had finished", "had been finished", "was finishing"], correct: 1, grammar: "had been + V3", explanation: "Past Perfect Passive. 'Before the lesson started' = completed before another past action." },
+            { text: 'The school trip ___ to next Friday <span class="time-marker">yesterday</span>.', answers: ["postponed", "was postponed", "has postponed"], correct: 1, grammar: "was/were + V3", explanation: "Past Simple Passive. 'Yesterday' = Past Simple. The trip was postponed." },
+            { text: 'YouTube videos ___ by creators <span class="time-marker">every day</span>.', answers: ["upload", "are uploaded", "uploaded"], correct: 1, grammar: "am/is/are + V3", explanation: "Present Simple Passive. 'Every day' = regular action. Use 'am/is/are + V3'." },
+            { text: 'The party ___ at my house <span class="time-marker">last weekend</span>.', answers: ["held", "was held", "has held"], correct: 1, grammar: "was/were + V3", explanation: "Past Simple Passive. 'Last weekend' = Past Simple. The party was held." },
+            { text: 'The message ___ to the wrong person <span class="time-marker">5 minutes ago</span>!', answers: ["sent", "was sent", "has sent"], correct: 1, grammar: "was/were + V3", explanation: "Past Simple Passive. '5 minutes ago' = Past Simple. The message was sent." },
+            { text: 'The new season of Stranger Things ___ <span class="time-marker">next year</span>.', answers: ["will release", "will be released", "releases"], correct: 1, grammar: "will be + V3", explanation: "Future Simple Passive. 'Next year' = Future. Use 'will be + V3'." }
+        ];
+        
+        let questions = [];
+        let score = 0;
+        let combo = 0;
+        let playerName = '';
+        let currentQuestion = 0;
+        let playerHP = 3;
+        let bossHP = 15;
+        let gameActive = false;
+        let correctAnswers = 0;
+        let incorrectAnswers = 0;
+        
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+        
+        function shuffleAnswers(question) {
+            const correctAnswer = question.answers[question.correct];
+            const shuffledAnswers = shuffleArray(question.answers);
+            const newCorrectIndex = shuffledAnswers.indexOf(correctAnswer);
+            return { text: question.text, answers: shuffledAnswers, correct: newCorrectIndex, grammar: question.grammar, explanation: question.explanation };
+        }
+        
+        function updateScoreDisplay() { document.getElementById('scoreDisplay').textContent = `⭐ Score: ${score}`; }
+        
+        function startTimer() {
+            timeLeft = TIME_PER_QUESTION;
+            updateTimerDisplay();
+            questionTimer = setInterval(() => {
+                timeLeft -= 0.1;
+                updateTimerDisplay();
+                if (timeLeft <= 5 && timeLeft > 0 && Math.floor(timeLeft * 10) % 10 === 0) playTickSound();
+                if (timeLeft <= 0) { clearInterval(questionTimer); questionTimer = null; handleTimeUp(); }
+            }, 100);
+        }
+        
+        function updateTimerDisplay() {
+            const timerFill = document.getElementById('timerFill');
+            const timerText = document.getElementById('timerText');
+            const percentage = (timeLeft / TIME_PER_QUESTION) * 100;
+            timerFill.style.width = percentage + '%';
+            timerText.textContent = `⏱️ ${Math.ceil(timeLeft)}s`;
+            timerFill.classList.remove('warning', 'danger');
+            timerText.classList.remove('warning', 'danger');
+            if (timeLeft <= 3) { timerFill.classList.add('danger'); timerText.classList.add('danger'); } 
+            else if (timeLeft <= 7) { timerFill.classList.add('warning'); timerText.classList.add('warning'); }
+        }
+        
+        function handleTimeUp() {
+            if (!gameActive) return;
+            combo = 0;
+            playerHP--;
+            incorrectAnswers++;
+            updateHealth();
+            const q = questions[currentQuestion];
+            const buttons = document.querySelectorAll('.answer-btn');
+            const explanation = document.getElementById('explanation');
+            buttons.forEach(btn => { btn.disabled = true; btn.onclick = null; });
+            buttons[q.correct].classList.add('correct');
+            explanation.innerHTML = `⏰ <b>Time's up!</b><br><span class="grammar-formula">📐 ${q.grammar}</span><br>${q.explanation}<br><span class="correct-answer">✓ ${q.answers[q.correct]}</span>`;
+            explanation.className = 'explanation show error';
+            showDamageEffect();
+            document.getElementById('gameContainer').classList.add('screen-shake');
+            safeSetTimeout(() => { document.getElementById('gameContainer').classList.remove('screen-shake'); }, 500);
+            if (playerHP <= 0) { safeSetTimeout(() => endGame(false), 1500); return; }
+            currentQuestion++;
+            safeSetTimeout(() => { if (gameActive) showQuestion(); }, 4000);
+        }
+        
+        function startGame() {
+            playClickSound();
+            playerName = document.getElementById('playerNameInput').value.trim() || 'Anonymous Hero';
+            document.getElementById('playerNameDisplay').textContent = '🐱 ' + playerName;
+            document.getElementById('playerNameDisplay').classList.remove('hidden');
+            document.getElementById('scoreDisplay').classList.remove('hidden');
+            document.getElementById('nameScreen').classList.add('hidden');
+            clearAllTimeouts();
+            document.querySelectorAll('.particle').forEach(p => p.remove());
+            document.querySelectorAll('.damage-effect').forEach(e => e.remove());
+            document.querySelectorAll('.combo-display').forEach(c => c.remove());
+            const shuffledAll = shuffleArray(allQuestions);
+            questions = shuffledAll.slice(0, 15).map(shuffleAnswers);
+            currentQuestion = 0;
+            playerHP = 3;
+            bossHP = 15;
+            score = 0;
+            combo = 0;
+            correctAnswers = 0;
+            incorrectAnswers = 0;
+            gameActive = true;
+            updateScoreDisplay();
+            updateHealth();
+            showQuestion();
+            getAudioCtx();
+            musicMuted = false;
+            startBackgroundMusic();
+        }
+        
+        function showQuestion() {
+            if (!gameActive) return;
+            if (currentQuestion >= questions.length) currentQuestion = 0;
+            playQuestionSound();
+            const q = questions[currentQuestion];
+            document.getElementById('questionText').innerHTML = q.text.replace('___', '<span class="blank">___</span>');
+            const answersContainer = document.getElementById('answersContainer');
+            answersContainer.innerHTML = '';
+            q.answers.forEach((answer, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-btn';
+                btn.textContent = answer;
+                btn.onclick = (e) => checkAnswer(index, e);
+                answersContainer.appendChild(btn);
+            });
+            document.getElementById('explanation').classList.remove('show', 'error', 'success');
+            startTimer();
+        }
+        
+        function checkAnswer(selectedIndex, event) {
+            if (!gameActive) return;
+            if (questionTimer) { clearInterval(questionTimer); questionTimer = null; }
+            const q = questions[currentQuestion];
+            const buttons = document.querySelectorAll('.answer-btn');
+            const explanation = document.getElementById('explanation');
+            buttons.forEach(btn => { btn.disabled = true; btn.onclick = null; });
+            const rect = event.target.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const timeBonus = Math.floor(timeLeft * 10);
+            
+            if (selectedIndex === q.correct) {
+                buttons[selectedIndex].classList.add('correct');
+                
+                // МЕХАНИКА "ГНЕВ ДРАКОНА": Если ответил правильно, но слишком медленно (< 5 сек), Дракон бьёт в ответ!
+                if (timeLeft < 5) {
+                    playerHP--;
+                    showDragonWrathEffect();
+                    playDamageSound();
+                    document.getElementById('gameContainer').classList.add('screen-shake');
+                    safeSetTimeout(() => { document.getElementById('gameContainer').classList.remove('screen-shake'); }, 500);
+                } else {
+                    bossHP--;
+                }
+                
+                combo++;
+                correctAnswers++;
+                const comboBonus = combo >= 3 ? combo * 5 : 0;
+                score += 100 + timeBonus + comboBonus;
+                updateScoreDisplay();
+                playCorrectSound();
+                updateHealth();
+                if (combo >= 3) { showCombo(combo); playComboSound(combo); }
+                
+                let wrathWarning = timeLeft < 5 ? '<br><span style="color:#fbbf24; font-weight:bold;">🔥 Dragon\'s Wrath! You were too slow!</span>' : '';
+                
+                explanation.innerHTML = `✅ <b>Correct!</b> +${100 + timeBonus + comboBonus} points${wrathWarning}<br><span class="grammar-formula">📐 ${q.grammar}</span><br>${q.explanation}<br><span class="correct-answer">✓ ${q.answers[q.correct]}</span>`;
+                explanation.className = 'explanation show success';
+                createParticles(centerX, centerY, '#4ade80');
+                if (bossHP <= 0) { safeSetTimeout(() => endGame(true), 1500); return; }
+            } else {
+                buttons[selectedIndex].classList.add('wrong');
+                buttons[q.correct].classList.add('correct');
+                playerHP--;
+                combo = 0;
+                incorrectAnswers++;
+                playWrongSound();
+                safeSetTimeout(() => playDamageSound(), 200);
+                updateHealth();
+                explanation.innerHTML = `❌ <b>Wrong!</b><br><span class="grammar-formula">📐 ${q.grammar}</span><br>${q.explanation}<br><span class="wrong-answer">✗ ${q.answers[selectedIndex]}</span><br><span class="correct-answer">✓ ${q.answers[q.correct]}</span>`;
+                explanation.className = 'explanation show error';
+                showDamageEffect();
+                createParticles(centerX, centerY, '#f87171');
+                document.getElementById('gameContainer').classList.add('screen-shake');
+                safeSetTimeout(() => { document.getElementById('gameContainer').classList.remove('screen-shake'); }, 500);
+                if (playerHP <= 0) { safeSetTimeout(() => endGame(false), 1500); return; }
+            }
+            currentQuestion++;
+            safeSetTimeout(() => { if (gameActive) showQuestion(); }, 4000);
+        }
+        
+        function updateHealth() {
+            const playerPercent = (playerHP / 3) * 100;
+            const bossPercent = (bossHP / 15) * 100;
+            document.getElementById('playerHealth').style.width = playerPercent + '%';
+            document.getElementById('bossHealth').style.width = bossPercent + '%';
+            let hearts = '';
+            for (let i = 0; i < playerHP; i++) hearts += '❤️';
+            document.getElementById('playerHealthText').textContent = hearts || '💔';
+            document.getElementById('bossHealthText').textContent = 'Cyber Dragon (' + bossHP + ' HP)';
+        }
+        
+        function showDamageEffect() {
+            const existing = document.querySelector('.damage-effect');
+            if (existing) existing.remove();
+            const effect = document.createElement('div');
+            effect.className = 'damage-effect';
+            effect.textContent = '-1 ❤️';
+            document.body.appendChild(effect);
+            safeSetTimeout(() => effect.remove(), 1200);
+        }
+
+        function showDragonWrathEffect() {
+            const existing = document.querySelector('.damage-effect');
+            if (existing) existing.remove();
+            const effect = document.createElement('div');
+            effect.className = 'damage-effect';
+            effect.style.color = '#fbbf24';
+            effect.style.textShadow = '0 0 60px rgba(251, 191, 36, 1)';
+            effect.textContent = '🔥 WRATH! -1 ❤️';
+            document.body.appendChild(effect);
+            safeSetTimeout(() => effect.remove(), 1200);
+        }
+        
+        function endGame(victory) {
+            if (!gameActive) return;
+            gameActive = false;
+            clearAllTimeouts();
+            stopBackgroundMusic();
+            if (shootingStarInterval) { clearInterval(shootingStarInterval); shootingStarInterval = null; }
+            
+            sendResultsToTeams(victory);
+            
+            try {
+                const results = JSON.parse(localStorage.getItem('grammarResults') || '[]');
+                results.push({ 
+                    name: playerName, exercise: "Grammar Dragon Battle", score: score,
+                    maxScore: 1500, percentage: Math.round((score / 1500) * 100),
+                    victory: victory, date: new Date().toISOString() 
+                });
+                localStorage.setItem('grammarResults', JSON.stringify(results));
+            } catch(e) {}
+            
+            const endScreen = document.getElementById('endScreen');
+            const endTitle = document.getElementById('endTitle');
+            const endMessage = document.getElementById('endMessage');
+            endScreen.classList.remove('hidden');
+            
+            if (victory) {
+                playVictorySound();
+                endTitle.textContent = '🎉 Victory, ' + playerName + '!';
+                endMessage.textContent = `Score: ${score} points! Astro Cat defeated the Cyber Dragon! All verb forms are free!`;
+            } else {
+                playDefeatSound();
+                endTitle.textContent = '💔 Defeated...';
+                endMessage.textContent = `Score: ${score} points. ${playerName}, the Cyber Dragon was too strong. Astro Cat believes in you — try again!`;
+            }
+        }
+        
+        document.getElementById('playerNameInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') startGame();
+        });
+    </script>
+</body>
+</html>
