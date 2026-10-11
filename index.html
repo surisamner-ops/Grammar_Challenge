@@ -585,7 +585,8 @@
     const distanceToEnd = scrollHeight - scrollTop - windowHeight;
     
     // Кнопка меняется на ↑ только когда до конца осталось меньше 300px
-    if (distanceToEnd < 300) {
+    const threshold = windowHeight * 0.7;
+if (distanceToEnd < threshold) {
         backToTopBtn.textContent = '↑';
     } else {
         backToTopBtn.textContent = '↓';
@@ -608,13 +609,14 @@
 // Принудительно ставим ↓ при загрузке
 backToTopBtn.textContent = '↓';
 
-// Через 1 секунду пересчитываем (когда всё загрузится)
+// Через 1 секунду пересчитываем с учётом размера экрана
 setTimeout(() => {
     const scrollHeight = document.body.scrollHeight;
     const windowHeight = window.innerHeight;
     const distanceToEnd = scrollHeight - windowHeight;
+    const threshold = windowHeight * 0.7; // 70% высоты экрана
     
-    if (distanceToEnd < 300) {
+    if (distanceToEnd < threshold) {
         backToTopBtn.textContent = '↑';
     } else {
         backToTopBtn.textContent = '↓';
