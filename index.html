@@ -572,31 +572,22 @@
         <!-- Кнопка возврата наверх -->
     <button id="backToTop" class="back-to-top-btn" title="Back to top">↑</button>
  <script>
-    // Кнопка прокрутки
+      // Кнопка прокрутки
     const backToTopBtn = document.getElementById('backToTop');
-    const tabsContainer = document.querySelector('.tabs-container');
-
+    
+    // Кнопка видна всегда
+    backToTopBtn.classList.add('visible');
+    
     window.addEventListener('scroll', () => {
-        // Показываем кнопку только когда прокрутили ниже вкладок
-        if (tabsContainer) {
-            const tabsBottom = tabsContainer.getBoundingClientRect().bottom;
-            if (tabsBottom < 0) {
-                backToTopBtn.classList.add('visible');
-            } else {
-                backToTopBtn.classList.remove('visible');
-            }
-        }
-        
-        // Меняем стрелку
-        if (window.scrollY > 400) {
+        if (window.scrollY > 1000) {
             backToTopBtn.textContent = '↑';
         } else {
             backToTopBtn.textContent = '↓';
         }
     });
-
+    
     backToTopBtn.addEventListener('click', () => {
-        if (window.scrollY > 400) {
+        if (window.scrollY > 1000) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
             const exercisesSection = document.getElementById('exercises-section');
@@ -605,15 +596,13 @@
             }
         }
     });
-
-// Инициализация при загрузке
-backToTopBtn.classList.add('visible');
-if (window.scrollY > 400) {
-    backToTopBtn.innerHTML = '<span>↑</span><span class="btn-text">Back to top</span>';
-} else {
-    backToTopBtn.innerHTML = '<span>↓</span><span class="btn-text">Go to exercises</span>';
-}
-
+    
+    // Инициализация стрелки при загрузке
+    if (window.scrollY > 1000) {
+        backToTopBtn.textContent = '↑';
+    } else {
+        backToTopBtn.textContent = '↓';
+    }
     // 2. Логика Поиска по карточкам
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', function() {
