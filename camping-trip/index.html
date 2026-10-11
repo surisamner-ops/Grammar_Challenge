@@ -59,7 +59,7 @@
         .sending-status.show { display: block; }
                 .back-to-exercises-btn {
             position: fixed;
-            bottom: 30px;
+            top: 30px;
             left: 30px;
             width: 70px;
             height: 70px;
@@ -84,20 +84,27 @@
             box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6);
             opacity: 1;
         }
-        .back-to-exercises-btn .btn-text {
+                .back-to-exercises-btn .btn-text {
             position: absolute;
-            left: 80px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 0.9em;
+            left: 85px;
+            background: rgba(192, 132, 252, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(192, 132, 252, 0.4);
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-family: 'Comfortaa', cursive;
+            font-size: 1em;
+            font-weight: 600;
+            color: #e9d5ff;
             white-space: nowrap;
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: all 0.3s ease;
             pointer-events: none;
+            letter-spacing: 0.5px;
         }
         .back-to-exercises-btn:hover .btn-text {
             opacity: 1;
+            transform: translateX(5px);
         }
     </style>
 </head>
