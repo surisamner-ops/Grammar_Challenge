@@ -423,6 +423,32 @@
     padding: 10px 18px !important;
     font-size: 0.85em !important;
 }
+        /* Фиолетовый фон для карточек с играми */
+.exercise-card:has(.game-card-image) {
+    background: linear-gradient(135deg, #1a1040 0%, #2d1b69 50%, #1a1040 100%) !important;
+    border: 1px solid rgba(123, 104, 238, 0.4) !important;
+    box-shadow: 0 8px 32px rgba(123, 104, 238, 0.2) !important;
+    min-height: auto !important;
+    max-height: 500px !important;
+}
+
+.exercise-card:has(.game-card-image) .game-card-image {
+    height: 140px !important;
+    max-height: 140px !important;
+}
+
+.exercise-card:has(.game-card-image) .game-card-content {
+    padding: 18px !important;
+}
+
+.exercise-card:has(.game-card-image) .game-card-title {
+    font-size: 1.25em !important;
+}
+
+.exercise-card:has(.game-card-image) .game-card-description {
+    font-size: 0.88em !important;
+    margin-bottom: 10px !important;
+}
     </style>
 </head>
 <body>
