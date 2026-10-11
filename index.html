@@ -346,6 +346,100 @@
     0%, 100% { opacity: 0.6; }
     50% { opacity: 1; }
 }
+        /* ===== ЖЁЛТЫЕ КНОПКИ PLAY NOW ===== */
+.exercise-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 25px;
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.exercise-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(192, 132, 252, 0.3);
+    border-color: rgba(192, 132, 252, 0.5);
+}
+
+.exercise-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.exercise-card .tag {
+    background: rgba(192, 132, 252, 0.2);
+    border: 1px solid rgba(192, 132, 252, 0.4);
+    border-radius: 15px;
+    padding: 5px 12px;
+    font-size: 0.85em;
+    color: #e9d5ff;
+    font-weight: 600;
+    display: inline-block;
+    margin: 3px;
+}
+
+.exercise-card .icon {
+    font-size: 2em;
+}
+
+.exercise-card h3 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.4em;
+    margin: 10px 0;
+    color: #ffffff;
+}
+
+.exercise-card p {
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.5;
+    margin-bottom: 15px;
+    font-size: 0.95em;
+}
+
+.exercise-card .play-btn,
+.exercise-card button.play-btn {
+    background: linear-gradient(135deg, #ffd93d, #fbbf24) !important;
+    border: none !important;
+    border-radius: 25px !important;
+    padding: 12px 30px !important;
+    font-family: 'Comfortaa', cursive !important;
+    font-size: 1.05em !important;
+    font-weight: 700 !important;
+    color: #1a1f3a !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    box-shadow: 0 4px 15px rgba(255, 217, 61, 0.4) !important;
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+    margin: 10px 0 !important;
+}
+
+.exercise-card .play-btn:hover,
+.exercise-card button.play-btn:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 25px rgba(255, 217, 61, 0.6) !important;
+    background: linear-gradient(135deg, #ffe066, #fbbf24) !important;
+}
+
+.exercise-card .card-footer {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 12px;
+    font-size: 0.85em;
+    color: rgba(255, 255, 255, 0.6);
+    flex-wrap: wrap;
+}
+/* ===== КОНЕЦ СТИЛЕЙ КНОПОК ===== */
     </style>
 </head>
 <body>
