@@ -474,29 +474,28 @@
         // ===== ОТПРАВКА В TEAMS =====
         const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCybdydUS2PDlskYqe2_jdbTns0MB_6e45CLWCkpr6jLB-d1zHm5ebBifFNLFoKhwr/exec';
-                async function sendResultsToTeams(victory) {
+                   async function sendResultsToTeams(victory) {
             const statusDiv = document.getElementById('sendingStatus');
-            statusDiv.classList.add('show'); 
-            statusDiv.textContent = '📤 Sending results...'; 
-            statusDiv.className = 'sending-status show';
+            statusDiv.classList.add('show');
+            statusDiv.textContent = '📤 Sending results...';
+            statusDiv.style.color = '#94a3b8';
 
-            const resultText = victory ? "Victory! 🎉" : "Defeated... 💔";
             const exerciseName = "Grammar Dragon Battle";
             const totalQuestions = currentQuestion;
-            const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) + '%' : '0%';
+            const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
 
             const payload = {
                 student_name: playerName || 'Anonymous',
                 score: `${score} points`,
-                percentage: percentage,
+                percentage: percentage + '%',
                 time: new Date().toLocaleString(),
                 exercise_name: exerciseName,
-                round_result: resultText,
+                round_result: victory ? "Victory! 🎉" : "Defeated... 💔",
                 questions_answered: totalQuestions,
                 correct_answers: correctAnswers,
                 incorrect_answers: incorrectAnswers,
                 time_spent: 'N/A',
-                tab_switches: '0 (no tracking)'
+                tab_switches: '0'
             };
 
             // 1. Отправка в Teams (Power Automate)
@@ -506,14 +505,14 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                statusDiv.textContent = '✅ Results sent!'; 
-                statusDiv.className = 'sending-status show success'; 
-            } catch (error) { 
-                statusDiv.textContent = '⚠️ Network error.'; 
-                statusDiv.className = 'sending-status show error'; 
+                statusDiv.textContent = '✅ Results sent to Teams!';
+                statusDiv.style.color = '#4ade80';
+            } catch (error) {
+                statusDiv.textContent = '⚠️ Teams error.';
+                statusDiv.style.color = '#f87171';
             }
 
-            // 2. Отправка в Google Sheets (точно как в Memory Tenses!)
+            // 2. Отправка в Google Sheets (ИДЕАЛЬНАЯ КОПИЯ РАБОЧЕГО МЕХАНИЗМА ИЗ TRAVEL CATCHER)
             try {
                 await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
@@ -523,7 +522,7 @@
                         student_name: playerName || 'Anonymous',
                         exercise_name: exerciseName,
                         score: `${score} points`,
-                        percentage: percentage,
+                        percentage: percentage + '%',
                         time: new Date().toLocaleString(),
                         time_spent: 'N/A'
                     })
@@ -532,30 +531,8 @@
                 console.log('Sheets error:', e); 
             }
 
-            setTimeout(() => { statusDiv.classList.remove('show'); }, 5000);
+            setTimeout(() => { statusDiv.classList.remove('show'); }, 6000);
         }
-
-            try {
-                const response = await fetch(POWER_AUTOMATE_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                if (response.ok) { 
-                    statusDiv.textContent = '✅ Results sent to Teams!'; 
-                    statusDiv.className = 'sending-status show success'; 
-                } else { 
-                    statusDiv.textContent = '⚠️ Error sending results.'; 
-                    statusDiv.className = 'sending-status show error'; 
-                }
-            } catch (error) { 
-                statusDiv.textContent = '⚠️ Network error.'; 
-                statusDiv.className = 'sending-status show error'; 
-            }
-
-            setTimeout(() => { statusDiv.classList.remove('show'); }, 5000);
-        }
-
         // ===== ЗВУКОВАЯ СИСТЕМА =====
         let audioCtx = null;
         let isMusicPlaying = false;
