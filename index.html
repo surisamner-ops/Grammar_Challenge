@@ -437,6 +437,21 @@
                             <p>A camping holiday in Scotland. Practice Past Simple, Past Continuous, Future in the Past, comparatives, and possessives.</p>
                             <span class="tag">9 questions • OGE Format</span>
                         </a>
+                                                <a href="paul-late/index.html" class="exercise-card">
+                            <span class="completed-badge" id="badge-paul-late">✓ Completed</span>
+                            <div class="emoji">⏰</div>
+                            <h2>Paul's Late Again</h2>
+                            <p>Paul is late for class again. Practice Past Simple, Past Continuous, First Conditional, and superlatives.</p>
+            <span class="tag">9 questions • OGE Format</span>
+                        </a>
+                        
+                        <a href="museum/index.html" class="exercise-card">
+                            <span class="completed-badge" id="badge-museum">✓ Completed</span>
+                            <div class="emoji">🏛️</div>
+                            <h2>A Day at the Museum</h2>
+                            <p>A class trip to the history museum. Practice Past Simple, Past Continuous, Past Perfect, and Passives.</p>
+                            <span class="tag">9 questions • OGE Format</span>
+                        </a>
                     </div>
                 </div>
 
@@ -690,7 +705,7 @@ window.addEventListener('DOMContentLoaded', function() {
         });
 
 function checkProgress() {
-           const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted', 'kate', 'memory-tenses', 'london', 'alison', 'annie', 'emma', 'travel-catcher', 'conditionals-l1', 'conditionals-l2', 'camping-trip', 'bristol-camping'];
+          const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted', 'kate', 'memory-tenses', 'london', 'alison', 'annie', 'emma', 'travel-catcher', 'conditionals-l1', 'conditionals-l2', 'camping-trip', 'bristol-camping', 'paul-late', 'museum'];
     exercises.forEach(ex => {
         if (localStorage.getItem('grammar_ex_' + ex) === 'true') {
             const badge = document.getElementById('badge-' + ex);
