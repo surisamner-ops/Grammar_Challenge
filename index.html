@@ -350,6 +350,7 @@
                 </div>
 
                 <div id="gse" class="tab-content">
+                    <div id="exercises-section"></div>
                     <h2 class="section-title"> GSE Mastery Tasks</h2>
                     <div class="exercises-grid">
                         <a href="susan-story.html" class="exercise-card" onclick="localStorage.setItem('lastActiveTab', 'gse'); localStorage.setItem('returnFromExercise', 'true')">
@@ -572,17 +573,40 @@
     <button id="backToTop" class="back-to-top-btn" title="Back to top">↑</button>
     <script>
             // 1. Логика кнопки "Наверх"
-    const backToTopBtn = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 400) { // Показывать после прокрутки на 400px
-            backToTopBtn.classList.add('visible');
-        } else {
-            backToTopBtn.classList.remove('visible');
+   const backToTopBtn = document.getElementById('backToTop');
+const exercisesSection = document.getElementById('exercises-section');
+
+window.addEventListener('scroll', () => {
+    // Показываем кнопку всегда (и в начале, и при прокрутке)
+    backToTopBtn.classList.add('visible');
+    
+    // Меняем иконку в зависимости от позиции
+    if (window.scrollY > 400) {
+        backToTopBtn.innerHTML = '<span>↑</span><span class="btn-text">Back to top</span>';
+    } else {
+        backToTopBtn.innerHTML = '<span>↓</span><span class="btn-text">Go to exercises</span>';
+    }
+});
+
+backToTopBtn.addEventListener('click', () => {
+    if (window.scrollY > 400) {
+        // Прокрутка наверх
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        // Прокрутка к разделу с заданиями
+        if (exercisesSection) {
+            exercisesSection.scrollIntoView({ behavior: 'smooth' });
         }
- });
-    backToTopBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // Плавная прокрутка
-    });
+    }
+});
+
+// Инициализация при загрузке
+backToTopBtn.classList.add('visible');
+if (window.scrollY > 400) {
+    backToTopBtn.innerHTML = '<span>↑</span><span class="btn-text">Back to top</span>';
+} else {
+    backToTopBtn.innerHTML = '<span>↓</span><span class="btn-text">Go to exercises</span>';
+}
 
     // 2. Логика Поиска по карточкам
     const searchInput = document.getElementById('searchInput');
