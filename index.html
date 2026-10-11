@@ -285,48 +285,33 @@
     position: fixed;
     bottom: 30px;
     right: 30px;
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     background: linear-gradient(135deg, #c084fc, #60a5fa);
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     color: white;
-    font-size: 2em;
+    font-size: 1.8em;
     font-weight: bold;
     cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
     z-index: 1000;
     box-shadow: 0 4px 20px rgba(192, 132, 252, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+}
+.back-to-top-btn.visible {
     opacity: 1;
     visibility: visible;
+    transform: translateY(0);
 }
 .back-to-top-btn:hover {
     transform: translateY(-5px) scale(1.1);
     box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6);
-}
-.back-to-top-btn .btn-text {
-    position: absolute;
-    right: 85px;
-    background: rgba(192, 132, 252, 0.15);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(192, 132, 252, 0.4);
-    padding: 10px 18px;
-    border-radius: 50px;
-    font-family: 'Comfortaa', cursive;
-    font-size: 0.9em;
-    font-weight: 600;
-    color: #e9d5ff;
-    white-space: nowrap;
-    opacity: 0;
-    transition: all 0.3s ease;
-    pointer-events: none;
-}
-.back-to-top-btn:hover .btn-text {
-    opacity: 1;
-    transform: translateX(-5px);
 }
     </style>
 </head>
@@ -586,34 +571,40 @@
     </div>
         <!-- Кнопка возврата наверх -->
     <button id="backToTop" class="back-to-top-btn" title="Back to top">↑</button>
-    <script>
-            // 1. Логика кнопки "Наверх"
-   const backToTopBtn = document.getElementById('backToTop');
-const exercisesSection = document.getElementById('exercises-section');
+ <script>
+    // Кнопка прокрутки
+    const backToTopBtn = document.getElementById('backToTop');
+    const tabsContainer = document.querySelector('.tabs-container');
 
-window.addEventListener('scroll', () => {
-    // Показываем кнопку всегда (и в начале, и при прокрутке)
-    backToTopBtn.classList.add('visible');
-    
-    // Меняем иконку в зависимости от позиции
-    if (window.scrollY > 400) {
-        backToTopBtn.innerHTML = '<span>↑</span><span class="btn-text">Back to top</span>';
-    } else {
-        backToTopBtn.innerHTML = '<span>↓</span><span class="btn-text">Go to exercises</span>';
-    }
-});
-
-backToTopBtn.addEventListener('click', () => {
-    if (window.scrollY > 400) {
-        // Прокрутка наверх
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-        // Прокрутка к разделу с заданиями
-        if (exercisesSection) {
-            exercisesSection.scrollIntoView({ behavior: 'smooth' });
+    window.addEventListener('scroll', () => {
+        // Показываем кнопку только когда прокрутили ниже вкладок
+        if (tabsContainer) {
+            const tabsBottom = tabsContainer.getBoundingClientRect().bottom;
+            if (tabsBottom < 0) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
         }
-    }
-});
+        
+        // Меняем стрелку
+        if (window.scrollY > 400) {
+            backToTopBtn.textContent = '↑';
+        } else {
+            backToTopBtn.textContent = '↓';
+        }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+        if (window.scrollY > 400) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            const exercisesSection = document.getElementById('exercises-section');
+            if (exercisesSection) {
+                exercisesSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    });
 
 // Инициализация при загрузке
 backToTopBtn.classList.add('visible');
