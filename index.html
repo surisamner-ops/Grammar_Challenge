@@ -605,8 +605,11 @@
         window.scrollBy({ top: 800, behavior: 'smooth' });
     }
 });
-   // Инициализация стрелки после полной загрузки
-window.addEventListener('load', () => {
+// Принудительно ставим ↓ при загрузке
+backToTopBtn.textContent = '↓';
+
+// Через 1 секунду пересчитываем (когда всё загрузится)
+setTimeout(() => {
     const scrollHeight = document.body.scrollHeight;
     const windowHeight = window.innerHeight;
     const distanceToEnd = scrollHeight - windowHeight;
@@ -616,7 +619,7 @@ window.addEventListener('load', () => {
     } else {
         backToTopBtn.textContent = '↓';
     }
-});
+}, 1000);
     // 2. Логика Поиска по карточкам
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', function() {
