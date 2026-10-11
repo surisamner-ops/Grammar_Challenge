@@ -601,11 +601,8 @@
         // Прокрутка наверх
         window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-        // Прокрутка до конца
-        window.scrollTo({ 
-            top: document.body.scrollHeight, 
-            behavior: 'smooth' 
-        });
+        // Постепенная прокрутка вниз на 800px
+        window.scrollBy({ top: 800, behavior: 'smooth' });
     }
 });
     // Инициализация стрелки при загрузке
