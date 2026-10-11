@@ -160,7 +160,7 @@
         .exercise-card h2, .game-card h2 { font-family: 'Comfortaa', cursive; font-size: 1.4em; margin-bottom: 10px; color: #c084fc; transition: color 0.3s ease; }
         .exercise-card:hover h2 { color: #e9d5ff; }
         .exercise-card p, .game-card-description { color: #94a3b8; line-height: 1.5; font-size: 0.95em; flex-grow: 1; margin-bottom: 15px; }
-       .exercise-card .tag { display: inline-flex !important; align-items: center !important; margin-top: auto !important; padding: 8px 16px !important; background: rgba(192, 132, 252, 0.15) !important; border: 1px solid rgba(192, 132, 252, 0.4) !important; border-radius: 20px !important; font-size: 0.85em !important; color: #e9d5ff !important; font-weight: 600 !important; transition: all 0.3s ease !important; align-self: flex-start !important; }
+       .exercise-card .tag { display: inline-flex !important; align-items: center !important; margin-top: auto !important; padding: 8px 16px !important; background: rgba(192, 132, 252, 0.15) !important; border: 1px solid rgba(192, 132, 252, 0.4) !important; border-radius: 20px !important; font-size: 0.95em !important; color: #e9d5ff !important; font-weight: 600 !important; transition: all 0.3s ease !important; align-self: flex-start !important; }
 .exercise-card:hover .tag { background: rgba(192, 132, 252, 0.3) !important; transform: scale(1.05) !important; border-color: rgba(192, 132, 252, 0.6) !important; }
 .game-tag, .game-card .game-tag { display: inline-flex !important; align-items: center !important; gap: 8px !important; padding: 14px 28px !important; background: rgba(123, 104, 238, 0.1) !important; border: 1.5px solid rgba(123, 104, 238, 0.5) !important; border-radius: 50px !important; font-size: 0.95em !important; color: #e9d5ff !important; font-weight: 600 !important; backdrop-filter: blur(10px) !important; transition: all 0.3s ease !important; margin-top: 5px !important; letter-spacing: 0.3px !important; }
 .game-tag:hover, .game-card .game-tag:hover { background: rgba(123, 104, 238, 0.2) !important; border-color: rgba(123, 104, 238, 0.8) !important; transform: translateY(-2px) !important; box-shadow: 0 4px 20px rgba(123, 104, 238, 0.3) !important; }
@@ -177,7 +177,7 @@
 .play-button::before, .exercise-card .play-button::before, .game-card .play-button::before { content: '' !important; position: absolute !important; top: 0 !important; left: -100% !important; width: 100% !important; height: 100% !important; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent) !important; transition: left 0.6s ease !important; }
 .play-button:hover::before, .exercise-card .play-button:hover::before, .game-card .play-button:hover::before { left: 100% !important; }
 .play-button:hover, .exercise-card .play-button:hover, .game-card .play-button:hover { transform: translateY(-4px) scale(1.03) !important; box-shadow: 0 12px 40px rgba(123, 104, 238, 0.7), 0 0 60px rgba(255, 107, 157, 0.5) !important; background: linear-gradient(135deg, #8b78ff 0%, #ff7bae 100%) !important; }
-.play-icon { display: inline-flex !important; align-items: center !important; justify-content: center !important; width: 32px !important; height: 32px !important; background: rgba(255, 255, 255, 0.25) !important; border-radius: 8px !important; font-size: 0.85em !important; backdrop-filter: blur(5px) !important; border: 1px solid rgba(255, 255, 255, 0.3) !important; }
+.play-icon { display: inline-flex !important; align-items: center !important; justify-content: center !important; width: 32px !important; height: 32px !important; background: rgba(255, 255, 255, 0.25) !important; border-radius: 8px !important; font-size: 0.95em !important; backdrop-filter: blur(5px) !important; border: 1px solid rgba(255, 255, 255, 0.3) !important; }
 
 .play-button::before, .exercise-card .play-button::before, .game-card .play-button::before {
     content: '' !important;
@@ -208,7 +208,7 @@
     height: 32px !important;
     background: rgba(255, 255, 255, 0.25) !important;
     border-radius: 8px !important;
-    font-size: 0.85em !important;
+    font-size: 0.95em !important;
     backdrop-filter: blur(5px) !important;
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
@@ -421,7 +421,7 @@
 
 .game-tag {
     padding: 10px 18px !important;
-    font-size: 0.85em !important;
+    font-size: 0.95em !important;
 }
         /* Фиолетовый фон для карточек с играми */
 .exercise-card:has(.game-card-image) {
@@ -451,11 +451,13 @@
 }
      /* Карточки с играми: компактные + свечение */
 .exercise-card:has(.game-card-image) {
-    max-height: 460px !important;
+    max-height: 520px !important;
+    min-height: 420px !important;
     background: linear-gradient(135deg, #1a1040 0%, #2d1b69 50%, #1a1040 100%) !important;
     border: 1px solid rgba(123, 104, 238, 0.4) !important;
     box-shadow: 0 0 25px rgba(123, 104, 238, 0.3), 0 0 50px rgba(123, 104, 238, 0.15) !important;
     transition: all 0.4s ease !important;
+    overflow: hidden !important;
 }
 
 .exercise-card:has(.game-card-image):hover {
@@ -465,29 +467,46 @@
 }
 
 .exercise-card:has(.game-card-image) .game-card-image {
-    height: 160px !important;
+    height: 150px !important;
+    flex-shrink: 0;
 }
 
 .exercise-card:has(.game-card-image) .game-card-content {
-    padding: 18px !important;
+    padding: 15px !important;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .exercise-card:has(.game-card-image) .game-card-title {
-    font-size: 1.2em !important;
+    font-size: 1.15em !important;
+    margin-bottom: 8px !important;
+    flex-shrink: 0;
 }
 
 .exercise-card:has(.game-card-image) .game-card-description {
-    font-size: 0.88em !important;
+    font-size: 0.95em !important;
+    line-height: 1.4 !important;
+    margin-bottom: 10px !important;
+    flex-grow: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 .exercise-card:has(.game-card-image) .play-button {
-    padding: 12px 26px !important;
-    font-size: 1em !important;
+    padding: 10px 24px !important;
+    font-size: 0.95em !important;
+    margin-bottom: 10px !important;
+    flex-shrink: 0;
 }
 
 .exercise-card:has(.game-card-image) .game-tag {
-    padding: 10px 20px !important;
-    font-size: 0.88em !important;
+    padding: 8px 18px !important;
+    font-size: 0.95em !important;
+    flex-shrink: 0;
 }
     </style>
 </head>
