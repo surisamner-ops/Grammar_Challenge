@@ -459,9 +459,10 @@
     transform: translateY(-5px) !important;
     border-color: rgba(123, 104, 238, 0.7) !important;
 }
-
 .exercise-card:has(.game-card-image) .game-card-image {
-    height: 150px !important;
+    height: 200px !important;
+    object-fit: contain !important;
+    background: rgba(0, 0, 0, 0.3) !important;
     flex-shrink: 0;
 }
 
@@ -504,9 +505,8 @@
 }
 /* === ФИНАЛЬНОЕ ИСПРАВЛЕНИЕ РАЗМЕРА ЗАГОЛОВКОВ ИГР === */
 a.exercise-card:has(.game-card-image) h3.game-card-title {
-    font-size: 1.7em !important;
-    font-weight: 700 !important;
-    margin-bottom: 12px !important;
+    font-size: 1.35em !important;
+    font-weight: 600 !important;
 }
     </style>
 </head>
