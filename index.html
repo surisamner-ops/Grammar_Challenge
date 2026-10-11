@@ -331,7 +331,7 @@
                         <!-- Поле поиска -->
         <div class="search-container">
             <span class="search-icon">🔍</span>
-            <input type="text" id="searchInput" class="search-input" placeholder="Найти задание (например: Past Simple, Conditionals)...">
+           <input type="text" id="searchInput" class="search-input" placeholder="Search for an exercise (e.g., Past Simple, Conditionals)...">
         </div>
                 <div class="tabs-container">
                     <button class="tab-button" onclick="switchTab('gse')">
@@ -554,6 +554,8 @@
             <div class="footer-copyright">© 2026 <strong>Juliya Magic Teacher</strong>. All rights reserved.<br><span style="font-size: 0.9em; opacity: 0.9;">Made with 💜 for English learners</span></div>
         </footer>
     </div>
+        <!-- Кнопка возврата наверх -->
+    <button id="backToTop" class="back-to-top-btn" title="Back to top">↑</button>
     <script>
             // 1. Логика кнопки "Наверх"
     const backToTopBtn = document.getElementById('backToTop');
@@ -737,7 +739,5 @@ document.addEventListener('DOMContentLoaded', checkProgress);
         }
         loadMiniLeaderboard();
     </script>
-        <!-- Кнопка возврата наверх -->
-    <button id="backToTop" class="back-to-top-btn" title="Вернуться наверх">↑</button>
 </body>
 </html>
