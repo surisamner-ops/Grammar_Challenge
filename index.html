@@ -83,10 +83,36 @@
         .side-score { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 0.95em; color: #4ade80; flex-shrink: 0; }
         .side-loading { text-align: center; padding: 15px 10px; color: #94a3b8; font-size: 0.8em; }
         
-        .tabs-container { display: flex; justify-content: center; gap: 35px; margin-bottom: 60px; flex-wrap: wrap; animation: fadeInUp 1s ease-out 0.3s forwards; opacity: 0; position: relative; }
-        .tabs-container::before, .tabs-container::after { content: '✨'; position: absolute; font-size: 2.2em; animation: sparkle 2s ease-in-out infinite; }
-        .tabs-container::before { top: -20px; left: 10%; animation-delay: 0s; }
-        .tabs-container::after { bottom: -20px; right: 10%; animation-delay: 1s; }
+        .tabs-container { display: flex; justify-content: center; gap: 35px; margin-bottom: 20px; flex-wrap: wrap; animation: fadeInUp 1s ease-out 0.3s forwards; opacity: 0; position: relative; }
+       .tabs-container::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 10%;
+    width: 30px;
+    height: 30px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c084fc'%3E%3Cpath d='M12 0C12 0 14.5 7.5 22 12C14.5 16.5 12 24 12 24C12 24 9.5 16.5 2 12C9.5 7.5 12 0 12 0Z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: sparkle 2s ease-in-out infinite;
+    animation-delay: 0s;
+    filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.6));
+}
+
+.tabs-container::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    right: 10%;
+    width: 30px;
+    height: 30px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2360a5fa'%3E%3Cpath d='M12 0C12 0 14.5 7.5 22 12C14.5 16.5 12 24 12 24C12 24 9.5 16.5 2 12C9.5 7.5 12 0 12 0Z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: sparkle 2s ease-in-out infinite;
+    animation-delay: 1s;
+    filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.6));
+}
 
         .tab-button { position: relative; padding: 32px 60px; background: linear-gradient(135deg, rgba(192, 132, 252, 0.1), rgba(96, 165, 250, 0.1), rgba(192, 132, 252, 0.1)); background-size: 200% 200%; animation: gradientShift 4s ease infinite; backdrop-filter: blur(20px); border: 2px solid rgba(192, 132, 252, 0.4); border-radius: 28px; color: #e9d5ff; font-family: 'Comfortaa', cursive; font-size: 1.5em; font-weight: 700; cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; align-items: center; gap: 18px; min-width: 320px; justify-content: center; text-shadow: 0 0 10px rgba(192, 132, 252, 0.5); overflow: visible; }
         .tab-button:hover { background: linear-gradient(135deg, rgba(192, 132, 252, 0.3), rgba(96, 165, 250, 0.3), rgba(192, 132, 252, 0.3)); border-color: rgba(192, 132, 252, 0.8); color: #ffffff; transform: translateY(-6px) scale(1.05); box-shadow: 0 0 35px rgba(192, 132, 252, 0.5), 0 0 70px rgba(96, 165, 250, 0.3); }
@@ -172,7 +198,7 @@
                      /* Кнопка Leave a Review - компактная и по центру */
         .review-cta {
             max-width: 900px;
-            margin: 30px auto;
+            margin: 20px auto 30px;
             padding: 0 20px;
             display: flex;
             justify-content: center;
@@ -313,13 +339,39 @@
     transform: translateY(-5px) scale(1.1);
     box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6);
 }
+        .floating-element svg {
+    animation: twinkle 3s ease-in-out infinite;
+}
+@keyframes twinkle {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
     </style>
 </head>
 <body>
-    <div class="floating-element">⭐</div>
-    <div class="floating-element">🌟</div>
-    <div class="floating-element">✨</div>
+    <!-- Летающая звезда 1 -->
+<div class="floating-element">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" 
+              fill="#fbbf24" opacity="0.8"/>
+    </svg>
+</div>
 
+<!-- Летающая звезда 2 -->
+<div class="floating-element">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" 
+              fill="#c084fc" opacity="0.6"/>
+    </svg>
+</div>
+
+<!-- Летающая звезда 3 -->
+<div class="floating-element">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" 
+              fill="#60a5fa" opacity="0.7"/>
+    </svg>
+</div>
     <div class="stars-container" id="starsContainer"></div>
     <div class="main-wrapper">
         <div class="header">
@@ -353,7 +405,7 @@
                     <div id="exercises-section"></div>
                     <h2 class="section-title"> GSE Mastery Tasks</h2>
                     <div class="exercises-grid">
-                        <a href="susan-story.html" class="exercise-card" onclick="localStorage.setItem('lastActiveTab', 'gse'); localStorage.setItem('returnFromExercise', 'true')">
+                        <a href="susan-story/index.html" class="exercise-card" onclick="localStorage.setItem('lastActiveTab', 'gse'); localStorage.setItem('returnFromExercise', 'true')">
                             <span class="completed-badge" id="badge-susan">✓ Completed</span>
                             <div class="emoji">&#x1F68C;</div>
                             <h2>Susan's Story</h2>
@@ -572,37 +624,46 @@
         <!-- Кнопка возврата наверх -->
     <button id="backToTop" class="back-to-top-btn" title="Back to top">↑</button>
  <script>
-      // Кнопка прокрутки
-    const backToTopBtn = document.getElementById('backToTop');
-    
-    // Кнопка видна всегда
-    backToTopBtn.classList.add('visible');
-    window.addEventListener('scroll', () => {
-    // Вычисляем, сколько осталось до конца страницы
+   // Кнопка прокрутки
+const backToTopBtn = document.getElementById('backToTop');
+
+// Кнопка скрыта при загрузке
+backToTopBtn.classList.remove('visible');
+
+window.addEventListener('scroll', () => {
     const scrollHeight = document.body.scrollHeight;
     const scrollTop = window.scrollY;
     const windowHeight = window.innerHeight;
     const distanceToEnd = scrollHeight - scrollTop - windowHeight;
+    const threshold = windowHeight * 0.2; // 20% высоты экрана
     
-    // Кнопка меняется на ↑ только когда до конца осталось меньше 300px
-    const threshold = windowHeight * 0.7;
-if (distanceToEnd < threshold) {
+    // Показываем кнопку только после прокрутки на 200px
+    if (scrollTop > 200) {
+        backToTopBtn.classList.add('visible');
+    } else {
+        backToTopBtn.classList.remove('visible');
+    }
+    
+    // Меняем стрелку
+    if (distanceToEnd < threshold) {
         backToTopBtn.textContent = '↑';
     } else {
         backToTopBtn.textContent = '↓';
     }
 });
-    backToTopBtn.addEventListener('click', () => {
+
+backToTopBtn.addEventListener('click', () => {
     const scrollHeight = document.body.scrollHeight;
     const scrollTop = window.scrollY;
     const windowHeight = window.innerHeight;
     const distanceToEnd = scrollHeight - scrollTop - windowHeight;
+    const threshold = windowHeight * 0.2;
     
-    if (distanceToEnd < 300) {
+    if (distanceToEnd < threshold) {
         // Прокрутка наверх
         window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-        // Постепенная прокрутка вниз на 800px
+        // Постепенная прокрутка вниз
         window.scrollBy({ top: 800, behavior: 'smooth' });
     }
 });
