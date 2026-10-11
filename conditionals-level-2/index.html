@@ -57,13 +57,65 @@
         .result-message.error { background: rgba(248, 113, 113, 0.12); border: 1px solid #f87171; color: #fca5a5; display: block; }
         .sending-status { text-align: center; margin-top: 15px; font-size: 0.95em; color: #94a3b8; display: none; }
         .sending-status.show { display: block; }
+                .back-to-exercises-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #c084fc, #60a5fa);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(192, 132, 252, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            opacity: 0.9;
+        }
+        .back-to-exercises-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6);
+            opacity: 1;
+        }
+        .back-to-exercises-btn .btn-text {
+            position: absolute;
+            left: 85px;
+            background: rgba(192, 132, 252, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(192, 132, 252, 0.4);
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-family: 'Comfortaa', cursive;
+            font-size: 1em;
+            font-weight: 600;
+            color: #e9d5ff;
+            white-space: nowrap;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            letter-spacing: 0.5px;
+        }
+        .back-to-exercises-btn:hover .btn-text {
+            opacity: 1;
+            transform: translateX(5px);
+        }
     </style>
 </head>
 <body>
     <div class="floating-element">⭐</div><div class="floating-element">🌟</div><div class="floating-element">✨</div>
     <div class="stars-container" id="starsContainer"></div>
     <div class="main-wrapper">
-        <a href="../index.html" class="back-link">← Back to exercises</a>
+        <a href="../index.html" class="back-to-exercises-btn" onclick="localStorage.setItem('lastActiveTab', 'practice'); localStorage.setItem('returnFromExercise', 'true')">
+    <span>←</span>
+    <span class="btn-text">Back to exercises</span>
+</a>
         <div class="header"><h1>🎯 Conditionals Level 2</h1><p>Master all types! Practice <strong>Zero, First, Second & Third Conditionals</strong>!</p></div>
         <div class="student-form" id="studentForm">
             <h2>🌟 Welcome!</h2><p>Please enter your name to start the exercise</p>
