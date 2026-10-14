@@ -82,7 +82,33 @@
         .side-name { font-weight: 600; color: #ffffff; font-size: 0.88em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .side-score { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 0.95em; color: #4ade80; flex-shrink: 0; }
         .side-loading { text-align: center; padding: 15px 10px; color: #94a3b8; font-size: 0.8em; }
-        
+                
+        /* Виджет отзывов справа */
+        .side-review-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border-left: 3px solid rgba(192, 132, 252, 0.4);
+        }
+        .side-review-item:last-child { margin-bottom: 0; }
+        .side-review-name {
+            font-weight: 600;
+            color: #c084fc;
+            font-size: 0.85em;
+            margin-bottom: 4px;
+        }
+        .side-review-text {
+            color: #94a3b8;
+            font-size: 0.8em;
+            line-height: 1.4;
+            font-style: italic;
+        }
+        .side-review-stars {
+            color: #fbbf24;
+            font-size: 0.9em;
+            margin-bottom: 4px;
+        }
         .tabs-container { display: flex; justify-content: center; gap: 35px; margin-bottom: 20px; flex-wrap: wrap; animation: fadeInUp 1s ease-out 0.3s forwards; opacity: 0; position: relative; }
        .tabs-container::before {
     content: '';
@@ -741,6 +767,12 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
            <input type="text" id="searchInput" class="search-input" placeholder="Search for an exercise (e.g., Past Simple, Conditionals)...">
         </div>
                 <div class="tabs-container">
+                                    <!-- Кнопка Share Your Feedback -->
+                <div style="text-align: center; margin: 20px 0;">
+                    <a href="review.html" style="display: inline-flex; align-items: center; gap: 10px; padding: 12px 28px; background: linear-gradient(135deg, rgba(192, 132, 252, 0.2), rgba(96, 165, 250, 0.2)); border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 50px; color: #e9d5ff; font-family: 'Comfortaa', cursive; font-weight: 600; font-size: 0.95em; text-decoration: none; transition: all 0.3s ease;">
+                        💬 Share Your Feedback →
+                    </a>
+                </div>
                     <button class="tab-button" onclick="switchTab('gse')">
                         <span class="tab-emoji">&#x1F3C6;</span>
                         <span>GSE Tasks</span>
@@ -974,33 +1006,7 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
                 </div>
             </div>
         </div>
-        <div class="review-cta">
-            <a href="review.html" class="review-cta-button">
-                <span class="review-cta-emoji">💬</span>
-                <div class="review-cta-text">
-                            <!-- СЕКЦИЯ ОТЗЫВОВ -->
-                <!-- СЕКЦИЯ ОТЗЫВОВ -->
-        <div class="reviews-section" id="reviewsSection">
-            <div class="reviews-header">
-                <h2 class="section-title">✨ What Students Say ✨</h2>
-                <div class="reviews-summary">
-                    <div class="reviews-stars" id="reviewsStars">★★★★★</div>
-                    <div class="reviews-count" id="reviewsCount">Loading...</div>
-                </div>
-                <br>
-                <a href="review.html" class="share-feedback-btn">
-                    💬 Share Your Feedback →
-                </a>
-            </div>
-            <div class="reviews-grid" id="reviewsGrid">
-                <!-- Сюда JavaScript вставит комментарии -->
-            </div>
-        </div>
-                    <strong>Share Your Feedback</strong>
-                </div>
-                <span class="review-cta-arrow">→</span>
-            </a>
-        </div>
+        
 <footer class="footer">
             <h3>✨ Contact Me ✨</h3>
             <div class="footer-links">
@@ -1288,8 +1294,8 @@ document.addEventListener('DOMContentLoaded', checkProgress);
             
             document.body.appendChild(script);
         }
-        function renderReviews(data) {
-            // 1. Фильтруем только отзывы (ищем REVIEW в любом регистре)
+               function renderReviews(data) {
+            // 1. Фильтруем только отзывы
             const reviews = data.filter(item => {
                 const ex = (item.Exercise || item.exercise_name || item.exercise || '').toString();
                 return ex.toUpperCase().includes('REVIEW');
@@ -1298,6 +1304,8 @@ document.addEventListener('DOMContentLoaded', checkProgress);
             if (reviews.length === 0) {
                 const el = document.getElementById('reviewsSection');
                 if(el) el.style.display = 'none';
+                const sideEl = document.getElementById('sideReviewsContent');
+                if(sideEl) sideEl.innerHTML = '<div class="side-loading">No reviews yet</div>';
                 return;
             }
 
@@ -1309,44 +1317,44 @@ document.addEventListener('DOMContentLoaded', checkProgress);
             });
             const avg = (totalScore / reviews.length).toFixed(1);
 
-            // 3. ПУЛЕНЕПРОБИВАЕМЫЙ ПОИСК КОММЕНТАРИЯ
+            // 3. Извлекаем комментарии
             const sortedReviews = reviews.map(r => {
-                let comment = "Нет комментария";
-                let name = r.Name || r.student_name || r.name || 'Ученик';
+                let comment = "No comment";
+                let name = r.Name || r.student_name || r.name || 'Student';
                 let section = (r.Exercise || r.exercise_name || r.exercise || '').replace('REVIEW: ', '').replace('REVIEW:', '').trim();
+                let score = r.Score || r.score || "0/5";
 
-                // Проверяем КАЖДОЕ поле в строке, пока не найдем то, где есть " | "
+                // Ищем комментарий
                 for (let key in r) {
                     let val = String(r[key] || '');
                     if (val.includes(' | ')) {
                         let parts = val.split(' | ');
                         if (parts.length > 1) {
-                            comment = parts[1].trim(); // Берем всё, что после разделителя
-                            break; // Нашли, прекращаем поиск
+                            comment = parts[1].trim();
+                            break;
                         }
                     }
                 }
 
-                return { name, section, comment };
+                return { name, section, comment, score };
             })
-            // Оставляем только те, где есть реальный текст (длиннее 5 символов)
-            .filter(item => item.comment.length > 5 && item.comment !== 'Нет комментария')
-            // Сортируем по длине (самые длинные сверху)
+            .filter(item => item.comment.length > 5 && item.comment !== 'No comment')
             .sort((a, b) => b.comment.length - a.comment.length)
-            // Берем топ-4
             .slice(0, 4);
 
-            // 4. Рендерим звёзды и счётчик
+            // 4. Рендерим звёзды и счётчик (для нижней секции)
             const fullStars = Math.round(avg);
             let starsHtml = '';
             for(let i = 0; i < 5; i++) {
                 starsHtml += i < fullStars ? '★' : '☆';
             }
             
-            document.getElementById('reviewsStars').textContent = starsHtml;
-            document.getElementById('reviewsCount').textContent = `${avg} из 5 на основе ${reviews.length} отзывов`;
+            const starsEl = document.getElementById('reviewsStars');
+            const countEl = document.getElementById('reviewsCount');
+            if(starsEl) starsEl.textContent = starsHtml;
+            if(countEl) countEl.textContent = `${avg} из 5 на основе ${reviews.length} отзывов`;
 
-            // 5. Рендерим карточки (или красивое сообщение, если комментариев нет)
+            // 5. Рендерим карточки (нижняя секция)
             let gridHtml = '';
             if (sortedReviews.length === 0) {
                 gridHtml = '<p style="color:#94a3b8; grid-column: 1/-1; text-align:center; padding: 20px; font-style: italic;">Спасибо за высокие оценки! Развернутые комментарии появятся здесь.</p>';
@@ -1364,9 +1372,31 @@ document.addEventListener('DOMContentLoaded', checkProgress);
                 });
             }
             
-            document.getElementById('reviewsGrid').innerHTML = gridHtml;
-        }
+            const gridEl = document.getElementById('reviewsGrid');
+            if(gridEl) gridEl.innerHTML = gridHtml;
 
+            // 6. Рендерим компактный виджет СПРАВА
+            let sideHtml = '';
+            const sideReviews = sortedReviews.slice(0, 3); // Топ-3 для виджета
+            sideReviews.forEach(r => {
+                const starsCount = parseInt(r.score.split('/')[0]) || 0;
+                let reviewStars = '';
+                for(let i = 0; i < 5; i++) {
+                    reviewStars += i < starsCount ? '★' : '☆';
+                }
+                
+                sideHtml += `
+                    <div class="side-review-item">
+                        <div class="side-review-stars">${reviewStars}</div>
+                        <div class="side-review-name">${r.name}</div>
+                        <div class="side-review-text">"${r.comment.substring(0, 80)}${r.comment.length > 80 ? '...' : ''}"</div>
+                    </div>
+                `;
+            });
+            
+            const sideEl = document.getElementById('sideReviewsContent');
+            if(sideEl) sideEl.innerHTML = sideHtml || '<div class="side-loading">No detailed reviews yet</div>';
+        }
         // ==========================================
         // 3. ЗАПУСК ВСЕХ ФУНКЦИЙ ПРИ ЗАГРУЗКЕ
         // ==========================================
