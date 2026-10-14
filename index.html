@@ -60,52 +60,6 @@
         .header p { font-size: 1.3em; color: #c4b5fd; text-shadow: 0 0 20px rgba(192, 132, 252, 0.3); }
         
         .content-layout { display: flex; gap: 30px; align-items: flex-start; }
-                /* Контейнер для правых виджетов */
-        .side-widgets {
-            width: 280px;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        /* Анимация для Reviews */
-        .side-leaderboard {
-            transition: all 0.4s ease;
-        }
-        
-        .side-leaderboard.hidden {
-            opacity: 0;
-            transform: translateY(-20px);
-            pointer-events: none;
-            height: 0;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        
-        /* Улучшенный стиль для звёзд в Reviews */
-        #sideReviewsContent .side-reviews-summary {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(251, 191, 36, 0.05));
-            border: 1px solid rgba(251, 191, 36, 0.4);
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 12px;
-        }
-        
-        #sideReviewsContent .side-review-item {
-            background: rgba(192, 132, 252, 0.05);
-            border-left: 3px solid rgba(192, 132, 252, 0.5);
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 8px;
-            transition: all 0.3s ease;
-        }
-        
-        #sideReviewsContent .side-review-item:hover {
-            background: rgba(192, 132, 252, 0.1);
-            transform: translateX(3px);
-        }
         .main-content { flex: 1; min-width: 0; }
         
         .side-leaderboard { width: 280px; flex-shrink: 0; background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(12px); border: 1px solid rgba(192, 132, 252, 0.25); border-radius: 14px; padding: 18px; position: sticky; top: 20px; }
@@ -626,43 +580,7 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
                         <span>Targeted Practice</span>
                     </button>
                 </div>
-                <!-- Кнопка Share Your Feedback -->
-                <div style="text-align: center; margin: 30px 0;">
-                    <a href="review.html" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 32px; background: linear-gradient(135deg, rgba(192, 132, 252, 0.2), rgba(96, 165, 250, 0.2)); border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 50px; color: #e9d5ff; font-family: 'Comfortaa', cursive; font-weight: 600; font-size: 1em; text-decoration: none; transition: all 0.3s ease;    box-shadow: 0 0 25px rgba(192, 132, 252, 0.7), 0 0 50px rgba(96, 165, 250, 0.4);">
-                       💬 Share Your Feedback →
-                    </a>
-                </div>
-                
-                                <!-- Contact Me блок со свечением -->
-                <div style="text-align: center; margin: 30px 0; padding: 30px; background: linear-gradient(135deg, rgba(192, 132, 252, 0.08), rgba(96, 165, 250, 0.08)); border: 1px solid rgba(192, 132, 252, 0.3); border-radius: 20px; backdrop-filter: blur(15px); box-shadow: 0 0 30px rgba(192, 132, 252, 0.2), 0 0 60px rgba(96, 165, 250, 0.1); position: relative; overflow: hidden;">
-                    <!-- Декоративные звёздочки -->
-                    <div style="position: absolute; top: 10px; left: 15px; font-size: 1.2em; opacity: 0.6;">✨</div>
-                    <div style="position: absolute; bottom: 10px; right: 15px; font-size: 1.2em; opacity: 0.6;">✨</div>
-                    
-                    <h3 style="font-family: 'Comfortaa', cursive; font-size: 1.4em; margin-bottom: 18px; background: linear-gradient(90deg, #c084fc, #ffffff, #60a5fa, #c084fc); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 4s linear infinite; position: relative; z-index: 1;">✨ Contact Me ✨</h3>
-                    
-                    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 18px; position: relative; z-index: 1;">
-                        <a href="mailto:suri_samner@mail.ru" style="display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: rgba(192, 132, 252, 0.15); box-shadow: 0 0 15px rgba(192, 132, 252, 0.3); border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 50px;    box-shadow: 0 0 20px rgba(192, 132, 252, 0.6), 0 0 40px rgba(192, 132, 252, 0.3); color: #ffffff; text-decoration: none; font-size: 0.9em; font-weight: 600; transition: all 0.3s; box-shadow: 0 0 15px rgba(192, 132, 252, 0.2);">
-                            📧 suri_samner@mail.ru
-                        </a>
-                        <a href="https://t.me/+79160601011" target="_blank" style="display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: rgba(192, 132, 252, 0.15); border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 50px; color: #ffffff; text-decoration: none; font-size: 0.9em; font-weight: 600; transition: all 0.3s; box-shadow: 0 0 15px rgba(192, 132, 252, 0.2);">
-                            ✈️ Telegram
-                        </a>
-                        <a href="tel:+79160601011" style="display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: rgba(192, 132, 252, 0.15); border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 50px;    box-shadow: 0 0 20px rgba(192, 132, 252, 0.6), 0 0 40px rgba(192, 132, 252, 0.3); color: #ffffff; text-decoration: none; font-size: 0.9em; font-weight: 600; transition: all 0.3s; box-shadow: 0 0 15px rgba(192, 132, 252, 0.2);">
-                            📱 +7 (916) 060-10-11
-                        </a>
-                    </div>
-                    
-                    <a href="https://surisamner-ops.github.io/Juliya_Magic_Teacher-/" target="_blank" style="display: inline-block; padding: 12px 25px; background: rgba(192, 132, 252, 0.2); border: 1px solid rgba(192, 132, 252, 0.5); border-radius: 50px;    box-shadow: 0 0 25px rgba(192, 132, 252, 0.7), 0 0 50px rgba(192, 132, 252, 0.4); color: #ffffff; text-decoration: none; font-family: 'Comfortaa', cursive; font-weight: 700; font-size: 0.95em; transition: all 0.3s; box-shadow: 0 0 20px rgba(192, 132, 252, 0.3); position: relative; z-index: 1;">
-                         Visit my main website to learn more!
-                    </a>
-                    
-                    <!-- Копирайт -->
-                    <div style="margin-top: 20px; color: #e9d5ff; font-size: 0.85em; position: relative; z-index: 1;">
-                        © 2026 <strong style="color: #c084fc;">Juliya Magic Teacher</strong>. All rights reserved.<br>
-                        <span style="font-size: 0.9em; opacity: 0.9;">Made with 💜 for English learners</span>
-                    </div>
-                </div>
+
                 <div id="tabSpinner" class="tab-spinner">
                     <div class="spinner-ring"></div>
                 </div>
@@ -875,27 +793,45 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
                 </div>
                         </div>
             
-        <div class="side-widgets">
-                <div class="side-leaderboard">
-                    <div class="side-leaderboard-header">
-                        <h3>🏆 Top 5</h3>
-                        <a href="leaderboard.html" class="view-all">View All →</a>
-                    </div>
-                    <div id="miniLeaderboardContent">
-                        <div class="side-loading">Loading...</div>
-                    </div>
+            <div class="side-leaderboard">
+                <div class="side-leaderboard-header">
+                    <h3>🏆 Top 5</h3>
+                    <a href="leaderboard.html" class="view-all">View All →</a>
                 </div>
-                
-                <div class="side-leaderboard" style="margin-top: 20px;">
-                    <div class="side-leaderboard-header">
-                        <h3>💬 Reviews</h3>
-                    </div>
-                    <div id="sideReviewsContent">
-                        <div class="side-loading">Loading...</div>
-                    </div>
+                <div id="miniLeaderboardContent">
+                    <div class="side-loading">Loading...</div>
+                </div>
+            </div>
+                                <!-- Виджет отзывов -->
+            <div class="side-leaderboard" style="margin-top: 20px;">
+                <div class="side-leaderboard-header">
+                    <h3>💬 Reviews</h3>
+                </div>
+                <div id="sideReviewsContent">
+                    <div class="side-loading">Loading...</div>
                 </div>
             </div>
         </div>
+               
+        <div class="review-cta">
+            <a href="review.html" class="review-cta-button">
+                <span class="review-cta-emoji">💬</span>
+                <div class="review-cta-text">
+                    <strong>Share Your Feedback</strong>
+                </div>
+                <span class="review-cta-arrow">→</span>
+            </a>
+        </div>
+<footer class="footer">
+            <h3>✨ Contact Me ✨</h3>
+            <div class="footer-links">
+                <a href="mailto:suri_samner@mail.ru" class="footer-link"><span class="icon">📧</span><span>suri_samner@mail.ru</span></a>
+                <a href="https://t.me/+79160601011" class="footer-link" target="_blank"><span class="icon">✈️</span><span>Telegram</span></a>
+                <a href="tel:+79160601011" class="footer-link"><span class="icon">📱</span><span>+7 (916) 060-10-11</span></a>
+            </div>
+            <a href="https://surisamner-ops.github.io/Juliya_Magic_Teacher-/" target="_blank" class="main-site-link">🌐 Visit my main website to learn more!</a>
+            <div class="footer-copyright">© 2026 <strong>Juliya Magic Teacher</strong>. All rights reserved.<br><span style="font-size: 0.9em; opacity: 0.9;">Made with 💜 for English learners</span></div>
+        </footer>
     </div>
         <!-- Кнопка возврата наверх -->
     <button id="backToTop" class="back-to-top-btn" title="Back to top">↑</button>
@@ -980,11 +916,6 @@ setTimeout(() => {
     });
         // ОБНОВЛЕННАЯ ФУНКЦИЯ СО СПИННЕРОМ
         function switchTab(tabName) {
-                    // Скрываем Reviews при клике на вкладки
-        const reviewsWidget = document.querySelector('.side-leaderboard:last-child');
-        if (reviewsWidget && reviewsWidget.querySelector('#sideReviewsContent')) {
-            reviewsWidget.classList.add('hidden');
-        }
             // Запоминаем активный раздел
 localStorage.setItem('lastActiveTab', tabName);
 localStorage.setItem('returnFromExercise', 'false');
