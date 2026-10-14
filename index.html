@@ -82,7 +82,27 @@
         .side-name { font-weight: 600; color: #ffffff; font-size: 0.88em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .side-score { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 0.95em; color: #4ade80; flex-shrink: 0; }
         .side-loading { text-align: center; padding: 15px 10px; color: #94a3b8; font-size: 0.8em; }
-        
+                /* Виджет отзывов в боковой панели */
+        .side-reviews-summary {
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 15px;
+            background: rgba(251, 191, 36, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+        .side-reviews-stars { color: #fbbf24; font-size: 1.2em; letter-spacing: 2px; }
+        .side-reviews-count { color: #94a3b8; font-size: 0.8em; margin-top: 4px; }
+        .side-review-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border-left: 3px solid rgba(192, 132, 252, 0.4);
+        }
+        .side-review-item:last-child { margin-bottom: 0; }
+        .side-review-name { font-weight: 600; color: #c084fc; font-size: 0.85em; margin-bottom: 4px; }
+        .side-review-text { color: #94a3b8; font-size: 0.8em; line-height: 1.4; font-style: italic; }
         .tabs-container { display: flex; justify-content: center; gap: 35px; margin-bottom: 20px; flex-wrap: wrap; animation: fadeInUp 1s ease-out 0.3s forwards; opacity: 0; position: relative; }
        .tabs-container::before {
     content: '';
@@ -782,6 +802,15 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
                 </div>
             </div>
         </div>
+                    <!-- Виджет отзывов -->
+            <div class="side-leaderboard" style="margin-top: 20px;">
+                <div class="side-leaderboard-header">
+                    <h3>💬 Reviews</h3>
+                </div>
+                <div id="sideReviewsContent">
+                    <div class="side-loading">Loading...</div>
+                </div>
+            </div>
         <div class="review-cta">
             <a href="review.html" class="review-cta-button">
                 <span class="review-cta-emoji">💬</span>
@@ -1049,6 +1078,86 @@ document.addEventListener('DOMContentLoaded', checkProgress);
             document.getElementById('miniLeaderboardContent').innerHTML = html;
         }
         loadMiniLeaderboard();
+             loadReviews();
+        loadReviews();
+
+        function loadReviews() {
+            const callbackName = 'reviewCallback' + Date.now();
+            const script = document.createElement('script');
+            window[callbackName] = function(data) {
+                renderReviews(data);
+                delete window[callbackName];
+                document.body.removeChild(script);
+            };
+            script.src = 'https://script.google.com/macros/s/AKfycbwCybdydUS2PDlskYqe2_jdbTns0MB_6e45CLWCkpr6jLB-d1zHm5ebBifFNLFoKhwr/exec' + '?callback=' + callbackName;
+            script.onerror = function() {
+                const el = document.getElementById('sideReviewsContent');
+                if(el) el.innerHTML = '<div class="side-loading">Could not load</div>';
+                delete window[callbackName];
+                document.body.removeChild(script);
+            };
+            document.body.appendChild(script);
+        }
+
+        function renderReviews(data) {
+            const reviews = data.filter(item => {
+                const ex = (item.Exercise || item.exercise_name || item.exercise || '').toString();
+                return ex.toUpperCase().includes('REVIEW');
+            });
+
+            const sideEl = document.getElementById('sideReviewsContent');
+            if (reviews.length === 0) {
+                if(sideEl) sideEl.innerHTML = '<div class="side-loading">No reviews yet</div>';
+                return;
+            }
+
+            let totalScore = 0;
+            reviews.forEach(r => {
+                const scoreStr = r.Score || r.score || "0/5";
+                totalScore += parseInt(scoreStr.split('/')[0]) || 0;
+            });
+            const avg = (totalScore / reviews.length).toFixed(1);
+            const fullStars = Math.round(avg);
+            let starsHtml = '';
+            for(let i = 0; i < 5; i++) starsHtml += i < fullStars ? '★' : '☆';
+
+            const sortedReviews = reviews.map(r => {
+                let comment = "No comment";
+                let name = r.Name || r.student_name || r.name || 'Student';
+                for (let key in r) {
+                    let val = String(r[key] || '');
+                    if (val.includes(' | ')) {
+                        let parts = val.split(' | ');
+                        if (parts.length > 1) { comment = parts[1].trim(); break; }
+                    }
+                }
+                return { name, comment, score: r.Score || r.score || "0/5" };
+            })
+            .filter(item => item.comment.length > 5 && item.comment !== 'No comment')
+            .sort((a, b) => b.comment.length - a.comment.length)
+            .slice(0, 3);
+
+            let html = `
+                <div class="side-reviews-summary">
+                    <div class="side-reviews-stars">${starsHtml}</div>
+                    <div class="side-reviews-count">${avg} из 5 (${reviews.length} отзывов)</div>
+                </div>
+            `;
+
+            if (sortedReviews.length === 0) {
+                html += '<div class="side-loading" style="padding:10px;">Спасибо за оценки! Комментарии появятся здесь.</div>';
+            } else {
+                sortedReviews.forEach(r => {
+                    html += `
+                        <div class="side-review-item">
+                            <div class="side-review-name">${r.name}</div>
+                            <div class="side-review-text">"${r.comment.substring(0, 70)}${r.comment.length > 70 ? '...' : ''}"</div>
+                        </div>
+                    `;
+                });
+            }
+            if(sideEl) sideEl.innerHTML = html;
+        }
     </script>
 </body>
 </html>
