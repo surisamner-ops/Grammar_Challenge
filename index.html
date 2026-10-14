@@ -60,6 +60,52 @@
         .header p { font-size: 1.3em; color: #c4b5fd; text-shadow: 0 0 20px rgba(192, 132, 252, 0.3); }
         
         .content-layout { display: flex; gap: 30px; align-items: flex-start; }
+                /* Контейнер для правых виджетов */
+        .side-widgets {
+            width: 280px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        /* Анимация для Reviews */
+        .side-leaderboard {
+            transition: all 0.4s ease;
+        }
+        
+        .side-leaderboard.hidden {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+            height: 0;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        /* Улучшенный стиль для звёзд в Reviews */
+        #sideReviewsContent .side-reviews-summary {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(251, 191, 36, 0.05));
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+        
+        #sideReviewsContent .side-review-item {
+            background: rgba(192, 132, 252, 0.05);
+            border-left: 3px solid rgba(192, 132, 252, 0.5);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        #sideReviewsContent .side-review-item:hover {
+            background: rgba(192, 132, 252, 0.1);
+            transform: translateX(3px);
+        }
         .main-content { flex: 1; min-width: 0; }
         
         .side-leaderboard { width: 280px; flex-shrink: 0; background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(12px); border: 1px solid rgba(192, 132, 252, 0.25); border-radius: 14px; padding: 18px; position: sticky; top: 20px; }
@@ -580,7 +626,31 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
                         <span>Targeted Practice</span>
                     </button>
                 </div>
-
+                <!-- Кнопка Share Your Feedback -->
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="review.html" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 32px; background: linear-gradient(135deg, rgba(192, 132, 252, 0.2), rgba(96, 165, 250, 0.2)); border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 50px; color: #e9d5ff; font-family: 'Comfortaa', cursive; font-weight: 600; font-size: 1em; text-decoration: none; transition: all 0.3s ease;">
+                        💬 Share Your Feedback →
+                    </a>
+                </div>
+                
+                <!-- Contact Me блок -->
+                <div style="text-align: center; margin: 30px 0; padding: 25px; background: linear-gradient(135deg, rgba(192, 132, 252, 0.08), rgba(96, 165, 250, 0.08)); border: 1px solid rgba(192, 132, 252, 0.2); border-radius: 20px; backdrop-filter: blur(15px);">
+                    <h3 style="font-family: 'Comfortaa', cursive; font-size: 1.3em; margin-bottom: 15px; background: linear-gradient(90deg, #c084fc, #ffffff, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">✨ Contact Me ✨</h3>
+                    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px;">
+                        <a href="mailto:suri_samner@mail.ru" style="display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: rgba(192, 132, 252, 0.15); border: 1px solid rgba(192, 132, 252, 0.3); border-radius: 50px; color: #ffffff; text-decoration: none; font-size: 0.9em; font-weight: 600; transition: all 0.3s;">
+                            📧 suri_samner@mail.ru
+                        </a>
+                        <a href="https://t.me/+79160601011" target="_blank" style="display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: rgba(192, 132, 252, 0.15); border: 1px solid rgba(192, 132, 252, 0.3); border-radius: 50px; color: #ffffff; text-decoration: none; font-size: 0.9em; font-weight: 600; transition: all 0.3s;">
+                            ✈️ Telegram
+                        </a>
+                        <a href="tel:+79160601011" style="display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: rgba(192, 132, 252, 0.15); border: 1px solid rgba(192, 132, 252, 0.3); border-radius: 50px; color: #ffffff; text-decoration: none; font-size: 0.9em; font-weight: 600; transition: all 0.3s;">
+                            📱 +7 (916) 060-10-11
+                        </a>
+                    </div>
+                    <a href="https://surisamner-ops.github.io/Juliya_Magic_Teacher-/" target="_blank" style="display: inline-block; padding: 10px 22px; background: rgba(192, 132, 252, 0.2); border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 50px; color: #ffffff; text-decoration: none; font-family: 'Comfortaa', cursive; font-weight: 700; font-size: 0.9em; transition: all 0.3s;">
+                        🌐 Visit my main website to learn more!
+                    </a>
+                </div>
                 <div id="tabSpinner" class="tab-spinner">
                     <div class="spinner-ring"></div>
                 </div>
@@ -793,22 +863,24 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
                 </div>
                         </div>
             
-            <div class="side-leaderboard">
-                <div class="side-leaderboard-header">
-                    <h3>🏆 Top 5</h3>
-                    <a href="leaderboard.html" class="view-all">View All →</a>
+        <div class="side-widgets">
+                <div class="side-leaderboard">
+                    <div class="side-leaderboard-header">
+                        <h3>🏆 Top 5</h3>
+                        <a href="leaderboard.html" class="view-all">View All →</a>
+                    </div>
+                    <div id="miniLeaderboardContent">
+                        <div class="side-loading">Loading...</div>
+                    </div>
                 </div>
-                <div id="miniLeaderboardContent">
-                    <div class="side-loading">Loading...</div>
-                </div>
-            </div>
-                                <!-- Виджет отзывов -->
-            <div class="side-leaderboard" style="margin-top: 20px;">
-                <div class="side-leaderboard-header">
-                    <h3>💬 Reviews</h3>
-                </div>
-                <div id="sideReviewsContent">
-                    <div class="side-loading">Loading...</div>
+                
+                <div class="side-leaderboard" style="margin-top: 20px;">
+                    <div class="side-leaderboard-header">
+                        <h3>💬 Reviews</h3>
+                    </div>
+                    <div id="sideReviewsContent">
+                        <div class="side-loading">Loading...</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -916,6 +988,11 @@ setTimeout(() => {
     });
         // ОБНОВЛЕННАЯ ФУНКЦИЯ СО СПИННЕРОМ
         function switchTab(tabName) {
+                    // Скрываем Reviews при клике на вкладки
+        const reviewsWidget = document.querySelector('.side-leaderboard:last-child');
+        if (reviewsWidget && reviewsWidget.querySelector('#sideReviewsContent')) {
+            reviewsWidget.classList.add('hidden');
+        }
             // Запоминаем активный раздел
 localStorage.setItem('lastActiveTab', tabName);
 localStorage.setItem('returnFromExercise', 'false');
