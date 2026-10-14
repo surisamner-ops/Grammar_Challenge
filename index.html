@@ -509,6 +509,92 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
     font-size: 1.35em !important;
     font-weight: 600 !important;
 }
+                /* === СЕКЦИЯ ОТЗЫВОВ === */
+        .reviews-section {
+            margin: 60px 0 40px;
+            text-align: center;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        .reviews-summary {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(251, 191, 36, 0.08);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+            display: inline-block;
+        }
+        .reviews-stars {
+            font-size: 2.5em;
+            color: #fbbf24;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+            margin-bottom: 10px;
+            letter-spacing: 5px;
+        }
+        .reviews-count {
+            color: #e9d5ff;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .review-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(192, 132, 252, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: left;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .review-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(192, 132, 252, 0.5);
+            box-shadow: 0 10px 30px rgba(192, 132, 252, 0.2);
+        }
+        .review-card::before {
+            content: '“';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 4em;
+            color: rgba(192, 132, 252, 0.2);
+            font-family: serif;
+            line-height: 1;
+        }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        .review-name {
+            font-family: 'Comfortaa', cursive;
+            font-weight: 700;
+            color: #c084fc;
+            font-size: 1.1em;
+        }
+        .review-section {
+            font-size: 0.8em;
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 10px;
+            border-radius: 10px;
+        }
+        .review-text {
+            color: #e2e8f0;
+            line-height: 1.6;
+            font-size: 0.95em;
+            position: relative;
+            z-index: 1;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -786,6 +872,17 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
             <a href="review.html" class="review-cta-button">
                 <span class="review-cta-emoji">💬</span>
                 <div class="review-cta-text">
+                            <!-- СЕКЦИЯ ОТЗЫВОВ -->
+        <div class="reviews-section" id="reviewsSection">
+            <h2 class="section-title">✨ What Students Say ✨</h2>
+            <div class="reviews-summary" id="reviewsSummary">
+                <div class="reviews-stars" id="reviewsStars">★★★★★</div>
+                <div class="reviews-count" id="reviewsCount">Loading reviews...</div>
+            </div>
+            <div class="reviews-grid" id="reviewsGrid">
+                <!-- Сюда JavaScript вставит лучшие комментарии -->
+            </div>
+        </div>
                     <strong>Share Your Feedback</strong>
                 </div>
                 <span class="review-cta-arrow">→</span>
@@ -998,7 +1095,11 @@ checkProgress();
 
 // И ещё раз при полной загрузке страницы
 document.addEventListener('DOMContentLoaded', checkProgress);
-        const MINI_LEADERBOARD_URL = 'https://script.google.com/macros/s/AKfycbwCybdydUS2PDlskYqe2_jdbTns0MB_6e45CLWCkpr6jLB-d1zHm5ebBifFNLFoKhwr/exec';
+                const MINI_LEADERBOARD_URL = 'https://script.google.com/macros/s/AKfycbwCybdydUS2PDlskYqe2_jdbTns0MB_6e45CLWCkpr6jLB-d1zHm5ebBifFNLFoKhwr/exec';
+        
+        // ==========================================
+        // 1. ФУНКЦИИ ДЛЯ ЛИДЕРБОРДА
+        // ==========================================
         function loadMiniLeaderboard() {
             const callbackName = 'miniCallback' + Date.now();
             const script = document.createElement('script');
@@ -1015,6 +1116,7 @@ document.addEventListener('DOMContentLoaded', checkProgress);
             };
             document.body.appendChild(script);
         }
+
         function renderMiniLeaderboard(data) {
             if (!data || data.length === 0) {
                 document.getElementById('miniLeaderboardContent').innerHTML = '<div class="side-loading">No results yet</div>';
@@ -1048,7 +1150,113 @@ document.addEventListener('DOMContentLoaded', checkProgress);
             });
             document.getElementById('miniLeaderboardContent').innerHTML = html;
         }
+
+        // ==========================================
+        // 2. ФУНКЦИИ ДЛЯ ОТЗЫВОВ (ОТДЕЛЬНЫЕ!)
+        // ==========================================
+        function loadReviews() {
+            const callbackName = 'reviewCallback' + Date.now();
+            const script = document.createElement('script');
+            
+            window[callbackName] = function(data) {
+                renderReviews(data);
+                delete window[callbackName];
+                document.body.removeChild(script);
+            };
+            
+            script.src = MINI_LEADERBOARD_URL + '?callback=' + callbackName;
+            
+            script.onerror = function() {
+                const reviewsSection = document.getElementById('reviewsSection');
+                if(reviewsSection) reviewsSection.style.display = 'none';
+                delete window[callbackName];
+                document.body.removeChild(script);
+            };
+            
+            document.body.appendChild(script);
+        }
+
+        function renderReviews(data) {
+            // 1. Фильтруем только отзывы
+            const reviews = data.filter(item => {
+                const ex = (item.Exercise || item.exercise_name || '').toString();
+                return ex.startsWith('REVIEW:');
+            });
+
+            if (reviews.length === 0) {
+                const reviewsSection = document.getElementById('reviewsSection');
+                if(reviewsSection) reviewsSection.style.display = 'none';
+                return;
+            }
+
+            // 2. Считаем средний рейтинг
+            let totalScore = 0;
+            reviews.forEach(r => {
+                const scoreStr = r.Score || r.score || "0/5";
+                totalScore += parseInt(scoreStr.split('/')[0]) || 0;
+            });
+            const avg = (totalScore / reviews.length).toFixed(1);
+
+            // 3. Сортируем по длине комментария (топ-3)
+            const topReviews = [...reviews].sort((a, b) => {
+                const lenA = (a.Time_spent || a.time_spent || "").length;
+                const lenB = (b.Time_spent || b.time_spent || "").length;
+                return lenB - lenA;
+            }).slice(0, 3);
+
+            // 4. Рендерим звёзды и счётчик
+            const fullStars = Math.round(avg);
+            let starsHtml = '';
+            for(let i = 0; i < 5; i++) {
+                starsHtml += i < fullStars ? '★' : '☆';
+            }
+            
+            const starsEl = document.getElementById('reviewsStars');
+            const countEl = document.getElementById('reviewsCount');
+            if(starsEl) starsEl.textContent = starsHtml;
+            if(countEl) countEl.textContent = `${avg} out of 5 based on ${reviews.length} reviews`;
+
+            // 5. Рендерим карточки
+            let gridHtml = '';
+            topReviews.forEach(r => {
+                const name = r.Name || r.student_name || 'Anonymous Student';
+                const section = (r.Exercise || r.exercise_name || '').replace('REVIEW: ', '');
+                
+                let rawFeedback = r.Time_spent || r.time_spent || 'No comment';
+                let comment = rawFeedback;
+                if (rawFeedback.includes(' | ')) {
+                    comment = rawFeedback.split(' | ')[1];
+                } else {
+                    comment = rawFeedback.replace('Helped: ', '');
+                }
+
+                if (comment.length < 15) return; // Пропускаем слишком короткие
+
+                gridHtml += `
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="review-name">${name}</span>
+                            <span class="review-section">${section}</span>
+                        </div>
+                        <p class="review-text">"${comment}"</p>
+                    </div>
+                `;
+            });
+            
+            const gridEl = document.getElementById('reviewsGrid');
+            if(gridEl) {
+                gridEl.innerHTML = gridHtml;
+                if (gridHtml === '') {
+                    gridEl.style.display = 'none';
+                }
+            }
+        }
+
+        // ==========================================
+        // 3. ЗАПУСК ВСЕХ ФУНКЦИЙ ПРИ ЗАГРУЗКЕ
+        // ==========================================
         loadMiniLeaderboard();
+        loadReviews();
     </script>
 </body>
 </html>
