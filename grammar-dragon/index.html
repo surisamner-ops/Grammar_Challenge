@@ -481,8 +481,8 @@
             statusDiv.style.color = '#94a3b8';
 
             const exerciseName = "Grammar Dragon Battle";
-            const totalQuestions = currentQuestion;
-            const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+           const totalAnswered = correctAnswers + incorrectAnswers;
+const percentage = totalAnswered > 0 ? Math.round((correctAnswers / totalAnswered) * 100) : 0;
 
             const payload = {
                 student_name: playerName || 'Anonymous',
@@ -945,17 +945,18 @@
             if (shootingStarInterval) { clearInterval(shootingStarInterval); shootingStarInterval = null; }
             
             sendResultsToTeams(victory);
-            
             try {
-                const results = JSON.parse(localStorage.getItem('grammarResults') || '[]');
-                results.push({ 
-                    name: playerName, exercise: "Grammar Dragon Battle", score: score,
-                    maxScore: 1500, percentage: Math.round((score / 1500) * 100),
-                    victory: victory, date: new Date().toISOString() 
-                });
-                localStorage.setItem('grammarResults', JSON.stringify(results));
-            } catch(e) {}
-            
+    const results = JSON.parse(localStorage.getItem('grammarResults') || '[]');
+    const totalAnswered = correctAnswers + incorrectAnswers;
+    const accuracy = totalAnswered > 0 ? Math.round((correctAnswers / totalAnswered) * 100) : 0;
+    
+    results.push({ 
+        name: playerName, exercise: "Grammar Dragon Battle", score: score,
+        maxScore: 1500, percentage: accuracy + '%',
+        victory: victory, date: new Date().toISOString() 
+    });
+    localStorage.setItem('grammarResults', JSON.stringify(results));
+} catch(e) {}
             const endScreen = document.getElementById('endScreen');
             const endTitle = document.getElementById('endTitle');
             const endMessage = document.getElementById('endMessage');
