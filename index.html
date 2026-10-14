@@ -766,13 +766,17 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
             <span class="search-icon">🔍</span>
            <input type="text" id="searchInput" class="search-input" placeholder="Search for an exercise (e.g., Past Simple, Conditionals)...">
         </div>
+                        </div>  ← конец search-container (строка 768)
+        
+        <!-- Кнопка Share Your Feedback -->
+        <div style="text-align: center; margin: 20px 0;">
+            <a href="review.html" ...>💬 Share Your Feedback →</a>
+        </div>
+        
+        <div class="tabs-container">  ← строка 769
+            <button class="tab-button" ...>
                 <div class="tabs-container">
-                                    <!-- Кнопка Share Your Feedback -->
-                <div style="text-align: center; margin: 20px 0;">
-                    <a href="review.html" style="display: inline-flex; align-items: center; gap: 10px; padding: 12px 28px; background: linear-gradient(135deg, rgba(192, 132, 252, 0.2), rgba(96, 165, 250, 0.2)); border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 50px; color: #e9d5ff; font-family: 'Comfortaa', cursive; font-weight: 600; font-size: 0.95em; text-decoration: none; transition: all 0.3s ease;">
-                        💬 Share Your Feedback →
-                    </a>
-                </div>
+                                  
                     <button class="tab-button" onclick="switchTab('gse')">
                         <span class="tab-emoji">&#x1F3C6;</span>
                         <span>GSE Tasks</span>
@@ -1006,7 +1010,15 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
                 </div>
             </div>
         </div>
-        
+                    <!-- Виджет отзывов -->
+            <div class="side-leaderboard" style="margin-top: 20px;">
+                <div class="side-leaderboard-header">
+                    <h3>💬 Reviews</h3>
+                </div>
+                <div id="sideReviewsContent">
+                    <div class="side-loading">Loading...</div>
+                </div>
+            </div>
 <footer class="footer">
             <h3>✨ Contact Me ✨</h3>
             <div class="footer-links">
