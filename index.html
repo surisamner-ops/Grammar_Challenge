@@ -1295,17 +1295,16 @@ document.addEventListener('DOMContentLoaded', checkProgress);
             
             document.body.appendChild(script);
         }
-
         function renderReviews(data) {
-            // 1. Фильтруем только отзывы
+            // 1. Фильтруем только отзывы (ищем REVIEW в любом регистре)
             const reviews = data.filter(item => {
-                const ex = (item.Exercise || item.exercise_name || '').toString();
-                return ex.startsWith('REVIEW:');
+                const ex = (item.Exercise || item.exercise_name || item.exercise || '').toString();
+                return ex.toUpperCase().includes('REVIEW');
             });
 
             if (reviews.length === 0) {
-                const reviewsSection = document.getElementById('reviewsSection');
-                if(reviewsSection) reviewsSection.style.display = 'none';
+                const el = document.getElementById('reviewsSection');
+                if(el) el.style.display = 'none';
                 return;
             }
 
@@ -1317,15 +1316,32 @@ document.addEventListener('DOMContentLoaded', checkProgress);
             });
             const avg = (totalScore / reviews.length).toFixed(1);
 
-            // 3. Сортируем: сначала те, где есть реальный комментарий, потом по длине
-            const sortedReviews = [...reviews].sort((a, b) => {
-                const textA = (a.Time_spent || a.time_spent || "");
-                const textB = (b.Time_spent || b.time_spent || "");
-                const hasCommentA = textA.includes(' | ') ? 1 : 0;
-                const hasCommentB = textB.includes(' | ') ? 1 : 0;
-                if (hasCommentB !== hasCommentA) return hasCommentB - hasCommentA;
-                return textB.length - textA.length;
-            }).slice(0, 4);
+            // 3. ПУЛЕНЕПРОБИВАЕМЫЙ ПОИСК КОММЕНТАРИЯ
+            const sortedReviews = reviews.map(r => {
+                let comment = "Нет комментария";
+                let name = r.Name || r.student_name || r.name || 'Ученик';
+                let section = (r.Exercise || r.exercise_name || r.exercise || '').replace('REVIEW: ', '').replace('REVIEW:', '').trim();
+
+                // Проверяем КАЖДОЕ поле в строке, пока не найдем то, где есть " | "
+                for (let key in r) {
+                    let val = String(r[key] || '');
+                    if (val.includes(' | ')) {
+                        let parts = val.split(' | ');
+                        if (parts.length > 1) {
+                            comment = parts[1].trim(); // Берем всё, что после разделителя
+                            break; // Нашли, прекращаем поиск
+                        }
+                    }
+                }
+
+                return { name, section, comment };
+            })
+            // Оставляем только те, где есть реальный текст (длиннее 5 символов)
+            .filter(item => item.comment.length > 5 && item.comment !== 'Нет комментария')
+            // Сортируем по длине (самые длинные сверху)
+            .sort((a, b) => b.comment.length - a.comment.length)
+            // Берем топ-4
+            .slice(0, 4);
 
             // 4. Рендерим звёзды и счётчик
             const fullStars = Math.round(avg);
@@ -1334,58 +1350,28 @@ document.addEventListener('DOMContentLoaded', checkProgress);
                 starsHtml += i < fullStars ? '★' : '☆';
             }
             
-            const starsEl = document.getElementById('reviewsStars');
-            const countEl = document.getElementById('reviewsCount');
-            if(starsEl) starsEl.textContent = starsHtml;
-            if(countEl) countEl.textContent = `${avg} из 5 на основе ${reviews.length} отзывов`;
+            document.getElementById('reviewsStars').textContent = starsHtml;
+            document.getElementById('reviewsCount').textContent = `${avg} из 5 на основе ${reviews.length} отзывов`;
 
-                       // 5. Рендерим карточки
+            // 5. Рендерим карточки (или красивое сообщение, если комментариев нет)
             let gridHtml = '';
-            sortedReviews.forEach(r => {
-                const name = r.Name || r.student_name || 'Ученик';
-                const section = (r.Exercise || r.exercise_name || '').replace('REVIEW: ', '');
-                
-                // Извлекаем комментарий из поля time_spent (колонка F в таблице)
-                let raw = r.Time_spent || r.time_spent || '';
-                let comment = '';
-                
-                // Формат в таблице: "13.10.2026, 15:2 Helped: Yes, a lot! | комментарий"
-                // Ищем разделитель " | "
-                if (raw.includes(' | ')) {
-                    const parts = raw.split(' | ');
-                    // Берём вторую часть (после |)
-                    comment = parts[1] ? parts[1].trim() : '';
-                    
-                    // Если во второй части всё ещё есть "Helped:", берём дальше
-                    if (comment.includes('Helped:') || comment.includes('Помогло:')) {
-                        comment = comment.replace(/Helped:.*?!\s*/i, '').replace(/Помогло:.*?!\s*/i, '').trim();
-                    }
-                } else {
-                    // Если нет разделителя, пробуем найти комментарий после "Helped: ... |"
-                    const match = raw.match(/Helped:.*?!\s*\|\s*(.*)/i);
-                    if (match && match[1]) {
-                        comment = match[1].trim();
-                    }
-                }
-
-                // Показываем, только если есть осмысленный текст (больше 10 символов)
-                if (comment.length < 10 || comment === 'No comment') return;
-
-                gridHtml += `
-                    <div class="review-card">
-                        <div class="review-header">
-                            <span class="review-name">${name}</span>
-                            <span class="review-section">${section}</span>
+            if (sortedReviews.length === 0) {
+                gridHtml = '<p style="color:#94a3b8; grid-column: 1/-1; text-align:center; padding: 20px; font-style: italic;">Спасибо за высокие оценки! Развернутые комментарии появятся здесь.</p>';
+            } else {
+                sortedReviews.forEach(r => {
+                    gridHtml += `
+                        <div class="review-card">
+                            <div class="review-header">
+                                <span class="review-name">${r.name}</span>
+                                <span class="review-section">${r.section}</span>
+                            </div>
+                            <p class="review-text">"${r.comment}"</p>
                         </div>
-                        <p class="review-text">"${comment}"</p>
-                    </div>
-                `;
-            });
-            
-            const gridEl = document.getElementById('reviewsGrid');
-            if(gridEl) {
-                gridEl.innerHTML = gridHtml || '<p style="color:#94a3b8; grid-column: 1/-1; padding: 20px;">Пока нет развернутых комментариев, но рейтинг отличный!</p>';
+                    `;
+                });
             }
+            
+            document.getElementById('reviewsGrid').innerHTML = gridHtml;
         }
 
         // ==========================================
