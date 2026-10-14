@@ -1339,22 +1339,37 @@ document.addEventListener('DOMContentLoaded', checkProgress);
             if(starsEl) starsEl.textContent = starsHtml;
             if(countEl) countEl.textContent = `${avg} из 5 на основе ${reviews.length} отзывов`;
 
-            // 5. Рендерим карточки
+                       // 5. Рендерим карточки
             let gridHtml = '';
             sortedReviews.forEach(r => {
                 const name = r.Name || r.student_name || 'Ученик';
                 const section = (r.Exercise || r.exercise_name || '').replace('REVIEW: ', '');
                 
+                // Извлекаем комментарий из поля time_spent (колонка F в таблице)
                 let raw = r.Time_spent || r.time_spent || '';
                 let comment = '';
                 
+                // Формат в таблице: "13.10.2026, 15:2 Helped: Yes, a lot! | комментарий"
+                // Ищем разделитель " | "
                 if (raw.includes(' | ')) {
-                    comment = raw.split(' | ')[1].trim();
+                    const parts = raw.split(' | ');
+                    // Берём вторую часть (после |)
+                    comment = parts[1] ? parts[1].trim() : '';
+                    
+                    // Если во второй части всё ещё есть "Helped:", берём дальше
+                    if (comment.includes('Helped:') || comment.includes('Помогло:')) {
+                        comment = comment.replace(/Helped:.*?!\s*/i, '').replace(/Помогло:.*?!\s*/i, '').trim();
+                    }
                 } else {
-                    comment = raw.replace('Helped: ', '').replace('Помогло: ', '').trim();
+                    // Если нет разделителя, пробуем найти комментарий после "Helped: ... |"
+                    const match = raw.match(/Helped:.*?!\s*\|\s*(.*)/i);
+                    if (match && match[1]) {
+                        comment = match[1].trim();
+                    }
                 }
 
-                if (comment.length < 10) return;
+                // Показываем, только если есть осмысленный текст (больше 10 символов)
+                if (comment.length < 10 || comment === 'No comment') return;
 
                 gridHtml += `
                     <div class="review-card">
