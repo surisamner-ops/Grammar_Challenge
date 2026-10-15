@@ -934,9 +934,11 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
     </div>
         <!-- Кнопка возврата наверх -->
     <button id="backToTop" class="back-to-top-btn" title="Back to top">↑</button>
+            <a href="index.html" class="home-btn" onclick="localStorage.removeItem('lastActiveTab'); localStorage.removeItem('returnFromExercise')" title="Home"></a>
  <script>
    // Кнопка прокрутки
 const backToTopBtn = document.getElementById('backToTop');
+             const homeBtn = document.querySelector('.home-btn');
 
 // Кнопка скрыта при загрузке
 backToTopBtn.classList.remove('visible');
@@ -954,6 +956,12 @@ window.addEventListener('scroll', () => {
     } else {
         backToTopBtn.classList.remove('visible');
     }
+            // Показываем кнопку Home после прокрутки
+        if (scrollTop > 200) {
+            homeBtn.classList.add('visible');
+        } else {
+            homeBtn.classList.remove('visible');
+        }
     
     // Меняем стрелку
     if (distanceToEnd < threshold) {
