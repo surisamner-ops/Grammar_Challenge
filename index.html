@@ -967,12 +967,7 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
     </div>
         <!-- Кнопка возврата наверх -->
     <button id="backToTop" class="back-to-top-btn" title="Back to top">↑</button>
-          <a href="index.html" class="home-btn" onclick="localStorage.removeItem('lastActiveTab'); localStorage.removeItem('returnFromExercise')" title="Home">
-    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-        <polyline points="9 22 9 12 15 12 15 22"/>
-    </svg>
-</a>
+           <a href="index.html" class="home-btn" onclick="localStorage.removeItem('lastActiveTab'); localStorage.removeItem('returnFromExercise')" title="Home">🏠</a>
  <script>
    // Кнопка прокрутки
 const backToTopBtn = document.getElementById('backToTop');
@@ -1066,12 +1061,16 @@ setTimeout(() => {
         if (reviewsWidget && reviewsWidget.querySelector('#sideReviewsContent')) {
             reviewsWidget.classList.add('hidden');
         }
-               // Скрываем Contact Me при клике на вкладки и запоминаем это
-const contactMe = document.querySelector('.footer');
-if (contactMe) {
-    contactMe.style.display = 'none';
-    localStorage.setItem('hideContactMe', 'true');
+                // Скрываем Contact Me при клике на вкладки
+    const contactMe = document.querySelector('.footer');
+    if (contactMe) {
+        contactMe.style.display = 'none';
+        // Показываем кнопку Home при клике на вкладки
+const homeBtn = document.querySelector('.home-btn');
+if (homeBtn) {
+    homeBtn.classList.add('visible');
 }
+    }
             // Запоминаем активный раздел
 localStorage.setItem('lastActiveTab', tabName);
 localStorage.setItem('returnFromExercise', 'false');
@@ -1257,13 +1256,10 @@ document.addEventListener('DOMContentLoaded', checkProgress);
             document.body.appendChild(script);
         }
 // Показываем Contact Me при загрузке страницы
-      // Показываем Contact Me только если не был скрыт
-      if (localStorage.getItem('hideContactMe') !== 'true') {
-          const contactMe = document.querySelector('.footer');
-          if (contactMe) {
-              contactMe.style.display = 'block';
-          }
-      }
+window.addEventListener('DOMContentLoaded', function() {
+    const contactMe = document.querySelector('.footer');
+    if (contactMe) {
+        contactMe.style.display = 'block';
                 // Скрываем кнопку Home при загрузке
         const homeBtn = document.querySelector('.home-btn');
         if (homeBtn) {
