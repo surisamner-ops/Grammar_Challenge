@@ -1255,6 +1255,17 @@ document.addEventListener('DOMContentLoaded', checkProgress);
             };
             document.body.appendChild(script);
         }
+// Показываем Contact Me при загрузке страницы
+window.addEventListener('DOMContentLoaded', function() {
+    const contactMe = document.querySelector('.footer');
+    if (contactMe) {
+        contactMe.style.display = 'block';
+                // Скрываем кнопку Home при загрузке
+        const homeBtn = document.querySelector('.home-btn');
+        if (homeBtn) {
+            homeBtn.classList.remove('visible');
+        }
+    }
 });
         function renderReviews(data) {
             const reviews = data.filter(item => {
