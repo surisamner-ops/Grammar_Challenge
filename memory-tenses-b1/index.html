@@ -382,15 +382,60 @@
         let tabSwitches = 0;
         
         console.log('✅ Tab tracking initialized! Current count:', tabSwitches);
-        
-        document.addEventListener('visibilitychange', function() {
-            console.log('👁️ Visibility state changed:', document.hidden);
+
+                document.addEventListener('visibilitychange', function() {
             if (document.hidden) {
                 tabSwitches++;
-                console.log('🔍 Tab switched! Count:', tabSwitches);
-                alert('Tab switched! Count: ' + tabSwitches); // Для проверки
+                console.log('🔍 Tab switched (visibilitychange)! Count:', tabSwitches);
+                showTabSwitchWarning();
             }
         });
+        
+        // Функция показа уведомления о переключении вкладки
+        function showTabSwitchWarning() {
+            // Создаём уведомление
+            const warning = document.createElement('div');
+            warning.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #ff6b9d 0%, #c084fc 100%);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 12px;
+                font-family: 'Comfortaa', cursive;
+                font-weight: 600;
+                font-size: 1em;
+                box-shadow: 0 8px 30px rgba(255, 107, 157, 0.5);
+                z-index: 10000;
+                animation: slideIn 0.4s ease-out;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            `;
+            warning.innerHTML = `⚠️ Tab switch detected! (${tabSwitches})`;
+            
+            // Добавляем анимацию
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(400px); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(400px); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(warning);
+            
+            // Удаляем через 3 секунды
+            setTimeout(() => {
+                warning.style.animation = 'slideOut 0.4s ease-out';
+                setTimeout(() => warning.remove(), 400);
+            }, 3000);
+        }
         
         // 🌟 22 ВОПРОСА УРОВНЯ B1/B1+ (Present Tenses + Travelling)
         const quizQuestions = [
