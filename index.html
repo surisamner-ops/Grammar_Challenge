@@ -1268,28 +1268,16 @@ document.addEventListener('DOMContentLoaded', checkProgress);
         }
 // Проверяем, нужно ли скрыть Contact Me после возврата из упражнения
 window.addEventListener('DOMContentLoaded', function() {
-    const lastActiveTab = localStorage.getItem('lastActiveTab');
     const hideContactMe = localStorage.getItem('hideContactMe');
     const contactMe = document.querySelector('.footer');
     
-    // Если нет активной вкладки (главная страница) - показываем Contact Me
-    if (!lastActiveTab || lastActiveTab === '') {
-        if (contactMe) contactMe.style.display = 'block';
-        localStorage.removeItem('hideContactMe'); // Сбрасываем флаг
-    } 
-    // Если была активна вкладка - проверяем флаг
-    else if (hideContactMe === 'true') {
+    if (hideContactMe === 'true') {
+        // Был скрыт — оставляем скрытым
         if (contactMe) contactMe.style.display = 'none';
     } else {
+        // Не был скрыт — показываем
         if (contactMe) contactMe.style.display = 'block';
     }
-    
-    // Скрываем кнопку Home при загрузке
-    const homeBtn = document.querySelector('.home-btn');
-    if (homeBtn) {
-        homeBtn.classList.remove('visible');
-    }
-});
     
     // Скрываем кнопку Home при загрузке
     const homeBtn = document.querySelector('.home-btn');
