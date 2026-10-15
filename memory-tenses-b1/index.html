@@ -381,9 +381,10 @@
         let gameStartTime = null;
                 let tabSwitches = 0;
         
-        document.addEventListener('visibilitychange', function() {
+               document.addEventListener('visibilitychange', function() {
             if (document.hidden) {
                 tabSwitches++;
+                console.log('🔍 Tab switched! Count:', tabSwitches);
             }
         });
         
