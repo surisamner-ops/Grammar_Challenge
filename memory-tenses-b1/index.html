@@ -379,6 +379,13 @@
         
         let studentName = '';
         let gameStartTime = null;
+                let tabSwitches = 0;
+        
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                tabSwitches++;
+            }
+        });
         
         // 🌟 22 ВОПРОСА УРОВНЯ B1/B1+ (Present Tenses + Travelling)
         const quizQuestions = [
@@ -681,7 +688,7 @@
                 exercise_name: exerciseName,
                 errors_text: 'Game completed',
                 time_spent: timeSpent,
-                tab_switches: '0'
+                tab_switches: tabSwitches.toString()
             };
 
             try {
