@@ -314,7 +314,18 @@
         .footer-copyright { color: #e9d5ff; font-size: 0.75em; line-height: 1.4; position: relative; z-index: 1; }
         .footer-copyright strong { color: #c084fc; }
 
-        @media (max-width: 900px) { .content-layout { flex-direction: column; } .side-leaderboard { width: 100%; position: static; order: -1; } }
+        @media (max-width: 900px) { 
+    .content-layout { flex-direction: column; } 
+    .side-widgets { 
+        width: 100%; 
+        order: -1; 
+        margin-bottom: 20px; 
+    }
+    .side-leaderboard { 
+        width: 100%; 
+        position: static; 
+    }
+}
         @media (max-width: 768px) { 
             .main-title { font-size: 2.2em; padding: 0 30px; } .main-title::before, .main-title::after { font-size: 0.4em; }
             .header p { font-size: 1.1em; } .exercises-grid { gap: 20px; } .tabs-container { gap: 20px; } 
@@ -1009,6 +1020,11 @@ setTimeout(() => {
         if (reviewsWidget && reviewsWidget.querySelector('#sideReviewsContent')) {
             reviewsWidget.classList.add('hidden');
         }
+                // Скрываем Contact Me при клике на вкладки
+    const contactMe = document.querySelector('.footer');
+    if (contactMe) {
+        contactMe.style.display = 'none';
+    }
             // Запоминаем активный раздел
 localStorage.setItem('lastActiveTab', tabName);
 localStorage.setItem('returnFromExercise', 'false');
@@ -1193,7 +1209,13 @@ document.addEventListener('DOMContentLoaded', checkProgress);
             };
             document.body.appendChild(script);
         }
-
+// Показываем Contact Me при загрузке страницы
+window.addEventListener('DOMContentLoaded', function() {
+    const contactMe = document.querySelector('.footer');
+    if (contactMe) {
+        contactMe.style.display = 'block';
+    }
+});
         function renderReviews(data) {
             const reviews = data.filter(item => {
                 const ex = (item.Exercise || item.exercise_name || item.exercise || '').toString();
