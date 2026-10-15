@@ -324,6 +324,17 @@
     animation-delay: 1.5s;
 }
         .footer h3 { font-family: 'Comfortaa', cursive; font-size: 1.2em; margin-bottom: 12px; background: linear-gradient(90deg, #c084fc, #ffffff, #60a5fa, #c084fc); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 4s linear infinite; position: relative; z-index: 1; }
+        .title-star {
+    width: 22px;
+    height: 22px;
+    vertical-align: middle;
+    margin: 0 6px;
+    animation: sparkle 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.8));
+}
+.title-star:last-child {
+    animation-delay: 1s;
+}
         .footer-links { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; position: relative; z-index: 1; }
         .footer-link { display: flex; align-items: center; gap: 6px; color: #ffffff; text-decoration: none; font-size: 0.85em; font-weight: 600; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); padding: 7px 14px; background: linear-gradient(135deg, rgba(192, 132, 252, 0.12), rgba(96, 165, 250, 0.12)); border-radius: 50px; border: 1px solid rgba(192, 132, 252, 0.3); box-shadow: 0 0 10px rgba(192, 132, 252, 0.15); }
         .footer-link:hover { background: linear-gradient(135deg, rgba(192, 132, 252, 0.25), rgba(96, 165, 250, 0.25)); border-color: #c084fc; transform: translateY(-2px) scale(1.03); box-shadow: 0 0 18px rgba(192, 132, 252, 0.4); }
@@ -731,7 +742,15 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
             <path d="M12 0C12 0 14.5 7.5 22 12C14.5 16.5 12 24 12 24C12 24 9.5 16.5 2 12C9.5 7.5 12 0 12 0Z" fill="#c084fc"/>
         </svg>
     </div>
-    <h3>✨ Contact Me ✨</h3>
+    <h3>
+    <svg class="title-star" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 0C12 0 14.5 7.5 22 12C14.5 16.5 12 24 12 24C12 24 9.5 16.5 2 12C9.5 7.5 12 0 12 0Z" fill="#c084fc"/>
+    </svg>
+    Contact Me
+    <svg class="title-star" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 0C12 0 14.5 7.5 22 12C14.5 16.5 12 24 12 24C12 24 9.5 16.5 2 12C9.5 7.5 12 0 12 0Z" fill="#c084fc"/>
+    </svg>
+</h3>
     <div class="footer-links">
         <a href="mailto:suri_samner@mail.ru" class="footer-link"><span class="icon">📧</span><span>suri_samner@mail.ru</span></a>
         <a href="https://t.me/+79160601011" class="footer-link" target="_blank"><span class="icon">✈️</span><span>Telegram</span></a>
