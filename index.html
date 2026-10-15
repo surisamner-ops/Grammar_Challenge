@@ -302,8 +302,27 @@
 }
 
         .footer { max-width: 900px; margin: 80px auto; padding: 15px 20px; text-align: center; background: linear-gradient(135deg, rgba(192, 132, 252, 0.08), rgba(96, 165, 250, 0.08)); background-size: 200% 200%; animation: gradientShift 6s ease infinite, glow 3s ease-in-out infinite; border: 1px solid rgba(192, 132, 252, 0.2); backdrop-filter: blur(15px); border-radius: 16px; position: relative; overflow: hidden; }
-        .footer::before, .footer::after { content: '✨'; position: absolute; font-size: 1em; animation: sparkle 3s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.8)); }
-        .footer::before { top: 8px; left: 15px; } .footer::after { bottom: 8px; right: 15px; animation-delay: 1.5s; }
+        .footer-sparkle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    animation: sparkle 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.8));
+    pointer-events: none;
+}
+.footer-sparkle svg {
+    width: 100%;
+    height: 100%;
+}
+.footer-sparkle.top-left {
+    top: 10px;
+    left: 18px;
+}
+.footer-sparkle.bottom-right {
+    bottom: 10px;
+    right: 18px;
+    animation-delay: 1.5s;
+}
         .footer h3 { font-family: 'Comfortaa', cursive; font-size: 1.2em; margin-bottom: 12px; background: linear-gradient(90deg, #c084fc, #ffffff, #60a5fa, #c084fc); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 4s linear infinite; position: relative; z-index: 1; }
         .footer-links { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; position: relative; z-index: 1; }
         .footer-link { display: flex; align-items: center; gap: 6px; color: #ffffff; text-decoration: none; font-size: 0.85em; font-weight: 600; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); padding: 7px 14px; background: linear-gradient(135deg, rgba(192, 132, 252, 0.12), rgba(96, 165, 250, 0.12)); border-radius: 50px; border: 1px solid rgba(192, 132, 252, 0.3); box-shadow: 0 0 10px rgba(192, 132, 252, 0.15); }
@@ -702,15 +721,25 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
             </a>
         </div>
 <footer class="footer">
-            <h3>✨ Contact Me ✨</h3>
-            <div class="footer-links">
-                <a href="mailto:suri_samner@mail.ru" class="footer-link"><span class="icon">📧</span><span>suri_samner@mail.ru</span></a>
-                <a href="https://t.me/+79160601011" class="footer-link" target="_blank"><span class="icon">✈️</span><span>Telegram</span></a>
-                <a href="tel:+79160601011" class="footer-link"><span class="icon">📱</span><span>+7 (916) 060-10-11</span></a>
-            </div>
-            <a href="https://surisamner-ops.github.io/Juliya_Magic_Teacher-/" target="_blank" class="main-site-link">🌐 Visit my main website to learn more!</a>
-            <div class="footer-copyright">© 2026 <strong>Juliya Magic Teacher</strong>. All rights reserved.<br><span style="font-size: 0.9em; opacity: 0.9;">Made with 💜 for English learners</span></div>
-        </footer>
+    <div class="footer-sparkle top-left">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C12 0 14.5 7.5 22 12C14.5 16.5 12 24 12 24C12 24 9.5 16.5 2 12C9.5 7.5 12 0 12 0Z" fill="#c084fc"/>
+        </svg>
+    </div>
+    <div class="footer-sparkle bottom-right">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C12 0 14.5 7.5 22 12C14.5 16.5 12 24 12 24C12 24 9.5 16.5 2 12C9.5 7.5 12 0 12 0Z" fill="#c084fc"/>
+        </svg>
+    </div>
+    <h3>✨ Contact Me ✨</h3>
+    <div class="footer-links">
+        <a href="mailto:suri_samner@mail.ru" class="footer-link"><span class="icon">📧</span><span>suri_samner@mail.ru</span></a>
+        <a href="https://t.me/+79160601011" class="footer-link" target="_blank"><span class="icon">✈️</span><span>Telegram</span></a>
+        <a href="tel:+79160601011" class="footer-link"><span class="icon">📱</span><span>+7 (916) 060-10-11</span></a>
+    </div>
+    <a href="https://surisamner-ops.github.io/Juliya_Magic_Teacher-/" target="_blank" class="main-site-link">🌐 Visit my main website to learn more!</a>
+    <div class="footer-copyright">© 2026 <strong>Juliya Magic Teacher</strong>. All rights reserved.<br><span style="font-size: 0.9em; opacity: 0.9;">Made with 💜 for English learners</span></div>
+</footer>
 
                 <div id="tabSpinner" class="tab-spinner">
                     <div class="spinner-ring"></div>
