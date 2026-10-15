@@ -231,6 +231,28 @@
 .game-tag, .game-card .game-tag { display: inline-flex !important; align-items: center !important; gap: 8px !important; padding: 14px 28px !important; background: rgba(123, 104, 238, 0.1) !important; border: 1.5px solid rgba(123, 104, 238, 0.5) !important; border-radius: 50px !important; font-size: 0.95em !important; color: #e9d5ff !important; font-weight: 600 !important; backdrop-filter: blur(10px) !important; transition: all 0.3s ease !important; margin-top: 5px !important; letter-spacing: 0.3px !important; }
 .game-tag:hover, .game-card .game-tag:hover { background: rgba(123, 104, 238, 0.2) !important; border-color: rgba(123, 104, 238, 0.8) !important; transform: translateY(-2px) !important; box-shadow: 0 4px 20px rgba(123, 104, 238, 0.3) !important; }
 
+                /* Красивый значок NEW ADVANCED */
+        .new-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c084fc 100%);
+            color: white;
+            font-family: 'Comfortaa', cursive;
+            font-size: 0.75em;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 50px;
+            box-shadow: 0 0 15px rgba(255, 107, 157, 0.6);
+            z-index: 10;
+            animation: pulseBadge 2s ease-in-out infinite;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        @keyframes pulseBadge {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 107, 157, 0.6); }
+            50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(255, 107, 157, 0.9), 0 0 40px rgba(192, 132, 252, 0.5); }
+        }
         .completed-badge { position: absolute; top: 15px; right: 15px; background: rgba(74, 222, 128, 0.15); color: #4ade80; border: 1px solid #4ade80; padding: 5px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 700; display: none; align-items: center; gap: 5px; box-shadow: 0 0 15px rgba(74, 222, 128, 0.3); animation: fadeInUp 0.5s ease-out forwards; }
 
       .game-card { background: linear-gradient(135deg, #1a1040 0%, #2d1b69 50%, #1a1040 100%); border: 1px solid rgba(123, 104, 238, 0.4); overflow: hidden; box-shadow: 0 8px 32px rgba(123, 104, 238, 0.2); padding: 0; min-height: auto; }
@@ -799,6 +821,26 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
                                     Play Now
                                 </div>
                                 <div class="game-tag">2 Players • Interactive Quiz</div>
+                            </div>
+                        </a>
+                                                <!-- Новая карточка: Present Tenses Memory B1+ -->
+                        <a href="memory-tenses-b1/index.html" class="exercise-card" onclick="localStorage.setItem('lastActiveTab', 'practice'); localStorage.setItem('returnFromExercise', 'true')">
+                            <span class="completed-badge" id="badge-memory-b1">✓ Completed</span>
+                            <span class="new-badge">🔥 NEW ADVANCED</span>
+                            <img src="memory-tenses-b1/game-screenshot.png" alt="Present Tenses Memory B1+" class="game-card-image">
+                            <div class="game-card-content">
+                                <h3 class="game-card-title">
+                                    <span class="emoji">🧠</span>
+                                    Present Tenses Memory (B1/B1+)
+                                </h3>
+                                <p class="game-card-description">
+                                    Advanced level! Match travel pairs and prove your knowledge of Present Simple, Continuous, Perfect, and Perfect Continuous. 22 challenging questions!
+                                </p>
+                                <div class="play-button">
+                                    <span class="play-icon">▶</span>
+                                    Play Now
+                                </div>
+                                <div class="game-tag">2 Players • Advanced Quiz • B1+</div>
                             </div>
                         </a>
                         <a href="travel-grammar-catcher/index.html" class="exercise-card" onclick="localStorage.setItem('lastActiveTab', 'practice'); localStorage.setItem('returnFromExercise', 'true')">
