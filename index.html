@@ -249,25 +249,39 @@
             letter-spacing: 0.5px;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
-                /* Ограничение размера для карточки Vocabulary Masterclass */
-        .vocab-card {
-            max-height: 300px;
-            overflow: hidden;
+                   /* === ЖЕСТКОЕ ОГРАНИЧЕНИЕ РАЗМЕРА ДЛЯ VOCABULARY MASTERCLASS === */
+        a.exercise-card.vocab-card {
+            max-height: 320px !important;
+            min-height: auto !important;
+            height: auto !important;
+            overflow: hidden !important;
+            display: flex !important;
+            flex-direction: column !important;
         }
-        .vocab-card p {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            margin-bottom: 10px;
+        a.exercise-card.vocab-card .emoji {
+            font-size: 2.5em !important;
+            margin-bottom: 10px !important;
+            flex-shrink: 0 !important;
         }
-        .vocab-card .emoji {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+        a.exercise-card.vocab-card h2 {
+            font-size: 1.3em !important;
+            margin-bottom: 8px !important;
+            line-height: 1.2 !important;
+            flex-shrink: 0 !important;
         }
-        .vocab-card h2 {
-            font-size: 1.25em;
-            margin-bottom: 8px;
+        a.exercise-card.vocab-card p {
+            font-size: 0.95em !important;
+            line-height: 1.4 !important;
+            margin-bottom: 10px !important;
+            flex-grow: 0 !important; /* ГЛАВНОЕ: запрещаем тексту растягивать карточку */
+            display: -webkit-box !important;
+            -webkit-line-clamp: 2 !important;
+            -webkit-box-orient: vertical !important;
+            overflow: hidden !important;
+        }
+        a.exercise-card.vocab-card .tag {
+            margin-top: auto !important;
+            flex-shrink: 0 !important;
         }
         @keyframes pulseBadge {
             0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 107, 157, 0.6); }
