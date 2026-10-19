@@ -173,33 +173,6 @@
             opacity: 1;
             transform: translateX(5px);
         }
-                .tab-warning-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 12, 41, 0.85); backdrop-filter: blur(8px);
-            display: flex; align-items: center; justify-content: center;
-            z-index: 300; opacity: 0; visibility: hidden; transition: all 0.3s ease;
-        }
-        .tab-warning-overlay.active { opacity: 1; visibility: visible; }
-        
-        .tab-warning-box {
-            background: var(--glass-bg); border: 2px solid var(--error);
-            border-radius: 24px; padding: 2rem; text-align: center;
-            max-width: 400px; width: 90%; 
-            box-shadow: 0 0 40px rgba(255, 107, 107, 0.3);
-            transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .tab-warning-overlay.active .tab-warning-box { transform: scale(1); }
-        
-        .warning-icon { font-size: 3.5rem; display: block; margin-bottom: 1rem; animation: bounce 1s infinite; }
-        .tab-warning-box h3 { color: var(--error); font-family: var(--font-display); margin: 0 0 0.5rem 0; font-size: 1.6rem; }
-        .tab-warning-box p { color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.5; font-size: 1.05rem; }
-        
-        .warning-btn {
-            background: var(--error); color: white; border: none; padding: 0.8rem 2rem;
-            border-radius: 12px; font-family: var(--font-body); font-weight: 600;
-            font-size: 1rem; cursor: pointer; transition: var(--transition-smooth);
-        }
-        .warning-btn:hover { background: #ff5252; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4); }
     </style>
 </head>
 <body>
@@ -444,13 +417,11 @@
             settings: { glyphs: 'standard', mode: 'pvp', aiDifficulty: 'perfect', firstMove: 'X', quizEnabled: true },
             winningCombos: [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]],
 
-            init() { this.renderBoard(); ui.updateLabels(); this.resetRound(); },
+            init() { this.renderBoard(); this.updateLabels(); this.resetRound(); },
             async resetRound() {
                 this.board.fill(null); this.gameActive = true; this.pendingMove = null; this.currentPlayer = this.settings.firstMove;
                 ui.clearBoard(); ui.hideBanner(); ui.updateStatus(`Player ${this.currentPlayer}'s Turn`);
                 roundStats = { correct: 0, incorrect: 0, total: 0 };
-tabSwitchCount = 0;
-isWarningShown = false;
                 if (this.settings.mode === 'pve' && this.currentPlayer === 'O') { await this.makeAiMove(); }
             },
             resetScores() { this.scores = { X: 0, O: 0, draw: 0 }; ui.updateScoreboard(); this.resetRound(); },
@@ -617,7 +588,7 @@ isWarningShown = false;
                 percentage: roundStats.total > 0 ? Math.round((roundStats.correct / roundStats.total) * 100) + '%' : '0%',
                 time: new Date().toLocaleString(), exercise_name: exerciseName, round_result: resultText,
                 questions_answered: roundStats.total, correct_answers: roundStats.correct, incorrect_answers: roundStats.incorrect,
-                time_spent: 'N/A', tab_switches: tabSwitchCount
+                time_spent: 'N/A', tab_switches: '0 (no tracking)'
             };
 
             try {
@@ -674,42 +645,10 @@ isWarningShown = false;
         };
 
         starSystem.init(); confetti.init();
-        // === ОТСЛЕЖИВАНИЕ ПЕРЕКЛЮЧЕНИЯ ВКЛАДОК ===
-        let tabSwitchCount = 0;
-        let isWarningShown = false;
 
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                tabSwitchCount++;
-                console.log(`️ Вкладка переключена! Всего переключений: ${tabSwitchCount}`);
-            } else {
-                if (tabSwitchCount > 0 && !isWarningShown && game.gameActive) {
-                    isWarningShown = true;
-                    showTabWarning();
-                }
-            }
-        });
-
-        function showTabWarning() {
-            document.getElementById('tab-switch-warning').classList.add('active');
-        }
-
-        function closeTabWarning() {
-            document.getElementById('tab-switch-warning').classList.remove('active');
-            isWarningShown = false;
-        }
-        // === КОНЕЦ ОТСЛЕЖИВАНИЯ ===
         document.addEventListener('keydown', (e) => {
             if (e.key === 's' && e.ctrlKey) { e.preventDefault(); ui.openSettings(); }
         });
     </script>
-        <div id="tab-switch-warning" class="tab-warning-overlay">
-        <div class="tab-warning-box">
-            <span class="warning-icon">⚠️</span>
-            <h3>Внимание!</h3>
-            <p>Вы переключились с вкладки игры.<br>Это действие было зафиксировано системой.</p>
-            <button class="warning-btn" onclick="closeTabWarning()">Понятно, продолжаем</button>
-        </div>
-    </div>
 </body>
 </html>
