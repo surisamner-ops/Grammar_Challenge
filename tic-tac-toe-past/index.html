@@ -444,7 +444,7 @@
             settings: { glyphs: 'standard', mode: 'pvp', aiDifficulty: 'perfect', firstMove: 'X', quizEnabled: true },
             winningCombos: [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]],
 
-            init() { this.renderBoard(); this.updateLabels(); this.resetRound(); },
+            init() { this.renderBoard(); ui.updateLabels(); this.resetRound(); },
             async resetRound() {
                 this.board.fill(null); this.gameActive = true; this.pendingMove = null; this.currentPlayer = this.settings.firstMove;
                 ui.clearBoard(); ui.hideBanner(); ui.updateStatus(`Player ${this.currentPlayer}'s Turn`);
