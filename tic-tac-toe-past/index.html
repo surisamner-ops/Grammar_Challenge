@@ -642,7 +642,7 @@ isWarningShown = false;
  score: `${game.scores.X} : ${game.scores.O} (Draws: ${game.scores.draw})`,
     percentage: roundStats.total > 0 ? Math.round((roundStats.correct / roundStats.total) * 100) + '%' : '0%',
     time: new Date().toLocaleString(),
-    exercise_name: exerciseName,
+   exercise_name: exerciseName + (wrongAnswers.length > 0 ? '\n\n❌ Errors (' + roundStats.incorrect + '):\n' + wrongAnswers.map((w, i) => (i+1) + '. ' + w.question + ' → ' + w.chosen + ' | ' + w.correct).join('\n') : ''),
    round_result: resultText + '\n\n❌ Errors (' + roundStats.incorrect + '): ' + (wrongAnswers.length > 0 ? wrongAnswers.map((w, i) => (i+1) + '. ' + w.question + ' → ' + w.chosen + ' | ' + w.correct).join('; ') : 'none') + '\n️ Time: ' + (gameStartTime ? Math.round((Date.now() - gameStartTime) / 1000) + ' sec' : 'N/A'),
     questions_answered: roundStats.total,
     correct_answers: roundStats.correct,
