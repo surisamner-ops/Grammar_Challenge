@@ -1039,11 +1039,13 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
                                 <div id="use" class="tab-content">
                     <h2 class="section-title">📝 USE Tasks</h2>
                     <div class="exercises-grid">
-                        <a href="vocab-masterclass/index.html" class="exercise-card vocab-card" onclick="localStorage.setItem('lastActiveTab', 'use'); localStorage.setItem('returnFromExercise', 'true')">
+                        <a href="vocab-masterclass/index.html" class="exercise-card vocab-card" 
+   style="max-width: 400px; max-height: 320px; min-height: 200px; padding: 20px; display: flex; flex-direction: column; overflow: hidden;"
+   onclick="localStorage.setItem('lastActiveTab', 'use'); localStorage.setItem('returnFromExercise', 'true')">
                             <span class="completed-badge" id="badge-vocab-master">✓ Completed</span>
-                            <div class="emoji">📚</div>
-                            <h2>Vocabulary Masterclass</h2>
-                            <p>Master vocabulary differences: reliable vs responsible, remind vs recall, good at vs succeed in.</p>
+                            <div class="emoji" style="font-size: 2.5em; margin-bottom: 10px;">📚</div>
+                         <h2 style="font-size: 1.3em; margin-bottom: 8px; line-height: 1.2;">Vocabulary Masterclass</h2>
+                          <p style="font-size: 0.95em; line-height: 1.4; margin-bottom: 10px; flex-grow: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">Master vocabulary differences: reliable vs responsible, remind vs recall, good at vs succeed in.</p>
                             <span class="tag">6 Tasks • EGE Format</span>
                         </a>
                     </div>
