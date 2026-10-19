@@ -650,7 +650,7 @@ isWarningShown = false;
         time_spent: (typeof gameStartTime !== 'undefined' && gameStartTime !== null) ? Math.round((Date.now() - gameStartTime) / 1000) + ' sec' : 'N/A',
         tab_switches: safeTab + ' switches',
         // ВОТ ГЛАВНЫЙ СЕКРЕТ ИЗ TED'S STORY:
-        errors_text: wrongAnswers.length > 0 ? wrongAnswers.map((w, i) => (i+1) + '. ' + w.question + ' → Выбрано: ' + w.chosen + ' | Правильно: ' + w.correct).join('\n\n') : '✅ No errors! Perfect!'
+        errors_text: wrongAnswers.length > 0 ? '\n' + wrongAnswers.map((w, i) => '   ' + (i+1) + '. ' + w.question + ' → Выбрано: ' + w.chosen + ' | Правильно: ' + w.correct).join('\n') : '✅ No errors! Perfect!'
     };
 
     console.log('📤 Отправляем:', payload);
