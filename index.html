@@ -731,9 +731,17 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
         <span>Targeted Practice</span>
     </button>
     <button class="tab-button" onclick="switchTab('use')">
-        <span class="tab-emoji">&#x1F4DD;</span>
-        <span>USE Tasks</span>
-    </button>
+    <span class="tab-emoji">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+        </svg>
+    </span>
+    <span>USE Tasks</span>
+</button>
 </div>
                
 <footer class="footer">
@@ -995,15 +1003,16 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
                     </div>
                 </div>
                         </div>
-                                    <div id="use" class="tab-content">
+                                  <div id="use" class="tab-content">
                     <h2 class="section-title">📝 USE Tasks</h2>
                     <div class="exercises-grid">
-                        <div class="exercise-card">
+                        <a href="vocab-masterclass/index.html" class="exercise-card" onclick="localStorage.setItem('lastActiveTab', 'use'); localStorage.setItem('returnFromExercise', 'true')">
+                            <span class="completed-badge" id="badge-vocab-master">✓ Completed</span>
                             <div class="emoji">📚</div>
-                            <h2>Coming Soon</h2>
-                            <p>New USE preparation tasks are being prepared for you!</p>
-                            <span class="tag">Stay tuned</span>
-                        </div>
+                            <h2>Vocabulary Masterclass</h2>
+                            <p>Master vocabulary differences: reliable vs responsible, remind vs recall, good at vs succeed in. Perfect for USE preparation!</p>
+                            <span class="tag">6 Tasks • EGE Format</span>
+                        </a>
                     </div>
                 </div>
             
