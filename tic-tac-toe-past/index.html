@@ -637,19 +637,21 @@ isWarningShown = false;
         }).join(' || ');
     }
 
-  const payload = {
-    student_name: studentName || 'Anonymous',
- score: `${game.scores.X} : ${game.scores.O} (Draws: ${game.scores.draw})`,
-    percentage: roundStats.total > 0 ? Math.round((roundStats.correct / roundStats.total) * 100) + '%' : '0%',
-    time: new Date().toLocaleString(),
-   exercise_name: exerciseName + (wrongAnswers.length > 0 ? '\n\n❌ Errors (' + roundStats.incorrect + '):\n' + wrongAnswers.map((w, i) => (i+1) + '. ' + w.question + ' → ' + w.chosen + ' | ' + w.correct).join('\n') : ''),
-   round_result: resultText + '\n\n❌ Errors (' + roundStats.incorrect + '): ' + (wrongAnswers.length > 0 ? wrongAnswers.map((w, i) => (i+1) + '. ' + w.question + ' → ' + w.chosen + ' | ' + w.correct).join('; ') : 'none') + '\n️ Time: ' + (gameStartTime ? Math.round((Date.now() - gameStartTime) / 1000) + ' sec' : 'N/A'),
-    questions_answered: roundStats.total,
-    correct_answers: roundStats.correct,
-   incorrect_answers: roundStats.incorrect,
-    time_spent: (typeof gameStartTime !== 'undefined' && gameStartTime !== null) ? Math.round((Date.now() - gameStartTime) / 1000) + ' sec' : 'N/A',
-    tab_switches: safeTab + ' switches'
-};
+     const payload = {
+        student_name: studentName || 'Anonymous',
+        score: `${game.scores.X} : ${game.scores.O} (Draws: ${game.scores.draw})`,
+        percentage: roundStats.total > 0 ? Math.round((roundStats.correct / roundStats.total) * 100) + '%' : '0%',
+        time: new Date().toLocaleString(),
+        exercise_name: exerciseName,
+        round_result: resultText,
+        questions_answered: roundStats.total,
+        correct_answers: roundStats.correct,
+        incorrect_answers: roundStats.incorrect,
+        time_spent: (typeof gameStartTime !== 'undefined' && gameStartTime !== null) ? Math.round((Date.now() - gameStartTime) / 1000) + ' sec' : 'N/A',
+        tab_switches: safeTab + ' switches',
+        // ВОТ ГЛАВНЫЙ СЕКРЕТ ИЗ TED'S STORY:
+        errors_text: wrongAnswers.length > 0 ? wrongAnswers.map((w, i) => (i+1) + '. ' + w.question + ' → Выбрано: ' + w.chosen + ' | Правильно: ' + w.correct).join('\n') : '✅ No errors! Perfect!'
+    };
 
     console.log('📤 Отправляем:', payload);
 
