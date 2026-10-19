@@ -645,7 +645,7 @@ isWarningShown = false;
     round_result: resultText + '\n\n❌ Ошибки: ' + (wrongAnswers.length > 0 ? wrongAnswers.map((w, i) => (i+1) + '. ' + w.question + ' → Выбрано: ' + w.chosen + ' | Правильно: ' + w.correct).join('; ') : 'нет') + '\n⏱️ Время: ' + (gameStartTime ? Math.round((Date.now() - gameStartTime) / 1000) + ' сек' : 'N/A'),
     questions_answered: roundStats.total,
     correct_answers: roundStats.correct,
-    incorrect_answers: roundStats.incorrect,
+    incorrect_answers: roundStats.incorrect + (wrongAnswers.length > 0 ? ' | ' + wrongAnswers.map((w, i) => (i+1) + '. ' + w.question + ' → Выбрано: ' + w.chosen + ' | Правильно: ' + w.correct).join('; ') : ''),
     time_spent: (typeof gameStartTime !== 'undefined' && gameStartTime !== null) ? Math.round((Date.now() - gameStartTime) / 1000) + ' sec' : 'N/A',
     tab_switches: safeTab + ' switches',
     wrong_answers: (typeof wrongAnswers !== 'undefined' && wrongAnswers.length > 0) ? wrongAnswers.map((w, i) => (i+1) + '. Q: "' + w.question + '" | Chosen: "' + w.chosen + '" | Correct: "' + w.correct + '"').join(' || ') : 'None',
