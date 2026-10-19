@@ -323,6 +323,8 @@ let isWarningShown = false;
             }
             document.getElementById('nameFormOverlay').classList.add('hidden');
             gameStartTime = Date.now();
+            tabSwitchCount = 0;
+            wrongAnswers = [];
             game.init();
         }
 
@@ -453,10 +455,9 @@ wrongAnswers.push({ question: this.currentQuestion.question, chosen: this.curren
                 this.board.fill(null); this.gameActive = true; this.pendingMove = null; this.currentPlayer = this.settings.firstMove;
                 ui.clearBoard(); ui.hideBanner(); ui.updateStatus(`Player ${this.currentPlayer}'s Turn`);
                 roundStats = { correct: 0, incorrect: 0, total: 0 };
-tabSwitchCount = 0;
-wrongAnswers = [];
+
 isWarningShown = false;
-                gameStartTime = Date.now();
+                
                 if (this.settings.mode === 'pve' && this.currentPlayer === 'O') { await this.makeAiMove(); }
             },
             resetScores() { this.scores = { X: 0, O: 0, draw: 0 }; ui.updateScoreboard(); this.resetRound(); },
@@ -636,19 +637,18 @@ isWarningShown = false;
         }).join(' || ');
     }
 
-   const payload = {
+  const payload = {
     student_name: studentName || 'Anonymous',
-    score: `${game.scores.X} : ${game.scores.O} (Draws: ${game.scores.draw})`,
+   score: `${game.scores.X} : ${game.scores.O} (Draws: ${game.scores.draw}) | Errors: ${roundStats.incorrect} | ${wrongAnswers.length > 0 ? wrongAnswers.map((w, i) => (i+1) + '. ' + w.question + '→' + w.chosen + '|' + w.correct).join('; ') : 'none'}`,
     percentage: roundStats.total > 0 ? Math.round((roundStats.correct / roundStats.total) * 100) + '%' : '0%',
     time: new Date().toLocaleString(),
     exercise_name: exerciseName,
     round_result: resultText + '\n\n❌ Ошибки: ' + (wrongAnswers.length > 0 ? wrongAnswers.map((w, i) => (i+1) + '. ' + w.question + ' → Выбрано: ' + w.chosen + ' | Правильно: ' + w.correct).join('; ') : 'нет') + '\n⏱️ Время: ' + (gameStartTime ? Math.round((Date.now() - gameStartTime) / 1000) + ' сек' : 'N/A'),
     questions_answered: roundStats.total,
     correct_answers: roundStats.correct,
-    incorrect_answers: roundStats.incorrect + (wrongAnswers.length > 0 ? ' | ' + wrongAnswers.map((w, i) => (i+1) + '. ' + w.question + ' → Выбрано: ' + w.chosen + ' | Правильно: ' + w.correct).join('; ') : ''),
+    incorrect_answers: roundStats.incorrect,
     time_spent: (typeof gameStartTime !== 'undefined' && gameStartTime !== null) ? Math.round((Date.now() - gameStartTime) / 1000) + ' sec' : 'N/A',
-    tab_switches: safeTab + ' switches',
-    wrong_answers: (typeof wrongAnswers !== 'undefined' && wrongAnswers.length > 0) ? wrongAnswers.map((w, i) => (i+1) + '. Q: "' + w.question + '" | Chosen: "' + w.chosen + '" | Correct: "' + w.correct + '"').join(' || ') : 'None',
+    tab_switches: safeTab + ' switches'
 };
 
     console.log('📤 Отправляем:', payload);
