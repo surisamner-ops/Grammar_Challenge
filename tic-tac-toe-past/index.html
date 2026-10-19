@@ -173,6 +173,30 @@
             opacity: 1;
             transform: translateX(5px);
         }
+                .tab-warning-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 12, 41, 0.85); backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 300; opacity: 0; visibility: hidden; transition: all 0.3s ease;
+        }
+        .tab-warning-overlay.active { opacity: 1; visibility: visible; }
+        .tab-warning-box {
+            background: var(--glass-bg); border: 2px solid var(--error);
+            border-radius: 24px; padding: 2rem; text-align: center;
+            max-width: 400px; width: 90%;
+            box-shadow: 0 0 40px rgba(255, 107, 107, 0.3);
+            transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .tab-warning-overlay.active .tab-warning-box { transform: scale(1); }
+        .warning-icon { font-size: 3.5rem; display: block; margin-bottom: 1rem; animation: bounce 1s infinite; }
+        .tab-warning-box h3 { color: var(--error); font-family: var(--font-display); margin: 0 0 0.5rem 0; font-size: 1.6rem; }
+        .tab-warning-box p { color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.5; font-size: 1.05rem; }
+        .warning-btn {
+            background: var(--error); color: white; border: none; padding: 0.8rem 2rem;
+            border-radius: 12px; font-family: var(--font-body); font-weight: 600;
+            font-size: 1rem; cursor: pointer; transition: var(--transition-smooth);
+        }
+        .warning-btn:hover { background: #ff5252; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4); }
     </style>
 </head>
 <body>
@@ -281,7 +305,11 @@
         const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCybdydUS2PDlskYqe2_jdbTns0MB_6e45CLWCkpr6jLB-d1zHm5ebBifFNLFoKhwr/exec';
         let studentName = '';
-        let roundStats = { correct: 0, incorrect: 0, total: 0 };
+       let roundStats = { correct: 0, incorrect: 0, total: 0 };
+let tabSwitchCount = 0;
+let wrongAnswers = [];
+let isWarningShown = false;
+        
 
         function startGame() {
             const nameInput = document.getElementById('studentName');
@@ -400,6 +428,7 @@
                 } else {
                     options[this.selectedOption].classList.add('incorrect'); options[this.currentQuestion.correct].classList.add('correct');
                     this.showFeedback("Let's give it a try! 💪", 'incorrect'); roundStats.incorrect++; this.attemptCount++; this.updateProgress();
+wrongAnswers.push({ question: this.currentQuestion.question, chosen: this.currentQuestion.options[this.selectedOption], correct: this.currentQuestion.options[this.currentQuestion.correct] });
                     setTimeout(() => {
                         if (this.attemptCount < 3) { this.loadRandomQuestion(); } 
                         else { this.showFeedback('Keep practicing! 🌟 Moving on...', 'correct'); setTimeout(() => { this.hideModal(); if (this.resolve) this.resolve(true); }, 1500); }
@@ -417,11 +446,14 @@
             settings: { glyphs: 'standard', mode: 'pvp', aiDifficulty: 'perfect', firstMove: 'X', quizEnabled: true },
             winningCombos: [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]],
 
-            init() { this.renderBoard(); this.updateLabels(); this.resetRound(); },
+            init() { this.renderBoard(); ui.updateLabels(); this.resetRound(); },
             async resetRound() {
                 this.board.fill(null); this.gameActive = true; this.pendingMove = null; this.currentPlayer = this.settings.firstMove;
                 ui.clearBoard(); ui.hideBanner(); ui.updateStatus(`Player ${this.currentPlayer}'s Turn`);
                 roundStats = { correct: 0, incorrect: 0, total: 0 };
+tabSwitchCount = 0;
+wrongAnswers = [];
+isWarningShown = false;
                 if (this.settings.mode === 'pve' && this.currentPlayer === 'O') { await this.makeAiMove(); }
             },
             resetScores() { this.scores = { X: 0, O: 0, draw: 0 }; ui.updateScoreboard(); this.resetRound(); },
@@ -574,35 +606,93 @@
             updateStatus(msg) {}
         };
 
-        async function sendResultsToTeams(isDraw) {
-            const statusDiv = document.getElementById('sendingStatus');
-            statusDiv.classList.add('show'); statusDiv.textContent = '📤 Sending results to teacher...'; statusDiv.className = 'sending-status show';
+      async function sendResultsToTeams(isDraw) {
+    const statusDiv = document.getElementById('sendingStatus');
+    statusDiv.classList.add('show');
+    statusDiv.textContent = '📤 Sending results to teacher...';
+    statusDiv.className = 'sending-status show';
 
-            let resultText = '';
-            if (isDraw) { resultText = "It's a Draw 🤝"; } 
-            else { resultText = `Player ${game.currentPlayer === 'X' ? '✨' : '🌙'} Wins!`; }
+    let resultText = '';
+    if (isDraw) {
+        resultText = "It's a Draw 🤝";
+    } else {
+        resultText = `Player ${game.currentPlayer === 'X' ? '✨' : '🌙'} Wins!`;
+    }
 
-            const exerciseName = "Past Tenses Tic Tac Toe";
-            const payload = {
-                student_name: studentName || 'Anonymous', score: `${game.scores.X} : ${game.scores.O} (Draws: ${game.scores.draw})`,
-                percentage: roundStats.total > 0 ? Math.round((roundStats.correct / roundStats.total) * 100) + '%' : '0%',
-                time: new Date().toLocaleString(), exercise_name: exerciseName, round_result: resultText,
-                questions_answered: roundStats.total, correct_answers: roundStats.correct, incorrect_answers: roundStats.incorrect,
-                time_spent: 'N/A', tab_switches: '0 (no tracking)'
-            };
+    const exerciseName = "Past Tenses Tic Tac Toe";
 
-            try {
-                const response = await fetch(POWER_AUTOMATE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                if (response.ok) { statusDiv.textContent = '✅ Results sent to Teams!'; statusDiv.className = 'sending-status show success'; } 
-                else { statusDiv.textContent = '⚠️ Error sending results.'; statusDiv.className = 'sending-status show error'; }
-            } catch (error) { statusDiv.textContent = '⚠️ Network error.'; statusDiv.className = 'sending-status show error'; }
+    // Безопасные значения
+    const safeTab = (typeof tabSwitchCount !== 'undefined') ? tabSwitchCount : 0;
+    const safeWrong = (typeof wrongAnswers !== 'undefined' && Array.isArray(wrongAnswers)) ? wrongAnswers : [];
 
-            try {
-                await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ student_name: studentName || 'Anonymous', exercise_name: exerciseName, score: payload.score, percentage: payload.percentage, time: payload.time, time_spent: 'Game mode' }) });
-            } catch (e) { console.log('Sheets error:', e); }
+    // Список ошибок
+    let wrongText = 'None';
+    if (safeWrong.length > 0) {
+        wrongText = safeWrong.map((w, i) => {
+            return `${i + 1}. Q: "${w.question}" | Chosen: "${w.chosen}" | Correct: "${w.correct}"`;
+        }).join(' || ');
+    }
 
-            setTimeout(() => { statusDiv.classList.remove('show'); }, 5000);
+    const payload = {
+        student_name: studentName || 'Anonymous',
+        score: `${game.scores.X} : ${game.scores.O} (Draws: ${game.scores.draw})`,
+        percentage: roundStats.total > 0 ? Math.round((roundStats.correct / roundStats.total) * 100) + '%' : '0%',
+        time: new Date().toLocaleString(),
+        exercise_name: exerciseName,
+        round_result: resultText,
+        questions_answered: roundStats.total,
+        correct_answers: roundStats.correct,
+        incorrect_answers: roundStats.incorrect,
+        time_spent: 'N/A',
+        tab_switches: safeTab + ' switches',
+        wrong_answers: wrongText
+    };
+
+    console.log('📤 Отправляем:', payload);
+
+    try {
+        const response = await fetch(POWER_AUTOMATE_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        if (response.ok) {
+            statusDiv.textContent = '✅ Results sent to Teams!';
+            statusDiv.className = 'sending-status show success';
+        } else {
+            statusDiv.textContent = '⚠️ Error sending results.';
+            statusDiv.className = 'sending-status show error';
         }
+    } catch (error) {
+        console.error('❌ Teams error:', error);
+        statusDiv.textContent = '⚠️ Network error.';
+        statusDiv.className = 'sending-status show error';
+    }
+
+    try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                student_name: studentName || 'Anonymous',
+                exercise_name: exerciseName,
+                score: payload.score,
+                percentage: payload.percentage,
+                time: payload.time,
+                time_spent: 'Game mode',
+                tab_switches: safeTab,
+                wrong_answers: wrongText
+            })
+        });
+    } catch (e) {
+        console.log('Sheets error:', e);
+    }
+
+    setTimeout(() => {
+        statusDiv.classList.remove('show');
+    }, 5000);
+}
 
         document.getElementById('mode-select').addEventListener('change', (e) => {
             document.getElementById('ai-diff-group').style.display = e.target.value === 'pve' ? 'block' : 'none';
@@ -645,10 +735,38 @@
         };
 
         starSystem.init(); confetti.init();
+                // === ОТСЛЕЖИВАНИЕ ВКЛАДОК ===
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                tabSwitchCount++;
+                console.log('⚠️ Переключение вкладки #' + tabSwitchCount);
+            } else {
+                if (tabSwitchCount > 0 && !isWarningShown && game.gameActive) {
+                    isWarningShown = true;
+                    var w = document.getElementById('tab-switch-warning');
+                    if (w) w.classList.add('active');
+                }
+            }
+        });
+
+        function closeTabWarning() {
+            var w = document.getElementById('tab-switch-warning');
+            if (w) w.classList.remove('active');
+            isWarningShown = false;
+        }
+        // === КОНЕЦ ===
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 's' && e.ctrlKey) { e.preventDefault(); ui.openSettings(); }
         });
     </script>
+        <div id="tab-switch-warning" class="tab-warning-overlay">
+        <div class="tab-warning-box">
+            <span class="warning-icon">⚠️</span>
+            <h3>Attention!</h3>
+            <p>You have switched away from the game tab.<br>This action has been recorded by the system.</p>
+            <button class="warning-btn" onclick="closeTabWarning()">Got it, continue</button>
+        </div>
+    </div>
 </body>
 </html>
