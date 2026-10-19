@@ -308,6 +308,7 @@
        let roundStats = { correct: 0, incorrect: 0, total: 0 };
 let tabSwitchCount = 0;
 let wrongAnswers = [];
+let gameStartTime = null;
 let isWarningShown = false;
         
 
@@ -321,6 +322,7 @@ let isWarningShown = false;
                 return;
             }
             document.getElementById('nameFormOverlay').classList.add('hidden');
+            gameStartTime = Date.now();
             game.init();
         }
 
@@ -454,6 +456,7 @@ wrongAnswers.push({ question: this.currentQuestion.question, chosen: this.curren
 tabSwitchCount = 0;
 wrongAnswers = [];
 isWarningShown = false;
+gameStartTime = Date.now();
                 if (this.settings.mode === 'pve' && this.currentPlayer === 'O') { await this.makeAiMove(); }
             },
             resetScores() { this.scores = { X: 0, O: 0, draw: 0 }; ui.updateScoreboard(); this.resetRound(); },
@@ -643,9 +646,11 @@ isWarningShown = false;
         questions_answered: roundStats.total,
         correct_answers: roundStats.correct,
         incorrect_answers: roundStats.incorrect,
+        errors_detail: wrongText,
         time_spent: 'N/A',
         tab_switches: safeTab + ' switches',
         wrong_answers: wrongText
+        time_spent: gameStartTime ? Math.round((Date.now() - gameStartTime) / 1000) + ' sec' : 'N/A'
     };
 
     console.log('📤 Отправляем:', payload);
