@@ -6,694 +6,210 @@
     <title>Juliya Magic Teacher - Vocabulary Challenge</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #c084fc;
+            --primary-light: #e9d5ff;
+            --secondary: #60a5fa;
+            --success: #4ade80;
+            --success-bg: rgba(74, 222, 128, 0.15);
+            --warning: #fbbf24;
+            --warning-bg: rgba(251, 191, 36, 0.15);
+            --error: #f87171;
+            --error-bg: rgba(248, 113, 113, 0.15);
+            --bg-dark: #090a0f;
+            --bg-card: rgba(255, 255, 255, 0.04);
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         
         body {
             font-family: 'Inter', sans-serif;
-            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, var(--bg-dark) 100%);
             min-height: 100vh;
             color: #f8fafc;
             overflow-x: hidden;
             position: relative;
+            line-height: 1.6;
         }
 
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
+        /* === ANIMATED BACKGROUND === */
+        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--duration) ease-in-out infinite; opacity: 0; }
+        .shooting-star { position: absolute; width: 150px; height: 2px; background: linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.8), transparent); animation: shoot 5s linear infinite; opacity: 0; }
 
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle var(--duration) ease-in-out infinite;
-            opacity: 0;
-        }
+        @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: var(--max-opacity); transform: scale(1.3); } }
+        @keyframes shoot { 0% { transform: translateX(-150px) translateY(150px) rotate(-45deg); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateX(100vw) translateY(-150px) rotate(-45deg); opacity: 0; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+        @keyframes sparkle { 0%, 100% { opacity: 0.6; transform: translateY(-50%) scale(0.8) rotate(0deg); } 50% { opacity: 1; transform: translateY(-50%) scale(1.2) rotate(180deg); } }
 
-        .shooting-star {
-            position: absolute;
-            width: 150px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.8), transparent);
-            animation: shoot 5s linear infinite;
-            opacity: 0;
-        }
+        .main-wrapper { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: var(--max-opacity); transform: scale(1.3); }
-        }
-
-        @keyframes shoot {
-            0% { transform: translateX(-150px) translateY(150px) rotate(-45deg); opacity: 0; }
-            20% { opacity: 1; }
-            100% { transform: translateX(100vw) translateY(-150px) rotate(-45deg); opacity: 0; }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            75% { transform: translateX(8px); }
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
-        }
-
-        @keyframes sparkle {
-            0%, 100% { opacity: 0.6; transform: translateY(-50%) scale(0.8) rotate(0deg); }
-            50% { opacity: 1; transform: translateY(-50%) scale(1.2) rotate(180deg); }
-        }
-
-        .main-wrapper {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 20px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 50px;
-            animation: fadeInUp 1s ease-out;
-        }
-
+        /* === HEADER === */
+        .header { text-align: center; margin-bottom: 50px; animation: fadeInUp 1s ease-out; }
         .main-title {
-            font-family: 'Comfortaa', cursive;
-            font-size: 3.5em;
-            font-weight: 700;
+            font-family: 'Comfortaa', cursive; font-size: 3.2em; font-weight: 700;
             background: linear-gradient(90deg, #c084fc, #ffffff, #60a5fa, #c084fc, #ffffff);
-            background-size: 300% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: shimmer 6s linear infinite;
-            margin-bottom: 15px;
-            position: relative;
-            display: inline-block;
+            background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shimmer 6s linear infinite; margin-bottom: 15px; position: relative; display: inline-block;
         }
-
         .main-title::before, .main-title::after {
-            content: '✦';
-            position: absolute;
-            top: 50%;
-            font-size: 0.5em;
-            color: #c084fc;
-            animation: sparkle 2.5s ease-in-out infinite;
-            filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.8));
+            content: '✦'; position: absolute; top: 50%; font-size: 0.5em; color: #c084fc;
+            animation: sparkle 2.5s ease-in-out infinite; filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.8));
             -webkit-text-fill-color: #c084fc;
         }
-
         .main-title::before { left: -40px; }
         .main-title::after { right: -40px; animation-delay: 1.2s; }
+        .header p { font-size: 1.15em; color: #c4b5fd; text-shadow: 0 0 20px rgba(192, 132, 252, 0.3); max-width: 650px; margin: 0 auto; }
 
-        .header p {
-            font-size: 1.2em;
-            color: #c4b5fd;
-            text-shadow: 0 0 20px rgba(192, 132, 252, 0.3);
-            max-width: 650px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
+        /* === FORMS & CARDS === */
         .welcome-form {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(192, 132, 252, 0.3);
-            border-radius: 24px;
-            padding: 50px 40px;
-            text-align: center;
-            max-width: 550px;
-            margin: 0 auto 50px;
-            animation: fadeInUp 0.8s ease-out;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 24px; padding: 50px 40px; text-align: center; max-width: 500px; margin: 0 auto 50px;
+            animation: fadeInUp 0.8s ease-out; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
-
-        .welcome-form h2 {
-            font-family: 'Comfortaa', cursive;
-            font-size: 2.2em;
-            margin-bottom: 15px;
-            color: #e9d5ff;
-        }
-
-        .welcome-form p {
-            margin-bottom: 30px;
-            color: #94a3b8;
-            font-size: 1.1em;
-        }
+        .welcome-form h2 { font-family: 'Comfortaa', cursive; font-size: 2em; margin-bottom: 15px; color: var(--primary-light); }
+        .welcome-form p { margin-bottom: 30px; color: #94a3b8; font-size: 1.05em; }
 
         .name-input {
-            width: 100%;
-            max-width: 350px;
-            padding: 16px 24px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(192, 132, 252, 0.4);
-            border-radius: 14px;
-            color: #fff;
-            font-size: 1.1em;
-            text-align: center;
-            margin-bottom: 25px;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
+            width: 100%; max-width: 320px; padding: 16px 24px; background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(192, 132, 252, 0.4); border-radius: 14px; color: #fff; font-size: 1.1em;
+            text-align: center; margin-bottom: 25px; font-family: 'Inter', sans-serif; transition: all 0.3s ease;
         }
-
         .name-input::placeholder { color: rgba(255, 255, 255, 0.3); }
-        .name-input:focus {
-            outline: none;
-            border-color: #c084fc;
-            box-shadow: 0 0 25px rgba(192, 132, 252, 0.4);
-            transform: translateY(-2px);
-        }
+        .name-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 25px rgba(192, 132, 252, 0.4); transform: translateY(-2px); }
 
         .btn-start {
-            padding: 16px 45px;
-            background: linear-gradient(135deg, #c084fc 0%, #60a5fa 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-family: 'Comfortaa', cursive;
-            font-size: 1.15em;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(192, 132, 252, 0.4);
+            padding: 16px 45px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white; border: none; border-radius: 50px; font-family: 'Comfortaa', cursive; font-size: 1.1em;
+            font-weight: 700; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(192, 132, 252, 0.4);
         }
+        .btn-start:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6); }
 
-        .btn-start:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6);
-        }
-
+        /* === TIMER === */
         .timer-bar {
-            position: sticky;
-            top: 10px;
-            z-index: 100;
-            background: rgba(192, 132, 252, 0.15);
-            border: 1px solid rgba(192, 132, 252, 0.4);
-            border-radius: 50px;
-            padding: 12px 25px;
-            text-align: center;
-            margin-bottom: 30px;
-            font-family: 'Comfortaa', cursive;
-            font-size: 1.1em;
-            color: #e9d5ff;
-            backdrop-filter: blur(10px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            animation: slideIn 0.5s ease-out;
+            position: sticky; top: 15px; z-index: 100; background: rgba(192, 132, 252, 0.15);
+            border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 50px; padding: 12px 25px;
+            text-align: center; margin-bottom: 30px; font-family: 'Comfortaa', cursive; font-size: 1.1em;
+            color: var(--primary-light); backdrop-filter: blur(12px); display: none; align-items: center;
+            justify-content: center; gap: 20px; animation: slideIn 0.5s ease-out; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
-
         .timer-bar.show { display: flex; }
-        .timer-bar .timer-icon { font-size: 1.3em; }
-        
-        .tab-warning {
-            color: #fbbf24;
-            font-weight: 700;
-            animation: pulse 1s ease-in-out infinite;
-            background: rgba(251, 191, 36, 0.15);
-            padding: 6px 15px;
-            border-radius: 20px;
-        }
+        .tab-warning { color: var(--warning); font-weight: 700; animation: pulse 1s ease-in-out infinite; background: var(--warning-bg); padding: 6px 15px; border-radius: 20px; }
 
+        /* === TASK SECTIONS === */
         .task-section {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(192, 132, 252, 0.2);
-            border-radius: 24px;
-            padding: 40px;
-            margin-bottom: 40px;
-            animation: fadeInUp 0.8s ease-out;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            display: none;
+            background: var(--bg-card); backdrop-filter: blur(16px); border: 1px solid rgba(192, 132, 252, 0.2);
+            border-radius: 24px; padding: 40px; margin-bottom: 40px; animation: fadeInUp 0.8s ease-out;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05); display: none;
         }
-
         .task-section.show { display: block; }
+        .section-title { font-family: 'Comfortaa', cursive; font-size: 1.8em; color: var(--primary-light); text-align: center; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .instruction { text-align: center; color: #94a3b8; margin-bottom: 35px; font-size: 1.05em; line-height: 1.6; }
+        .multi-answer-note { text-align: center; color: var(--warning); font-size: 0.95em; margin-bottom: 25px; font-weight: 600; background: var(--warning-bg); padding: 10px 20px; border-radius: 12px; display: inline-block; margin-left: auto; margin-right: auto; }
 
-        .section-title {
-            font-family: 'Comfortaa', cursive;
-            font-size: 1.9em;
-            color: #e9d5ff;
-            text-align: center;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-        }
-
-        .instruction {
-            text-align: center;
-            color: #94a3b8;
-            margin-bottom: 30px;
-            font-size: 1.05em;
-            line-height: 1.5;
-        }
-
-        .match-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .match-column {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
+        /* === MATCHING === */
+        .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 800px; margin: 0 auto; }
+        .match-column { display: flex; flex-direction: column; gap: 12px; }
         .match-item {
-            background: rgba(192, 132, 252, 0.1);
-            border: 2px solid rgba(192, 132, 252, 0.3);
-            border-radius: 16px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 1em;
-            color: #e9d5ff;
-            min-height: 75px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            font-weight: 600;
-            position: relative;
-            overflow: hidden;
+            background: rgba(192, 132, 252, 0.08); border: 1.5px solid rgba(192, 132, 252, 0.3); border-radius: 14px;
+            padding: 18px; text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.95em; color: var(--primary-light); min-height: 70px; display: flex; align-items: center;
+            justify-content: center; gap: 12px; font-weight: 600; position: relative; overflow: hidden;
         }
-
-        .match-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
-        }
-
+        .match-item::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transition: left 0.5s; }
         .match-item:hover::before { left: 100%; }
+        .match-item:hover { background: rgba(192, 132, 252, 0.2); border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(192, 132, 252, 0.2); }
+        .match-item.selected { background: rgba(192, 132, 252, 0.35); border-color: var(--primary-light); box-shadow: 0 0 25px rgba(192, 132, 252, 0.4); transform: scale(1.02); }
+        .match-item.correct { background: var(--success-bg); border-color: var(--success); color: var(--success); cursor: default; pointer-events: none; animation: pulse 0.5s ease; }
+        .match-item.wrong { animation: shake 0.4s ease; background: var(--error-bg); border-color: var(--error); }
+        .match-item svg { width: 24px; height: 24px; flex-shrink: 0; filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.6)); }
 
-        .match-item:hover {
-            background: rgba(192, 132, 252, 0.25);
-            border-color: #c084fc;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(192, 132, 252, 0.3);
-        }
+        /* === QUIZ CARDS === */
+        .quiz-container { display: flex; flex-direction: column; gap: 20px; max-width: 800px; margin: 0 auto; }
+        .quiz-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(192, 132, 252, 0.2); border-radius: 16px; padding: 25px; transition: all 0.3s ease; }
+        .quiz-card:hover { border-color: rgba(192, 132, 252, 0.4); background: rgba(255, 255, 255, 0.05); }
+        .quiz-question { font-size: 1.1em; color: #ffffff; margin-bottom: 20px; line-height: 1.7; font-weight: 500; }
+        .quiz-question .blank { color: var(--primary); font-weight: 700; border-bottom: 2px dashed var(--primary); padding: 0 6px; }
+        .quiz-question .wrong-word { color: var(--error); text-decoration: line-through; font-weight: 600; background: var(--error-bg); padding: 2px 8px; border-radius: 6px; }
 
-        .match-item.selected {
-            background: rgba(192, 132, 252, 0.4);
-            border-color: #e9d5ff;
-            box-shadow: 0 0 30px rgba(192, 132, 252, 0.5);
-            transform: scale(1.03);
-        }
-
-        .match-item.correct {
-            background: rgba(74, 222, 128, 0.2);
-            border-color: #4ade80;
-            color: #86efac;
-            cursor: default;
-            pointer-events: none;
-            animation: pulse 0.5s ease;
-        }
-
-        .match-item.wrong {
-            animation: shake 0.4s ease;
-            background: rgba(248, 113, 113, 0.2);
-            border-color: #f87171;
-        }
-
-        .match-item svg {
-            width: 28px;
-            height: 28px;
-            flex-shrink: 0;
-            filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.6));
-        }
-
-        .quiz-container {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .quiz-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(192, 132, 252, 0.2);
-            border-radius: 16px;
-            padding: 25px;
-            transition: all 0.3s ease;
-        }
-
-        .quiz-card:hover {
-            border-color: rgba(192, 132, 252, 0.4);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .quiz-question {
-            font-size: 1.1em;
-            color: #ffffff;
-            margin-bottom: 20px;
-            line-height: 1.6;
-            font-weight: 500;
-        }
-
-        .quiz-question .blank {
-            color: #c084fc;
-            font-weight: 700;
-            border-bottom: 2px dashed #c084fc;
-            padding: 0 6px;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-        }
-
+        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
         .option-btn {
-            background: rgba(192, 132, 252, 0.1);
-            border: 1px solid rgba(192, 132, 252, 0.3);
-            border-radius: 12px;
-            padding: 14px 16px;
-            color: #e9d5ff;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
+            background: rgba(192, 132, 252, 0.1); border: 1.5px solid rgba(192, 132, 252, 0.3); border-radius: 12px;
+            padding: 14px 16px; color: var(--primary-light); font-family: 'Inter', sans-serif; font-size: 0.95em;
+            font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-align: center;
         }
-
-        .option-btn:hover:not(:disabled) {
-            background: rgba(192, 132, 252, 0.25);
-            border-color: #c084fc;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(192, 132, 252, 0.3);
-        }
-
-        .option-btn.correct {
-            background: rgba(74, 222, 128, 0.2);
-            border-color: #4ade80;
-            color: #86efac;
-            pointer-events: none;
-            animation: pulse 0.5s ease;
-        }
-
-        .option-btn.wrong {
-            background: rgba(248, 113, 113, 0.2);
-            border-color: #f87171;
-            color: #fca5a5;
-            animation: shake 0.4s ease;
-        }
-
+        .option-btn:hover:not(:disabled) { background: rgba(192, 132, 252, 0.25); border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(192, 132, 252, 0.2); }
+        .option-btn.correct { background: var(--success-bg); border-color: var(--success); color: var(--success); pointer-events: none; animation: pulse 0.5s ease; }
+        .option-btn.wrong { background: var(--error-bg); border-color: var(--error); color: var(--error); animation: shake 0.4s ease; }
         .option-btn:disabled { cursor: not-allowed; opacity: 0.5; }
 
-        .feedback-msg {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 0.95em;
-            display: none;
-            animation: slideIn 0.4s ease-out;
-            border-left: 4px solid;
-            line-height: 1.5;
-        }
+        .feedback-msg { margin-top: 15px; padding: 15px; border-radius: 12px; font-size: 0.95em; display: none; animation: slideIn 0.4s ease-out; border-left: 4px solid; line-height: 1.6; }
+        .feedback-msg.success { background: var(--success-bg); border-left-color: var(--success); color: #86efac; display: block; }
+        .feedback-msg.hint { background: var(--warning-bg); border-left-color: var(--warning); color: #fcd34d; display: block; }
 
-        .feedback-msg.success {
-            background: rgba(74, 222, 128, 0.1);
-            border-left-color: #4ade80;
-            color: #86efac;
-            display: block;
-        }
-
-        .feedback-msg.hint {
-            background: rgba(251, 191, 36, 0.1);
-            border-left-color: #fbbf24;
-            color: #fcd34d;
-            display: block;
-        }
-
-        /* EGE Split View */
-        .ege-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-top: 30px;
-        }
-
-        .ege-text-panel {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(192, 132, 252, 0.3);
-            border-radius: 16px;
-            padding: 30px;
-            height: fit-content;
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-
+        /* === EGE SPLIT VIEW === */
+        .ege-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
+        .ege-text-panel { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(192, 132, 252, 0.3); border-radius: 16px; padding: 30px; height: fit-content; max-height: 70vh; overflow-y: auto; }
         .ege-text-panel::-webkit-scrollbar { width: 8px; }
         .ege-text-panel::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.3); border-radius: 4px; }
-        .ege-text-panel::-webkit-scrollbar-thumb { background: #c084fc; border-radius: 4px; }
+        .ege-text-panel::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+        .ege-text-title { font-family: 'Comfortaa', cursive; font-size: 1.3em; margin-bottom: 20px; color: var(--primary); padding-bottom: 15px; border-bottom: 2px solid rgba(192, 132, 252, 0.3); }
+        .ege-text-content { font-size: 1em; line-height: 1.9; color: #e2e8f0; }
+        .ege-gap { display: inline-block; min-width: 70px; text-align: center; border-bottom: 2px dashed var(--primary); color: var(--primary); font-weight: 700; padding: 0 5px; transition: all 0.3s ease; background: rgba(192, 132, 252, 0.1); border-radius: 4px; }
+        .ege-gap.filled { color: var(--success); border-bottom-color: var(--success); background: var(--success-bg); animation: pulse 0.5s ease; }
 
-        .ege-text-title {
-            font-family: 'Comfortaa', cursive;
-            font-size: 1.3em;
-            margin-bottom: 20px;
-            color: #c084fc;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(192, 132, 252, 0.3);
-        }
-
-        .ege-text-content {
-            font-size: 0.95em;
-            line-height: 1.9;
-            color: #e2e8f0;
-        }
-
-        .ege-gap {
-            display: inline-block;
-            min-width: 70px;
-            text-align: center;
-            border-bottom: 2px dashed #c084fc;
-            color: #c084fc;
-            font-weight: 700;
-            padding: 0 5px;
-            transition: all 0.3s ease;
-            background: rgba(192, 132, 252, 0.1);
-            border-radius: 4px;
-        }
-
-        .ege-gap.filled {
-            color: #4ade80;
-            border-bottom-color: #4ade80;
-            background: rgba(74, 222, 128, 0.15);
-            animation: pulse 0.5s ease;
-        }
-
-        .ege-questions-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-height: 70vh;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
+        .ege-questions-panel { display: flex; flex-direction: column; gap: 20px; max-height: 70vh; overflow-y: auto; padding-right: 10px; }
         .ege-questions-panel::-webkit-scrollbar { width: 8px; }
-        .ege-questions-panel::-webkit-scrollbar-thumb { background: #c084fc; border-radius: 4px; }
+        .ege-questions-panel::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+        .question-card { background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(192, 132, 252, 0.2); border-radius: 14px; padding: 20px; transition: all 0.3s ease; }
+        .question-card:hover { border-color: rgba(192, 132, 252, 0.4); transform: translateX(5px); }
+        .question-header { font-family: 'Comfortaa', cursive; font-size: 1.1em; font-weight: 700; margin-bottom: 15px; color: var(--primary-light); display: flex; align-items: center; gap: 10px; }
+        .question-number { background: var(--primary); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9em; color: white; }
 
-        .question-card {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(192, 132, 252, 0.2);
-            border-radius: 14px;
-            padding: 20px;
-            transition: all 0.3s ease;
-        }
+        /* === CONTROLS & RESULTS === */
+        .controls { display: flex; gap: 16px; justify-content: center; margin-top: 35px; flex-wrap: wrap; }
+        .btn { padding: 14px 32px; border: none; border-radius: 50px; font-family: 'Comfortaa', cursive; font-size: 1em; font-weight: 700; cursor: pointer; transition: all 0.3s ease; }
+        .btn-check { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; box-shadow: 0 4px 20px rgba(192, 132, 252, 0.4); }
+        .btn-check:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6); }
+        .btn-reset { background: rgba(255, 255, 255, 0.08); color: #f8fafc; border: 1px solid rgba(255, 255, 255, 0.12); }
+        .btn-reset:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-2px); }
 
-        .question-card:hover {
-            border-color: rgba(192, 132, 252, 0.4);
-            transform: translateX(5px);
-        }
-
-        .question-header {
-            font-family: 'Comfortaa', cursive;
-            font-size: 1.1em;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: #e9d5ff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .question-number {
-            background: #c084fc;
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9em;
-            color: white;
-        }
-
-        .controls {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            margin-top: 35px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 14px 32px;
-            border: none;
-            border-radius: 50px;
-            font-family: 'Comfortaa', cursive;
-            font-size: 1em;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-check {
-            background: linear-gradient(135deg, #c084fc 0%, #60a5fa 100%);
-            color: white;
-            box-shadow: 0 4px 20px rgba(192, 132, 252, 0.4);
-        }
-
-        .btn-check:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6);
-        }
-
-        .btn-reset {
-            background: rgba(255, 255, 255, 0.08);
-            color: #f8fafc;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-        }
-
-        .btn-reset:hover {
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateY(-2px);
-        }
-
-        .result-message {
-            text-align: center;
-            padding: 20px;
-            border-radius: 16px;
-            margin-top: 25px;
-            font-size: 1.15em;
-            font-weight: 600;
-            display: none;
-        }
-
-        .result-message.success {
-            background: rgba(74, 222, 128, 0.12);
-            border: 1px solid #4ade80;
-            color: #86efac;
-            display: block;
-        }
-
-        .result-message.error {
-            background: rgba(248, 113, 113, 0.12);
-            border: 1px solid #f87171;
-            color: #fca5a5;
-            display: block;
-        }
-
-        .sending-status {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 0.95em;
-            color: #94a3b8;
-            display: none;
-        }
-
+        .result-message { text-align: center; padding: 20px; border-radius: 16px; margin-top: 25px; font-size: 1.15em; font-weight: 600; display: none; }
+        .result-message.success { background: var(--success-bg); border: 1px solid var(--success); color: var(--success); display: block; }
+        .result-message.error { background: var(--error-bg); border: 1px solid var(--error); color: #fca5a5; display: block; }
+        .sending-status { text-align: center; margin-top: 15px; font-size: 0.95em; color: #94a3b8; display: none; }
         .sending-status.show { display: block; }
 
+        /* === TOAST & NAV === */
         .success-toast {
-            position: fixed;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: linear-gradient(135deg, #4ade80, #22c55e);
-            color: white;
-            padding: 18px 35px;
-            border-radius: 50px;
-            font-family: 'Comfortaa', cursive;
-            font-weight: 700;
-            font-size: 1.1em;
-            box-shadow: 0 10px 40px rgba(74, 222, 128, 0.4);
-            z-index: 1000;
-            opacity: 0;
+            position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: linear-gradient(135deg, var(--success), #22c55e); color: white; padding: 18px 35px;
+            border-radius: 50px; font-family: 'Comfortaa', cursive; font-weight: 700; font-size: 1.1em;
+            box-shadow: 0 10px 40px rgba(74, 222, 128, 0.4); z-index: 1000; opacity: 0;
             transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
-
-        .success-toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
+        .success-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
         .back-to-main {
-            position: fixed;
-            top: 30px;
-            left: 30px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #c084fc, #60a5fa);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            box-shadow: 0 0 25px rgba(192, 132, 252, 0.5);
-            transition: all 0.3s ease;
-            z-index: 100;
-            font-size: 1.5em;
+            position: fixed; top: 30px; left: 30px; width: 55px; height: 55px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: white; text-decoration: none;
+            box-shadow: 0 0 25px rgba(192, 132, 252, 0.5); transition: all 0.3s ease; z-index: 100; font-size: 1.5em;
         }
-
-        .back-to-main:hover {
-            transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 0 35px rgba(192, 132, 252, 0.8);
-        }
+        .back-to-main:hover { transform: translateY(-5px) scale(1.1); box-shadow: 0 0 35px rgba(192, 132, 252, 0.8); }
 
         @media (max-width: 968px) {
             .ege-container { grid-template-columns: 1fr; }
             .ege-text-panel, .ege-questions-panel { max-height: none; }
+        }
+        @media (max-width: 768px) {
             .main-title { font-size: 2.2em; }
             .task-section { padding: 25px; }
-            .match-grid { grid-template-columns: 1fr; gap: 20px; }
+            .match-grid { grid-template-columns: 1fr; gap: 15px; }
             .options-grid { grid-template-columns: 1fr 1fr; }
             .welcome-form { padding: 35px 25px; }
         }
@@ -723,7 +239,7 @@
             <span class="timer-icon">⏱️</span>
             <span id="timerDisplay">00:00</span>
             <span id="tabWarning" class="tab-warning" style="display: none;">
-                ️ Tab switches: <span id="tabSwitchCount">0</span>
+                ⚠️ Tab switches: <span id="tabSwitchCount">0</span>
             </span>
         </div>
 
@@ -736,12 +252,13 @@
         <div class="task-section" id="task2">
             <h2 class="section-title">🕵️ Task 2: Twin Sentences</h2>
             <p class="instruction">Choose the correct word for each gap. Notice the difference!</p>
+            <div style="text-align: center;"><span class="multi-answer-note">💡 Note: Some questions may have more than one correct answer!</span></div>
             <div class="quiz-container" id="quizContainer2"></div>
         </div>
 
         <div class="task-section" id="task3">
             <h2 class="section-title">🚫 Task 3: Fix the Mistake</h2>
-            <p class="instruction">Each sentence has one mistake. Choose the correct word to replace the crossed-out word.</p>
+            <p class="instruction">Each sentence has one mistake. Choose the correct word to replace the <span class="wrong-word">crossed-out word</span>.</p>
             <div class="quiz-container" id="quizContainer3"></div>
         </div>
 
@@ -766,11 +283,9 @@
                     <h3 class="ege-text-title">Solo Travelling</h3>
                     <div class="ege-text-content" id="egeText">
                         I like travelling alone. I have visited many places, such as Thailand, Europe, South America and the USA on my own, which was a great challenge. Every time I travel solo I <span class="ege-gap" id="gap-32">32</span> myself of how strong I am. Travelling with others, you tend to rely on different people for different things. For example, Joe handles the map because he's good <span class="ege-gap" id="gap-33">33</span> navigation, while Jennifer deals with the arguments because she's an excellent problem solver. When you're travelling by yourself, only you're <span class="ege-gap" id="gap-34">34</span> for it all: reading the map, navigating local transportation, communicating through language barriers to order food or a bus ticket, and any other travel situation.<br><br>
-                        
                         Solo travelling also developed my communication skills. I think I truly reached my full socializing potential when I was travelling alone in Europe. I can <span class="ege-gap" id="gap-35">35</span> that European culture is extremely social in itself. Suddenly, people were coming up and starting conversations with me in money exchanges, train stations, parks, buses, piazzas, hostels. As I got used to the European culture, I began initiating conversations myself. I still <span class="ege-gap" id="gap-36">36</span> in touch with most of the friends I made on that trip. They are very kind and helpful people. <span class="ege-gap" id="gap-37">37</span>, I realized how easy it was to make friends once you came out of your shell. These communication skills have helped me to <span class="ege-gap" id="gap-38">38</span> in work, friendship and relationships.
                     </div>
                 </div>
-
                 <div class="ege-questions-panel" id="egeQuestionsPanel"></div>
             </div>
 
@@ -794,7 +309,6 @@
         let isExerciseActive = false;
         let egeAnswers = {};
 
-        // SVG Icons - FIXED: added "in touch"
         const wordIcons = {
             'reliable': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
             'recall': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
@@ -836,7 +350,6 @@
                 shootingStar.style.top = Math.random() * 50 + '%';
                 shootingStar.style.left = '-' + Math.random() * 20 + '%';
                 shootingStar.style.animationDelay = (Math.random() * 10 + i * 3) + 's';
-                shootingStar.style.animationDuration = (Math.random() * 3 + 3) + 's';
                 container.appendChild(shootingStar);
             }
         }
@@ -847,12 +360,9 @@
             studentName = nameInput.value.trim();
             
             if (studentName === '') {
-                nameInput.style.borderColor = '#f87171';
+                nameInput.style.borderColor = 'var(--error)';
                 nameInput.style.animation = 'shake 0.4s ease';
-                setTimeout(() => {
-                    nameInput.style.borderColor = '';
-                    nameInput.style.animation = '';
-                }, 400);
+                setTimeout(() => { nameInput.style.borderColor = ''; nameInput.style.animation = ''; }, 400);
                 alert('Please enter your name to continue! 🌟');
                 return;
             }
@@ -883,8 +393,7 @@
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
             const minutes = Math.floor(elapsed / 60);
             const seconds = elapsed % 60;
-            document.getElementById('timerDisplay').textContent = 
-                String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+            document.getElementById('timerDisplay').textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
         }
 
         document.addEventListener('visibilitychange', function() {
@@ -897,6 +406,7 @@
             }
         });
 
+        // === TASK 1 ===
         const task1Data = [
             { id: 1, word: "reliable", match: "Someone or something you can trust", icon: wordIcons['reliable'] },
             { id: 2, word: "recall", match: "To remember something from the past", icon: wordIcons['recall'] },
@@ -953,6 +463,7 @@
             }
         }
 
+        // === QUIZ GENERATOR (Supports Multiple Correct Answers) ===
         function createQuiz(containerId, data) {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
@@ -964,7 +475,7 @@
                 item.options.forEach(opt => {
                     const btn = document.createElement('button');
                     btn.className = 'option-btn'; btn.textContent = opt;
-                    btn.addEventListener('click', () => checkAnswer(btn, opt, item.correct, item.hint, card));
+                    btn.addEventListener('click', () => checkQuizAnswer(btn, opt, item.correctAnswers, item.hint, card));
                     optDiv.appendChild(btn);
                 });
                 
@@ -974,42 +485,54 @@
             });
         }
 
-        function checkAnswer(btn, selected, correct, hint, card) {
+        function checkQuizAnswer(btn, selected, correctAnswers, hint, card) {
             const fbEl = card.querySelector('.feedback-msg');
             const buttons = card.querySelectorAll('.option-btn');
             buttons.forEach(b => b.disabled = true);
 
-            if (selected === correct) {
+            if (correctAnswers.includes(selected)) {
                 btn.classList.add('correct');
                 fbEl.className = 'feedback-msg success';
-                fbEl.textContent = ["✨ Spot on!", "🌟 Excellent!", " Great job!"][Math.floor(Math.random() * 3)];
+                if (correctAnswers.length > 1) {
+                    fbEl.innerHTML = `✨ <b>Excellent!</b> Both "<b>${correctAnswers.join('</b>" and "<b>')}</b>" are correct! <br><em>${hint}</em>`;
+                } else {
+                    fbEl.innerHTML = `✨ <b>Spot on!</b> <br><em>${hint}</em>`;
+                }
             } else {
                 btn.classList.add('wrong');
-                buttons.forEach(b => { if (b.textContent.trim() === correct) b.classList.add('correct'); });
+                buttons.forEach(b => { 
+                    if (correctAnswers.includes(b.textContent.trim())) b.classList.add('correct'); 
+                });
                 fbEl.className = 'feedback-msg hint';
-                fbEl.innerHTML = `💫 Good try!<br><em>Hint:</em> ${hint}`;
+                if (correctAnswers.length > 1) {
+                    fbEl.innerHTML = `💫 <b>Good try!</b> The correct answers are: <b>${correctAnswers.join('</b> and <b>')}</b>.<br><em>${hint}</em>`;
+                } else {
+                    fbEl.innerHTML = `💫 <b>Good try!</b> The correct answer is: <b>${correctAnswers[0]}</b>.<br><em>${hint}</em>`;
+                }
             }
         }
 
+        // Updated Task 2 to include BOTH "remember" and "recall" as correct for question 2
         const task2Data = [
-            { question: "Please <span class='blank'>_____</span> me to call my mom.", options: ["remind", "recall"], correct: "remind", hint: "'Remind' is for making someone else remember." },
-            { question: "I don't <span class='blank'>_____</span> his name now.", options: ["remind", "recall"], correct: "recall", hint: "'Recall' is for remembering from your own memory." },
-            { question: "My laptop is very <span class='blank'>_____</span>.", options: ["reliable", "responsible"], correct: "reliable", hint: "Objects are 'reliable'. 'Responsible' needs 'for'." },
-            { question: "Who is <span class='blank'>_____</span> for locking the door?", options: ["reliable", "responsible"], correct: "responsible", hint: "Having the duty means you are 'responsible for' it." }
+            { question: "Please <span class='blank'>_____</span> me to call my mom.", options: ["remind", "remember", "recall", "review"], correctAnswers: ["remind"], hint: "'Remind' is for making someone else remember." },
+            { question: "I can't <span class='blank'>_____</span> his name, we met only once.", options: ["remind", "remember", "recall", "review"], correctAnswers: ["remember", "recall"], hint: "Both <b>'remember'</b> and <b>'recall'</b> mean to bring something back to your own mind. 'Remind' is for making someone ELSE remember." },
+            { question: "My laptop is very <span class='blank'>_____</span>.", options: ["reliable", "responsible"], correctAnswers: ["reliable"], hint: "Objects are 'reliable'. 'Responsible' needs the preposition 'for'." },
+            { question: "Who is <span class='blank'>_____</span> for locking the door?", options: ["reliable", "responsible"], correctAnswers: ["responsible"], hint: "Having the duty means you are 'responsible for' it." }
         ];
 
         const task3Data = [
-            { question: "I need to <span style='color: #f87171; text-decoration: line-through;'>remind</span> my notes.", options: ["remind", "review", "recall"], correct: "review", hint: "We 'review' notes. We 'remind' a person." },
-            { question: "He is good <span style='color: #f87171; text-decoration: line-through;'>in</span> playing guitar.", options: ["in", "at", "on"], correct: "at", hint: "The fixed phrase is always 'good at'." },
-            { question: "Please <span style='color: #f87171; text-decoration: line-through;'>say</span> me the truth.", options: ["say", "speak", "tell"], correct: "tell", hint: "We 'tell someone' something. 'Say' cannot be followed by a person." }
+            { question: "I need to <span class='wrong-word'>remind</span> my notes.", options: ["remind", "review", "recall"], correctAnswers: ["review"], hint: "We 'review' notes. We 'remind' a person." },
+            { question: "He is good <span class='wrong-word'>in</span> playing guitar.", options: ["in", "at", "on"], correctAnswers: ["at"], hint: "The fixed phrase is always 'good at'." },
+            { question: "Please <span class='wrong-word'>say</span> me the truth.", options: ["say", "speak", "tell"], correctAnswers: ["tell"], hint: "We 'tell someone' something. 'Say' cannot be followed by a person." }
         ];
 
         const task5Data = [
-            { question: "I studied hard. <span class='blank'>_____</span>, I got an A+.", options: ["Therefore", "Otherwise", "However", "Moreover"], correct: "Therefore", hint: "'Therefore' shows a direct result." },
-            { question: "I studied hard. <span class='blank'>_____</span>, I didn't pass.", options: ["Therefore", "Otherwise", "However", "Moreover"], correct: "However", hint: "'However' introduces a contrast." },
-            { question: "The hotel was beautiful. <span class='blank'>_____</span>, it was cheap.", options: ["Therefore", "Otherwise", "However", "Moreover"], correct: "Moreover", hint: "'Moreover' adds a new positive point." }
+            { question: "I studied hard. <span class='blank'>_____</span>, I got an A+.", options: ["Therefore", "Otherwise", "However", "Moreover"], correctAnswers: ["Therefore"], hint: "'Therefore' shows a direct result." },
+            { question: "I studied hard. <span class='blank'>_____</span>, I didn't pass.", options: ["Therefore", "Otherwise", "However", "Moreover"], correctAnswers: ["However"], hint: "'However' introduces a contrast." },
+            { question: "The hotel was beautiful. <span class='blank'>_____</span>, it was cheap.", options: ["Therefore", "Otherwise", "However", "Moreover"], correctAnswers: ["Moreover"], hint: "'Moreover' adds a new positive point." }
         ];
 
+        // === TASK 4 ===
         const task4Data = [
             { id: 1, word: "good", match: "at" }, { id: 2, word: "responsible", match: "for" },
             { id: 3, word: "succeed", match: "in" }, { id: 4, word: "keep", match: "in touch" },
@@ -1064,37 +587,33 @@
             }
         }
 
+        // === TASK 6: EGE ===
         const egeData = [
-            { id: 32, options: ["revise", "review", "remind", "recall"], correct: "remind", hint: "Fixed expression: <b>remind oneself of</b> something." },
-            { id: 33, options: ["in", "at", "on", "of"], correct: "at", hint: "Fixed expression: to be good <b>at</b> something." },
-            { id: 34, options: ["dependable", "consistent", "reliable", "responsible"], correct: "responsible", hint: "Fixed expression: to be <b>responsible for</b> something." },
-            { id: 35, options: ["say", "speak", "talk", "tell"], correct: "say", hint: "Use <b>say</b> to express an opinion (I can say that...)." },
-            { id: 36, options: ["take", "hold", "keep", "make"], correct: "keep", hint: "Fixed expression: <b>keep in touch</b>." },
-            { id: 37, options: ["Therefore", "Otherwise", "However", "Moreover"], correct: "Moreover", hint: "<b>Moreover</b> adds new information in the same positive direction." },
-            { id: 38, options: ["succeed", "fulfil", "achieve", "manage"], correct: "succeed", hint: "Fixed expression: to <b>succeed in</b> something." }
+            { id: 32, options: ["revise", "review", "remind", "recall"], correctAnswers: ["remind"], hint: "Fixed expression: <b>remind oneself of</b> something." },
+            { id: 33, options: ["in", "at", "on", "of"], correctAnswers: ["at"], hint: "Fixed expression: to be good <b>at</b> something." },
+            { id: 34, options: ["dependable", "consistent", "reliable", "responsible"], correctAnswers: ["responsible"], hint: "Fixed expression: to be <b>responsible for</b> something." },
+            { id: 35, options: ["say", "speak", "talk", "tell"], correctAnswers: ["say"], hint: "Use <b>say</b> to express an opinion (I can say that...)." },
+            { id: 36, options: ["take", "hold", "keep", "make"], correctAnswers: ["keep"], hint: "Fixed expression: <b>keep in touch</b>." },
+            { id: 37, options: ["Therefore", "Otherwise", "However", "Moreover"], correctAnswers: ["Moreover"], hint: "<b>Moreover</b> adds new information in the same positive direction." },
+            { id: 38, options: ["succeed", "fulfil", "achieve", "manage"], correctAnswers: ["succeed"], hint: "Fixed expression: to <b>succeed in</b> something." }
         ];
 
         function initEgeTask() {
             const panel = document.getElementById('egeQuestionsPanel');
             panel.innerHTML = '';
-            
             egeData.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = 'question-card';
-                
+                const card = document.createElement('div'); card.className = 'question-card';
                 const header = document.createElement('div');
                 header.className = 'question-header';
                 header.innerHTML = `<span class="question-number">${item.id}</span> Question ${item.id}`;
-                
-                const optionsDiv = document.createElement('div');
-                optionsDiv.className = 'options-grid';
+                const optionsDiv = document.createElement('div'); optionsDiv.className = 'options-grid';
                 
                 item.options.forEach((opt, optIndex) => {
                     const btn = document.createElement('button');
                     btn.className = 'option-btn';
                     btn.textContent = `${optIndex + 1}. ${opt}`;
                     btn.dataset.value = opt;
-                    btn.onclick = () => checkEgeAnswer(btn, opt, item.id, item.correct, item.hint, card);
+                    btn.onclick = () => checkEgeAnswer(btn, opt, item.id, item.correctAnswers, item.hint, card);
                     optionsDiv.appendChild(btn);
                 });
                 
@@ -1102,36 +621,26 @@
                 feedback.className = 'feedback-msg';
                 feedback.id = `fb-ege-${item.id}`;
                 
-                card.appendChild(header);
-                card.appendChild(optionsDiv);
-                card.appendChild(feedback);
+                card.appendChild(header); card.appendChild(optionsDiv); card.appendChild(feedback);
                 panel.appendChild(card);
             });
         }
 
-        function checkEgeAnswer(btn, selected, gapId, correct, hint, card) {
+        function checkEgeAnswer(btn, selected, gapId, correctAnswers, hint, card) {
             const feedback = card.querySelector('.feedback-msg');
             const buttons = card.querySelectorAll('.option-btn');
             buttons.forEach(b => b.disabled = true);
-
             const gapElement = document.getElementById(`gap-${gapId}`);
 
-            if (selected === correct) {
+            if (correctAnswers.includes(selected)) {
                 btn.classList.add('correct');
                 feedback.className = 'feedback-msg success';
                 feedback.innerHTML = `<strong>✓ Correct!</strong> ${hint}`;
-                
-                if (gapElement) {
-                    gapElement.textContent = selected;
-                    gapElement.classList.add('filled');
-                }
-                
+                if (gapElement) { gapElement.textContent = selected; gapElement.classList.add('filled'); }
                 egeAnswers[gapId] = { correct: true, answer: selected };
             } else {
                 btn.classList.add('wrong');
-                buttons.forEach(b => { 
-                    if (b.dataset.value === correct) b.classList.add('correct'); 
-                });
+                buttons.forEach(b => { if (correctAnswers.includes(b.dataset.value)) b.classList.add('correct'); });
                 feedback.className = 'feedback-msg hint';
                 feedback.innerHTML = `<strong>✗ Not quite</strong><br>${hint}`;
                 egeAnswers[gapId] = { correct: false, answer: selected };
@@ -1147,7 +656,7 @@
                 if (egeAnswers[item.id] && egeAnswers[item.id].correct) {
                     correctCount++;
                 } else {
-                    errors.push(`Question ${item.id}: correct answer is "${item.correct}"`);
+                    errors.push(`Question ${item.id}: correct answer is "${item.correctAnswers[0]}"`);
                 }
             });
 
@@ -1155,7 +664,6 @@
             const minutes = Math.floor(elapsed / 60);
             const seconds = elapsed % 60;
             const timeSpent = `${minutes} min ${seconds} sec`;
-
             const errorsText = errors.length > 0 ? errors.join('<br>') : '✓ No errors! Perfect!';
             
             sendResultsToTeams(correctCount, total, errorsText, timeSpent);
@@ -1164,7 +672,7 @@
             if (correctCount === total) {
                 resultDiv.className = 'result-message success';
                 resultDiv.innerHTML = `🎉 Perfect! All ${total} answers are correct!<br>Time: ${timeSpent}`;
-                showSuccess('🎉 Congratulations! Perfect score!', 'success');
+                showSuccess('🎉 Congratulations! Perfect score!');
             } else {
                 resultDiv.className = 'result-message error';
                 resultDiv.innerHTML = `You got ${correctCount} out of ${total} correct.<br>Time: ${timeSpent}<br>Keep practicing! 💫`;
@@ -1210,36 +718,18 @@
             };
 
             try {
-                await fetch(POWER_AUTOMATE_URL, { 
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' }, 
-                    body: JSON.stringify(payload) 
-                });
+                await fetch(POWER_AUTOMATE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 statusDiv.innerHTML += '<br>✓ Results sent to Teams!';
-                statusDiv.style.color = '#4ade80';
+                statusDiv.style.color = 'var(--success)';
             } catch (error) { 
                 statusDiv.innerHTML += '<br>✗ Teams error.'; 
-                statusDiv.style.color = '#f87171'; 
+                statusDiv.style.color = 'var(--error)'; 
             }
 
             try {
-                await fetch(GOOGLE_SCRIPT_URL, { 
-                    method: 'POST', 
-                    mode: 'no-cors', 
-                    headers: { 'Content-Type': 'application/json' }, 
-                    body: JSON.stringify({ 
-                        student_name: studentName, 
-                        exercise_name: exerciseName, 
-                        score: `${correct}/${total}`, 
-                        percentage: `${percentage}%`, 
-                        time: new Date().toLocaleString(), 
-                        time_spent: timeSpent 
-                    }) 
-                });
+                await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ student_name: studentName, exercise_name: exerciseName, score: `${correct}/${total}`, percentage: `${percentage}%`, time: new Date().toLocaleString(), time_spent: timeSpent }) });
                 statusDiv.innerHTML += '<br>✓ Results sent to Google Sheets!';
-            } catch (e) { 
-                console.log('Sheets error:', e); 
-            }
+            } catch (e) { console.log('Sheets error:', e); }
 
             setTimeout(() => { statusDiv.classList.remove('show'); }, 8000);
         }
@@ -1254,10 +744,8 @@
         window.addEventListener('DOMContentLoaded', () => {
             if (localStorage.getItem('vocab_ex_completed') === 'true') {
                 const form = document.getElementById('welcomeForm');
-                const welcomeText = form.querySelector('h2');
-                welcomeText.innerHTML = '✨ Welcome Back! ✨';
-                const p = form.querySelector('p');
-                p.textContent = "You've already completed this exercise. You can try again!";
+                form.querySelector('h2').innerHTML = '✨ Welcome Back! ✨';
+                form.querySelector('p').textContent = "You've already completed this exercise. You can try again!";
             }
         });
     </script>
