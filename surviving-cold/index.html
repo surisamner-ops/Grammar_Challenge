@@ -294,8 +294,8 @@
     </div>
 
     <script>
-        const POWER_AUTOMATE_URL = 'YOUR_POWER_AUTOMATE_URL_HERE';
-        const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE';
+      const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCybdydUS2PDlskYqe2_jdbTns0MB_6e45CLWCkpr6jLB-d1zHm5ebBifFNLFoKhwr/exec';
         
         let studentName = '';
         let startTime = null;
@@ -580,6 +580,8 @@
             const errorsText = errors.length > 0 ? errors.join('<br>') : '✓ No errors! Perfect!';
             
             sendResultsToTeams(correctCount, total, errorsText, timeSpent);
+                        // ✅ СОХРАНЯЕМ ФАКТ ВЫПОЛНЕНИЯ ЗАДАНИЯ
+            localStorage.setItem('grammar_ex_surviving-cold', 'true');
 
             const resultDiv = document.getElementById('egeResultMessage');
             if (correctCount === total) {
@@ -617,7 +619,7 @@
             statusDiv.style.color = '#94a3b8';
             
             const percentage = Math.round((correct / total) * 100);
-            const exerciseName = "Vocabulary Masterclass - The Man on the Trail";
+          const exerciseName = "Surviving the Cold - The Man on the Trail";
 
             const payload = { 
                 student_name: studentName, 
