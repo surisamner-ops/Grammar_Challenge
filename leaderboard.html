@@ -388,12 +388,19 @@ if (typeof rawPercentage === 'string' && rawPercentage.includes('%')) {
                 });
                 
                 displayData = Object.entries(studentResults)
-                    .map(([name, scores]) => ({
-                        name,
-                        percentage: Math.round(scores.reduce((a, b) => a + b, 0) / scores.length),
-                        exercises: scores.length
-                    }))
-                    .sort((a, b) => b.percentage - a.percentage);
+    .map(([name, scores]) => ({
+        name,
+        percentage: Math.round(scores.reduce((a, b) => a + b, 0) / scores.length),
+        exercises: scores.length
+    }))
+    .sort((a, b) => {
+        // Сначала сравниваем по количеству упражнений (чем больше, тем выше)
+        if (b.exercises !== a.exercises) {
+            return b.exercises - a.exercises;
+        }
+        // Если количество одинаковое, сравниваем по проценту
+        return b.percentage - a.percentage;
+    });
             } else {
                 displayData = filtered.map(item => ({
                     name: item.Name || item.student_name || 'Anonymous',
