@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juliya Magic Teacher - Life Events & Verbs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c084fc;
+            --primary-light: #e9d5ff;
+            --secondary: #60a5fa;
+            --success: #4ade80;
+            --success-bg: rgba(74, 222, 128, 0.15);
+            --warning: #fbbf24;
+            --warning-bg: rgba(251, 191, 36, 0.15);
+            --error: #f87171;
+            --error-bg: rgba(248, 113, 113, 0.15);
+            --bg-dark: #090a0f;
+            --bg-card: rgba(255, 255, 255, 0.04);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, var(--bg-dark) 100%);
+            min-height: 100vh;
+            color: #f8fafc;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+        }
+        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--duration) ease-in-out infinite; opacity: 0; }
+        .shooting-star { position: absolute; width: 150px; height: 2px; background: linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.8), transparent); animation: shoot 5s linear infinite; opacity: 0; }
+
+        .space-decor { position: fixed; pointer-events: none; z-index: 0; opacity: 0.12; }
+        .space-decor.planet { animation: float 12s ease-in-out infinite; }
+        .space-decor.rocket { animation: rocketFloat 8s ease-in-out infinite; }
+        .space-decor.small { opacity: 0.08; }
+        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(5deg); } }
+        @keyframes rocketFloat { 0%, 100% { transform: translateY(0) rotate(-15deg); } 50% { transform: translateY(-30px) rotate(-10deg); } }
+        @keyframes saturnGlow { 0%, 100% { filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.3)); } 50% { filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.5)); } }
+        .space-decor.saturn { animation: float 15s ease-in-out infinite, saturnGlow 4s ease-in-out infinite; }
+
+        @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: var(--max-opacity); transform: scale(1.3); } }
+        @keyframes shoot { 0% { transform: translateX(-150px) translateY(150px) rotate(-45deg); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateX(100vw) translateY(-150px) rotate(-45deg); opacity: 0; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+        @keyframes sparkle { 0%, 100% { opacity: 0.6; transform: translateY(-50%) scale(0.8) rotate(0deg); } 50% { opacity: 1; transform: translateY(-50%) scale(1.2) rotate(180deg); } }
+        @keyframes pop { 0% { transform: scale(0.8); opacity: 0; } 50% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+
+        .main-wrapper { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 60px 20px; }
+        .header { text-align: center; margin-bottom: 50px; animation: fadeInUp 1s ease-out; }
+        .main-title {
+            font-family: 'Comfortaa', cursive; font-size: 3em; font-weight: 700;
+            background: linear-gradient(90deg, #c084fc, #ffffff, #60a5fa, #c084fc, #ffffff);
+            background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shimmer 6s linear infinite; margin-bottom: 15px; position: relative; display: inline-block;
+        }
+        .main-title::before, .main-title::after {
+            content: '✦'; position: absolute; top: 50%; font-size: 0.5em; color: #c084fc;
+            animation: sparkle 2.5s ease-in-out infinite; filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.8));
+            -webkit-text-fill-color: #c084fc;
+        }
+        .main-title::before { left: -40px; }
+        .main-title::after { right: -40px; animation-delay: 1.2s; }
+        .header p { font-size: 1.15em; color: #c4b5fd; text-shadow: 0 0 20px rgba(192, 132, 252, 0.3); max-width: 700px; margin: 0 auto; }
+
+        .welcome-form {
+            background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 24px; padding: 50px 40px; text-align: center; max-width: 500px; margin: 0 auto 50px;
+            animation: fadeInUp 0.8s ease-out; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        .welcome-form h2 { font-family: 'Comfortaa', cursive; font-size: 2em; margin-bottom: 15px; color: var(--primary-light); }
+        .welcome-form p { margin-bottom: 30px; color: #94a3b8; font-size: 1.05em; }
+        .name-input {
+            width: 100%; max-width: 320px; padding: 16px 24px; background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(192, 132, 252, 0.4); border-radius: 14px; color: #fff; font-size: 1.1em;
+            text-align: center; margin-bottom: 25px; font-family: 'Inter', sans-serif; transition: all 0.3s ease;
+        }
+        .name-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+        .name-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 25px rgba(192, 132, 252, 0.4); transform: translateY(-2px); }
+        .btn-start, .btn-finish {
+            padding: 16px 45px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white; border: none; border-radius: 50px; font-family: 'Comfortaa', cursive; font-size: 1.1em;
+            font-weight: 700; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(192, 132, 252, 0.4);
+        }
+        .btn-start:hover, .btn-finish:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6); }
+
+        .timer-bar {
+            position: sticky; top: 15px; z-index: 100; background: rgba(192, 132, 252, 0.15);
+            border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 50px; padding: 12px 25px;
+            text-align: center; margin-bottom: 30px; font-family: 'Comfortaa', cursive; font-size: 1.1em;
+            color: var(--primary-light); backdrop-filter: blur(12px); display: none; align-items: center;
+            justify-content: center; gap: 20px; animation: slideIn 0.5s ease-out; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .timer-bar.show { display: flex; }
+        .tab-warning { color: var(--warning); font-weight: 700; animation: pulse 1s ease-in-out infinite; background: var(--warning-bg); padding: 6px 15px; border-radius: 20px; }
+
+        .task-section {
+            background: var(--bg-card); backdrop-filter: blur(16px); border: 1px solid rgba(192, 132, 252, 0.2);
+            border-radius: 24px; padding: 40px; margin-bottom: 40px; animation: fadeInUp 0.8s ease-out;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05); display: none;
+        }
+        .task-section.show { display: block; }
+        .section-title { font-family: 'Comfortaa', cursive; font-size: 1.8em; color: var(--primary-light); text-align: center; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .instruction { text-align: center; color: #94a3b8; margin-bottom: 35px; font-size: 1.05em; line-height: 1.6; }
+
+        .word-bank {
+            display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+            margin-bottom: 30px; padding: 20px; background: rgba(192, 132, 252, 0.08);
+            border: 2px dashed rgba(192, 132, 252, 0.3); border-radius: 16px;
+        }
+        .word-bank-item {
+            padding: 10px 18px; background: rgba(192, 132, 252, 0.15);
+            border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 10px; color: var(--primary-light);
+            font-weight: 600; font-size: 0.95em; transition: all 0.3s ease;
+        }
+        .word-bank-item.used {
+            opacity: 0.3; text-decoration: line-through; background: rgba(248, 113, 113, 0.1);
+            border-color: rgba(248, 113, 113, 0.3); color: var(--error);
+        }
+
+        .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 800px; margin: 0 auto; }
+        .match-column { display: flex; flex-direction: column; gap: 12px; }
+        .match-item {
+            background: rgba(192, 132, 252, 0.08); border: 1.5px solid rgba(192, 132, 252, 0.3); border-radius: 14px;
+            padding: 18px; text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.95em; color: var(--primary-light); min-height: 70px; display: flex; align-items: center;
+            justify-content: center; gap: 12px; font-weight: 600; position: relative; overflow: hidden;
+        }
+        .match-item::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transition: left 0.5s; }
+        .match-item:hover::before { left: 100%; }
+        .match-item:hover { background: rgba(192, 132, 252, 0.2); border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(192, 132, 252, 0.2); }
+        .match-item.selected { background: rgba(192, 132, 252, 0.35); border-color: var(--primary-light); box-shadow: 0 0 25px rgba(192, 132, 252, 0.4); transform: scale(1.02); }
+        .match-item.correct { background: var(--success-bg); border-color: var(--success); color: var(--success); cursor: default; pointer-events: none; animation: pulse 0.5s ease; }
+        .match-item.wrong { animation: shake 0.4s ease; background: var(--error-bg); border-color: var(--error); }
+
+        .quiz-container { display: flex; flex-direction: column; gap: 20px; max-width: 800px; margin: 0 auto; }
+        .quiz-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(192, 132, 252, 0.2); border-radius: 16px; padding: 25px; transition: all 0.3s ease; }
+        .quiz-card:hover { border-color: rgba(192, 132, 252, 0.4); background: rgba(255, 255, 255, 0.05); }
+        .quiz-question { font-size: 1.1em; color: #ffffff; margin-bottom: 20px; line-height: 1.7; font-weight: 500; }
+        .quiz-question .wrong-word { color: var(--error); text-decoration: line-through; font-weight: 600; background: var(--error-bg); padding: 2px 8px; border-radius: 6px; }
+
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .option-btn {
+            background: rgba(192, 132, 252, 0.1); border: 1.5px solid rgba(192, 132, 252, 0.3); border-radius: 12px;
+            padding: 14px 16px; color: var(--primary-light); font-family: 'Inter', sans-serif; font-size: 0.95em;
+            font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-align: center;
+        }
+        .option-btn:hover:not(:disabled) { background: rgba(192, 132, 252, 0.25); border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(192, 132, 252, 0.2); }
+        .option-btn.correct { background: var(--success-bg); border-color: var(--success); color: var(--success); pointer-events: none; animation: pulse 0.5s ease; }
+        .option-btn.wrong { background: var(--error-bg); border-color: var(--error); color: var(--error); animation: shake 0.4s ease; }
+        .option-btn:disabled { cursor: not-allowed; opacity: 0.5; }
+
+        .feedback-msg { margin-top: 15px; padding: 15px; border-radius: 12px; font-size: 0.95em; display: none; animation: pop 0.4s ease-out; border-left: 4px solid; line-height: 1.6; }
+        .feedback-msg.success { background: var(--success-bg); border-left-color: var(--success); color: #86efac; display: block; }
+        .feedback-msg.hint { background: var(--warning-bg); border-left-color: var(--warning); color: #fcd34d; display: block; }
+
+        .input-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        .input-sentence { color: #e2e8f0; font-size: 1.05em; line-height: 1.6; }
+        .magic-input {
+            background: rgba(0, 0, 0, 0.3); border: 1.5px solid rgba(192, 132, 252, 0.4); border-radius: 10px;
+            padding: 12px 16px; color: #fff; font-family: 'Inter', sans-serif; font-size: 1em; width: 100%; max-width: 250px;
+            transition: all 0.3s ease;
+        }
+        .magic-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 15px rgba(192, 132, 252, 0.3); }
+        .magic-input.correct { border-color: var(--success); background: var(--success-bg); color: var(--success); }
+        .magic-input.wrong { border-color: var(--error); background: var(--error-bg); color: var(--error); animation: shake 0.4s ease; }
+        .magic-input:disabled { opacity: 0.7; cursor: not-allowed; }
+        /* ✅ Усиленная красная рамка для disabled wrong полей — работает для всех заданий */
+        .magic-input.wrong:disabled { 
+            border-color: var(--error) !important; 
+            background: var(--error-bg) !important; 
+            color: var(--error) !important;
+            opacity: 0.85;
+        }
+        
+        .btn-check-small {
+            padding: 10px 20px; background: rgba(192, 132, 252, 0.2); border: 1px solid var(--primary); border-radius: 10px;
+            color: var(--primary-light); font-family: 'Comfortaa', cursive; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+            align-self: flex-start; margin-top: 5px;
+        }
+        .btn-check-small:hover:not(:disabled) { background: rgba(192, 132, 252, 0.4); }
+        .btn-check-small:disabled { opacity: 0.5; cursor: not-allowed; }
+        .attempts-left { font-size: 0.85em; color: var(--warning); margin-left: 10px; font-weight: 600; }
+
+        .sequence-container { display: flex; flex-direction: column; gap: 15px; max-width: 600px; margin: 0 auto; }
+        .sequence-item {
+            background: rgba(192, 132, 252, 0.1); border: 1.5px solid rgba(192, 132, 252, 0.3); border-radius: 12px;
+            padding: 16px 20px; color: var(--primary-light); font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 15px;
+        }
+        .sequence-item:hover { background: rgba(192, 132, 252, 0.25); transform: translateX(5px); }
+        .sequence-item.placed { background: var(--success-bg); border-color: var(--success); color: var(--success); cursor: default; pointer-events: none; }
+        .sequence-item.wrong { animation: shake 0.4s ease; border-color: var(--error); background: var(--error-bg); }
+        .sequence-number { 
+            background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; font-size: 0.9em; font-weight: 700; 
+        }
+        .sequence-item.placed .sequence-number { background: var(--success); }
+
+        .result-message { text-align: center; padding: 20px; border-radius: 16px; margin-top: 25px; font-size: 1.15em; font-weight: 600; display: none; }
+        .result-message.success { background: var(--success-bg); border: 1px solid var(--success); color: var(--success); display: block; }
+        .result-message.error { background: var(--error-bg); border: 1px solid var(--error); color: #fca5a5; display: block; }
+        
+        .sending-status { text-align: center; margin-top: 15px; font-size: 0.95em; color: #94a3b8; display: none; }
+        .sending-status.show { display: block; }
+
+        .success-toast {
+            position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: linear-gradient(135deg, var(--success), #22c55e); color: white; padding: 18px 35px;
+            border-radius: 50px; font-family: 'Comfortaa', cursive; font-weight: 700; font-size: 1.1em;
+            box-shadow: 0 10px 40px rgba(74, 222, 128, 0.4); z-index: 1000; opacity: 0;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        .success-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .back-to-main {
+            position: fixed; top: 30px; left: 30px; width: 55px; height: 55px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: white; text-decoration: none;
+            box-shadow: 0 0 25px rgba(192, 132, 252, 0.5); transition: all 0.3s ease; z-index: 100; font-size: 1.5em;
+        }
+        .back-to-main:hover { transform: translateY(-5px) scale(1.1); box-shadow: 0 0 35px rgba(192, 132, 252, 0.8); }
+
+        @media (max-width: 768px) {
+            .main-title { font-size: 2.2em; }
+            .task-section { padding: 25px; }
+            .match-grid { grid-template-columns: 1fr; gap: 15px; }
+            .options-grid { grid-template-columns: 1fr 1fr; }
+            .welcome-form { padding: 35px 25px; }
+            .space-decor { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="starsContainer"></div>
+    <div class="success-toast" id="successToast"></div>
+
+    <!-- SVG SPACE DECORATIONS -->
+    <svg class="space-decor planet" style="top: 8%; right: 5%; width: 120px; height: 120px;" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="35" fill="#c084fc" opacity="0.6"/>
+        <ellipse cx="50" cy="50" rx="48" ry="10" fill="none" stroke="#e9d5ff" stroke-width="2" opacity="0.5" transform="rotate(-20 50 50)"/>
+        <circle cx="38" cy="40" r="6" fill="#a855f7" opacity="0.4"/>
+        <circle cx="60" cy="55" r="4" fill="#a855f7" opacity="0.3"/>
+    </svg>
+
+    <svg class="space-decor planet small" style="bottom: 15%; left: 3%; width: 90px; height: 90px; animation-delay: -4s;" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="38" fill="#60a5fa" opacity="0.5"/>
+        <path d="M 20 50 Q 50 30 80 50 Q 50 70 20 50" fill="#93c5fd" opacity="0.3"/>
+        <circle cx="40" cy="45" r="8" fill="#3b82f6" opacity="0.4"/>
+    </svg>
+
+    <svg class="space-decor planet" style="top: 45%; right: 2%; width: 70px; height: 70px; animation-delay: -7s;" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="40" fill="#fbbf24" opacity="0.4"/>
+        <circle cx="35" cy="40" r="10" fill="#f59e0b" opacity="0.5"/>
+        <circle cx="65" cy="60" r="7" fill="#f59e0b" opacity="0.4"/>
+    </svg>
+
+    <svg class="space-decor rocket" style="top: 25%; left: 2%; width: 80px; height: 120px;" viewBox="0 0 60 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 30 5 L 45 35 L 45 70 L 30 80 L 15 70 L 15 35 Z" fill="#e9d5ff" opacity="0.7"/>
+        <path d="M 15 70 L 5 85 L 20 75 Z" fill="#c084fc" opacity="0.6"/>
+        <path d="M 45 70 L 55 85 L 40 75 Z" fill="#c084fc" opacity="0.6"/>
+        <circle cx="30" cy="45" r="8" fill="#60a5fa" opacity="0.8"/>
+        <path d="M 22 80 L 30 95 L 38 80 Z" fill="#fbbf24" opacity="0.7"/>
+        <path d="M 25 82 L 30 92 L 35 82 Z" fill="#f87171" opacity="0.6"/>
+    </svg>
+
+    <svg class="space-decor rocket small" style="bottom: 25%; right: 4%; width: 60px; height: 90px; animation-delay: -3s;" viewBox="0 0 60 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 30 5 L 45 35 L 45 70 L 30 80 L 15 70 L 15 35 Z" fill="#e9d5ff" opacity="0.6"/>
+        <path d="M 15 70 L 5 85 L 20 75 Z" fill="#c084fc" opacity="0.5"/>
+        <path d="M 45 70 L 55 85 L 40 75 Z" fill="#c084fc" opacity="0.5"/>
+        <circle cx="30" cy="45" r="8" fill="#60a5fa" opacity="0.7"/>
+        <path d="M 22 80 L 30 95 L 38 80 Z" fill="#fbbf24" opacity="0.6"/>
+    </svg>
+
+    <svg class="space-decor planet small" style="top: 60%; left: 1%; width: 80px; height: 80px; animation-delay: -9s;" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="25" fill="#4ade80" opacity="0.4"/>
+        <ellipse cx="50" cy="50" rx="42" ry="8" fill="none" stroke="#86efac" stroke-width="2" opacity="0.4" transform="rotate(25 50 50)"/>
+    </svg>
+
+    <svg class="space-decor saturn" style="bottom: 8%; right: 8%; width: 160px; height: 160px;" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="100" rx="90" ry="22" fill="none" stroke="#fbbf24" stroke-width="3" opacity="0.3" transform="rotate(-15 100 100)"/>
+        <ellipse cx="100" cy="100" rx="85" ry="18" fill="none" stroke="#fcd34d" stroke-width="2" opacity="0.25" transform="rotate(-15 100 100)"/>
+        <circle cx="100" cy="100" r="45" fill="#fbbf24" opacity="0.5"/>
+        <circle cx="100" cy="100" r="45" fill="url(#saturnGrad)" opacity="0.6"/>
+        <path d="M 60 90 Q 100 85 140 90" stroke="#f59e0b" stroke-width="3" fill="none" opacity="0.4"/>
+        <path d="M 58 100 Q 100 95 142 100" stroke="#f59e0b" stroke-width="2" fill="none" opacity="0.3"/>
+        <path d="M 62 110 Q 100 105 138 110" stroke="#f59e0b" stroke-width="3" fill="none" opacity="0.4"/>
+        <ellipse cx="100" cy="100" rx="90" ry="22" fill="none" stroke="#fbbf24" stroke-width="4" opacity="0.5" transform="rotate(-15 100 100)" stroke-dasharray="180 360" stroke-dashoffset="90"/>
+        <ellipse cx="100" cy="100" rx="85" ry="18" fill="none" stroke="#fcd34d" stroke-width="2" opacity="0.4" transform="rotate(-15 100 100)" stroke-dasharray="170 340" stroke-dashoffset="85"/>
+        <circle cx="85" cy="85" r="12" fill="#fef3c7" opacity="0.3"/>
+        <defs>
+            <radialGradient id="saturnGrad" cx="40%" cy="40%">
+                <stop offset="0%" stop-color="#fde68a" stop-opacity="0.6"/>
+                <stop offset="50%" stop-color="#fbbf24" stop-opacity="0.4"/>
+                <stop offset="100%" stop-color="#d97706" stop-opacity="0.3"/>
+            </radialGradient>
+        </defs>
+    </svg>
+
+    <div class="main-wrapper">
+       <a href="../index.html" class="back-to-main" onclick="localStorage.setItem('lastActiveTab', 'use'); localStorage.setItem('returnFromExercise', 'true')" title="Back to main page">←</a>
+        
+        <div class="header">
+            <h1 class="main-title">Life Events & Verbs</h1>
+            <p>Master irregular verbs, stages of life, and chores! Enter your name to begin your magical learning journey. ✨</p>
+        </div>
+
+        <div class="welcome-form" id="welcomeForm">
+            <h2>Welcome!</h2>
+            <p>Please enter your name to start the exercises</p>
+            <input type="text" class="name-input" id="studentName" placeholder="Your name">
+            <br>
+            <button class="btn-start" onclick="startExercise()">Start Exercise ✨</button>
+        </div>
+
+        <div class="timer-bar" id="timerBar">
+            <span class="timer-icon">️</span>
+            <span id="timerDisplay">00:00</span>
+            <span id="tabWarning" class="tab-warning" style="display: none;">
+                ⚠️ Tab switches: <span id="tabSwitchCount">0</span>
+            </span>
+        </div>
+
+        <div class="task-section" id="task1">
+            <h2 class="section-title">🎯 Task 1: Irregular Verbs</h2>
+            <p class="instruction">Choose the <b>only</b> correct option to complete the sentences.</p>
+            <div class="quiz-container" id="quizContainer1"></div>
+        </div>
+
+        <div class="task-section" id="task2">
+            <h2 class="section-title">✍️ Task 2: A Life Story</h2>
+            <p class="instruction">Type the correct word from the box. Use each word only once.</p>
+            <div class="word-bank" id="wordBank2"></div>
+            <div id="inputContainer2"></div>
+        </div>
+
+        <div class="task-section" id="task3">
+            <h2 class="section-title">🧩 Task 3: Chores & Logic</h2>
+            <p class="instruction">Click a chore on the left, then click its logical situation on the right.</p>
+            <div class="match-grid" id="matchGrid3"></div>
+        </div>
+
+        <div class="task-section" id="task4">
+            <h2 class="section-title">🚫 Task 4: Find and Fix the Mistake</h2>
+            <p class="instruction">Each sentence has one mistake. Choose the correct word to replace the <span class="wrong-word">crossed-out word</span>.</p>
+            <div class="quiz-container" id="quizContainer4"></div>
+        </div>
+
+        <div class="task-section" id="task5">
+            <h2 class="section-title">⏳ Task 5: Life Chronology</h2>
+            <p class="instruction">Click the life events in the <b>correct chronological order</b> (from 1 to 5).</p>
+            <div class="sequence-container" id="sequenceContainer5"></div>
+            <div class="result-message" id="seqResult5"></div>
+        </div>
+
+        <div class="task-section" id="task6">
+            <h2 class="section-title">🔄 Task 6: Sentence Transformation</h2>
+            <p class="instruction">Rewrite the sentence using the word in brackets. Type the missing part (2-4 words).</p>
+            <div id="inputContainer6"></div>
+        </div>
+
+        <div class="task-section" id="task7">
+            <h2 class="section-title">🔗 Task 7: Collocation Builder</h2>
+            <p class="instruction">Choose the <b>only</b> correct verb: <b>do, make, take, put, look</b>.</p>
+            <div class="quiz-container" id="quizContainer7"></div>
+        </div>
+
+        <div class="task-section" id="task8">
+            <h2 class="section-title">💡 Task 8: Context & Nuance</h2>
+            <p class="instruction">Choose the <b>only</b> best option to complete the sentence.</p>
+            <div class="quiz-container" id="quizContainer8"></div>
+        </div>
+
+        <div class="task-section" id="task9">
+            <h2 class="section-title">💬 Task 9: Personalization</h2>
+            <p class="instruction">Answer in 1-2 sentences. Use at least <b>one irregular verb</b> and <b>one target collocation</b>.</p>
+            <div class="input-group">
+                <p class="input-sentence">What chores did you <b>do</b> <b>last week</b> after you <b>came</b> home?</p>
+                <textarea class="magic-input" id="openAnswer9" rows="3" placeholder="Type your answer here..." style="max-width: 100%;"></textarea>
+                <button class="btn-check-small" data-check-open="9" data-keywords='["did","made","took out","washed","do the dishes","tidy up","make the bed"]'>Check Keywords</button>
+                <div class="feedback-msg" id="fb-9"></div>
+            </div>
+        </div>
+
+        <div class="task-section" id="task10">
+            <h2 class="section-title"> Task 10: Odd One Out</h2>
+            <p class="instruction">Identify the odd one out and the correct reason.</p>
+            <div class="quiz-container" id="quizContainer10"></div>
+        </div>
+
+        <div class="task-section" id="task11">
+            <h2 class="section-title">⭐ Task 11: Three Forms of Verbs</h2>
+            <p class="instruction">Write all three forms of each verb separated by spaces (e.g., <b>bring brought brought</b>).</p>
+            <div id="threeFormsContainer"></div>
+        </div>
+
+        <div class="task-section" id="task12">
+            <h2 class="section-title">🌟 Task 12: Master the Forms!</h2>
+            <p class="instruction">Put the verbs in brackets into the correct form. <b>Type the exact form.</b></p>
+            <div id="inputContainer12"></div>
+        </div>
+
+        <div class="task-section" id="finalTask" style="text-align: center;">
+            <h2 class="section-title">🚀 Ready to Finish?</h2>
+            <p class="instruction">Click the button below to calculate your final score and send detailed results to your teacher.</p>
+            <button class="btn-finish" onclick="finishAndSend()">🚀 Finish & Send Results</button>
+            <div class="sending-status" id="sendingStatus"></div>
+            <div class="result-message" id="finalResultMessage"></div>
+        </div>
+
+    </div>
+
+    <script>
+        const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCybdydUS2PDlskYqe2_jdbTns0MB_6e45CLWCkpr6jLB-d1zHm5ebBifFNLFoKhwr/exec';
+        
+        let studentName = '';
+        let startTime = null;
+        let timerInterval = null;
+        let tabSwitchCount = 0;
+        let isExerciseActive = false;
+        let totalScore = 0;
+        let maxPossibleScore = 0;
+
+        const studentAnswers = {
+            task1: [], task2: [], task3: [], task4: [], task5: [],
+            task6: [], task7: [], task8: [], task9: '', task10: [], task11: [], task12: []
+        };
+
+        const encouragingWords = [
+            "🌟 Amazing!", "🎉 Fantastic!", "✨ Brilliant!", " Excellent!", 
+            "🌈 Wonderful!", "⭐ Outstanding!", "🎊 Superb!", "💫 Perfect!",
+            "🚀 Awesome!", "🎯 Great job!", "💖 You're on fire!", "🌠 Stellar!"
+        ];
+        function getRandomEncouragement() {
+            return encouragingWords[Math.floor(Math.random() * encouragingWords.length)];
+        }
+
+        const task1Data = [
+            { question: "My grandparents ______ in love 50 years ago and ______ married in 1974.", options: ["fell / got", "fallen / gotten", "fall / get"], correctAnswers: ["fell / got"], hint: "Past Simple of 'fall' is 'fell', 'get' is 'got'." },
+            { question: "He ______ up in a small village, but he ______ to the city when he was 18.", options: ["grown / moved", "grew / moved", "grew / move"], correctAnswers: ["grew / moved"], hint: "'Grow' is irregular: grew, grown. 'Move' is regular." },
+            { question: "After they ______ up last year, he ______ care of their dog.", options: ["split / took", "splitted / taken", "split / taked"], correctAnswers: ["split / took"], hint: "'Split' is irregular (split-split-split). 'Take' becomes 'took'." },
+            { question: "When I was a toddler, my parents ______ me up to be polite, and they ______ me well.", options: ["bringed / teached", "brought / taught", "brought / teached"], correctAnswers: ["brought / taught"], hint: "Irregular forms: bring - brought, teach - taught." }
+        ];
+
+        const task2Data = [
+            { sentence: "My great-grandfather was [1] in 1920.", answer: "born", hint: "Past participle of 'bear'." },
+            { sentence: "Later he [2] from university as an engineer.", answer: "graduated", hint: "Regular verb meaning to finish university." },
+            { sentence: "In his [3], he fell in love.", answer: "twenties", hint: "The stage of life from 20 to 29." },
+            { sentence: "They eventually [4] house to a bigger flat.", answer: "moved", hint: "Regular verb: to change residence." },
+            { sentence: "Now he is 104, a true [5].", answer: "centenarian", hint: "A person who is 100+ years old." },
+            { sentence: "He has finally [6] from his business.", answer: "retired", hint: "Stopped working due to age." }
+        ];
+
+        const task3Data = [
+            { id: 1, word: "Mow the lawn", match: "The grass is getting too long (Saturday)." },
+            { id: 2, word: "Put away the toys", match: "Your little brother left Legos on the floor." },
+            { id: 3, word: "Lay the table", match: "Guests are arriving in 10 minutes for dinner." },
+            { id: 4, word: "Scrub the toilet", match: "The bathroom needs deep cleaning." },
+            { id: 5, word: "Do the laundry", match: "You have a pile of dirty clothes and no clean socks." },
+            { id: 6, word: "Take out the trash", match: "The bin smells bad and the truck comes tomorrow." }
+        ];
+        let selectedLeft = null, selectedRight = null, matchedPairs3 = 0;
+
+        const task4Data = [
+            { question: "She has <span class='wrong-word'>grew</span> up in a big family.", options: ["grew", "grown", "growed", "grow"], correctAnswers: ["grown"], hint: "Present Perfect requires the past participle: grown." },
+            { question: "They got <span class='wrong-word'>divorce</span> last year.", options: ["divorce", "divorced", "divorcing", "divorces"], correctAnswers: ["divorced"], hint: "After 'got' we need the past participle/adjective: divorced." },
+            { question: "Do not forget to <span class='wrong-word'>make</span> the chores.", options: ["make", "do", "did", "making"], correctAnswers: ["do"], hint: "The correct collocation is 'do the chores'." },
+            { question: "He did not <span class='wrong-word'>had</span> to pay rent.", options: ["had", "have", "has", "having"], correctAnswers: ["have"], hint: "After 'did not', use the base form: have." }
+        ];
+
+        const task5Data = ["Be an infant", "Learn to drive", "Graduate from university", "Get your first job", "Retire"];
+        let seqCurrentStep = 1;
+
+        const task6Data = [
+            { sentence: "They decided to end their relationship. (split up) - They _______________ last month.", answers: ["split up"], hint: "Past simple of 'split up' is 'split up' (unchanged)." },
+            { sentence: "My mother raised me after my father left. (bring up) - I _______________ by my mother.", answers: ["was brought up"], hint: "Passive voice, past simple of 'bring up'." },
+            { sentence: "Organize your clothes neatly. (fold) - Please _______________ and put them away.", answers: ["fold"], hint: "Imperative form." },
+            { sentence: "She began to love him the moment they met. (fall in love with) - She _______________ him the moment they met.", answers: ["fell in love with"], hint: "Past simple of 'fall in love with'." }
+        ];
+
+        const task7Data = [
+            { question: "______ the dusting", options: ["do", "make", "take", "put"], correctAnswers: ["do"], hint: "We 'do' the dusting." },
+            { question: "______ the bed", options: ["do", "make", "take", "look"], correctAnswers: ["make"], hint: "We 'make' the bed." },
+            { question: "______ out the rubbish", options: ["do", "make", "take", "put"], correctAnswers: ["take"], hint: "We 'take' out the rubbish." },
+            { question: "______ away the toys", options: ["do", "make", "take", "put"], correctAnswers: ["put"], hint: "We 'put' away the toys." },
+            { question: "______ after your little brother", options: ["do", "make", "take", "look"], correctAnswers: ["look"], hint: "We 'look' after someone." }
+        ];
+
+        const task8Data = [
+            { question: "When you ______, you leave your country to live in another permanently.", options: ["emigrate", "retire", "inherit"], correctAnswers: ["emigrate"], hint: "'Emigrate' means to leave your country." },
+            { question: "My dad is 55. He is not elderly, but definitely ______.", options: ["a toddler", "middle-aged", "a centenarian"], correctAnswers: ["middle-aged"], hint: "55 years old is middle-aged." },
+            { question: "Dinner is finished. What is the most logical chore to do immediately?", options: ["mow the lawn", "clean off the table", "water the flowers"], correctAnswers: ["clean off the table"], hint: "After dinner, you clean the table." },
+            { question: "She decided to ______ and open her own bakery.", options: ["have a change of career", "get divorced", "pass away"], correctAnswers: ["have a change of career"], hint: "Opening a bakery is a career change." }
+        ];
+
+        const task10Data = [
+            { question: "Odd one out: grew / fell / got / split / cleaned", options: ["grew", "cleaned", "split"], correctAnswers: ["cleaned"], hint: "'Cleaned' is regular, the others are irregular." },
+            { question: "Odd one out: be an infant / be middle-aged / do the laundry", options: ["be an infant", "do the laundry", "be middle-aged"], correctAnswers: ["do the laundry"], hint: "'Do the laundry' is a chore, the others are life stages." },
+            { question: "Odd one out: mop the floor / fall in love / scrub the sink", options: ["mop the floor", "fall in love", "scrub the sink"], correctAnswers: ["fall in love"], hint: "'Fall in love' is an emotion/event, the others are chores." }
+        ];
+
+        const task11Data = [
+            { verb: "bring", forms: "bring brought brought", hint: "Base form - Past Simple - Past Participle" },
+            { verb: "split", forms: "split split split", hint: "This verb does not change!" },
+            { verb: "fall", forms: "fall fell fallen", hint: "Remember: fall - fell - fallen" },
+            { verb: "grow", forms: "grow grew grown", hint: "grow - grew - grown" },
+            { verb: "take", forms: "take took taken", hint: "take - took - taken" },
+            { verb: "get", forms: "get got got", hint: "get - got - got (British) or gotten (American)" }
+        ];
+
+        const task12Data = [
+            { sentence: "I _______________ (be brought up by) my older sister after our parents moved.", answer: "was brought up by", hint: "Passive voice, Past Simple." },
+            { sentence: "She _______________ (fall) in love with the language when she visited Istanbul.", answer: "fell", hint: "Past Simple of 'fall'." },
+            { sentence: "We _______________ (grow) up in a small house.", answer: "grew", hint: "Past Simple of 'grow'." },
+            { sentence: "Yesterday, I _______________ (take) out the rubbish and _______________ (do) the laundry.", answer1: "took", answer2: "did", hint: "Both are Past Simple irregular." },
+            { sentence: "They _______________ (get) married in 2015 and _______________ (buy) a house.", answer1: "got", answer2: "bought", hint: "Past Simple of 'get' and 'buy'." },
+            { sentence: "My grandfather _______________ (leave) us a garden when he passed away.", answer: "left", hint: "Past Simple of 'leave'." },
+            { sentence: "Who _______________ (make) the bed in your room this morning?", answer: "made", hint: "Past Simple of 'make'." }
+        ];
+
+        const attemptCounts = {};
+
+        function initAll() {
+            createQuiz('quizContainer1', task1Data, 1);
+            initTask2();
+            initTask3();
+            createQuiz('quizContainer4', task4Data, 4);
+            initTask5();
+            initTask6();
+            createQuiz('quizContainer7', task7Data, 7);
+            createQuiz('quizContainer8', task8Data, 8);
+            createQuiz('quizContainer10', task10Data, 10);
+            initTask11();
+            initTask12();
+        }
+
+        function createQuiz(containerId, data, taskNum) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            maxPossibleScore += data.length;
+            
+            data.forEach((item, index) => {
+                const card = document.createElement('div'); card.className = 'quiz-card';
+                const qDiv = document.createElement('div'); qDiv.className = 'quiz-question'; qDiv.innerHTML = `${index + 1}. ${item.question}`;
+                const optDiv = document.createElement('div'); optDiv.className = 'options-grid';
+                
+                item.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn'; btn.textContent = opt;
+                    btn.addEventListener('click', () => checkQuizAnswer(btn, opt, item.correctAnswers, item.hint, card, taskNum, index));
+                    optDiv.appendChild(btn);
+                });
+                
+                const fbDiv = document.createElement('div'); fbDiv.className = 'feedback-msg'; fbDiv.id = `fb-${containerId}-${index}`;
+                card.appendChild(qDiv); card.appendChild(optDiv); card.appendChild(fbDiv);
+                container.appendChild(card);
+            });
+        }
+
+        function checkQuizAnswer(btn, selected, correctAnswers, hint, card, taskNum, index) {
+            const fbEl = card.querySelector('.feedback-msg');
+            const buttons = card.querySelectorAll('.option-btn');
+            buttons.forEach(b => b.disabled = true);
+
+            const isCorrect = correctAnswers.includes(selected);
+            studentAnswers[`task${taskNum}`][index] = { question: card.querySelector('.quiz-question').textContent, studentAnswer: selected, correctAnswer: correctAnswers[0], isCorrect: isCorrect };
+
+            if (isCorrect) {
+                btn.classList.add('correct');
+                fbEl.className = 'feedback-msg success';
+                fbEl.innerHTML = `✨ <b>${getRandomEncouragement()}</b><br><em>${hint}</em>`;
+                totalScore++;
+            } else {
+                btn.classList.add('wrong');
+                buttons.forEach(b => { if (correctAnswers.includes(b.textContent.trim())) b.classList.add('correct'); });
+                fbEl.className = 'feedback-msg hint';
+                fbEl.innerHTML = `💫 <b>Good try!</b> Correct: <b>${correctAnswers[0]}</b>.<br><em>${hint}</em>`;
+            }
+        }
+
+        function initTask2() {
+            const container = document.getElementById('inputContainer2');
+            const wordBank = document.getElementById('wordBank2');
+            container.innerHTML = '';
+            wordBank.innerHTML = '';
+            maxPossibleScore += task2Data.length;
+
+            const words = task2Data.map(item => item.answer);
+            const shuffledWords = [...words].sort(() => Math.random() - 0.5);
+            shuffledWords.forEach(word => {
+                const span = document.createElement('span');
+                span.className = 'word-bank-item';
+                span.textContent = word;
+                span.dataset.word = word;
+                wordBank.appendChild(span);
+            });
+
+            task2Data.forEach((item, index) => {
+                const div = document.createElement('div'); div.className = 'input-group';
+                div.innerHTML = `
+                    <p class="input-sentence">${item.sentence.replace(`[${index+1}]`, `<input type="text" class="magic-input" id="t2-${index}" style="max-width:200px; display:inline-block; vertical-align:middle;" autocomplete="off">`)}</p>
+                    <div>
+                        <button class="btn-check-small" data-check-input="t2-${index}" data-task="2" data-index="${index}">Check</button>
+                        <span class="attempts-left" id="attempts-t2-${index}">Attempts left: 2</span>
+                    </div>
+                    <div class="feedback-msg" id="fb-t2-${index}"></div>
+                `;
+                container.appendChild(div);
+                attemptCounts[`t2-${index}`] = 2;
+            });
+        }
+
+        function initTask6() {
+            const container = document.getElementById('inputContainer6');
+            container.innerHTML = '';
+            maxPossibleScore += task6Data.length;
+            task6Data.forEach((item, index) => {
+                const parts = item.sentence.split('_______________');
+                const div = document.createElement('div'); div.className = 'input-group';
+                div.innerHTML = `
+                    <p class="input-sentence">${parts[0]} <input type="text" class="magic-input" id="t6-${index}" style="max-width:280px; display:inline-block; vertical-align:middle;" autocomplete="off"> ${parts[1] || ''}</p>
+                    <div>
+                        <button class="btn-check-small" data-check-input="t6-${index}" data-task="6" data-index="${index}">Check</button>
+                        <span class="attempts-left" id="attempts-t6-${index}">Attempts left: 2</span>
+                    </div>
+                    <div class="feedback-msg" id="fb-t6-${index}"></div>
+                `;
+                container.appendChild(div);
+                attemptCounts[`t6-${index}`] = 2;
+            });
+        }
+
+        function initTask12() {
+            const container = document.getElementById('inputContainer12');
+            container.innerHTML = '';
+            maxPossibleScore += 8;
+            task12Data.forEach((item, index) => {
+                let html = `<div class="input-group"><p class="input-sentence">`;
+                if (item.answer1) {
+                    const parts = item.sentence.split('_______________');
+                    html += parts[0] + 
+                            `<input type="text" class="magic-input" id="t12-${index}-1" style="max-width:150px; display:inline-block; vertical-align:middle;" autocomplete="off">` +
+                            (parts[1] || '') +
+                            `<input type="text" class="magic-input" id="t12-${index}-2" style="max-width:150px; display:inline-block; vertical-align:middle;" autocomplete="off">` +
+                            (parts[2] || '');
+                } else {
+                    const parts = item.sentence.split('_______________');
+                    html += parts[0] + 
+                            `<input type="text" class="magic-input" id="t12-${index}" style="max-width:220px; display:inline-block; vertical-align:middle;" autocomplete="off">` +
+                            (parts[1] || '');
+                }
+                html += `</p>
+                    <div>
+                        <button class="btn-check-small" data-check-task12="${index}">Check</button>
+                        <span class="attempts-left" id="attempts-t12-${index}">Attempts left: 2</span>
+                    </div>
+                    <div class="feedback-msg" id="fb-t12-${index}"></div>
+                </div>`;
+                container.innerHTML += html;
+                attemptCounts[`t12-${index}`] = 2;
+            });
+        }
+
+        document.addEventListener('click', function(e) {
+            const btn = e.target.closest('.btn-check-small');
+            if (!btn) return;
+
+            if (btn.dataset.checkInput) {
+                const inputId = btn.dataset.checkInput;
+                const taskNum = parseInt(btn.dataset.task);
+                const index = parseInt(btn.dataset.index);
+                const answers = taskNum === 2 ? [task2Data[index].answer] : task6Data[index].answers;
+                const hint = taskNum === 2 ? task2Data[index].hint : task6Data[index].hint;
+                checkInputAnswer(inputId, answers, `fb-${inputId}`, hint, taskNum, index);
+                return;
+            }
+
+            if (btn.dataset.checkTask12 !== undefined) {
+                const index = parseInt(btn.dataset.checkTask12);
+                checkTask12(index);
+                return;
+            }
+
+            if (btn.dataset.checkThreeForms !== undefined) {
+                const index = parseInt(btn.dataset.checkThreeForms);
+                checkThreeForms(index);
+                return;
+            }
+
+            if (btn.dataset.checkOpen !== undefined) {
+                const taskNum = parseInt(btn.dataset.checkOpen);
+                const keywords = JSON.parse(btn.dataset.keywords);
+                checkOpenAnswer(taskNum, keywords);
+                return;
+            }
+        });
+
+        // ✅ ИСПРАВЛЕНО: красная подсветка теперь гарантированно остаётся после окончания попыток в Task 2 и Task 6
+        function checkInputAnswer(inputId, correctAnswers, fbId, hint, taskNum, index) {
+            const input = document.getElementById(inputId);
+            const fb = document.getElementById(fbId);
+            const attemptsSpan = document.getElementById(`attempts-${inputId}`);
+            
+            if (attemptCounts[inputId] === undefined) attemptCounts[inputId] = 2;
+            if (attemptCounts[inputId] <= 0) return;
+            
+            attemptCounts[inputId]--;
+            if (attemptsSpan) attemptsSpan.textContent = `Attempts left: ${attemptCounts[inputId]}`;
+            
+            const userVal = input.value.trim().toLowerCase();
+            const isCorrect = correctAnswers.map(a => a.toLowerCase()).includes(userVal);
+            
+            studentAnswers[`task${taskNum}`][index] = { question: input.closest('.input-group').querySelector('.input-sentence').textContent, studentAnswer: input.value.trim() || '(empty)', correctAnswer: correctAnswers[0], isCorrect: isCorrect };
+
+            if (isCorrect) {
+                input.classList.remove('wrong');
+                input.classList.add('correct');
+                input.disabled = true;
+                const btn = input.closest('.input-group').querySelector('.btn-check-small');
+                if (btn) btn.disabled = true;
+                fb.className = 'feedback-msg success';
+                fb.innerHTML = `✨ <b>${getRandomEncouragement()}</b><br><em>${hint}</em>`;
+                if (!input.dataset.scored) { totalScore++; input.dataset.scored = "true"; }
+                
+                if (taskNum === 2) {
+                    const wordItems = document.querySelectorAll('.word-bank-item');
+                    wordItems.forEach(item => {
+                        if (item.dataset.word.toLowerCase() === userVal && !item.classList.contains('used')) {
+                            item.classList.add('used');
+                        }
+                    });
+                }
+            } else {
+                input.classList.remove('correct'); 
+                input.classList.add('wrong');
+                fb.className = 'feedback-msg hint';
+                
+                if (attemptCounts[inputId] > 0) {
+                    // Есть ещё попытки — снимаем красную подсветку через 500мс
+                    fb.innerHTML = `💫 <b>Try again!</b> (${attemptCounts[inputId]} attempt${attemptCounts[inputId] > 1 ? 's' : ''} left)`;
+                    setTimeout(() => input.classList.remove('wrong'), 500);
+                } else {
+                    // ✅ Попытки закончились — КРАСНАЯ ПОДСВЕТКА ОСТАЁТСЯ НАВСЕГДА
+                    fb.innerHTML = `💫 <b>No more attempts.</b> Correct: <b>${correctAnswers[0]}</b>.<br><em>${hint}</em>`;
+                    input.disabled = true;
+                    // Принудительно оставляем класс wrong и добавляем inline стили
+                    input.classList.add('wrong');
+                    input.style.borderColor = 'var(--error)';
+                    input.style.background = 'var(--error-bg)';
+                    input.style.color = 'var(--error)';
+                    
+                    const btn = input.closest('.input-group').querySelector('.btn-check-small');
+                    if (btn) btn.disabled = true;
+                    // НЕ вызываем setTimeout — красная рамка остаётся
+                    
+                    if (taskNum === 2) {
+                        const wordItems = document.querySelectorAll('.word-bank-item');
+                        wordItems.forEach(item => {
+                            if (item.dataset.word.toLowerCase() === correctAnswers[0].toLowerCase()) item.classList.add('used');
+                        });
+                    }
+                }
+            }
+        }
+
+        function checkTask12(index) {
+            const item = task12Data[index];
+            let isCorrect = true;
+            let studentAns = '';
+            const attemptsSpan = document.getElementById(`attempts-t12-${index}`);
+            
+            if (attemptCounts[`t12-${index}`] === undefined) attemptCounts[`t12-${index}`] = 2;
+            if (attemptCounts[`t12-${index}`] <= 0) return;
+            
+            attemptCounts[`t12-${index}`]--;
+            if (attemptsSpan) attemptsSpan.textContent = `Attempts left: ${attemptCounts[`t12-${index}`]}`;
+            
+            const input1 = document.getElementById(`t12-${index}-1`);
+            const input2 = document.getElementById(`t12-${index}-2`);
+            const inputSingle = document.getElementById(`t12-${index}`);
+            
+            if (item.answer1) {
+                const val1 = input1 ? input1.value.trim() : '';
+                const val2 = input2 ? input2.value.trim() : '';
+                studentAns = `${val1} / ${val2}`;
+                
+                if (val1.toLowerCase() !== item.answer1.toLowerCase()) { 
+                    input1.classList.remove('correct'); 
+                    input1.classList.add('wrong'); 
+                    isCorrect = false; 
+                } else { 
+                    input1.classList.remove('wrong'); 
+                    input1.classList.add('correct'); 
+                }
+                
+                if (val2.toLowerCase() !== item.answer2.toLowerCase()) { 
+                    input2.classList.remove('correct'); 
+                    input2.classList.add('wrong'); 
+                    isCorrect = false; 
+                } else { 
+                    input2.classList.remove('wrong'); 
+                    input2.classList.add('correct'); 
+                }
+            } else {
+                const val = inputSingle ? inputSingle.value.trim() : '';
+                studentAns = val;
+                
+                if (val.toLowerCase() !== item.answer.toLowerCase()) { 
+                    inputSingle.classList.remove('correct'); 
+                    inputSingle.classList.add('wrong'); 
+                    isCorrect = false; 
+                } else { 
+                    inputSingle.classList.remove('wrong'); 
+                    inputSingle.classList.add('correct'); 
+                }
+            }
+            
+            studentAnswers.task12[index] = { question: item.sentence, studentAnswer: studentAns || '(empty)', correctAnswer: item.answer1 ? `${item.answer1} / ${item.answer2}` : item.answer, isCorrect: isCorrect };
+            const fb = document.getElementById(`fb-t12-${index}`);
+            
+            if (isCorrect) {
+                fb.className = 'feedback-msg success';
+                fb.innerHTML = `✨ <b>${getRandomEncouragement()}</b><br><em>${item.hint}</em>`;
+                if (!inputSingle?.dataset.scored && !input1?.dataset.scored) { 
+                    totalScore += item.answer1 ? 2 : 1; 
+                    (inputSingle || input1).dataset.scored = "true"; 
+                }
+                input1?.setAttribute('disabled', 'true');
+                input2?.setAttribute('disabled', 'true');
+                inputSingle?.setAttribute('disabled', 'true');
+                const btn = document.querySelector(`[data-check-task12="${index}"]`);
+                if (btn) btn.disabled = true;
+            } else {
+                fb.className = 'feedback-msg hint';
+                if (attemptCounts[`t12-${index}`] > 0) {
+                    fb.innerHTML = `💫 <b>Try again!</b> (${attemptCounts[`t12-${index}`]} attempt${attemptCounts[`t12-${index}`] > 1 ? 's' : ''} left)`;
+                    setTimeout(() => {
+                        input1?.classList.remove('wrong');
+                        input2?.classList.remove('wrong');
+                        inputSingle?.classList.remove('wrong');
+                    }, 500);
+                } else {
+                    fb.innerHTML = `💫 <b>No more attempts.</b> Expected: ${item.answer1 ? item.answer1 + ' / ' + item.answer2 : item.answer}`;
+                    input1?.setAttribute('disabled', 'true');
+                    input2?.setAttribute('disabled', 'true');
+                    inputSingle?.setAttribute('disabled', 'true');
+                    const btn = document.querySelector(`[data-check-task12="${index}"]`);
+                    if (btn) btn.disabled = true;
+                    
+                    // Принудительно оставляем красную подсветку
+                    if (input1 && input1.classList.contains('wrong')) {
+                        input1.style.borderColor = 'var(--error)';
+                        input1.style.background = 'var(--error-bg)';
+                        input1.style.color = 'var(--error)';
+                    }
+                    if (input2 && input2.classList.contains('wrong')) {
+                        input2.style.borderColor = 'var(--error)';
+                        input2.style.background = 'var(--error-bg)';
+                        input2.style.color = 'var(--error)';
+                    }
+                    if (inputSingle && inputSingle.classList.contains('wrong')) {
+                        inputSingle.style.borderColor = 'var(--error)';
+                        inputSingle.style.background = 'var(--error-bg)';
+                        inputSingle.style.color = 'var(--error)';
+                    }
+                }
+            }
+        }
+
+        function initTask3() {
+            const grid = document.getElementById('matchGrid3');
+            grid.innerHTML = '';
+            const leftCol = document.createElement('div'); leftCol.className = 'match-column';
+            const rightCol = document.createElement('div'); rightCol.className = 'match-column';
+            maxPossibleScore += task3Data.length;
+            
+            const leftItems = [...task3Data].sort(() => Math.random() - 0.5);
+            const rightItems = [...task3Data].sort(() => Math.random() - 0.5);
+            
+            leftItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'match-item'; div.textContent = item.word;
+                div.dataset.id = item.id; div.dataset.side = 'left';
+                div.addEventListener('click', () => handleMatch3(div, 'left'));
+                leftCol.appendChild(div);
+            });
+            rightItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'match-item'; div.textContent = item.match;
+                div.dataset.id = item.id; div.dataset.side = 'right';
+                div.addEventListener('click', () => handleMatch3(div, 'right'));
+                rightCol.appendChild(div);
+            });
+            grid.appendChild(leftCol); grid.appendChild(rightCol);
+        }
+
+        function handleMatch3(el, side) {
+            if (el.classList.contains('correct')) return;
+            if (side === 'left') { if (selectedLeft) selectedLeft.classList.remove('selected'); selectedLeft = el; el.classList.add('selected'); }
+            else { if (selectedRight) selectedRight.classList.remove('selected'); selectedRight = el; el.classList.add('selected'); }
+
+            if (selectedLeft && selectedRight) {
+                if (selectedLeft.dataset.id === selectedRight.dataset.id) {
+                    selectedLeft.classList.add('correct'); selectedRight.classList.add('correct');
+                    selectedLeft.classList.remove('selected'); selectedRight.classList.remove('selected');
+                    selectedLeft = null; selectedRight = null; matchedPairs3++; totalScore++;
+                    studentAnswers.task3.push({ question: 'Matched pair', studentAnswer: 'Correct', correctAnswer: 'Correct', isCorrect: true });
+                    if (matchedPairs3 === task3Data.length) showSuccess(` ${getRandomEncouragement()} All matched perfectly!`);
+                } else {
+                    studentAnswers.task3.push({ question: selectedLeft.textContent, studentAnswer: selectedRight.textContent, correctAnswer: task3Data.find(t => t.id === selectedLeft.dataset.id).match, isCorrect: false });
+                    selectedLeft.classList.add('wrong'); selectedRight.classList.add('wrong');
+                    setTimeout(() => {
+                        if (selectedLeft) { selectedLeft.classList.remove('wrong', 'selected'); selectedLeft = null; }
+                        if (selectedRight) { selectedRight.classList.remove('wrong', 'selected'); selectedRight = null; }
+                    }, 500);
+                }
+            }
+        }
+
+        function initTask5() {
+            const container = document.getElementById('sequenceContainer5');
+            container.innerHTML = '';
+            maxPossibleScore += task5Data.length;
+            seqCurrentStep = 1;
+            const shuffled = [...task5Data].sort(() => Math.random() - 0.5);
+            shuffled.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'sequence-item';
+                div.textContent = item;
+                div.dataset.value = item;
+                div.addEventListener('click', handleSequenceClick);
+                container.appendChild(div);
+            });
+        }
+
+        function handleSequenceClick(e) {
+            const div = e.currentTarget;
+            if (div.classList.contains('placed')) return;
+            const value = div.dataset.value;
+            const correctValue = task5Data[seqCurrentStep - 1];
+            const isCorrect = value === correctValue;
+            
+            studentAnswers.task5.push({ question: `Position ${seqCurrentStep}`, studentAnswer: value, correctAnswer: correctValue, isCorrect: isCorrect });
+            
+            if (isCorrect) {
+                div.classList.add('placed');
+                div.innerHTML = `<span class="sequence-number">${seqCurrentStep}</span> ${value}`;
+                totalScore++;
+                seqCurrentStep++;
+                if (seqCurrentStep > task5Data.length) {
+                    document.getElementById('seqResult5').className = 'result-message success';
+                    document.getElementById('seqResult5').innerHTML = `✨ ${getRandomEncouragement()} Perfect chronological order!`;
+                    document.getElementById('seqResult5').style.display = 'block';
+                }
+            } else {
+                div.classList.add('wrong');
+                setTimeout(() => div.classList.remove('wrong'), 500);
+            }
+        }
+
+        function initTask11() {
+            const container = document.getElementById('threeFormsContainer');
+            container.innerHTML = '';
+            maxPossibleScore += task11Data.length;
+            task11Data.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'input-group';
+                div.innerHTML = `
+                    <p class="input-sentence">${index + 1}. Verb: <b style="color: var(--primary);">${item.verb}</b> - write all three forms</p>
+                    <div>
+                        <input type="text" class="magic-input" id="t11-${index}" placeholder="e.g., bring brought brought" style="max-width:300px;" autocomplete="off">
+                        <button class="btn-check-small" data-check-three-forms="${index}">Check</button>
+                        <span class="attempts-left" id="attempts-t11-${index}">Attempts left: 2</span>
+                    </div>
+                    <div class="feedback-msg" id="fb-t11-${index}"></div>
+                `;
+                container.appendChild(div);
+                attemptCounts[`t11-${index}`] = 2;
+            });
+        }
+
+        function checkThreeForms(index) {
+            const item = task11Data[index];
+            const input = document.getElementById(`t11-${index}`);
+            const fb = document.getElementById(`fb-t11-${index}`);
+            
+            if (attemptCounts[`t11-${index}`] === undefined) attemptCounts[`t11-${index}`] = 2;
+            if (attemptCounts[`t11-${index}`] <= 0) return;
+            attemptCounts[`t11-${index}`]--;
+            
+            const userVal = input.value.trim().toLowerCase();
+            const correctVal = item.forms.toLowerCase();
+            const isCorrect = userVal === correctVal;
+            
+            studentAnswers.task11[index] = { question: `Three forms of "${item.verb}"`, studentAnswer: input.value.trim() || '(empty)', correctAnswer: item.forms, isCorrect: isCorrect };
+            
+            if (isCorrect) {
+                input.classList.remove('wrong');
+                input.classList.add('correct');
+                input.disabled = true;
+                fb.className = 'feedback-msg success';
+                fb.innerHTML = `✨ <b>${getRandomEncouragement()}</b> ${item.hint}`;
+                if (!input.dataset.scored) { totalScore++; input.dataset.scored = "true"; }
+                const btn = document.querySelector(`[data-check-three-forms="${index}"]`);
+                if (btn) btn.disabled = true;
+            } else {
+                input.classList.remove('correct'); 
+                input.classList.add('wrong');
+                fb.className = 'feedback-msg hint';
+                
+                if (attemptCounts[`t11-${index}`] > 0) {
+                    fb.innerHTML = `💫 <b>Not quite!</b> Try again! (${attemptCounts[`t11-${index}`]} attempt${attemptCounts[`t11-${index}`] > 1 ? 's' : ''} left)`;
+                    setTimeout(() => input.classList.remove('wrong'), 500);
+                } else {
+                    fb.innerHTML = `💫 <b>No more attempts.</b> Correct: <b>${item.forms}</b><br><em>${item.hint}</em>`;
+                    input.disabled = true;
+                    input.classList.add('wrong');
+                    input.style.borderColor = 'var(--error)';
+                    input.style.background = 'var(--error-bg)';
+                    input.style.color = 'var(--error)';
+                    const btn = document.querySelector(`[data-check-three-forms="${index}"]`);
+                    if (btn) btn.disabled = true;
+                }
+            }
+        }
+
+        function checkOpenAnswer(taskNum, keywords) {
+            const input = document.getElementById(`openAnswer${taskNum}`);
+            const fb = document.getElementById(`fb-${taskNum}`);
+            const text = input.value.toLowerCase();
+            const found = keywords.filter(kw => text.includes(kw.toLowerCase()));
+            const hasAnswer = input.value.trim().length > 5;
+            studentAnswers.task9 = input.value.trim() || '(no answer)';
+            
+            if (found.length >= 1 && hasAnswer) {
+                fb.className = 'feedback-msg success';
+                fb.innerHTML = `✨ <b>${getRandomEncouragement()}</b> You used: "${found.join(', ')}".`;
+                if (!input.dataset.scored) { totalScore++; input.dataset.scored = "true"; }
+            } else {
+                fb.className = 'feedback-msg hint';
+                fb.innerHTML = `💫 <b>Tip:</b> Try to include words like: ${keywords.slice(0, 3).join(', ')}.`;
+            }
+        }
+
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            container.innerHTML = '';
+            for (let i = 0; i < 300; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.setProperty('--duration', (Math.random() * 4 + 2) + 's');
+                star.style.setProperty('--max-opacity', Math.random() * 0.8 + 0.2);
+                star.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(star);
+            }
+            for (let i = 0; i < 5; i++) {
+                const shootingStar = document.createElement('div');
+                shootingStar.classList.add('shooting-star');
+                shootingStar.style.top = Math.random() * 50 + '%';
+                shootingStar.style.left = '-' + Math.random() * 20 + '%';
+                shootingStar.style.animationDelay = (Math.random() * 10 + i * 3) + 's';
+                container.appendChild(shootingStar);
+            }
+        }
+
+        function startExercise() {
+            const nameInput = document.getElementById('studentName');
+            studentName = nameInput.value.trim();
+            if (studentName === '') {
+                nameInput.style.borderColor = 'var(--error)';
+                nameInput.style.animation = 'shake 0.4s ease';
+                setTimeout(() => { nameInput.style.borderColor = ''; nameInput.style.animation = ''; }, 400);
+                alert('Please enter your name to continue! 🌟');
+                return;
+            }
+            document.getElementById('welcomeForm').style.display = 'none';
+            document.getElementById('timerBar').classList.add('show');
+            for (let i = 1; i <= 12; i++) {
+                const el = document.getElementById('task' + i);
+                if (el) el.classList.add('show');
+            }
+            document.getElementById('finalTask').classList.add('show');
+            startTime = Date.now();
+            isExerciseActive = true;
+            timerInterval = setInterval(updateTimer, 1000);
+            initAll();
+            document.getElementById('task1').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateTimer() {
+            if (!isExerciseActive) return;
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            document.getElementById('timerDisplay').textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+        }
+
+        document.addEventListener('visibilitychange', function() {
+            if (!isExerciseActive) return;
+            if (document.hidden) {
+                tabSwitchCount++;
+                document.getElementById('tabSwitchCount').textContent = tabSwitchCount;
+                document.getElementById('tabWarning').style.display = 'inline';
+                alert('⚠️ WARNING: You left the exercise tab!\n\nThis has been recorded.\nTab switches: ' + tabSwitchCount);
+            }
+        });
+
+        function showSuccess(message) {
+            const toast = document.getElementById('successToast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        function buildDetailedReport() {
+            const lines = [];
+            lines.push('=== TASK 1: Irregular Verbs ===\n');
+            studentAnswers.task1.forEach((ans, i) => lines.push(`   Q${i+1} [${ans.isCorrect ? 'CORRECT' : 'WRONG'}]: "${ans.studentAnswer}"${ans.isCorrect ? '' : ' | Correct: "' + ans.correctAnswer + '"'}\n`));
+            lines.push('\n=== TASK 2: Life Story ===\n');
+            studentAnswers.task2.forEach((ans, i) => lines.push(`   Q${i+1} [${ans.isCorrect ? 'CORRECT' : 'WRONG'}]: "${ans.studentAnswer}"${ans.isCorrect ? '' : ' | Correct: "' + ans.correctAnswer + '"'}\n`));
+            lines.push('\n=== TASK 3: Chores Matching ===\n');
+            studentAnswers.task3.forEach((ans, i) => lines.push(`   Pair ${i+1} [${ans.isCorrect ? 'CORRECT' : 'WRONG'}]: "${ans.question}" -> "${ans.studentAnswer}"${ans.isCorrect ? '' : ' | Correct: "' + ans.correctAnswer + '"'}\n`));
+            lines.push('\n=== TASK 4: Error Correction ===\n');
+            studentAnswers.task4.forEach((ans, i) => lines.push(`   Q${i+1} [${ans.isCorrect ? 'CORRECT' : 'WRONG'}]: "${ans.studentAnswer}"${ans.isCorrect ? '' : ' | Correct: "' + ans.correctAnswer + '"'}\n`));
+            lines.push('\n=== TASK 5: Chronology ===\n');
+            studentAnswers.task5.forEach((ans, i) => lines.push(`   Pos ${i+1} [${ans.isCorrect ? 'CORRECT' : 'WRONG'}]: "${ans.studentAnswer}"${ans.isCorrect ? '' : ' | Correct: "' + ans.correctAnswer + '"'}\n`));
+            lines.push('\n=== TASK 6: Transformation ===\n');
+            studentAnswers.task6.forEach((ans, i) => lines.push(`   Q${i+1} [${ans.isCorrect ? 'CORRECT' : 'WRONG'}]: "${ans.studentAnswer}"${ans.isCorrect ? '' : ' | Correct: "' + ans.correctAnswer + '"'}\n`));
+            lines.push('\n=== TASK 7: Collocations ===\n');
+            studentAnswers.task7.forEach((ans, i) => lines.push(`   Q${i+1} [${ans.isCorrect ? 'CORRECT' : 'WRONG'}]: "${ans.studentAnswer}"${ans.isCorrect ? '' : ' | Correct: "' + ans.correctAnswer + '"'}\n`));
+            lines.push('\n=== TASK 8: Context ===\n');
+            studentAnswers.task8.forEach((ans, i) => lines.push(`   Q${i+1} [${ans.isCorrect ? 'CORRECT' : 'WRONG'}]: "${ans.studentAnswer}"${ans.isCorrect ? '' : ' | Correct: "' + ans.correctAnswer + '"'}\n`));
+            lines.push('\n=== TASK 9: Open Answer ===\n');
+            lines.push(`   Answer: "${studentAnswers.task9}"\n\n`);
+            lines.push('=== TASK 10: Odd One Out ===\n');
+            studentAnswers.task10.forEach((ans, i) => lines.push(`   Q${i+1} [${ans.isCorrect ? 'CORRECT' : 'WRONG'}]: "${ans.studentAnswer}"${ans.isCorrect ? '' : ' | Correct: "' + ans.correctAnswer + '"'}\n`));
+            lines.push('\n=== TASK 11: Three Verb Forms ===\n');
+            studentAnswers.task11.forEach((ans, i) => lines.push(`   Verb ${i+1} [${ans.isCorrect ? 'CORRECT' : 'WRONG'}]: "${ans.studentAnswer}"${ans.isCorrect ? '' : ' | Correct: "' + ans.correctAnswer + '"'}\n`));
+            lines.push('\n=== TASK 12: Verb Forms in Context ===\n');
+            studentAnswers.task12.forEach((ans, i) => lines.push(`   Q${i+1} [${ans.isCorrect ? 'CORRECT' : 'WRONG'}]: "${ans.studentAnswer}"${ans.isCorrect ? '' : ' | Correct: "' + ans.correctAnswer + '"'}\n`));
+            return lines.join('');
+        }
+
+        async function finishAndSend() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const timeSpent = `${Math.floor(elapsed / 60)} min ${elapsed % 60} sec`;
+            const percentage = Math.round((totalScore / maxPossibleScore) * 100) || 0;
+            const statusDiv = document.getElementById('sendingStatus');
+            statusDiv.classList.add('show'); 
+            statusDiv.innerHTML = '📤 Building detailed report and sending results...';
+            
+            const detailedReport = buildDetailedReport();
+            const payload = { 
+                student_name: studentName, score: `${totalScore}/${maxPossibleScore}`, percentage: `${percentage}%`, 
+                time: new Date().toLocaleString(), exercise_name: "Life Events & Irregular Verbs Worksheet", 
+                time_spent: timeSpent, tab_switches: tabSwitchCount === 0 ? '0 (no switches)' : `${tabSwitchCount} switch(es) detected ⚠️`,
+                errors_text: detailedReport
+            };
+
+            try {
+                await fetch(POWER_AUTOMATE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                statusDiv.innerHTML += '<br>✓ Results sent to Teams!';
+                statusDiv.style.color = 'var(--success)';
+            } catch (error) { statusDiv.innerHTML += '<br>✗ Teams error.'; statusDiv.style.color = 'var(--error)'; }
+
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...payload, detailed_answers: detailedReport }) });
+                statusDiv.innerHTML += '<br>✓ Results sent to Google Sheets!';
+            } catch (e) { console.log('Sheets error:', e); }
+
+            const finalMsg = document.getElementById('finalResultMessage');
+            finalMsg.className = `result-message ${percentage >= 80 ? 'success' : 'error'}`;
+            finalMsg.innerHTML = ` <b>${getRandomEncouragement()}</b><br>Your score: <b>${totalScore} / ${maxPossibleScore}</b> (${percentage}%)<br>Time: ${timeSpent}<br>Great job, ${studentName}! ✨`;
+            finalMsg.style.display = 'block';
+            
+            localStorage.setItem('life_events_completed', 'true');
+            isExerciseActive = false;
+            clearInterval(timerInterval);
+            setTimeout(() => { statusDiv.classList.remove('show'); }, 8000);
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => { createStars(); });
+    </script>
+</body>
+</html>
