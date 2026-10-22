@@ -1185,7 +1185,7 @@
             finalMsg.innerHTML = ` <b>${getRandomEncouragement()}</b><br>Your score: <b>${totalScore} / ${maxPossibleScore}</b> (${percentage}%)<br>Time: ${timeSpent}<br>Great job, ${studentName}! ✨`;
             finalMsg.style.display = 'block';
             
-            localStorage.setItem('life_events_completed', 'true');
+          localStorage.setItem('grammar_ex_life-events', 'true');
             isExerciseActive = false;
             clearInterval(timerInterval);
             setTimeout(() => { statusDiv.classList.remove('show'); }, 8000);
