@@ -1373,9 +1373,18 @@ document.addEventListener('DOMContentLoaded', checkProgress);
                 if (!studentResults[name]) { studentResults[name] = []; }
                 studentResults[name].push(percentage);
             });
-            const sorted = Object.entries(studentResults)
-                .map(([name, scores]) => ({ name, score: Math.round(scores.reduce((a, b) => a + b, 0) / scores.length), exercises: scores.length }))
-                .sort((a, b) => b.score - a.score)
+                     const sorted = Object.entries(studentResults)
+                .map(([name, scores]) => ({ 
+                    name, 
+                    score: Math.round(scores.reduce((a, b) => a + b, 0) / scores.length), 
+                    exercises: scores.length 
+                }))
+                .sort((a, b) => {
+                    // ФОРМУЛА: количество заданий × процент качества
+                    const scoreA = a.exercises * a.score;
+                    const scoreB = b.exercises * b.score;
+                    return scoreB - scoreA;
+                })
                 .slice(0, 5);
             
             let html = '';
