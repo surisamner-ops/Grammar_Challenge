@@ -393,14 +393,12 @@ if (typeof rawPercentage === 'string' && rawPercentage.includes('%')) {
         percentage: Math.round(scores.reduce((a, b) => a + b, 0) / scores.length),
         exercises: scores.length
     }))
-    .sort((a, b) => {
-        // Сначала сравниваем по количеству упражнений (чем больше, тем выше)
-        if (b.exercises !== a.exercises) {
-            return b.exercises - a.exercises;
-        }
-        // Если количество одинаковое, сравниваем по проценту
-        return b.percentage - a.percentage;
-    });
+  .sort((a, b) => {
+    // ФОРМУЛА: количество заданий × процент качества
+    const scoreA = a.exercises * a.percentage;
+    const scoreB = b.exercises * b.percentage;
+    return scoreB - scoreA;
+});
             } else {
                 displayData = filtered.map(item => ({
                     name: item.Name || item.student_name || 'Anonymous',
