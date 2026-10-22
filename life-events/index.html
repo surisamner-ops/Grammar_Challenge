@@ -1164,7 +1164,7 @@
             const detailedReport = buildDetailedReport();
             const payload = { 
                 student_name: studentName, score: `${totalScore}/${maxPossibleScore}`, percentage: `${percentage}%`, 
-                time: new Date().toLocaleString(), exercise_name: "Life Events & Irregular Verbs Worksheet", 
+                time: new Date().toLocaleString(), exercise_name: "Life Events", 
                 time_spent: timeSpent, tab_switches: tabSwitchCount === 0 ? '0 (no switches)' : `${tabSwitchCount} switch(es) detected ⚠️`,
                 errors_text: detailedReport
             };
