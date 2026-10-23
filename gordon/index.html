@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juliya Magic Teacher - Gordon's Restless Day Vocabulary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c084fc;
+            --primary-light: #e9d5ff;
+            --secondary: #60a5fa;
+            --success: #4ade80;
+            --success-bg: rgba(74, 222, 128, 0.15);
+            --warning: #fbbf24;
+            --warning-bg: rgba(251, 191, 36, 0.15);
+            --error: #f87171;
+            --error-bg: rgba(248, 113, 113, 0.15);
+            --bg-dark: #090a0f;
+            --bg-card: rgba(255, 255, 255, 0.04);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, var(--bg-dark) 100%);
+            min-height: 100vh;
+            color: #f8fafc;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--duration) ease-in-out infinite; opacity: 0; }
+        .shooting-star { position: absolute; width: 150px; height: 2px; background: linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.8), transparent); animation: shoot 5s linear infinite; opacity: 0; }
+
+        @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: var(--max-opacity); transform: scale(1.3); } }
+        @keyframes shoot { 0% { transform: translateX(-150px) translateY(150px) rotate(-45deg); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateX(100vw) translateY(-150px) rotate(-45deg); opacity: 0; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+        @keyframes sparkle { 0%, 100% { opacity: 0.6; transform: translateY(-50%) scale(0.8) rotate(0deg); } 50% { opacity: 1; transform: translateY(-50%) scale(1.2) rotate(180deg); } }
+
+        .main-wrapper { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+
+        .header { text-align: center; margin-bottom: 50px; animation: fadeInUp 1s ease-out; }
+        .main-title {
+            font-family: 'Comfortaa', cursive; font-size: 3.2em; font-weight: 700;
+            background: linear-gradient(90deg, #c084fc, #ffffff, #60a5fa, #c084fc, #ffffff);
+            background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shimmer 6s linear infinite; margin-bottom: 15px; position: relative; display: inline-block;
+        }
+        .main-title::before, .main-title::after {
+            content: '✦'; position: absolute; top: 50%; font-size: 0.5em; color: #c084fc;
+            animation: sparkle 2.5s ease-in-out infinite; filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.8));
+            -webkit-text-fill-color: #c084fc;
+        }
+        .main-title::before { left: -40px; }
+        .main-title::after { right: -40px; animation-delay: 1.2s; }
+        .header p { font-size: 1.15em; color: #c4b5fd; text-shadow: 0 0 20px rgba(192, 132, 252, 0.3); max-width: 650px; margin: 0 auto; }
+
+        .welcome-form {
+            background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 24px; padding: 50px 40px; text-align: center; max-width: 500px; margin: 0 auto 50px;
+            animation: fadeInUp 0.8s ease-out; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        .welcome-form h2 { font-family: 'Comfortaa', cursive; font-size: 2em; margin-bottom: 15px; color: var(--primary-light); }
+        .welcome-form p { margin-bottom: 30px; color: #94a3b8; font-size: 1.05em; }
+
+        .name-input {
+            width: 100%; max-width: 320px; padding: 16px 24px; background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(192, 132, 252, 0.4); border-radius: 14px; color: #fff; font-size: 1.1em;
+            text-align: center; margin-bottom: 25px; font-family: 'Inter', sans-serif; transition: all 0.3s ease;
+        }
+        .name-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+        .name-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 25px rgba(192, 132, 252, 0.4); transform: translateY(-2px); }
+
+        .btn-start {
+            padding: 16px 45px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white; border: none; border-radius: 50px; font-family: 'Comfortaa', cursive; font-size: 1.1em;
+            font-weight: 700; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(192, 132, 252, 0.4);
+        }
+        .btn-start:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6); }
+
+        .timer-bar {
+            position: sticky; top: 15px; z-index: 100; background: rgba(192, 132, 252, 0.15);
+            border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 50px; padding: 12px 25px;
+            text-align: center; margin-bottom: 30px; font-family: 'Comfortaa', cursive; font-size: 1.1em;
+            color: var(--primary-light); backdrop-filter: blur(12px); display: none; align-items: center;
+            justify-content: center; gap: 20px; animation: slideIn 0.5s ease-out; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .timer-bar.show { display: flex; }
+        .tab-warning { color: var(--warning); font-weight: 700; animation: pulse 1s ease-in-out infinite; background: var(--warning-bg); padding: 6px 15px; border-radius: 20px; }
+
+        .task-section {
+            background: var(--bg-card); backdrop-filter: blur(16px); border: 1px solid rgba(192, 132, 252, 0.2);
+            border-radius: 24px; padding: 40px; margin-bottom: 40px; animation: fadeInUp 0.8s ease-out;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05); display: none;
+        }
+        .task-section.show { display: block; }
+        .section-title { font-family: 'Comfortaa', cursive; font-size: 1.8em; color: var(--primary-light); text-align: center; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .instruction { text-align: center; color: #94a3b8; margin-bottom: 35px; font-size: 1.05em; line-height: 1.6; }
+        .multi-answer-note { text-align: center; color: var(--warning); font-size: 0.95em; margin-bottom: 25px; font-weight: 600; background: var(--warning-bg); padding: 10px 20px; border-radius: 12px; display: inline-block; margin-left: auto; margin-right: auto; }
+
+        .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 800px; margin: 0 auto; }
+        .match-column { display: flex; flex-direction: column; gap: 12px; }
+        .match-item {
+            background: rgba(192, 132, 252, 0.08); border: 1.5px solid rgba(192, 132, 252, 0.3); border-radius: 14px;
+            padding: 18px; text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.95em; color: var(--primary-light); min-height: 70px; display: flex; align-items: center;
+            justify-content: center; gap: 12px; font-weight: 600; position: relative; overflow: hidden;
+        }
+        .match-item::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transition: left 0.5s; }
+        .match-item:hover::before { left: 100%; }
+        .match-item:hover { background: rgba(192, 132, 252, 0.2); border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(192, 132, 252, 0.2); }
+        .match-item.selected { background: rgba(192, 132, 252, 0.35); border-color: var(--primary-light); box-shadow: 0 0 25px rgba(192, 132, 252, 0.4); transform: scale(1.02); }
+        .match-item.correct { background: var(--success-bg); border-color: var(--success); color: var(--success); cursor: default; pointer-events: none; animation: pulse 0.5s ease; }
+        .match-item.wrong { animation: shake 0.4s ease; background: var(--error-bg); border-color: var(--error); }
+
+        .quiz-container { display: flex; flex-direction: column; gap: 20px; max-width: 800px; margin: 0 auto; }
+        .quiz-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(192, 132, 252, 0.2); border-radius: 16px; padding: 25px; transition: all 0.3s ease; }
+        .quiz-card:hover { border-color: rgba(192, 132, 252, 0.4); background: rgba(255, 255, 255, 0.05); }
+        .quiz-question { font-size: 1.1em; color: #ffffff; margin-bottom: 20px; line-height: 1.7; font-weight: 500; }
+        .quiz-question .blank { color: var(--primary); font-weight: 700; border-bottom: 2px dashed var(--primary); padding: 0 6px; }
+        .quiz-question .wrong-word { color: var(--error); text-decoration: line-through; font-weight: 600; background: var(--error-bg); padding: 2px 8px; border-radius: 6px; }
+
+        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+        .option-btn {
+            background: rgba(192, 132, 252, 0.1); border: 1.5px solid rgba(192, 132, 252, 0.3); border-radius: 12px;
+            padding: 14px 16px; color: var(--primary-light); font-family: 'Inter', sans-serif; font-size: 0.95em;
+            font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-align: center;
+        }
+        .option-btn:hover:not(:disabled) { background: rgba(192, 132, 252, 0.25); border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(192, 132, 252, 0.2); }
+        .option-btn.correct { background: var(--success-bg); border-color: var(--success); color: var(--success); pointer-events: none; animation: pulse 0.5s ease; }
+        .option-btn.wrong { background: var(--error-bg); border-color: var(--error); color: var(--error); animation: shake 0.4s ease; }
+        .option-btn:disabled { cursor: not-allowed; opacity: 0.5; }
+
+        .feedback-msg { margin-top: 15px; padding: 15px; border-radius: 12px; font-size: 0.95em; display: none; animation: slideIn 0.4s ease-out; border-left: 4px solid; line-height: 1.6; }
+        .feedback-msg.success { background: var(--success-bg); border-left-color: var(--success); color: #86efac; display: block; }
+        .feedback-msg.hint { background: var(--warning-bg); border-left-color: var(--warning); color: #fcd34d; display: block; }
+
+        .ege-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
+        .ege-text-panel { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(192, 132, 252, 0.3); border-radius: 16px; padding: 30px; height: fit-content; max-height: 70vh; overflow-y: auto; }
+        .ege-text-panel::-webkit-scrollbar { width: 8px; }
+        .ege-text-panel::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.3); border-radius: 4px; }
+        .ege-text-panel::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+        .ege-text-title { font-family: 'Comfortaa', cursive; font-size: 1.3em; margin-bottom: 20px; color: var(--primary); padding-bottom: 15px; border-bottom: 2px solid rgba(192, 132, 252, 0.3); }
+        .ege-text-content { font-size: 1em; line-height: 1.9; color: #e2e8f0; }
+        .ege-gap { display: inline-block; min-width: 70px; text-align: center; border-bottom: 2px dashed var(--primary); color: var(--primary); font-weight: 700; padding: 0 5px; transition: all 0.3s ease; background: rgba(192, 132, 252, 0.1); border-radius: 4px; }
+        .ege-gap.filled { color: var(--success); border-bottom-color: var(--success); background: var(--success-bg); animation: pulse 0.5s ease; }
+
+        .ege-questions-panel { display: flex; flex-direction: column; gap: 20px; max-height: 70vh; overflow-y: auto; padding-right: 10px; }
+        .ege-questions-panel::-webkit-scrollbar { width: 8px; }
+        .ege-questions-panel::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+        .question-card { background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(192, 132, 252, 0.2); border-radius: 14px; padding: 20px; transition: all 0.3s ease; }
+        .question-card:hover { border-color: rgba(192, 132, 252, 0.4); transform: translateX(5px); }
+        .question-header { font-family: 'Comfortaa', cursive; font-size: 1.1em; font-weight: 700; margin-bottom: 15px; color: var(--primary-light); display: flex; align-items: center; gap: 10px; }
+        .question-number { background: var(--primary); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9em; color: white; }
+
+        .controls { display: flex; gap: 16px; justify-content: center; margin-top: 35px; flex-wrap: wrap; }
+        .btn { padding: 14px 32px; border: none; border-radius: 50px; font-family: 'Comfortaa', cursive; font-size: 1em; font-weight: 700; cursor: pointer; transition: all 0.3s ease; }
+        .btn-check { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; box-shadow: 0 4px 20px rgba(192, 132, 252, 0.4); }
+        .btn-check:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6); }
+        .btn-reset { background: rgba(255, 255, 255, 0.08); color: #f8fafc; border: 1px solid rgba(255, 255, 255, 0.12); }
+        .btn-reset:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-2px); }
+
+        .result-message { text-align: center; padding: 20px; border-radius: 16px; margin-top: 25px; font-size: 1.15em; font-weight: 600; display: none; }
+        .result-message.success { background: var(--success-bg); border: 1px solid var(--success); color: var(--success); display: block; }
+        .result-message.error { background: var(--error-bg); border: 1px solid var(--error); color: #fca5a5; display: block; }
+        .sending-status { text-align: center; margin-top: 15px; font-size: 0.95em; color: #94a3b8; display: none; }
+        .sending-status.show { display: block; }
+
+        .success-toast {
+            position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: linear-gradient(135deg, var(--success), #22c55e); color: white; padding: 18px 35px;
+            border-radius: 50px; font-family: 'Comfortaa', cursive; font-weight: 700; font-size: 1.1em;
+            box-shadow: 0 10px 40px rgba(74, 222, 128, 0.4); z-index: 1000; opacity: 0;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        .success-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .back-to-main {
+            position: fixed; top: 30px; left: 30px; width: 55px; height: 55px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: white; text-decoration: none;
+            box-shadow: 0 0 25px rgba(192, 132, 252, 0.5); transition: all 0.3s ease; z-index: 100; font-size: 1.5em;
+        }
+        .back-to-main:hover { transform: translateY(-5px) scale(1.1); box-shadow: 0 0 35px rgba(192, 132, 252, 0.8); }
+
+        @media (max-width: 968px) {
+            .ege-container { grid-template-columns: 1fr; }
+            .ege-text-panel, .ege-questions-panel { max-height: none; }
+        }
+        @media (max-width: 768px) {
+            .main-title { font-size: 2.2em; }
+            .task-section { padding: 25px; }
+            .match-grid { grid-template-columns: 1fr; gap: 15px; }
+            .options-grid { grid-template-columns: 1fr 1fr; }
+            .welcome-form { padding: 35px 25px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="starsContainer"></div>
+    <div class="success-toast" id="successToast"></div>
+
+    <div class="main-wrapper">
+        <a href="../index.html" class="back-to-main" onclick="localStorage.setItem('lastActiveTab', 'use'); localStorage.setItem('returnFromExercise', 'true')" title="Back to main page">←</a>
+        
+        <div class="header">
+            <h1 class="main-title">Gordon's Restless Day!</h1>
+            <p>Master vocabulary from the text about Gordon and ace your exams! Enter your name to begin your magical learning journey. ✨</p>
+        </div>
+
+        <div class="welcome-form" id="welcomeForm">
+            <h2>Welcome!</h2>
+            <p>Please enter your name to start the exercises</p>
+            <input type="text" class="name-input" id="studentName" placeholder="Your name">
+            <br>
+            <button class="btn-start" onclick="startExercise()">Start Exercise ✨</button>
+        </div>
+
+        <div class="timer-bar" id="timerBar">
+            <span class="timer-icon">⏱️</span>
+            <span id="timerDisplay">00:00</span>
+            <span id="tabWarning" class="tab-warning" style="display: none;">
+                ⚠️ Tab switches: <span id="tabSwitchCount">0</span>
+            </span>
+        </div>
+
+        <div class="task-section" id="task1">
+            <h2 class="section-title">🧩 Task 1: Match the Meaning</h2>
+            <p class="instruction">Click a word on the left, then click its definition on the right.</p>
+            <div class="match-grid" id="matchGrid1"></div>
+        </div>
+
+        <div class="task-section" id="task2">
+            <h2 class="section-title">🕵️ Task 2: Twin Sentences</h2>
+            <p class="instruction">Choose the correct word for each gap. Notice the difference!</p>
+            <div class="quiz-container" id="quizContainer2"></div>
+        </div>
+
+        <div class="task-section" id="task3">
+            <h2 class="section-title">🚫 Task 3: Find and Fix the Mistake</h2>
+            <p class="instruction">Each sentence has one mistake. Choose the correct word to replace the <span class="wrong-word">crossed-out word</span>.</p>
+            <div class="quiz-container" id="quizContainer3"></div>
+        </div>
+
+        <div class="task-section" id="task4">
+            <h2 class="section-title">🔗 Task 4: Collocation Builder</h2>
+            <p class="instruction">Connect the word on the left with its natural partner on the right.</p>
+            <div class="match-grid" id="matchGrid4"></div>
+        </div>
+
+        <div class="task-section" id="task5">
+            <h2 class="section-title">🧩 Task 5: Linking Words Logic</h2>
+            <p class="instruction">Which linking word fits the logic best? Choose the right one.</p>
+            <div class="quiz-container" id="quizContainer5"></div>
+        </div>
+
+        <div class="task-section" id="task6">
+            <h2 class="section-title">🎓 Task 6: EGE Reading Practice</h2>
+            <p class="instruction">Read the text with gaps 32–38. Choose the correct option (1, 2, 3, or 4). The word will automatically fill in the text when you select the right answer!</p>
+            
+            <div class="ege-container">
+                <div class="ege-text-panel">
+                    <h3 class="ege-text-title">Gordon</h3>
+                    <div class="ege-text-content" id="egeText">
+                        Gordon Fink had felt restless all day. Early Sunday morning he had gone for a run in Central Park. Afterwards he came home and <span class="ege-gap" id="gap-32">32</span> a cheese sandwich. He didn’t eat much for breakfast. During his marriage he had been the regular morning chef, but he had got <span class="ege-gap" id="gap-33">33</span> of the habit when his family left. He never bothered to fix anything for himself now. He read the Times while he ate, but <span class="ege-gap" id="gap-34">34</span>, after pouring a second cup of coffee, he found he was unable to concentrate, so he <span class="ege-gap" id="gap-35">35</span> down the paper and walked to the window.<br><br>
+                        It was eleven o’clock. His apartment overlooked the park, and he could see that the sunny day had already brought out a lot of people. There were many couples and family groups. Gordon <span class="ege-gap" id="gap-36">36</span> an elderly woman settle on a bench and turn her face so that the sun shone on it. She looked calm and happy.<br><br>
+                        He turned away from the window and went into the bedroom. He had to pack for his trip tomorrow, and the prospect irritated him. It was almost over though. There was only one week more of publicity for the book, and then he would take a week off to himself. The <span class="ege-gap" id="gap-37">37</span> agent had prepared a list of cruise ships with empty first-class space that would accommodate his schedule. He went back to his desk to look at it. Although he trusted his agent, he wanted to choose a cruise ship himself. He looked <span class="ege-gap" id="gap-38">38</span> to having a pleasant rest after a year of hard work.
+                    </div>
+                </div>
+                <div class="ege-questions-panel" id="egeQuestionsPanel"></div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-check" onclick="checkAllEgeAnswers()">✨ Check All Answers</button>
+                <button class="btn btn-reset" onclick="resetEgeTask()">↺ Reset Task 6</button>
+            </div>
+            <div id="egeResultMessage" class="result-message"></div>
+            <div class="sending-status" id="sendingStatus"></div>
+        </div>
+    </div>
+
+    <script>
+        const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCybdydUS2PDlskYqe2_jdbTns0MB_6e45CLWCkpr6jLB-d1zHm5ebBifFNLFoKhwr/exec';
+        
+        let studentName = '';
+        let startTime = null;
+        let timerInterval = null;
+        let tabSwitchCount = 0;
+        let isExerciseActive = false;
+        let egeAnswers = {};
+
+        // === TASK 1 DATA ===
+        const task1Data = [
+            { id: 1, word: "restless", match: "Feeling unable to relax, sit still, or be calm." },
+            { id: 2, word: "regular", match: "Done or happening often, as a normal habit." },
+            { id: 3, word: "concentrate", match: "To give all your attention to something." },
+            { id: 4, word: "prospect", match: "The possibility or likelihood of some future event." },
+            { id: 5, word: "irritated", match: "Annoyed or slightly angry." },
+            { id: 6, word: "accommodate", match: "To provide space for; to fit in with someone's plans." },
+            { id: 7, word: "schedule", match: "A plan of what someone is going to do and when." },
+            { id: 8, word: "glance", match: "To look quickly at someone or something." }
+        ];
+        let selectedLeft = null, selectedRight = null, matchedPairs = 0;
+
+        function initTask1() {
+            const grid = document.getElementById('matchGrid1');
+            grid.innerHTML = '';
+            const leftCol = document.createElement('div'); leftCol.className = 'match-column';
+            const rightCol = document.createElement('div'); rightCol.className = 'match-column';
+            
+            [...task1Data].sort(() => Math.random() - 0.5).forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'match-item'; div.textContent = item.word;
+                div.dataset.id = item.id; div.dataset.side = 'left';
+                div.addEventListener('click', () => handleMatch(div, 'left'));
+                leftCol.appendChild(div);
+            });
+            [...task1Data].sort(() => Math.random() - 0.5).forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'match-item'; div.textContent = item.match;
+                div.dataset.id = item.id; div.dataset.side = 'right';
+                div.addEventListener('click', () => handleMatch(div, 'right'));
+                rightCol.appendChild(div);
+            });
+            grid.appendChild(leftCol); grid.appendChild(rightCol);
+        }
+
+        function handleMatch(el, side) {
+            if (el.classList.contains('correct')) return;
+            if (side === 'left') { if (selectedLeft) selectedLeft.classList.remove('selected'); selectedLeft = el; el.classList.add('selected'); }
+            else { if (selectedRight) selectedRight.classList.remove('selected'); selectedRight = el; el.classList.add('selected'); }
+
+            if (selectedLeft && selectedRight) {
+                if (selectedLeft.dataset.id === selectedRight.dataset.id) {
+                    selectedLeft.classList.add('correct'); selectedRight.classList.add('correct');
+                    selectedLeft.classList.remove('selected'); selectedRight.classList.remove('selected');
+                    selectedLeft = null; selectedRight = null; matchedPairs++;
+                    if (matchedPairs === task1Data.length) showSuccess("🌟 Amazing! All matched perfectly!");
+                } else {
+                    selectedLeft.classList.add('wrong'); selectedRight.classList.add('wrong');
+                    setTimeout(() => {
+                        if (selectedLeft) { selectedLeft.classList.remove('wrong', 'selected'); selectedLeft = null; }
+                        if (selectedRight) { selectedRight.classList.remove('wrong', 'selected'); selectedRight = null; }
+                    }, 500);
+                }
+            }
+        }
+
+        // === QUIZ GENERATOR ===
+        function createQuiz(containerId, data) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, index) => {
+                const card = document.createElement('div'); card.className = 'quiz-card';
+                const qDiv = document.createElement('div'); qDiv.className = 'quiz-question'; qDiv.innerHTML = `${index + 1}. ${item.question}`;
+                const optDiv = document.createElement('div'); optDiv.className = 'options-grid';
+                
+                item.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn'; btn.textContent = opt;
+                    btn.addEventListener('click', () => checkQuizAnswer(btn, opt, item.correctAnswers, item.hint, card));
+                    optDiv.appendChild(btn);
+                });
+                
+                const fbDiv = document.createElement('div'); fbDiv.className = 'feedback-msg'; fbDiv.id = `fb-${containerId}-${index}`;
+                card.appendChild(qDiv); card.appendChild(optDiv); card.appendChild(fbDiv);
+                container.appendChild(card);
+            });
+        }
+
+        function checkQuizAnswer(btn, selected, correctAnswers, hint, card) {
+            const fbEl = card.querySelector('.feedback-msg');
+            const buttons = card.querySelectorAll('.option-btn');
+            buttons.forEach(b => b.disabled = true);
+
+            if (correctAnswers.includes(selected)) {
+                btn.classList.add('correct');
+                fbEl.className = 'feedback-msg success';
+                fbEl.innerHTML = `✨ <b>Spot on!</b> <br><em>${hint}</em>`;
+            } else {
+                btn.classList.add('wrong');
+                buttons.forEach(b => { 
+                    if (correctAnswers.includes(b.textContent.trim())) b.classList.add('correct'); 
+                });
+                fbEl.className = 'feedback-msg hint';
+                fbEl.innerHTML = `💫 <b>Good try!</b> The correct answer is: <b>${correctAnswers[0]}</b>.<br><em>${hint}</em>`;
+            }
+        }
+
+        const task2Data = [
+            { question: "He came home and <span class='blank'>_____</span> a quick cheese sandwich.", options: ["cooked", "made"], correctAnswers: ["made"], hint: "We 'make' a sandwich (assemble it). We 'cook' a hot meal." },
+            { question: "She <span class='blank'>_____</span> a delicious pasta dinner for the whole family.", options: ["cooked", "made"], correctAnswers: ["cooked"], hint: "We 'cook' a hot meal." },
+            { question: "He had got <span class='blank'>_____</span> of the habit of cooking for himself.", options: ["out", "over"], correctAnswers: ["out"], hint: "Fixed phrase: to get 'out' of a habit." },
+            { question: "It took him a month to get <span class='blank'>_____</span> the flu.", options: ["out", "over"], correctAnswers: ["over"], hint: "To 'get over' means to recover from an illness." },
+            { question: "Gordon <span class='blank'>_____</span> an elderly woman settle on a bench.", options: ["watched", "looked"], correctAnswers: ["watched"], hint: "We 'watch' someone do an action (we see the whole process)." },
+            { question: "He <span class='blank'>_____</span> out of the window at the sunny park.", options: ["watched", "looked"], correctAnswers: ["looked"], hint: "We 'look' in a specific direction." },
+            { question: "He <span class='blank'>_____</span> down the newspaper and walked to the window.", options: ["placed", "laid"], correctAnswers: ["laid"], hint: "Fixed phrase: to 'lay' down (to put something flat)." },
+            { question: "She carefully <span class='blank'>_____</span> the keys on the table.", options: ["placed", "laid"], correctAnswers: ["placed"], hint: "To 'place' means to put something carefully in a specific position." }
+        ];
+
+        const task3Data = [
+            { question: "He <span class='wrong-word'>did</span> a cheese sandwich because he was hungry.", options: ["did", "made", "cooked", "baked"], correctAnswers: ["made"], hint: "We 'make' a sandwich." },
+            { question: "He got <span class='wrong-word'>up</span> of the habit of fixing breakfast for himself.", options: ["up", "out", "off", "away"], correctAnswers: ["out"], hint: "The correct phrase is 'get out of a habit'." },
+            { question: "He <span class='wrong-word'>placed</span> down the paper and walked away.", options: ["placed", "laid", "put", "set"], correctAnswers: ["laid"], hint: "The correct phrase is 'lay down'." },
+            { question: "Gordon <span class='wrong-word'>looked</span> an elderly woman settle on a bench.", options: ["looked", "watched", "viewed", "glanced"], correctAnswers: ["watched"], hint: "We 'watch' someone do an action." },
+            { question: "He is a <span class='wrong-word'>trip</span> agent who prepares lists of cruise ships.", options: ["trip", "travel", "tour", "voyage"], correctAnswers: ["travel"], hint: "The correct term is 'travel agent'." },
+            { question: "He looked <span class='wrong-word'>forward</span> having a pleasant rest after hard work.", options: ["forward", "forward to", "ahead", "onward"], correctAnswers: ["forward to"], hint: "The correct phrase is 'look forward to' + V-ing." }
+        ];
+
+        const task4Data = [
+            { id: 1, word: "regular", match: "morning chef" },
+            { id: 2, word: "get out of", match: "a habit" },
+            { id: 3, word: "pour a second", match: "cup of coffee" },
+            { id: 4, word: "lay", match: "down the paper" },
+            { id: 5, word: "travel", match: "agent" },
+            { id: 6, word: "look forward", match: "to having a pleasant rest" },
+            { id: 7, word: "first-class", match: "space" },
+            { id: 8, word: "hard", match: "work" }
+        ];
+        let selL4 = null, selR4 = null, match4 = 0;
+
+        function initTask4() {
+            const grid = document.getElementById('matchGrid4'); grid.innerHTML = '';
+            const lCol = document.createElement('div'); lCol.className = 'match-column';
+            const rCol = document.createElement('div'); rCol.className = 'match-column';
+            
+            [...task4Data].sort(() => Math.random() - 0.5).forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'match-item'; div.textContent = item.word;
+                div.dataset.id = item.id; div.dataset.side = 'left';
+                div.addEventListener('click', () => handleMatch4(div, 'left'));
+                lCol.appendChild(div);
+            });
+            [...task4Data].sort(() => Math.random() - 0.5).forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'match-item'; div.textContent = item.match;
+                div.dataset.id = item.id; div.dataset.side = 'right';
+                div.addEventListener('click', () => handleMatch4(div, 'right'));
+                rCol.appendChild(div);
+            });
+            grid.appendChild(lCol); grid.appendChild(rCol);
+        }
+
+        function handleMatch4(el, side) {
+            if (el.classList.contains('correct')) return;
+            if (side === 'left') { if (selL4) selL4.classList.remove('selected'); selL4 = el; el.classList.add('selected'); }
+            else { if (selR4) selR4.classList.remove('selected'); selR4 = el; el.classList.add('selected'); }
+
+            if (selL4 && selR4) {
+                if (selL4.dataset.id === selR4.dataset.id) {
+                    selL4.classList.add('correct'); selR4.classList.add('correct');
+                    selL4.classList.remove('selected'); selR4.classList.remove('selected');
+                    selL4 = null; selR4 = null; match4++;
+                    if (match4 === task4Data.length) showSuccess("🔗 Fantastic! All collocations matched!");
+                } else {
+                    selL4.classList.add('wrong'); selR4.classList.add('wrong');
+                    setTimeout(() => {
+                        if (selL4) { selL4.classList.remove('wrong', 'selected'); selL4 = null; }
+                        if (selR4) { selR4.classList.remove('wrong', 'selected'); selR4 = null; }
+                    }, 500);
+                }
+            }
+        }
+
+        const task5Data = [
+            { question: "He read the Times while he ate, but <span class='blank'>_____</span>, after pouring a second cup of coffee, he found he was unable to concentrate.", options: ["Finally", "However", "Although"], correctAnswers: ["Finally"], hint: "'Finally' means at the end of a process or period of time." },
+            { question: "<span class='blank'>_____</span> he trusted his agent, he wanted to choose a cruise ship himself.", options: ["Although", "However", "Finally"], correctAnswers: ["Although"], hint: "'Although' introduces a contrasting clause." },
+            { question: "He had to pack for his trip, and the prospect irritated him. <span class='blank'>_____</span>, it was almost over, with only one week of publicity left.", options: ["However", "Although", "Finally"], correctAnswers: ["However"], hint: "'However' shows contrast and can start a new sentence." }
+        ];
+
+        const egeData = [
+            { id: 32, options: ["cooked", "baked", "did", "made"], correctAnswers: ["made"], hint: "We <b>make</b> a sandwich (assemble it). We <b>cook</b> a hot meal." },
+            { id: 33, options: ["over", "out", "down", "up"], correctAnswers: ["out"], hint: "Fixed phrase: to get <b>out</b> of a habit." },
+            { id: 34, options: ["definitely", "directly", "finally", "completely"], correctAnswers: ["finally"], hint: "<b>Finally</b> means at the end of a process or period of time." },
+            { id: 35, options: ["placed", "arranged", "laid", "rested"], correctAnswers: ["laid"], hint: "Fixed phrase: to <b>lay</b> down (to put something flat)." },
+            { id: 36, options: ["watched", "looked", "viewed", "glanced"], correctAnswers: ["watched"], hint: "We <b>watch</b> someone do an action (we see the whole process)." },
+            { id: 37, options: ["tour", "travel", "trip", "voyage"], correctAnswers: ["travel"], hint: "Fixed phrase: <b>travel</b> agent." },
+            { id: 38, options: ["on", "in", "through", "forward"], correctAnswers: ["forward"], hint: "Fixed phrase: to look <b>forward</b> to something." }
+        ];
+
+        function initEgeTask() {
+            const panel = document.getElementById('egeQuestionsPanel');
+            panel.innerHTML = '';
+            egeData.forEach((item, index) => {
+                const card = document.createElement('div'); card.className = 'question-card';
+                const header = document.createElement('div');
+                header.className = 'question-header';
+                header.innerHTML = `<span class="question-number">${item.id}</span> Question ${item.id}`;
+                const optionsDiv = document.createElement('div'); optionsDiv.className = 'options-grid';
+                
+                item.options.forEach((opt, optIndex) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.textContent = `${optIndex + 1}. ${opt}`;
+                    btn.dataset.value = opt;
+                    btn.onclick = () => checkEgeAnswer(btn, opt, item.id, item.correctAnswers, item.hint, card);
+                    optionsDiv.appendChild(btn);
+                });
+                
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback-msg';
+                feedback.id = `fb-ege-${item.id}`;
+                
+                card.appendChild(header); card.appendChild(optionsDiv); card.appendChild(feedback);
+                panel.appendChild(card);
+            });
+        }
+
+        function checkEgeAnswer(btn, selected, gapId, correctAnswers, hint, card) {
+            const feedback = card.querySelector('.feedback-msg');
+            const buttons = card.querySelectorAll('.option-btn');
+            buttons.forEach(b => b.disabled = true);
+            const gapElement = document.getElementById(`gap-${gapId}`);
+
+            if (correctAnswers.includes(selected)) {
+                btn.classList.add('correct');
+                feedback.className = 'feedback-msg success';
+                feedback.innerHTML = `<strong>✓ Correct!</strong> ${hint}`;
+                if (gapElement) { gapElement.textContent = selected; gapElement.classList.add('filled'); }
+                egeAnswers[gapId] = { correct: true, answer: selected };
+            } else {
+                btn.classList.add('wrong');
+                buttons.forEach(b => { if (correctAnswers.includes(b.dataset.value)) b.classList.add('correct'); });
+                feedback.className = 'feedback-msg hint';
+                feedback.innerHTML = `<strong>✗ Not quite</strong><br>${hint}`;
+                egeAnswers[gapId] = { correct: false, answer: selected };
+            }
+        }
+
+        function checkAllEgeAnswers() {
+            const total = egeData.length;
+            let correctCount = 0;
+            let errors = [];
+
+            egeData.forEach(item => {
+                if (egeAnswers[item.id] && egeAnswers[item.id].correct) {
+                    correctCount++;
+                } else {
+                    errors.push(`Question ${item.id}: correct answer is "${item.correctAnswers[0]}"`);
+                }
+            });
+
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            const timeSpent = `${minutes} min ${seconds} sec`;
+            const errorsText = errors.length > 0 ? errors.join('<br>') : '✓ No errors! Perfect!';
+            
+            sendResultsToTeams(correctCount, total, errorsText, timeSpent);
+            localStorage.setItem('grammar_ex_gordon', 'true');
+
+            const resultDiv = document.getElementById('egeResultMessage');
+            if (correctCount === total) {
+                resultDiv.className = 'result-message success';
+                resultDiv.innerHTML = `🎉 Perfect! All ${total} answers are correct!<br>Time: ${timeSpent}`;
+                showSuccess('🎉 Congratulations! Perfect score!');
+            } else {
+                resultDiv.className = 'result-message error';
+                resultDiv.innerHTML = `You got ${correctCount} out of ${total} correct.<br>Time: ${timeSpent}<br>Keep practicing! 💫`;
+            }
+        }
+
+        function resetEgeTask() {
+            egeAnswers = {};
+            document.querySelectorAll('.ege-gap').forEach(gap => {
+                const num = gap.id.split('-')[1];
+                gap.textContent = num;
+                gap.classList.remove('filled');
+            });
+            document.querySelectorAll('#egeQuestionsPanel .option-btn').forEach(btn => {
+                btn.disabled = false;
+                btn.classList.remove('correct', 'wrong');
+            });
+            document.querySelectorAll('#egeQuestionsPanel .feedback-msg').forEach(fb => {
+                fb.className = 'feedback-msg';
+                fb.style.display = 'none';
+            });
+            document.getElementById('egeResultMessage').style.display = 'none';
+        }
+
+        async function sendResultsToTeams(correct, total, errorsText, timeSpent) {
+            const statusDiv = document.getElementById('sendingStatus');
+            statusDiv.classList.add('show'); 
+            statusDiv.innerHTML = '📤 Sending results to Teams and Google Sheets...';
+            statusDiv.style.color = '#94a3b8';
+            
+            const percentage = Math.round((correct / total) * 100);
+            const exerciseName = "Vocabulary Masterclass - Gordon's Restless Day";
+
+            const payload = { 
+                student_name: studentName, 
+                score: `${correct}/${total}`, 
+                percentage: `${percentage}%`, 
+                time: new Date().toLocaleString(), 
+                exercise_name: exerciseName, 
+                errors_text: errorsText, 
+                time_spent: timeSpent, 
+                tab_switches: tabSwitchCount === 0 ? '0 (no switches)' : `${tabSwitchCount} switch(es) detected ⚠️` 
+            };
+
+            try {
+                await fetch(POWER_AUTOMATE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                statusDiv.innerHTML += '<br>✓ Results sent to Teams!';
+                statusDiv.style.color = 'var(--success)';
+            } catch (error) { 
+                statusDiv.innerHTML += '<br>✗ Teams error.'; 
+                statusDiv.style.color = 'var(--error)'; 
+            }
+
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ student_name: studentName, exercise_name: exerciseName, score: `${correct}/${total}`, percentage: `${percentage}%`, time: new Date().toLocaleString(), time_spent: timeSpent }) });
+                statusDiv.innerHTML += '<br>✓ Results sent to Google Sheets!';
+            } catch (e) { console.log('Sheets error:', e); }
+
+            setTimeout(() => { statusDiv.classList.remove('show'); }, 8000);
+        }
+
+        function showSuccess(message) {
+            const toast = document.getElementById('successToast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            for (let i = 0; i < 300; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.setProperty('--duration', (Math.random() * 4 + 2) + 's');
+                star.style.setProperty('--max-opacity', Math.random() * 0.8 + 0.2);
+                star.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(star);
+            }
+            for (let i = 0; i < 5; i++) {
+                const shootingStar = document.createElement('div');
+                shootingStar.classList.add('shooting-star');
+                shootingStar.style.top = Math.random() * 50 + '%';
+                shootingStar.style.left = '-' + Math.random() * 20 + '%';
+                shootingStar.style.animationDelay = (Math.random() * 10 + i * 3) + 's';
+                container.appendChild(shootingStar);
+            }
+        }
+
+        function startExercise() {
+            const nameInput = document.getElementById('studentName');
+            studentName = nameInput.value.trim();
+            
+            if (studentName === '') {
+                nameInput.style.borderColor = 'var(--error)';
+                nameInput.style.animation = 'shake 0.4s ease';
+                setTimeout(() => { nameInput.style.borderColor = ''; nameInput.style.animation = ''; }, 400);
+                alert('Please enter your name to continue! 🌟');
+                return;
+            }
+
+            document.getElementById('welcomeForm').style.display = 'none';
+            document.getElementById('timerBar').classList.add('show');
+            
+            for (let i = 1; i <= 6; i++) {
+                document.getElementById('task' + i).classList.add('show');
+            }
+            
+            startTime = Date.now();
+            isExerciseActive = true;
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            initTask1();
+            createQuiz('quizContainer2', task2Data);
+            createQuiz('quizContainer3', task3Data);
+            initTask4();
+            createQuiz('quizContainer5', task5Data);
+            initEgeTask();
+            
+            document.getElementById('task1').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateTimer() {
+            if (!isExerciseActive) return;
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            document.getElementById('timerDisplay').textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+        }
+
+        document.addEventListener('visibilitychange', function() {
+            if (!isExerciseActive) return;
+            if (document.hidden) {
+                tabSwitchCount++;
+                document.getElementById('tabSwitchCount').textContent = tabSwitchCount;
+                document.getElementById('tabWarning').style.display = 'inline';
+                alert('⚠️ WARNING: You left the exercise tab!\n\nThis has been recorded.\nTab switches: ' + tabSwitchCount);
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            if (localStorage.getItem('grammar_ex_gordon') === 'true') {
+                const form = document.getElementById('welcomeForm');
+                form.querySelector('h2').innerHTML = '✨ Welcome Back! ✨';
+                form.querySelector('p').textContent = "You've already completed this exercise. You can try again!";
+            }
+        });
+    </script>
+</body>
+</html>
