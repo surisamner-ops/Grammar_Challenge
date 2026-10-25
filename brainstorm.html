@@ -75,23 +75,30 @@
             justify-content: center;
             box-shadow: 0 0 30px rgba(192, 132, 252, 0.2);
         }
-        .input-section input {
-            flex: 1;
-            max-width: 400px;
-            padding: 15px 25px;
-            background: rgba(0,0,0,0.3);
-            border: 2px solid rgba(192, 132, 252, 0.3);
-            border-radius: 50px;
-            color: white;
-            font-size: 1em;
-            font-family: 'Comfortaa', cursive;
-            text-align: center;
-        }
-        .input-section input:focus {
-            outline: none;
-            border-color: #c084fc;
-            box-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
-        }
+    .input-section input {
+    flex: 1;
+    max-width: 400px;
+    padding: 15px 25px;
+    background: rgba(0,0,0,0.3);
+    border: 2px solid rgba(192, 132, 252, 0.5);
+    border-radius: 50px;
+    color: white;
+    font-size: 1.1em;
+    font-family: 'Comfortaa', cursive;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(192, 132, 252, 0.3);
+    animation: inputGlow 2s ease-in-out infinite;
+}
+.input-section input:focus {
+    outline: none;
+    border-color: #c084fc;
+    box-shadow: 0 0 50px rgba(192, 132, 252, 0.6), 0 0 80px rgba(192, 132, 252, 0.4);
+}
+
+@keyframes inputGlow {
+    0%, 100% { box-shadow: 0 0 30px rgba(192, 132, 252, 0.3); }
+    50% { box-shadow: 0 0 50px rgba(192, 132, 252, 0.5), 0 0 70px rgba(192, 132, 252, 0.3); }
+}
         .input-section button {
             padding: 15px 35px;
             background: linear-gradient(135deg, #c084fc, #60a5fa);
@@ -155,26 +162,55 @@
             height: 450px;
         }
         
-        .back-btn {
-            display: block;
-            max-width: 250px;
-            margin: 25px auto 0;
-            padding: 12px 30px;
-            background: rgba(192, 132, 252, 0.2);
-            border: 1px solid rgba(192, 132, 252, 0.4);
-            border-radius: 50px;
-            color: #e9d5ff;
-            text-decoration: none;
-            font-family: 'Comfortaa', cursive;
-            font-weight: 600;
-            transition: all 0.3s;
-            text-align: center;
-        }
-        .back-btn:hover {
-            background: rgba(192, 132, 252, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(192, 132, 252, 0.4);
-        }
+        .back-to-exercises-btn {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #c084fc, #60a5fa);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(192, 132, 252, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    opacity: 0.9;
+}
+.back-to-exercises-btn:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6);
+    opacity: 1;
+}
+.back-to-exercises-btn .btn-text {
+    position: absolute;
+    left: 85px;
+    background: rgba(192, 132, 252, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(192, 132, 252, 0.4);
+    padding: 10px 18px;
+    border-radius: 50px;
+    font-family: 'Comfortaa', cursive;
+    font-size: 1em;
+    font-weight: 600;
+    color: #e9d5ff;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    letter-spacing: 0.5px;
+}
+.back-to-exercises-btn:hover .btn-text {
+    opacity: 1;
+    transform: translateX(5px);
+}
         
         .status {
             text-align: center;
@@ -236,7 +272,10 @@
             </div>
         </div>
         
-        <a href="index.html" class="back-btn">← Back to exercises</a>
+       <a href="index.html" class="back-to-exercises-btn" onclick="localStorage.setItem('lastActiveTab', 'practice'); localStorage.setItem('returnFromExercise', 'true')">
+    <span>←</span>
+    <span class="btn-text">Back to exercises</span>
+</a>
     </div>
 
     <!-- Загружаем библиотеки -->
@@ -252,21 +291,51 @@
         const wordcloudDiv = document.getElementById('wordcloud');
         
         // Создаём звёзды
-        function createStars() {
-            const container = document.getElementById('starsContainer');
-            for (let i = 0; i < 200; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                const size = Math.random() * 3 + 1;
-                star.style.width = size + 'px';
-                star.style.height = size + 'px';
-                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-                container.appendChild(star);
-            }
-        }
-        createStars();
+       function createStars() {
+    const container = document.getElementById('starsContainer');
+    // Увеличиваем с 200 до 400 звёзд
+    for (let i = 0; i < 400; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        const size = Math.random() * 3 + 1;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+        star.style.setProperty('--max-opacity', Math.random() * 0.7 + 0.3);
+        star.style.animationDelay = Math.random() * 5 + 's';
+        container.appendChild(star);
+    }
+    // Увеличиваем падающие звёзды с 5 до 10
+    for (let i = 0; i < 10; i++) {
+        const shootingStar = document.createElement('div');
+        shootingStar.style.position = 'absolute';
+        shootingStar.style.width = '150px';
+        shootingStar.style.height = '1px';
+        shootingStar.style.background = 'linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.3) 30%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.3) 70%, rgba(255,255,255,0))';
+        shootingStar.style.top = Math.random() * 50 + '%';
+        shootingStar.style.left = '-' + Math.random() * 20 + '%';
+        shootingStar.style.transform = 'rotate(-35deg)';
+        shootingStar.style.filter = 'blur(0.5px)';
+        shootingStar.style.animation = `shootingStar ${Math.random() * 6 + 10}s ease-in-out ${Math.random() * 15}s infinite`;
+        container.appendChild(shootingStar);
+    }
+    // Увеличиваем частицы с 15 до 30
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.style.position = 'absolute';
+        particle.style.width = '4px';
+        particle.style.height = '4px';
+        particle.style.background = 'rgba(192, 132, 252, 0.8)';
+        particle.style.borderRadius = '50%';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.boxShadow = '0 0 10px rgba(192, 132, 252, 0.8)';
+        particle.style.animation = `magicParticles ${Math.random() * 4 + 3}s ease-in-out ${Math.random() * 5}s infinite`;
+        container.appendChild(particle);
+    }
+}
         
         // Отправка слова
         async function submitWord() {
@@ -333,7 +402,7 @@
                WordCloud(canvas, {
     list: scaledWords,
     gridSize: 8,
-    weightFactor: 3,
+    weightFactor: 5,
                     fontFamily: 'Comfortaa',
                    color: function() {
     const colors = ['#c084fc', '#60a5fa', '#fbbf24', '#4ade80', '#f472b6', '#fb923c', '#a78bfa', '#38bdf8', '#facc15', '#34d399'];
