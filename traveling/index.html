@@ -142,6 +142,65 @@
             color: var(--primary-light);
             font-family: 'Comfortaa', cursive;
         }
+                .custom-audio-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .audio-play-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .audio-play-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(192, 132, 252, 0.6);
+        }
+        .audio-progress-container {
+            flex: 1;
+            position: relative;
+        }
+        .audio-progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .audio-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 4px;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 10px rgba(192, 132, 252, 0.5);
+        }
+        .audio-time {
+            font-family: 'Comfortaa', cursive;
+            font-weight: 600;
+            color: var(--primary-light);
+            min-width: 60px;
+            text-align: center;
+        }
+        .audio-player-custom audio {
+            display: none;
+        }
 
         .strategy-box {
             background: rgba(96, 165, 250, 0.1); border: 1px solid rgba(96, 165, 250, 0.3); border-radius: 16px;
@@ -674,8 +733,10 @@
         <span class="audio-time" id="timeDisplay">00:00</span>
     </div>
     
-    <audio id="listeningAudio" ontimeupdate="updateProgress()" onended="audioEnded()">
-        <source src="https://raw.githubusercontent.com/surisamner-ops/Grammar_Challenge/refs/heads/main/traveling/listening-task.mp3" type="audio/mpeg">
+      <audio id="listeningAudio" ontimeupdate="updateProgress()" onended="audioEnded()" onerror="audioError()">
+        <!-- Используем jsDelivr, так как raw github часто блокирует аудио -->
+        <source src="https://cdn.jsdelivr.net/gh/surisamner-ops/Grammar_Challenge@main/traveling/listening-task.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио элемент.
     </audio>
 </div>
 
@@ -1576,6 +1637,10 @@
             const progressFill = document.getElementById('progressFill');
             btn.textContent = '▶️';
             progressFill.style.width = '0%';
+        }
+                function audioError() {
+            console.error('Audio failed to load!');
+            alert('❌ Audio file not found. Please check the file path.');
         }
     </script>
 </body>
