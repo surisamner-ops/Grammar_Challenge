@@ -333,10 +333,10 @@
                     return;
                 }
                 
-                WordCloud(canvas, {
-                    list: scaledWords,
-                    gridSize: 8,
-                    weightFactor: 1,
+               WordCloud(canvas, {
+    list: scaledWords,
+    gridSize: 8,
+    weightFactor: 3,
                     fontFamily: 'Comfortaa',
                     color: function(word, weight) {
                         if (weight > 30) return '#c084fc';
