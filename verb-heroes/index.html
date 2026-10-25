@@ -229,25 +229,27 @@
             border-color: var(--neon-green);
         }
 
-        /* ПЕРСОНАЖ - компактный */
-      .player-character {
+ /* ИСПРАВЛЕНО: персонаж теперь отображается ПОЛНОСТЬЮ */
+.player-character {
     position: absolute;
-    bottom: 100px;
+    bottom: 80px;
     left: 5%;
-    width: 250px;  /* Большой размер */
-    height: 250px;
+    width: 280px;  /* УВЕЛИЧЕНО с 250px */
+    height: 280px; /* УВЕЛИЧЕНО с 250px */
     z-index: 3;
     transition: left 1.2s cubic-bezier(0.4, 0, 0.2, 1), bottom 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: visible !important;  /* ВАЖНО! */
+    overflow: visible !important;  /* ВАЖНО: разрешаем показывать всё */
 }
+
 .player-character svg { 
     width: 100%; 
     height: 100%; 
-    overflow: visible !important;  /* ВАЖНО! */
+    overflow: visible !important;  /* ВАЖНО: SVG тоже показывает всё */
     animation: glow 2s ease-in-out infinite, breathe 3s ease-in-out infinite;
 }
-        .player-character.flying { animation: characterFly 1s ease-in-out infinite; }
-        .player-character.landing { animation: characterLand 0.6s ease-out; }
+
+.player-character.flying { animation: characterFly 1s ease-in-out infinite; }
+.player-character.landing { animation: characterLand 0.6s ease-out; }
 
         .rocket-particle {
             position: absolute;
@@ -736,57 +738,79 @@
             margin-bottom: 4px;
         }
 
-        /* МОБИЛЬНАЯ АДАПТАЦИЯ */
-        @media (max-width: 768px) {
-            .main-title { font-size: 1.3em; }
-            .header p { font-size: 0.8em; }
-            .character-select { grid-template-columns: repeat(2, 1fr); }
-            .character-card svg { width: 70px; height: 70px; }
-            .options-grid { grid-template-columns: repeat(2, 1fr); }
-            .game-scene { height: 280px; }
-            .task-card { grid-template-columns: 1fr; }
-            .planet-mercury { width: 40px; height: 40px; bottom: 120px; }
-            .planet-venus { width: 55px; height: 55px; bottom: 140px; }
-            .planet-earth { width: 60px; height: 60px; bottom: 100px; }
-            .planet-mars { width: 50px; height: 50px; bottom: 150px; }
-            .planet-jupiter { width: 80px; height: 80px; bottom: 80px; }
-            .planet-saturn { width: 70px; height: 70px; bottom: 120px; }
-            .planet-uranus { width: 60px; height: 60px; bottom: 160px; }
-            .planet-neptune { width: 55px; height: 55px; bottom: 110px; }
-            .portal { width: 55px; height: 85px; bottom: 80px; }
-            .player-character { width: 140px; height: 140px; bottom: 60px; }
-            .verb-v1 { font-size: 1.6em; }
-            .bonus-options { grid-template-columns: 1fr; }
-            .timer-bar { top: 8px; padding: 6px 15px; font-size: 0.9em; }
-            .progress-container { top: 8px; padding: 10px 12px; }
-            .sentence-box { padding: 10px 12px; }
-            .sentence-context { font-size: 0.95em; }
-            .btn { padding: 10px 25px; font-size: 0.85em; }
-            .verb-slot { min-width: 90px; height: 40px; font-size: 0.9em; }
-            .type-input { font-size: 1em; padding: 10px 12px; }
-        }
+      /* МОБИЛЬНАЯ АДАПТАЦИЯ */
+@media (max-width: 768px) {
+    .main-title { font-size: 1.3em; }
+    .header p { font-size: 0.8em; }
+    .character-select { grid-template-columns: repeat(2, 1fr); }
+    .character-card svg { width: 70px; height: 70px; }
+    .options-grid { grid-template-columns: repeat(2, 1fr); }
+    .game-scene { height: 320px; }
+    .task-card { grid-template-columns: 1fr; }
+    .planet-mercury { width: 40px; height: 40px; bottom: 120px; }
+    .planet-venus { width: 55px; height: 55px; bottom: 140px; }
+    .planet-earth { width: 60px; height: 60px; bottom: 100px; }
+    .planet-mars { width: 50px; height: 50px; bottom: 150px; }
+    .planet-jupiter { width: 80px; height: 80px; bottom: 80px; }
+    .planet-saturn { width: 70px; height: 70px; bottom: 120px; }
+    .planet-uranus { width: 60px; height: 60px; bottom: 160px; }
+    .planet-neptune { width: 55px; height: 55px; bottom: 110px; }
+    .portal { width: 55px; height: 85px; bottom: 80px; }
+    
+    /* ИСПРАВЛЕНО: увеличен размер персонажа */
+    .player-character { 
+        width: 200px; 
+        height: 200px; 
+        bottom: 60px;
+        overflow: visible !important;
+    }
+    .player-character svg {
+        overflow: visible !important;
+    }
+    
+    .verb-v1 { font-size: 1.6em; }
+    .bonus-options { grid-template-columns: 1fr; }
+    .timer-bar { top: 8px; padding: 6px 15px; font-size: 0.9em; }
+    .progress-container { top: 8px; padding: 10px 12px; }
+    .sentence-box { padding: 10px 12px; }
+    .sentence-context { font-size: 0.95em; }
+    .btn { padding: 10px 25px; font-size: 0.85em; }
+    .verb-slot { min-width: 90px; height: 40px; font-size: 0.9em; }
+    .type-input { font-size: 1em; padding: 10px 12px; }
+}
 
-        @media (max-width: 480px) {
-            .main-wrapper { padding: 5px; }
-            .main-title { font-size: 1.1em; }
-            .header p { font-size: 0.7em; }
-            .game-scene { height: 240px; }
-            .player-character { width: 120px; height: 120px; }
-            .planet-mercury { width: 35px; height: 35px; }
-            .planet-venus { width: 45px; height: 45px; }
-            .planet-earth { width: 50px; height: 50px; }
-            .planet-mars { width: 40px; height: 40px; }
-            .planet-jupiter { width: 70px; height: 70px; }
-            .planet-saturn { width: 60px; height: 60px; }
-            .planet-uranus { width: 50px; height: 50px; }
-            .planet-neptune { width: 45px; height: 45px; }
-            .portal { width: 45px; height: 70px; }
-            .verb-v1 { font-size: 1.4em; }
-            .verb-slot { min-width: 80px; height: 38px; font-size: 0.85em; }
-            .type-input { font-size: 0.95em; padding: 8px 10px; }
-            .option-btn { padding: 10px; font-size: 0.85em; }
-            .sentence-context { font-size: 0.9em; }
-        }
+@media (max-width: 480px) {
+    .main-wrapper { padding: 5px; }
+    .main-title { font-size: 1.1em; }
+    .header p { font-size: 0.7em; }
+    .game-scene { height: 280px; }
+    
+    /* ИСПРАВЛЕНО: увеличен размер персонажа для телефонов */
+    .player-character { 
+        width: 160px; 
+        height: 160px;
+        bottom: 50px;
+        overflow: visible !important;
+    }
+    .player-character svg {
+        overflow: visible !important;
+    }
+    
+    .planet-mercury { width: 35px; height: 35px; }
+    .planet-venus { width: 45px; height: 45px; }
+    .planet-earth { width: 50px; height: 50px; }
+    .planet-mars { width: 40px; height: 40px; }
+    .planet-jupiter { width: 70px; height: 70px; }
+    .planet-saturn { width: 60px; height: 60px; }
+    .planet-uranus { width: 50px; height: 50px; }
+    .planet-neptune { width: 45px; height: 45px; }
+    .portal { width: 45px; height: 70px; }
+    .verb-v1 { font-size: 1.4em; }
+    .verb-slot { min-width: 80px; height: 38px; font-size: 0.85em; }
+    .type-input { font-size: 0.95em; padding: 8px 10px; }
+    .option-btn { padding: 10px; font-size: 0.85em; }
+    .sentence-context { font-size: 0.9em; }
+}
     </style>
 </head>
 <body>
