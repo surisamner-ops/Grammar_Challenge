@@ -229,27 +229,25 @@
             border-color: var(--neon-green);
         }
 
- /* ИСПРАВЛЕНО: персонаж теперь отображается ПОЛНОСТЬЮ */
-.player-character {
-    position: absolute;
-    bottom: 80px;
-    left: 5%;
-    width: 280px;  /* УВЕЛИЧЕНО с 250px */
-    height: 280px; /* УВЕЛИЧЕНО с 250px */
-    z-index: 3;
-    transition: left 1.2s cubic-bezier(0.4, 0, 0.2, 1), bottom 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: visible !important;  /* ВАЖНО: разрешаем показывать всё */
-}
-
-.player-character svg { 
-    width: 100%; 
-    height: 100%; 
-    overflow: visible !important;  /* ВАЖНО: SVG тоже показывает всё */
-    animation: glow 2s ease-in-out infinite, breathe 3s ease-in-out infinite;
-}
-
-.player-character.flying { animation: characterFly 1s ease-in-out infinite; }
-.player-character.landing { animation: characterLand 0.6s ease-out; }
+        /* ПЕРСОНАЖ - компактный */
+        .player-character {
+            position: absolute;
+            bottom: 80px;
+            left: 5%;
+            width: 180px;
+            height: 180px;
+            z-index: 3;
+            transition: left 1.2s cubic-bezier(0.4, 0, 0.2, 1), bottom 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: visible !important;
+        }
+        .player-character svg { 
+            width: 100%; 
+            height: 100%; 
+            overflow: visible !important;
+            animation: glow 2s ease-in-out infinite, breathe 3s ease-in-out infinite;
+        }
+        .player-character.flying { animation: characterFly 1s ease-in-out infinite; }
+        .player-character.landing { animation: characterLand 0.6s ease-out; }
 
         .rocket-particle {
             position: absolute;
@@ -738,79 +736,57 @@
             margin-bottom: 4px;
         }
 
-      /* МОБИЛЬНАЯ АДАПТАЦИЯ */
-@media (max-width: 768px) {
-    .main-title { font-size: 1.3em; }
-    .header p { font-size: 0.8em; }
-    .character-select { grid-template-columns: repeat(2, 1fr); }
-    .character-card svg { width: 70px; height: 70px; }
-    .options-grid { grid-template-columns: repeat(2, 1fr); }
-    .game-scene { height: 320px; }
-    .task-card { grid-template-columns: 1fr; }
-    .planet-mercury { width: 40px; height: 40px; bottom: 120px; }
-    .planet-venus { width: 55px; height: 55px; bottom: 140px; }
-    .planet-earth { width: 60px; height: 60px; bottom: 100px; }
-    .planet-mars { width: 50px; height: 50px; bottom: 150px; }
-    .planet-jupiter { width: 80px; height: 80px; bottom: 80px; }
-    .planet-saturn { width: 70px; height: 70px; bottom: 120px; }
-    .planet-uranus { width: 60px; height: 60px; bottom: 160px; }
-    .planet-neptune { width: 55px; height: 55px; bottom: 110px; }
-    .portal { width: 55px; height: 85px; bottom: 80px; }
-    
-    /* ИСПРАВЛЕНО: увеличен размер персонажа */
-    .player-character { 
-        width: 200px; 
-        height: 200px; 
-        bottom: 60px;
-        overflow: visible !important;
-    }
-    .player-character svg {
-        overflow: visible !important;
-    }
-    
-    .verb-v1 { font-size: 1.6em; }
-    .bonus-options { grid-template-columns: 1fr; }
-    .timer-bar { top: 8px; padding: 6px 15px; font-size: 0.9em; }
-    .progress-container { top: 8px; padding: 10px 12px; }
-    .sentence-box { padding: 10px 12px; }
-    .sentence-context { font-size: 0.95em; }
-    .btn { padding: 10px 25px; font-size: 0.85em; }
-    .verb-slot { min-width: 90px; height: 40px; font-size: 0.9em; }
-    .type-input { font-size: 1em; padding: 10px 12px; }
-}
+        /* МОБИЛЬНАЯ АДАПТАЦИЯ */
+        @media (max-width: 768px) {
+            .main-title { font-size: 1.3em; }
+            .header p { font-size: 0.8em; }
+            .character-select { grid-template-columns: repeat(2, 1fr); }
+            .character-card svg { width: 70px; height: 70px; }
+            .options-grid { grid-template-columns: repeat(2, 1fr); }
+            .game-scene { height: 280px; }
+            .task-card { grid-template-columns: 1fr; }
+            .planet-mercury { width: 40px; height: 40px; bottom: 120px; }
+            .planet-venus { width: 55px; height: 55px; bottom: 140px; }
+            .planet-earth { width: 60px; height: 60px; bottom: 100px; }
+            .planet-mars { width: 50px; height: 50px; bottom: 150px; }
+            .planet-jupiter { width: 80px; height: 80px; bottom: 80px; }
+            .planet-saturn { width: 70px; height: 70px; bottom: 120px; }
+            .planet-uranus { width: 60px; height: 60px; bottom: 160px; }
+            .planet-neptune { width: 55px; height: 55px; bottom: 110px; }
+            .portal { width: 55px; height: 85px; bottom: 80px; }
+            .player-character { width: 140px; height: 140px; bottom: 60px; }
+            .verb-v1 { font-size: 1.6em; }
+            .bonus-options { grid-template-columns: 1fr; }
+            .timer-bar { top: 8px; padding: 6px 15px; font-size: 0.9em; }
+            .progress-container { top: 8px; padding: 10px 12px; }
+            .sentence-box { padding: 10px 12px; }
+            .sentence-context { font-size: 0.95em; }
+            .btn { padding: 10px 25px; font-size: 0.85em; }
+            .verb-slot { min-width: 90px; height: 40px; font-size: 0.9em; }
+            .type-input { font-size: 1em; padding: 10px 12px; }
+        }
 
-@media (max-width: 480px) {
-    .main-wrapper { padding: 5px; }
-    .main-title { font-size: 1.1em; }
-    .header p { font-size: 0.7em; }
-    .game-scene { height: 280px; }
-    
-    /* ИСПРАВЛЕНО: увеличен размер персонажа для телефонов */
-    .player-character { 
-        width: 160px; 
-        height: 160px;
-        bottom: 50px;
-        overflow: visible !important;
-    }
-    .player-character svg {
-        overflow: visible !important;
-    }
-    
-    .planet-mercury { width: 35px; height: 35px; }
-    .planet-venus { width: 45px; height: 45px; }
-    .planet-earth { width: 50px; height: 50px; }
-    .planet-mars { width: 40px; height: 40px; }
-    .planet-jupiter { width: 70px; height: 70px; }
-    .planet-saturn { width: 60px; height: 60px; }
-    .planet-uranus { width: 50px; height: 50px; }
-    .planet-neptune { width: 45px; height: 45px; }
-    .portal { width: 45px; height: 70px; }
-    .verb-v1 { font-size: 1.4em; }
-    .verb-slot { min-width: 80px; height: 38px; font-size: 0.85em; }
-    .type-input { font-size: 0.95em; padding: 8px 10px; }
-    .option-btn { padding: 10px; font-size: 0.85em; }
-    .sentence-context { font-size: 0.9em; }
-}
+        @media (max-width: 480px) {
+            .main-wrapper { padding: 5px; }
+            .main-title { font-size: 1.1em; }
+            .header p { font-size: 0.7em; }
+            .game-scene { height: 240px; }
+            .player-character { width: 120px; height: 120px; }
+            .planet-mercury { width: 35px; height: 35px; }
+            .planet-venus { width: 45px; height: 45px; }
+            .planet-earth { width: 50px; height: 50px; }
+            .planet-mars { width: 40px; height: 40px; }
+            .planet-jupiter { width: 70px; height: 70px; }
+            .planet-saturn { width: 60px; height: 60px; }
+            .planet-uranus { width: 50px; height: 50px; }
+            .planet-neptune { width: 45px; height: 45px; }
+            .portal { width: 45px; height: 70px; }
+            .verb-v1 { font-size: 1.4em; }
+            .verb-slot { min-width: 80px; height: 38px; font-size: 0.85em; }
+            .type-input { font-size: 0.95em; padding: 8px 10px; }
+            .option-btn { padding: 10px; font-size: 0.85em; }
+            .sentence-context { font-size: 0.9em; }
+        }
     </style>
 </head>
 <body>
@@ -819,9 +795,9 @@
     <div class="level-badge" id="levelBadge">Level 2: Type Mode</div>
     <div class="tab-switch-warning" id="tabWarning">Tab Switches: <span id="tabSwitchCount">0</span></div>
 
-    
-       <audio id="bgMusic" loop><source src="background-music.mp3" type="audio/mpeg"></audio>
- 
+    <audio id="bgMusic" loop>
+        <source src="background-music.mp3" type="audio/mpeg">
+    </audio>
     <div class="music-control">
         <button class="music-btn" id="musicToggle" onclick="toggleMusic()">🔇</button>
         <label class="music-label" for="musicUpload">Load Music</label>
@@ -1436,390 +1412,16 @@
             }
         }
 
-       const heroSVGs = {
-    astronaut: `<svg viewBox="0 0 200 220">
-        <defs>
-            <radialGradient id="catBody" cx="40%" cy="40%">
-                <stop offset="0%" stop-color="#f3e8ff"/>
-                <stop offset="100%" stop-color="#a855f7"/>
-            </radialGradient>
-            <radialGradient id="helmetGlass" cx="30%" cy="30%">
-                <stop offset="0%" stop-color="rgba(255,255,255,0.7)"/>
-                <stop offset="100%" stop-color="rgba(96,165,250,0.3)"/>
-            </radialGradient>
-            <filter id="softShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.25"/></filter>
-        </defs>
-        <!-- Рюкзак -->
-        <rect x="60" y="130" width="80" height="45" rx="20" fill="#7c3aed" filter="url(#softShadow)"/>
-        <!-- Тело -->
-        <ellipse cx="100" cy="165" rx="48" ry="52" fill="url(#catBody)" filter="url(#softShadow)"/>
-        <!-- Уши -->
-        <path d="M 65 55 Q 50 15 90 35 Z" fill="#a855f7" stroke="#7c3aed" stroke-width="2"/>
-        <path d="M 135 55 Q 150 15 110 35 Z" fill="#a855f7" stroke="#7c3aed" stroke-width="2"/>
-        <!-- Голова -->
-        <circle cx="100" cy="85" r="52" fill="#faf5ff" filter="url(#softShadow)"/>
-        <!-- Шлем -->
-        <circle cx="100" cy="85" r="52" fill="url(#helmetGlass)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
-        <!-- Блики на шлеме -->
-        <ellipse cx="75" cy="65" rx="15" ry="8" fill="white" opacity="0.6" transform="rotate(-20 75 65)"/>
-        <!-- Глаза -->
-        <ellipse cx="80" cy="80" rx="16" ry="18" fill="#fff"/>
-        <ellipse cx="120" cy="80" rx="16" ry="18" fill="#fff"/>
-        <circle cx="84" cy="83" r="9" fill="#1e293b"/>
-        <circle cx="124" cy="83" r="9" fill="#1e293b"/>
-        <!-- Блики в глазах -->
-        <circle cx="87" cy="80" r="4" fill="#fff"/>
-        <circle cx="127" cy="80" r="4" fill="#fff"/>
-        <circle cx="81" cy="87" r="2" fill="#fff" opacity="0.7"/>
-        <circle cx="121" cy="87" r="2" fill="#fff" opacity="0.7"/>
-        <!-- Нос и рот -->
-        <circle cx="100" cy="96" r="4" fill="#f472b6"/>
-        <path d="M 94 102 Q 100 108 106 102" stroke="#1e293b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <!-- Щёчки -->
-        <circle cx="65" cy="95" r="7" fill="#f9a8d4" opacity="0.5"/>
-        <circle cx="135" cy="95" r="7" fill="#f9a8d4" opacity="0.5"/>
-        <!-- Ноги -->
-        <ellipse cx="75" cy="210" rx="20" ry="14" fill="#a855f7"/>
-        <ellipse cx="125" cy="210" rx="20" ry="14" fill="#a855f7"/>
-        <!-- Антенна -->
-        <line x1="100" y1="33" x2="100" y2="15" stroke="#c084fc" stroke-width="4" stroke-linecap="round"/>
-        <circle cx="100" cy="10" r="7" fill="#fbbf24" filter="url(#softShadow)">
-            <animate attributeName="r" values="7;9;7" dur="1.5s" repeatCount="indefinite"/>
-        </circle>
-    </svg>`,
-
-    robot: `<svg viewBox="0 0 200 220">
-        <defs>
-            <linearGradient id="robotMetal" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#dbeafe"/>
-                <stop offset="100%" stop-color="#60a5fa"/>
-            </linearGradient>
-            <radialGradient id="robotHead" cx="30%" cy="30%">
-                <stop offset="0%" stop-color="#f0f9ff"/>
-                <stop offset="100%" stop-color="#bfdbfe"/>
-            </radialGradient>
-            <filter id="metalShadow"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-opacity="0.3"/></filter>
-        </defs>
-        <!-- Антенна -->
-        <line x1="100" y1="45" x2="100" y2="20" stroke="#60a5fa" stroke-width="5" stroke-linecap="round"/>
-        <circle cx="100" cy="15" r="8" fill="#f87171" filter="url(#metalShadow)">
-            <animate attributeName="fill" values="#f87171;#fbbf24;#f87171" dur="2s" repeatCount="indefinite"/>
-        </circle>
-        <!-- Тело -->
-        <rect x="65" y="120" width="70" height="75" rx="20" fill="url(#robotMetal)" filter="url(#metalShadow)"/>
-        <!-- Грудная панель -->
-        <rect x="80" y="135" width="40" height="30" rx="10" fill="rgba(255,255,255,0.3)"/>
-        <!-- Голова -->
-        <rect x="60" y="45" width="80" height="75" rx="25" fill="url(#robotHead)" filter="url(#metalShadow)"/>
-        <!-- Экран лица -->
-        <rect x="70" y="55" width="60" height="50" rx="15" fill="#0f172a"/>
-        <!-- Глаза -->
-        <circle cx="88" cy="75" r="10" fill="#4ade80">
-            <animate attributeName="ry" values="10;2;10" dur="3s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="112" cy="75" r="10" fill="#4ade80">
-            <animate attributeName="ry" values="10;2;10" dur="3s" repeatCount="indefinite"/>
-        </circle>
-        <!-- Блики -->
-        <circle cx="91" cy="72" r="3" fill="#fff" opacity="0.8"/>
-        <circle cx="115" cy="72" r="3" fill="#fff" opacity="0.8"/>
-        <!-- Рот -->
-        <rect x="85" y="92" width="30" height="6" rx="3" fill="#4ade80" opacity="0.6"/>
-        <!-- Руки -->
-        <rect x="35" y="130" width="22" height="50" rx="11" fill="#60a5fa" filter="url(#metalShadow)">
-            <animateTransform attributeName="transform" type="rotate" values="0 46 130; -10 46 130; 0 46 130" dur="2s" repeatCount="indefinite"/>
-        </rect>
-        <rect x="143" y="130" width="22" height="50" rx="11" fill="#60a5fa" filter="url(#metalShadow)">
-            <animateTransform attributeName="transform" type="rotate" values="0 154 130; 10 154 130; 0 154 130" dur="2s" repeatCount="indefinite"/>
-        </rect>
-        <!-- Ноги -->
-        <rect x="75" y="195" width="20" height="22" rx="10" fill="#3b82f6"/>
-        <rect x="105" y="195" width="20" height="22" rx="10" fill="#3b82f6"/>
-    </svg>`,
-
-    alien: `<svg viewBox="0 0 200 220">
-        <defs>
-            <radialGradient id="alienSkin" cx="40%" cy="40%">
-                <stop offset="0%" stop-color="#dcfce7"/>
-                <stop offset="100%" stop-color="#22c55e"/>
-            </radialGradient>
-            <radialGradient id="alienEye" cx="30%" cy="30%">
-                <stop offset="0%" stop-color="#fef08a"/>
-                <stop offset="100%" stop-color="#eab308"/>
-            </radialGradient>
-            <filter id="alienShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.25"/></filter>
-        </defs>
-        <!-- Тело -->
-        <ellipse cx="100" cy="155" rx="45" ry="55" fill="url(#alienSkin)" filter="url(#alienShadow)"/>
-        <!-- Голова -->
-        <ellipse cx="100" cy="80" rx="55" ry="60" fill="url(#alienSkin)" filter="url(#alienShadow)"/>
-        <!-- Глаза -->
-        <ellipse cx="75" cy="75" rx="20" ry="26" fill="#0f172a"/>
-        <ellipse cx="125" cy="75" rx="20" ry="26" fill="#0f172a"/>
-        <ellipse cx="78" cy="78" rx="12" ry="16" fill="url(#alienEye)"/>
-        <ellipse cx="128" cy="78" rx="12" ry="16" fill="url(#alienEye)"/>
-        <!-- Зрачки -->
-        <circle cx="80" cy="78" r="6" fill="#0f172a"/>
-        <circle cx="130" cy="78" r="6" fill="#0f172a"/>
-        <!-- Блики -->
-        <circle cx="83" cy="74" r="4" fill="#fff" opacity="0.9"/>
-        <circle cx="133" cy="74" r="4" fill="#fff" opacity="0.9"/>
-        <circle cx="76" cy="82" r="2" fill="#fff" opacity="0.6"/>
-        <circle cx="126" cy="82" r="2" fill="#fff" opacity="0.6"/>
-        <!-- Рот -->
-        <path d="M 90 105 Q 100 112 110 105" stroke="#0f172a" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <!-- Щупальца -->
-        <path d="M 55 140 Q 30 150 25 180" stroke="#22c55e" stroke-width="14" fill="none" stroke-linecap="round">
-            <animateTransform attributeName="transform" type="rotate" values="0 55 140; -8 55 140; 0 55 140" dur="2s" repeatCount="indefinite"/>
-        </path>
-        <path d="M 145 140 Q 170 150 175 180" stroke="#22c55e" stroke-width="14" fill="none" stroke-linecap="round">
-            <animateTransform attributeName="transform" type="rotate" values="0 145 140; 8 145 140; 0 145 140" dur="2s" repeatCount="indefinite"/>
-        </path>
-        <!-- Ноги -->
-        <ellipse cx="75" cy="210" rx="18" ry="12" fill="#16a34a"/>
-        <ellipse cx="125" cy="210" rx="18" ry="12" fill="#16a34a"/>
-    </svg>`,
-
-    ninja: `<svg viewBox="0 0 200 220">
-        <defs>
-            <linearGradient id="ninjaSuit" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#334155"/>
-                <stop offset="100%" stop-color="#0f172a"/>
-            </linearGradient>
-            <filter id="ninjaShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.4"/></filter>
-        </defs>
-        <!-- Тело -->
-        <ellipse cx="100" cy="150" rx="42" ry="55" fill="url(#ninjaSuit)" filter="url(#ninjaShadow)"/>
-        <!-- Пояс -->
-        <rect x="60" y="140" width="80" height="15" rx="5" fill="#f87171"/>
-        <!-- Голова -->
-        <circle cx="100" cy="80" r="45" fill="url(#ninjaSuit)" filter="url(#ninjaShadow)"/>
-        <!-- Повязка -->
-        <rect x="55" y="65" width="90" height="18" rx="6" fill="#f87171"/>
-        <!-- Хвост повязки -->
-        <path d="M 145 74 Q 165 65 175 75 Q 165 85 145 78" fill="#f87171">
-            <animate attributeName="d" values="M 145 74 Q 165 65 175 75 Q 165 85 145 78; M 145 74 Q 165 85 175 75 Q 165 65 145 78; M 145 74 Q 165 65 175 75 Q 165 85 145 78" dur="2s" repeatCount="indefinite"/>
-        </path>
-        <!-- Глаза -->
-        <path d="M 75 75 L 90 75 L 88 82 L 77 82 Z" fill="#fff"/>
-        <path d="M 110 75 L 125 75 L 123 82 L 112 82 Z" fill="#fff"/>
-        <circle cx="84" cy="78" r="3" fill="#0f172a">
-            <animate attributeName="cx" values="84;86;84" dur="3s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="119" cy="78" r="3" fill="#0f172a">
-            <animate attributeName="cx" values="119;117;119" dur="3s" repeatCount="indefinite"/>
-        </circle>
-        <!-- Руки -->
-        <ellipse cx="60" cy="145" rx="14" ry="24" fill="#1e293b" transform="rotate(-15 60 145)"/>
-        <ellipse cx="140" cy="145" rx="14" ry="24" fill="#1e293b" transform="rotate(15 140 145)"/>
-        <!-- Меч -->
-        <line x1="130" y1="110" x2="160" y2="70" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
-        <polygon points="160,70 164,66 156,66" fill="#fbbf24"/>
-        <!-- Ноги -->
-        <ellipse cx="78" cy="205" rx="16" ry="14" fill="#0f172a"/>
-        <ellipse cx="122" cy="205" rx="16" ry="14" fill="#0f172a"/>
-    </svg>`,
-
-    dragon: `<svg viewBox="0 0 200 220">
-        <defs>
-            <radialGradient id="dragonBody" cx="40%" cy="40%">
-                <stop offset="0%" stop-color="#fecaca"/>
-                <stop offset="100%" stop-color="#dc2626"/>
-            </radialGradient>
-            <filter id="dragonShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.3"/></filter>
-        </defs>
-        <!-- Хвост -->
-        <path d="M 100 180 Q 140 200 160 180 Q 180 160 170 150" stroke="#dc2626" stroke-width="16" fill="none" stroke-linecap="round">
-            <animateTransform attributeName="transform" type="rotate" values="0 100 180; 10 100 180; 0 100 180" dur="2s" repeatCount="indefinite"/>
-        </path>
-        <!-- Тело -->
-        <ellipse cx="100" cy="145" rx="48" ry="55" fill="url(#dragonBody)" filter="url(#dragonShadow)"/>
-        <!-- Голова -->
-        <ellipse cx="100" cy="80" rx="52" ry="55" fill="#fee2e2" filter="url(#dragonShadow)"/>
-        <!-- Рога -->
-        <path d="M 65 45 Q 50 20 75 30" fill="#f87171" stroke="#dc2626" stroke-width="2">
-            <animateTransform attributeName="transform" type="rotate" values="0 65 45; -5 65 45; 0 65 45" dur="1.5s" repeatCount="indefinite"/>
-        </path>
-        <path d="M 135 45 Q 150 20 125 30" fill="#f87171" stroke="#dc2626" stroke-width="2">
-            <animateTransform attributeName="transform" type="rotate" values="0 135 45; 5 135 45; 0 135 45" dur="1.5s" repeatCount="indefinite"/>
-        </path>
-        <!-- Глаза -->
-        <circle cx="80" cy="75" r="14" fill="#fff"/>
-        <circle cx="120" cy="75" r="14" fill="#fff"/>
-        <circle cx="83" cy="78" r="8" fill="#0f172a">
-            <animate attributeName="r" values="8;5;8" dur="3s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="123" cy="78" r="8" fill="#0f172a">
-            <animate attributeName="r" values="8;5;8" dur="3s" repeatCount="indefinite"/>
-        </circle>
-        <!-- Блики -->
-        <circle cx="86" cy="75" r="3" fill="#fff"/>
-        <circle cx="126" cy="75" r="3" fill="#fff"/>
-        <!-- Мордочка -->
-        <circle cx="100" cy="95" r="5" fill="#f472b6"/>
-        <path d="M 90 105 Q 100 112 110 105" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <!-- Крылья -->
-        <path d="M 55 120 Q 25 100 30 140 Q 45 130 55 140" fill="#f87171" stroke="#dc2626" stroke-width="2">
-            <animateTransform attributeName="transform" type="rotate" values="0 55 120; -15 55 120; 0 55 120" dur="2s" repeatCount="indefinite"/>
-        </path>
-        <path d="M 145 120 Q 175 100 170 140 Q 155 130 145 140" fill="#f87171" stroke="#dc2626" stroke-width="2">
-            <animateTransform attributeName="transform" type="rotate" values="0 145 120; 15 145 120; 0 145 120" dur="2s" repeatCount="indefinite"/>
-        </path>
-        <!-- Ноги -->
-        <ellipse cx="75" cy="205" rx="18" ry="14" fill="#b91c1c"/>
-        <ellipse cx="125" cy="205" rx="18" ry="14" fill="#b91c1c"/>
-    </svg>`,
-
-    pirate: `<svg viewBox="0 0 200 220">
-        <defs>
-            <linearGradient id="pirateCoat" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#b45309"/>
-                <stop offset="100%" stop-color="#78350f"/>
-            </linearGradient>
-            <radialGradient id="pirateFace" cx="40%" cy="40%">
-                <stop offset="0%" stop-color="#fcd34d"/>
-                <stop offset="100%" stop-color="#d97706"/>
-            </radialGradient>
-            <filter id="pirateShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.3"/></filter>
-        </defs>
-        <!-- Тело -->
-        <ellipse cx="100" cy="150" rx="45" ry="55" fill="url(#pirateCoat)" filter="url(#pirateShadow)"/>
-        <!-- Пояс -->
-        <rect x="65" y="145" width="70" height="12" rx="4" fill="#fbbf24"/>
-        <circle cx="100" cy="151" r="8" fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
-        <!-- Голова -->
-        <circle cx="100" cy="80" r="48" fill="url(#pirateFace)" filter="url(#pirateShadow)"/>
-        <!-- Шляпа -->
-        <path d="M 50 60 Q 100 30 150 60 L 145 75 Q 100 60 55 75 Z" fill="#0f172a"/>
-        <rect x="70" y="60" width="60" height="10" rx="3" fill="#dc2626"/>
-        <!-- Глаза -->
-        <circle cx="80" cy="80" r="10" fill="#fff"/>
-        <circle cx="120" cy="80" r="10" fill="#fff"/>
-        <circle cx="82" cy="82" r="5" fill="#0f172a">
-            <animate attributeName="cx" values="82;84;82" dur="4s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="122" cy="82" r="5" fill="#0f172a">
-            <animate attributeName="cx" values="122;120;122" dur="4s" repeatCount="indefinite"/>
-        </circle>
-        <!-- Блики -->
-        <circle cx="84" cy="80" r="2" fill="#fff"/>
-        <circle cx="124" cy="80" r="2" fill="#fff"/>
-        <!-- Улыбка и борода -->
-        <path d="M 90 100 Q 100 108 110 100" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <path d="M 85 110 Q 100 125 115 110" fill="#78350f" opacity="0.8"/>
-        <!-- Руки -->
-        <path d="M 55 140 Q 30 150 25 175" stroke="#b45309" stroke-width="14" fill="none" stroke-linecap="round"/>
-        <path d="M 145 140 Q 170 150 175 175" stroke="#b45309" stroke-width="14" fill="none" stroke-linecap="round">
-            <animateTransform attributeName="transform" type="rotate" values="0 145 140; 15 145 140; 0 145 140" dur="2s" repeatCount="indefinite"/>
-        </path>
-        <!-- Меч -->
-        <line x1="170" y1="170" x2="185" y2="145" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
-        <!-- Ноги -->
-        <ellipse cx="78" cy="208" rx="18" ry="14" fill="#78350f"/>
-        <ellipse cx="122" cy="208" rx="18" ry="14" fill="#78350f"/>
-    </svg>`,
-
-    phoenix: `<svg viewBox="0 0 200 220">
-        <defs>
-            <radialGradient id="phoenixBody" cx="40%" cy="40%">
-                <stop offset="0%" stop-color="#fef3c7"/>
-                <stop offset="50%" stop-color="#f97316"/>
-                <stop offset="100%" stop-color="#ea580c"/>
-            </radialGradient>
-            <filter id="phoenixGlow"><feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#f97316" flood-opacity="0.4"/></filter>
-        </defs>
-        <!-- Тело -->
-        <ellipse cx="100" cy="145" rx="45" ry="55" fill="url(#phoenixBody)" filter="url(#phoenixGlow)"/>
-        <!-- Голова -->
-        <ellipse cx="100" cy="80" rx="48" ry="52" fill="#ffedd5" filter="url(#phoenixGlow)"/>
-        <!-- Глаза -->
-        <circle cx="80" cy="75" r="12" fill="#fff"/>
-        <circle cx="120" cy="75" r="12" fill="#fff"/>
-        <circle cx="83" cy="78" r="7" fill="#0f172a">
-            <animate attributeName="r" values="7;4;7" dur="3s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="123" cy="78" r="7" fill="#0f172a">
-            <animate attributeName="r" values="7;4;7" dur="3s" repeatCount="indefinite"/>
-        </circle>
-        <!-- Блики -->
-        <circle cx="86" cy="75" r="3" fill="#fff"/>
-        <circle cx="126" cy="75" r="3" fill="#fff"/>
-        <!-- Клюв -->
-        <path d="M 94 92 L 100 104 L 106 92 Z" fill="#f97316" stroke="#ea580c" stroke-width="1"/>
-        <!-- Крылья -->
-        <path d="M 55 60 Q 25 30 40 20 Q 65 40 75 55" fill="#f97316" opacity="0.9">
-            <animate attributeName="d" values="M 55 60 Q 25 30 40 20 Q 65 40 75 55; M 55 60 Q 25 20 40 10 Q 65 30 75 55; M 55 60 Q 25 30 40 20 Q 65 40 75 55" dur="2s" repeatCount="indefinite"/>
-        </path>
-        <path d="M 145 60 Q 175 30 160 20 Q 135 40 125 55" fill="#f97316" opacity="0.9">
-            <animate attributeName="d" values="M 145 60 Q 175 30 160 20 Q 135 40 125 55; M 145 60 Q 175 20 160 10 Q 135 30 125 55; M 145 60 Q 175 30 160 20 Q 135 40 125 55" dur="2s" repeatCount="indefinite"/>
-        </path>
-        <!-- Хвост -->
-        <path d="M 50 150 Q 20 160 15 190" stroke="#f97316" stroke-width="14" fill="none" stroke-linecap="round">
-            <animateTransform attributeName="transform" type="rotate" values="0 50 150; -5 50 150; 0 50 150" dur="2s" repeatCount="indefinite"/>
-        </path>
-        <path d="M 150 150 Q 180 160 185 190" stroke="#f97316" stroke-width="14" fill="none" stroke-linecap="round">
-            <animateTransform attributeName="transform" type="rotate" values="0 150 150; 5 150 150; 0 150 150" dur="2s" repeatCount="indefinite"/>
-        </path>
-        <!-- Ноги -->
-        <ellipse cx="78" cy="208" rx="16" ry="12" fill="#c2410c"/>
-        <ellipse cx="122" cy="208" rx="16" ry="12" fill="#c2410c"/>
-    </svg>`,
-
-    hero: `<svg viewBox="0 0 200 220">
-        <defs>
-            <linearGradient id="heroSuit" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#93c5fd"/>
-                <stop offset="100%" stop-color="#2563eb"/>
-            </linearGradient>
-            <radialGradient id="heroFace" cx="40%" cy="40%">
-                <stop offset="0%" stop-color="#f0f9ff"/>
-                <stop offset="100%" stop-color="#dbeafe"/>
-            </radialGradient>
-            <filter id="heroShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.3"/></filter>
-        </defs>
-        <!-- Плащ -->
-        <path d="M 55 85 Q 30 130 40 190 L 65 180 Q 60 130 70 95 Z" fill="#dc2626" opacity="0.9">
-            <animateTransform attributeName="transform" type="rotate" values="0 55 85; -5 55 85; 0 55 85" dur="2s" repeatCount="indefinite"/>
-        </path>
-        <path d="M 145 85 Q 170 130 160 190 L 135 180 Q 140 130 130 95 Z" fill="#dc2626" opacity="0.9">
-            <animateTransform attributeName="transform" type="rotate" values="0 145 85; 5 145 85; 0 145 85" dur="2s" repeatCount="indefinite"/>
-        </path>
-        <!-- Тело -->
-        <ellipse cx="100" cy="145" rx="42" ry="55" fill="url(#heroSuit)" filter="url(#heroShadow)"/>
-        <!-- Эмблема -->
-        <polygon points="100,120 104,132 116,132 106,140 110,152 100,144 90,152 94,140 84,132 96,132" fill="#fbbf24" filter="url(#heroShadow)">
-            <animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite"/>
-        </polygon>
-        <!-- Голова -->
-        <circle cx="100" cy="80" r="48" fill="url(#heroFace)" filter="url(#heroShadow)"/>
-        <!-- Маска -->
-        <path d="M 55 65 Q 100 45 145 65 L 145 85 Q 100 70 55 85 Z" fill="#1e293b"/>
-        <!-- Глаза -->
-        <ellipse cx="80" cy="75" rx="10" ry="8" fill="#fff"/>
-        <ellipse cx="120" cy="75" rx="10" ry="8" fill="#fff"/>
-        <circle cx="83" cy="76" r="5" fill="#0f172a">
-            <animate attributeName="cx" values="83;85;83" dur="3s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="123" cy="76" r="5" fill="#0f172a">
-            <animate attributeName="cx" values="123;121;123" dur="3s" repeatCount="indefinite"/>
-        </circle>
-        <!-- Блики -->
-        <circle cx="85" cy="74" r="2" fill="#fff"/>
-        <circle cx="125" cy="74" r="2" fill="#fff"/>
-        <!-- Улыбка -->
-        <path d="M 90 95 Q 100 102 110 95" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <!-- Руки -->
-        <ellipse cx="58" cy="145" rx="14" ry="24" fill="#3b82f6" transform="rotate(-15 58 145)">
-            <animateTransform attributeName="transform" type="rotate" values="-15 58 145; -5 58 145; -15 58 145" dur="2s" repeatCount="indefinite"/>
-        </ellipse>
-        <ellipse cx="142" cy="145" rx="14" ry="24" fill="#3b82f6" transform="rotate(15 142 145)">
-            <animateTransform attributeName="transform" type="rotate" values="15 142 145; 5 142 145; 15 142 145" dur="2s" repeatCount="indefinite"/>
-        </ellipse>
-        <!-- Ноги -->
-        <ellipse cx="78" cy="208" rx="18" ry="14" fill="#1d4ed8"/>
-        <ellipse cx="122" cy="208" rx="18" ry="14" fill="#1d4ed8"/>
-    </svg>`
-};
+        const heroSVGs = {
+            astronaut: `<svg viewBox="0 0 200 220"><defs><radialGradient id="catBody" cx="40%" cy="40%"><stop offset="0%" stop-color="#f3e8ff"/><stop offset="100%" stop-color="#a855f7"/></radialGradient><radialGradient id="helmetGlass" cx="30%" cy="30%"><stop offset="0%" stop-color="rgba(255,255,255,0.7)"/><stop offset="100%" stop-color="rgba(96,165,250,0.3)"/></radialGradient><filter id="softShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.25"/></filter></defs><rect x="60" y="130" width="80" height="45" rx="20" fill="#7c3aed" filter="url(#softShadow)"/><ellipse cx="100" cy="165" rx="48" ry="52" fill="url(#catBody)" filter="url(#softShadow)"/><path d="M 65 55 Q 50 15 90 35 Z" fill="#a855f7" stroke="#7c3aed" stroke-width="2"/><path d="M 135 55 Q 150 15 110 35 Z" fill="#a855f7" stroke="#7c3aed" stroke-width="2"/><circle cx="100" cy="85" r="52" fill="#faf5ff" filter="url(#softShadow)"/><circle cx="100" cy="85" r="52" fill="url(#helmetGlass)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/><ellipse cx="75" cy="65" rx="15" ry="8" fill="white" opacity="0.6" transform="rotate(-20 75 65)"/><ellipse cx="80" cy="80" rx="16" ry="18" fill="#fff"/><ellipse cx="120" cy="80" rx="16" ry="18" fill="#fff"/><circle cx="84" cy="83" r="9" fill="#1e293b"/><circle cx="124" cy="83" r="9" fill="#1e293b"/><circle cx="87" cy="80" r="4" fill="#fff"/><circle cx="127" cy="80" r="4" fill="#fff"/><circle cx="81" cy="87" r="2" fill="#fff" opacity="0.7"/><circle cx="121" cy="87" r="2" fill="#fff" opacity="0.7"/><circle cx="100" cy="96" r="4" fill="#f472b6"/><path d="M 94 102 Q 100 108 106 102" stroke="#1e293b" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="65" cy="95" r="7" fill="#f9a8d4" opacity="0.5"/><circle cx="135" cy="95" r="7" fill="#f9a8d4" opacity="0.5"/><ellipse cx="75" cy="210" rx="20" ry="14" fill="#a855f7"/><ellipse cx="125" cy="210" rx="20" ry="14" fill="#a855f7"/><line x1="100" y1="33" x2="100" y2="15" stroke="#c084fc" stroke-width="4" stroke-linecap="round"/><circle cx="100" cy="10" r="7" fill="#fbbf24" filter="url(#softShadow)"><animate attributeName="r" values="7;9;7" dur="1.5s" repeatCount="indefinite"/></circle></svg>`,
+            robot: `<svg viewBox="0 0 200 220"><defs><linearGradient id="robotMetal" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#dbeafe"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient><radialGradient id="robotHead" cx="30%" cy="30%"><stop offset="0%" stop-color="#f0f9ff"/><stop offset="100%" stop-color="#bfdbfe"/></radialGradient><filter id="metalShadow"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-opacity="0.3"/></filter></defs><line x1="100" y1="45" x2="100" y2="20" stroke="#60a5fa" stroke-width="5" stroke-linecap="round"/><circle cx="100" cy="15" r="8" fill="#f87171" filter="url(#metalShadow)"><animate attributeName="fill" values="#f87171;#fbbf24;#f87171" dur="2s" repeatCount="indefinite"/></circle><rect x="65" y="120" width="70" height="75" rx="20" fill="url(#robotMetal)" filter="url(#metalShadow)"/><rect x="80" y="135" width="40" height="30" rx="10" fill="rgba(255,255,255,0.3)"/><rect x="60" y="45" width="80" height="75" rx="25" fill="url(#robotHead)" filter="url(#metalShadow)"/><rect x="70" y="55" width="60" height="50" rx="15" fill="#0f172a"/><circle cx="88" cy="75" r="10" fill="#4ade80"><animate attributeName="ry" values="10;2;10" dur="3s" repeatCount="indefinite"/></circle><circle cx="112" cy="75" r="10" fill="#4ade80"><animate attributeName="ry" values="10;2;10" dur="3s" repeatCount="indefinite"/></circle><circle cx="91" cy="72" r="3" fill="#fff" opacity="0.8"/><circle cx="115" cy="72" r="3" fill="#fff" opacity="0.8"/><rect x="85" y="92" width="30" height="6" rx="3" fill="#4ade80" opacity="0.6"/><rect x="35" y="130" width="22" height="50" rx="11" fill="#60a5fa" filter="url(#metalShadow)"><animateTransform attributeName="transform" type="rotate" values="0 46 130; -10 46 130; 0 46 130" dur="2s" repeatCount="indefinite"/></rect><rect x="143" y="130" width="22" height="50" rx="11" fill="#60a5fa" filter="url(#metalShadow)"><animateTransform attributeName="transform" type="rotate" values="0 154 130; 10 154 130; 0 154 130" dur="2s" repeatCount="indefinite"/></rect><rect x="75" y="195" width="20" height="22" rx="10" fill="#3b82f6"/><rect x="105" y="195" width="20" height="22" rx="10" fill="#3b82f6"/></svg>`,
+            alien: `<svg viewBox="0 0 200 220"><defs><radialGradient id="alienSkin" cx="40%" cy="40%"><stop offset="0%" stop-color="#dcfce7"/><stop offset="100%" stop-color="#22c55e"/></radialGradient><radialGradient id="alienEye" cx="30%" cy="30%"><stop offset="0%" stop-color="#fef08a"/><stop offset="100%" stop-color="#eab308"/></radialGradient><filter id="alienShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.25"/></filter></defs><ellipse cx="100" cy="155" rx="45" ry="55" fill="url(#alienSkin)" filter="url(#alienShadow)"/><ellipse cx="100" cy="80" rx="55" ry="60" fill="url(#alienSkin)" filter="url(#alienShadow)"/><ellipse cx="75" cy="75" rx="20" ry="26" fill="#0f172a"/><ellipse cx="125" cy="75" rx="20" ry="26" fill="#0f172a"/><ellipse cx="78" cy="78" rx="12" ry="16" fill="url(#alienEye)"/><ellipse cx="128" cy="78" rx="12" ry="16" fill="url(#alienEye)"/><circle cx="80" cy="78" r="6" fill="#0f172a"/><circle cx="130" cy="78" r="6" fill="#0f172a"/><circle cx="83" cy="74" r="4" fill="#fff" opacity="0.9"/><circle cx="133" cy="74" r="4" fill="#fff" opacity="0.9"/><circle cx="76" cy="82" r="2" fill="#fff" opacity="0.6"/><circle cx="126" cy="82" r="2" fill="#fff" opacity="0.6"/><path d="M 90 105 Q 100 112 110 105" stroke="#0f172a" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M 55 140 Q 30 150 25 180" stroke="#22c55e" stroke-width="14" fill="none" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="0 55 140; -8 55 140; 0 55 140" dur="2s" repeatCount="indefinite"/></path><path d="M 145 140 Q 170 150 175 180" stroke="#22c55e" stroke-width="14" fill="none" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="0 145 140; 8 145 140; 0 145 140" dur="2s" repeatCount="indefinite"/></path><ellipse cx="75" cy="210" rx="18" ry="12" fill="#16a34a"/><ellipse cx="125" cy="210" rx="18" ry="12" fill="#16a34a"/></svg>`,
+            ninja: `<svg viewBox="0 0 200 220"><defs><linearGradient id="ninjaSuit" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#334155"/><stop offset="100%" stop-color="#0f172a"/></linearGradient><filter id="ninjaShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.4"/></filter></defs><ellipse cx="100" cy="150" rx="42" ry="55" fill="url(#ninjaSuit)" filter="url(#ninjaShadow)"/><rect x="60" y="140" width="80" height="15" rx="5" fill="#f87171"/><circle cx="100" cy="80" r="45" fill="url(#ninjaSuit)" filter="url(#ninjaShadow)"/><rect x="55" y="65" width="90" height="18" rx="6" fill="#f87171"/><path d="M 145 74 Q 165 65 175 75 Q 165 85 145 78" fill="#f87171"><animate attributeName="d" values="M 145 74 Q 165 65 175 75 Q 165 85 145 78; M 145 74 Q 165 85 175 75 Q 165 65 145 78; M 145 74 Q 165 65 175 75 Q 165 85 145 78" dur="2s" repeatCount="indefinite"/></path><path d="M 75 75 L 90 75 L 88 82 L 77 82 Z" fill="#fff"/><path d="M 110 75 L 125 75 L 123 82 L 112 82 Z" fill="#fff"/><circle cx="84" cy="78" r="3" fill="#0f172a"><animate attributeName="cx" values="84;86;84" dur="3s" repeatCount="indefinite"/></circle><circle cx="119" cy="78" r="3" fill="#0f172a"><animate attributeName="cx" values="119;117;119" dur="3s" repeatCount="indefinite"/></circle><ellipse cx="60" cy="145" rx="14" ry="24" fill="#1e293b" transform="rotate(-15 60 145)"/><ellipse cx="140" cy="145" rx="14" ry="24" fill="#1e293b" transform="rotate(15 140 145)"/><line x1="130" y1="110" x2="160" y2="70" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/><polygon points="160,70 164,66 156,66" fill="#fbbf24"/><ellipse cx="78" cy="205" rx="16" ry="14" fill="#0f172a"/><ellipse cx="122" cy="205" rx="16" ry="14" fill="#0f172a"/></svg>`,
+            dragon: `<svg viewBox="0 0 200 220"><defs><radialGradient id="dragonBody" cx="40%" cy="40%"><stop offset="0%" stop-color="#fecaca"/><stop offset="100%" stop-color="#dc2626"/></radialGradient><filter id="dragonShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.3"/></filter></defs><path d="M 100 180 Q 140 200 160 180 Q 180 160 170 150" stroke="#dc2626" stroke-width="16" fill="none" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="0 100 180; 10 100 180; 0 100 180" dur="2s" repeatCount="indefinite"/></path><ellipse cx="100" cy="145" rx="48" ry="55" fill="url(#dragonBody)" filter="url(#dragonShadow)"/><ellipse cx="100" cy="80" rx="52" ry="55" fill="#fee2e2" filter="url(#dragonShadow)"/><path d="M 65 45 Q 50 20 75 30" fill="#f87171" stroke="#dc2626" stroke-width="2"><animateTransform attributeName="transform" type="rotate" values="0 65 45; -5 65 45; 0 65 45" dur="1.5s" repeatCount="indefinite"/></path><path d="M 135 45 Q 150 20 125 30" fill="#f87171" stroke="#dc2626" stroke-width="2"><animateTransform attributeName="transform" type="rotate" values="0 135 45; 5 135 45; 0 135 45" dur="1.5s" repeatCount="indefinite"/></path><circle cx="80" cy="75" r="14" fill="#fff"/><circle cx="120" cy="75" r="14" fill="#fff"/><circle cx="83" cy="78" r="8" fill="#0f172a"><animate attributeName="r" values="8;5;8" dur="3s" repeatCount="indefinite"/></circle><circle cx="123" cy="78" r="8" fill="#0f172a"><animate attributeName="r" values="8;5;8" dur="3s" repeatCount="indefinite"/></circle><circle cx="86" cy="75" r="3" fill="#fff"/><circle cx="126" cy="75" r="3" fill="#fff"/><circle cx="100" cy="95" r="5" fill="#f472b6"/><path d="M 90 105 Q 100 112 110 105" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M 55 120 Q 25 100 30 140 Q 45 130 55 140" fill="#f87171" stroke="#dc2626" stroke-width="2"><animateTransform attributeName="transform" type="rotate" values="0 55 120; -15 55 120; 0 55 120" dur="2s" repeatCount="indefinite"/></path><path d="M 145 120 Q 175 100 170 140 Q 155 130 145 140" fill="#f87171" stroke="#dc2626" stroke-width="2"><animateTransform attributeName="transform" type="rotate" values="0 145 120; 15 145 120; 0 145 120" dur="2s" repeatCount="indefinite"/></path><ellipse cx="75" cy="205" rx="18" ry="14" fill="#b91c1c"/><ellipse cx="125" cy="205" rx="18" ry="14" fill="#b91c1c"/></svg>`,
+            pirate: `<svg viewBox="0 0 200 220"><defs><linearGradient id="pirateCoat" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#b45309"/><stop offset="100%" stop-color="#78350f"/></linearGradient><radialGradient id="pirateFace" cx="40%" cy="40%"><stop offset="0%" stop-color="#fcd34d"/><stop offset="100%" stop-color="#d97706"/></radialGradient><filter id="pirateShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.3"/></filter></defs><ellipse cx="100" cy="150" rx="45" ry="55" fill="url(#pirateCoat)" filter="url(#pirateShadow)"/><rect x="65" y="145" width="70" height="12" rx="4" fill="#fbbf24"/><circle cx="100" cy="151" r="8" fill="#f59e0b" stroke="#b45309" stroke-width="2"/><circle cx="100" cy="80" r="48" fill="url(#pirateFace)" filter="url(#pirateShadow)"/><path d="M 50 60 Q 100 30 150 60 L 145 75 Q 100 60 55 75 Z" fill="#0f172a"/><rect x="70" y="60" width="60" height="10" rx="3" fill="#dc2626"/><circle cx="80" cy="80" r="10" fill="#fff"/><circle cx="120" cy="80" r="10" fill="#fff"/><circle cx="82" cy="82" r="5" fill="#0f172a"><animate attributeName="cx" values="82;84;82" dur="4s" repeatCount="indefinite"/></circle><circle cx="122" cy="82" r="5" fill="#0f172a"><animate attributeName="cx" values="122;120;122" dur="4s" repeatCount="indefinite"/></circle><circle cx="84" cy="80" r="2" fill="#fff"/><circle cx="124" cy="80" r="2" fill="#fff"/><path d="M 90 100 Q 100 108 110 100" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M 85 110 Q 100 125 115 110" fill="#78350f" opacity="0.8"/><path d="M 55 140 Q 30 150 25 175" stroke="#b45309" stroke-width="14" fill="none" stroke-linecap="round"/><path d="M 145 140 Q 170 150 175 175" stroke="#b45309" stroke-width="14" fill="none" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="0 145 140; 15 145 140; 0 145 140" dur="2s" repeatCount="indefinite"/></path><line x1="170" y1="170" x2="185" y2="145" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/><ellipse cx="78" cy="208" rx="18" ry="14" fill="#78350f"/><ellipse cx="122" cy="208" rx="18" ry="14" fill="#78350f"/></svg>`,
+            phoenix: `<svg viewBox="0 0 200 220"><defs><radialGradient id="phoenixBody" cx="40%" cy="40%"><stop offset="0%" stop-color="#fef3c7"/><stop offset="50%" stop-color="#f97316"/><stop offset="100%" stop-color="#ea580c"/></radialGradient><filter id="phoenixGlow"><feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#f97316" flood-opacity="0.4"/></filter></defs><ellipse cx="100" cy="145" rx="45" ry="55" fill="url(#phoenixBody)" filter="url(#phoenixGlow)"/><ellipse cx="100" cy="80" rx="48" ry="52" fill="#ffedd5" filter="url(#phoenixGlow)"/><circle cx="80" cy="75" r="12" fill="#fff"/><circle cx="120" cy="75" r="12" fill="#fff"/><circle cx="83" cy="78" r="7" fill="#0f172a"><animate attributeName="r" values="7;4;7" dur="3s" repeatCount="indefinite"/></circle><circle cx="123" cy="78" r="7" fill="#0f172a"><animate attributeName="r" values="7;4;7" dur="3s" repeatCount="indefinite"/></circle><circle cx="86" cy="75" r="3" fill="#fff"/><circle cx="126" cy="75" r="3" fill="#fff"/><path d="M 94 92 L 100 104 L 106 92 Z" fill="#f97316" stroke="#ea580c" stroke-width="1"/><path d="M 55 60 Q 25 30 40 20 Q 65 40 75 55" fill="#f97316" opacity="0.9"><animate attributeName="d" values="M 55 60 Q 25 30 40 20 Q 65 40 75 55; M 55 60 Q 25 20 40 10 Q 65 30 75 55; M 55 60 Q 25 30 40 20 Q 65 40 75 55" dur="2s" repeatCount="indefinite"/></path><path d="M 145 60 Q 175 30 160 20 Q 135 40 125 55" fill="#f97316" opacity="0.9"><animate attributeName="d" values="M 145 60 Q 175 30 160 20 Q 135 40 125 55; M 145 60 Q 175 20 160 10 Q 135 30 125 55; M 145 60 Q 175 30 160 20 Q 135 40 125 55" dur="2s" repeatCount="indefinite"/></path><path d="M 50 150 Q 20 160 15 190" stroke="#f97316" stroke-width="14" fill="none" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="0 50 150; -5 50 150; 0 50 150" dur="2s" repeatCount="indefinite"/></path><path d="M 150 150 Q 180 160 185 190" stroke="#f97316" stroke-width="14" fill="none" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="0 150 150; 5 150 150; 0 150 150" dur="2s" repeatCount="indefinite"/></path><ellipse cx="78" cy="208" rx="16" ry="12" fill="#c2410c"/><ellipse cx="122" cy="208" rx="16" ry="12" fill="#c2410c"/></svg>`,
+            hero: `<svg viewBox="0 0 200 220"><defs><linearGradient id="heroSuit" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#93c5fd"/><stop offset="100%" stop-color="#2563eb"/></linearGradient><radialGradient id="heroFace" cx="40%" cy="40%"><stop offset="0%" stop-color="#f0f9ff"/><stop offset="100%" stop-color="#dbeafe"/></radialGradient><filter id="heroShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.3"/></filter></defs><path d="M 55 85 Q 30 130 40 190 L 65 180 Q 60 130 70 95 Z" fill="#dc2626" opacity="0.9"><animateTransform attributeName="transform" type="rotate" values="0 55 85; -5 55 85; 0 55 85" dur="2s" repeatCount="indefinite"/></path><path d="M 145 85 Q 170 130 160 190 L 135 180 Q 140 130 130 95 Z" fill="#dc2626" opacity="0.9"><animateTransform attributeName="transform" type="rotate" values="0 145 85; 5 145 85; 0 145 85" dur="2s" repeatCount="indefinite"/></path><ellipse cx="100" cy="145" rx="42" ry="55" fill="url(#heroSuit)" filter="url(#heroShadow)"/><polygon points="100,120 104,132 116,132 106,140 110,152 100,144 90,152 94,140 84,132 96,132" fill="#fbbf24" filter="url(#heroShadow)"><animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite"/></polygon><circle cx="100" cy="80" r="48" fill="url(#heroFace)" filter="url(#heroShadow)"/><path d="M 55 65 Q 100 45 145 65 L 145 85 Q 100 70 55 85 Z" fill="#1e293b"/><ellipse cx="80" cy="75" rx="10" ry="8" fill="#fff"/><ellipse cx="120" cy="75" rx="10" ry="8" fill="#fff"/><circle cx="83" cy="76" r="5" fill="#0f172a"><animate attributeName="cx" values="83;85;83" dur="3s" repeatCount="indefinite"/></circle><circle cx="123" cy="76" r="5" fill="#0f172a"><animate attributeName="cx" values="123;121;123" dur="3s" repeatCount="indefinite"/></circle><circle cx="85" cy="74" r="2" fill="#fff"/><circle cx="125" cy="74" r="2" fill="#fff"/><path d="M 90 95 Q 100 102 110 95" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="58" cy="145" rx="14" ry="24" fill="#3b82f6" transform="rotate(-15 58 145)"><animateTransform attributeName="transform" type="rotate" values="-15 58 145; -5 58 145; -15 58 145" dur="2s" repeatCount="indefinite"/></ellipse><ellipse cx="142" cy="145" rx="14" ry="24" fill="#3b82f6" transform="rotate(15 142 145)"><animateTransform attributeName="transform" type="rotate" values="15 142 145; 5 142 145; 15 142 145" dur="2s" repeatCount="indefinite"/></ellipse><ellipse cx="78" cy="208" rx="18" ry="14" fill="#1d4ed8"/><ellipse cx="122" cy="208" rx="18" ry="14" fill="#1d4ed8"/></svg>`
+        };
 
         const planetPositions = [
             { left: 5, bottom: 140 },
