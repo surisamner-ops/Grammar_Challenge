@@ -257,6 +257,34 @@
             transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
         .success-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+                /* === КНОПКА НАЗАД И БЕЙДЖ COMPLETED === */
+        .back-to-main {
+            position: fixed; top: 30px; left: 30px; width: 55px; height: 55px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: white; text-decoration: none;
+            box-shadow: 0 0 25px rgba(192, 132, 252, 0.5); transition: all 0.3s ease; z-index: 100; font-size: 1.5em;
+        }
+        .back-to-main:hover { transform: translateY(-5px) scale(1.1); box-shadow: 0 0 35px rgba(192, 132, 252, 0.8); }
+        
+        .completed-badge-floating {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(74, 222, 128, 0.15);
+            color: #4ade80;
+            border: 2px solid #4ade80;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-family: 'Comfortaa', cursive;
+            font-weight: 700;
+            font-size: 1.1em;
+            z-index: 1000;
+            box-shadow: 0 0 20px rgba(74, 222, 128, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
         /* Parallel Layout Styles */
         .parallel-layout {
@@ -651,6 +679,7 @@
     </svg>
 
     <div class="main-wrapper">
+                <a href="../index.html" class="back-to-main" onclick="localStorage.setItem('lastActiveTab', 'use'); localStorage.setItem('returnFromExercise', 'true')" title="Back to main page">←</a>
         <div class="header">
             <h1 class="main-title">The Art of Traveling</h1>
             <p>Master listening, reading strategies, and travel vocabulary! Enter your name to begin your magical learning journey.</p>
@@ -1596,8 +1625,7 @@
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
 
-        window.addEventListener('DOMContentLoaded', () => { createStars(); });
-                // === AUDIO PLAYER FUNCTIONS ===
+            // === AUDIO PLAYER FUNCTIONS ===
         function toggleAudio() {
             const audio = document.getElementById('listeningAudio');
             const btn = document.getElementById('playBtn');
@@ -1638,10 +1666,30 @@
             btn.textContent = '▶️';
             progressFill.style.width = '0%';
         }
-                function audioError() {
+        
+        function audioError() {
             console.error('Audio failed to load!');
             alert('❌ Audio file not found. Please check the file path.');
         }
+
+        // === ШАГ 3: ПРОВЕРКА ВЫПОЛНЕНИЯ И БЕЙДЖ (в самом конце!) ===
+        window.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            
+            // Если задание уже выполнено, показываем бейдж и меняем текст приветствия
+            if (localStorage.getItem('grammar_ex_traveling') === 'true') {
+                const form = document.getElementById('welcomeForm');
+                if (form) {
+                    form.querySelector('h2').innerHTML = '✨ Welcome Back! ✨';
+                    form.querySelector('p').textContent = "You've already completed this exercise. You can try again!";
+                }
+                
+                const badge = document.createElement('div');
+                badge.className = 'completed-badge-floating';
+                badge.innerHTML = '✓ Completed';
+                document.body.appendChild(badge);
+            }
+        });
     </script>
 </body>
 </html>
