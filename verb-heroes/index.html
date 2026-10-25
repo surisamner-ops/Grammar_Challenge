@@ -825,21 +825,34 @@
         }
 
         function startGame() {
-            playSound('teleport'); showScreen('screen-game');
-            document.getElementById('playerCharacter').innerHTML = heroSVGs[selectedCharacter];
-            currentQuestions = shuffle([...verbDatabase]).slice(0, 41);
-            currentIndex = 0; score = 0; currentPlanetIndex = 0; currentLevel = 1;
-            isExerciseActive = true; tabSwitchCount = 0; errorsList = [];
-            startTime = Date.now(); timerInterval = setInterval(updateTimer, 1000);
-            loadQuestion();
-        }
+    playSound('teleport'); 
+    showScreen('screen-game');
+    document.getElementById('playerCharacter').innerHTML = heroSVGs[selectedCharacter];
+    currentQuestions = shuffle([...verbDatabase]).slice(0, 41);
+    currentIndex = 0; 
+    score = 0; 
+    currentPlanetIndex = 0; 
+    currentLevel = 1;
+    isExerciseActive = true; 
+    tabSwitchCount = 0; 
+    errorsList = [];
+    startTime = Date.now(); 
+    timerInterval = setInterval(updateTimer, 1000);
+    
+    updateProgress();  // ← ДОБАВЬ ЭТУ СТРОКУ (показывает "0 / 41")
+    
+    loadQuestion();
+}
 
         function updateTimer() {
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
             document.getElementById('timerDisplay').textContent = 
                 `${Math.floor(elapsed / 60).toString().padStart(2, '0')}:${(elapsed % 60).toString().padStart(2, '0')}`;
         }
-
+function updateProgress() {
+    document.getElementById('progressText').textContent = `${currentIndex} / ${currentQuestions.length}`;
+    document.getElementById('progressBarFill').style.width = `${((currentIndex) / currentQuestions.length) * 100}%`;
+}
         function loadQuestion() {
             const q = currentQuestions[currentIndex];
             if (currentIndex >= 20 && currentLevel === 1) {
@@ -895,8 +908,6 @@
                 document.getElementById('nextBtn').style.display = 'none';
                 setTimeout(() => document.getElementById('typeInput').focus(), 100);
             }
-            document.getElementById('progressText').textContent = `${currentIndex + 1} / ${currentQuestions.length}`;
-            document.getElementById('progressBarFill').style.width = `${((currentIndex) / currentQuestions.length) * 100}%`;
         }
 
         function selectOption(value, btnElement) {
@@ -953,7 +964,8 @@
                 }
             }
             if (isCorrect) {
-                score++; document.getElementById('portal').classList.add('repaired');
+                score++; updateProgress();  // ← ВОТ СЮДА ДОБАВЬ! 
+                document.getElementById('portal').classList.add('repaired');
                 const player = document.getElementById('playerCharacter');
                 player.classList.remove('landing'); player.classList.add('flying');
                 const rect = player.getBoundingClientRect();
@@ -977,15 +989,18 @@
                 document.getElementById('nextBtn').style.display = 'inline-block';
             }
         }
-
-        function nextQuestion() {
-            playSound('click'); currentIndex++;
-            if (currentIndex % questionsPerPlanet === 0 && currentIndex < currentQuestions.length) {
-                currentPlanetIndex = (currentPlanetIndex + 1) % 8;
-            }
-            if (currentIndex < currentQuestions.length) loadQuestion();
-            else showResults();
-        }
+function nextQuestion() {
+    playSound('click'); 
+    currentIndex++;
+    updateProgress();  // ← ДОБАВЬ ЭТУ СТРОКУ
+    
+    if (currentIndex % questionsPerPlanet === 0 && currentIndex < currentQuestions.length) {
+        currentPlanetIndex = (currentPlanetIndex + 1) % 8;
+    }
+    
+    if (currentIndex < currentQuestions.length) loadQuestion();
+    else showResults();
+}
 
         function selectBonus(element, bonusType) {
             playSound('select');
@@ -1076,20 +1091,42 @@
             }
         });
 
-        window.addEventListener('DOMContentLoaded', () => {
-            createStars();
-            // Автоматически запускаем музыку при загрузке
-            const bgMusic = document.getElementById('bgMusic');
-            bgMusic.volume = 0.3;
-            bgMusic.play().catch(e => console.log('Autoplay blocked:', e));
+       window.addEventListener('DOMContentLoaded', () => {
+    createStars();
+    
+    const bgMusic = document.getElementById('bgMusic');
+    bgMusic.volume = 0.3;
+    
+    // Попытка автовоспроизведения
+    bgMusic.play().catch(e => console.log('Autoplay blocked:', e));
+    
+    // Запуск музыки при первом взаимодействии (клик, касание, клавиша)
+    let musicStarted = false;
+    function startMusic() {
+        if (!musicStarted && bgMusic.paused) {
+            bgMusic.play().then(() => {
+                musicStarted = true;
+                document.getElementById('musicToggle').textContent = '🔊';
+            }).catch(e => console.log('Music start failed:', e));
             
-            if (localStorage.getItem('grammar_ex_verb-heroes') === 'true') {
-                const badge = document.createElement('div');
-                badge.style.cssText = 'position: fixed; top: 20px; right: 20px; background: rgba(57, 255, 20, 0.2); color: var(--neon-green); border: 2px solid var(--neon-green); padding: 10px 20px; border-radius: 50px; font-family: Orbitron, monospace; font-weight: 900; z-index: 1000; text-transform: uppercase; letter-spacing: 2px;';
-                badge.innerHTML = 'COMPLETED';
-                document.body.appendChild(badge);
-            }
-        });
+            // Удаляем обработчики после первого запуска
+            document.removeEventListener('click', startMusic);
+            document.removeEventListener('touchstart', startMusic);
+            document.removeEventListener('keydown', startMusic);
+        }
+    }
+    
+    document.addEventListener('click', startMusic);
+    document.addEventListener('touchstart', startMusic);
+    document.addEventListener('keydown', startMusic);
+    
+    if (localStorage.getItem('grammar_ex_verb-heroes') === 'true') {
+        const badge = document.createElement('div');
+        badge.style.cssText = 'position: fixed; top: 20px; right: 20px; background: rgba(57, 255, 20, 0.2); color: var(--neon-green); border: 2px solid var(--neon-green); padding: 10px 20px; border-radius: 50px; font-family: Orbitron, monospace; font-weight: 900; z-index: 1000; text-transform: uppercase; letter-spacing: 2px;';
+        badge.innerHTML = 'COMPLETED';
+        document.body.appendChild(badge);
+    }
+});
     </script>
 </body>
 </html>
