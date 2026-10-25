@@ -141,18 +141,15 @@
             text-align: center;
         }
         
-        .cloud-container {
-            background: rgba(255,255,255,0.04);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(192, 132, 252, 0.2);
-            border-radius: 20px;
-            padding: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 450px;
-            box-shadow: 0 0 30px rgba(192, 132, 252, 0.15);
-        }
+      .cloud-container {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+    min-height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
         #wordcloud {
             width: 100%;
             height: 450px;
@@ -338,12 +335,10 @@
     gridSize: 8,
     weightFactor: 3,
                     fontFamily: 'Comfortaa',
-                    color: function(word, weight) {
-                        if (weight > 30) return '#c084fc';
-                        if (weight > 20) return '#60a5fa';
-                        if (weight > 15) return '#fbbf24';
-                        return '#4ade80';
-                    },
+                   color: function() {
+    const colors = ['#c084fc', '#60a5fa', '#fbbf24', '#4ade80', '#f472b6', '#fb923c', '#a78bfa', '#38bdf8', '#facc15', '#34d399'];
+    return colors[Math.floor(Math.random() * colors.length)];
+},
                     backgroundColor: 'transparent',
                     rotateRatio: 0.3,
                     rotationSteps: 2,
