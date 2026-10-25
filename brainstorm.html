@@ -3,146 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brainstorm - Word Cloud</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+    <title>Live Brainstorm</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/wordcloud2.js@1.2.2/src/wordcloud2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <style>
+        :root {
+            --neon-purple: #b026ff;
+            --neon-blue: #00f3ff;
+            --neon-pink: #ff00ff;
+            --neon-green: #39ff14;
+            --dark-bg: #0a0a0f;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: 'Comfortaa', cursive;
-            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--dark-bg);
             min-height: 100vh;
             color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Звёздный фон */
+        .stars-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #0a0a0f 100%);
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 20px;
         }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
+        
         h1 {
             text-align: center;
-            font-size: 2em;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #c084fc, #60a5fa);
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2em;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
+        
         .question {
             text-align: center;
-            color: #c4b5fd;
+            color: var(--neon-blue);
             font-size: 1.2em;
-            margin-bottom: 20px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
         }
+        
         .input-section {
-            background: rgba(255,255,255,0.06);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(192, 132, 252, 0.3);
-            border-radius: 16px;
+            background: rgba(176, 38, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--neon-purple);
+            border-radius: 20px;
             padding: 20px;
             margin-bottom: 20px;
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            gap: 15px;
             justify-content: center;
+            box-shadow: 0 0 40px rgba(176, 38, 255, 0.3);
         }
         .input-section input {
             flex: 1;
-            min-width: 200px;
-            padding: 12px 20px;
-            background: rgba(0,0,0,0.3);
-            border: 2px solid rgba(192, 132, 252, 0.3);
+            max-width: 400px;
+            padding: 15px 25px;
+            background: rgba(0,0,0,0.6);
+            border: 2px solid var(--neon-blue);
             border-radius: 50px;
             color: white;
-            font-size: 1em;
-            font-family: 'Comfortaa', cursive;
+            font-size: 1.1em;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
         }
         .input-section input:focus {
             outline: none;
-            border-color: #c084fc;
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 30px rgba(176, 38, 255, 0.6);
         }
         .input-section button {
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #c084fc, #60a5fa);
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
             color: white;
             border: none;
             border-radius: 50px;
-            font-family: 'Comfortaa', cursive;
+            font-family: 'Orbitron', monospace;
             font-weight: 700;
+            font-size: 1em;
             cursor: pointer;
             transition: all 0.3s;
+            box-shadow: 0 0 25px rgba(176, 38, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         .input-section button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(192, 132, 252, 0.5);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 40px rgba(176, 38, 255, 0.8);
         }
+        
         .qr-section {
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 20px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(192, 132, 252, 0.2);
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px;
+            background: rgba(10, 10, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--neon-purple);
             border-radius: 16px;
+            z-index: 1000;
+            box-shadow: 0 0 30px rgba(176, 38, 255, 0.5);
         }
         .qr-section h2 {
-            color: #c084fc;
-            margin-bottom: 15px;
-            font-size: 1.3em;
+            color: var(--neon-blue);
+            font-family: 'Orbitron', monospace;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         #qrcode {
-            display: inline-block;
-            padding: 15px;
+            display: block;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 0 30px rgba(192, 132, 252, 0.4);
+            padding: 10px;
+            border-radius: 8px;
         }
         .qr-hint {
             color: #94a3b8;
-            margin-top: 10px;
-            font-size: 0.9em;
+            margin-top: 8px;
+            font-size: 0.75em;
+            text-align: center;
         }
+        
         .cloud-container {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(192, 132, 252, 0.2);
-            border-radius: 16px;
-            padding: 20px;
+            background: rgba(176, 38, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(176, 38, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 400px;
+            min-height: 500px;
+            box-shadow: 0 0 40px rgba(176, 38, 255, 0.2);
         }
         #wordcloud {
             width: 100%;
-            height: 400px;
+            height: 500px;
         }
+        
         .back-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 25px;
-            background: rgba(192, 132, 252, 0.2);
-            border: 1px solid rgba(192, 132, 252, 0.4);
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: rgba(176, 38, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--neon-purple);
             border-radius: 50px;
-            color: #e9d5ff;
+            color: var(--neon-blue);
             text-decoration: none;
+            font-family: 'Orbitron', monospace;
+            font-weight: 600;
             font-size: 0.9em;
+            z-index: 1000;
             transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         .back-btn:hover {
-            background: rgba(192, 132, 252, 0.3);
+            background: rgba(176, 38, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(176, 38, 255, 0.6);
         }
+        
         .status {
             text-align: center;
-            color: #4ade80;
+            color: var(--neon-green);
             margin-top: 10px;
             min-height: 20px;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
-        .center { text-align: center; }
+        
+        @media (max-width: 768px) {
+            .qr-section {
+                top: 10px;
+                right: 10px;
+                padding: 10px;
+            }
+            #qrcode {
+                padding: 5px;
+            }
+            #qrcode img, #qrcode canvas {
+                width: 100px !important;
+                height: 100px !important;
+            }
+            h1 { font-size: 1.5em; }
+            .question { font-size: 1em; }
+            .input-section { flex-direction: column; padding: 15px; }
+            .input-section input { max-width: 100%; }
+            .cloud-container { min-height: 300px; padding: 15px; }
+            #wordcloud { height: 300px; }
+        }
     </style>
 </head>
 <body>
+    <div class="stars-bg" id="starsContainer"></div>
+    
+    <div class="qr-section">
+        <h2>📱 Scan to join!</h2>
+        <div id="qrcode"></div>
+        <p class="qr-hint">Open on your phone</p>
+    </div>
+    
     <div class="container">
-        <h1>🧠 Live Brainstorm</h1>
-        <p class="question">What words come to mind when you think about ...?</p>
+        <h1> Live Brainstorm</h1>
+        <p class="question">What words come to mind when you think about grammar?</p>
         
         <div class="input-section">
             <input type="text" id="wordInput" placeholder="Type your word..." maxlength="30">
@@ -150,40 +259,48 @@
         </div>
         <div class="status" id="status"></div>
         
-        <div class="qr-section">
-            <h2>📱 Scan to join!</h2>
-            <div id="qrcode"></div>
-            <p class="qr-hint">Open this page on your phone to participate</p>
-        </div>
-        
         <div class="cloud-container">
             <canvas id="wordcloud"></canvas>
         </div>
-        
-        <div class="center">
-            <a href="index.html" class="back-btn">← Back to exercises</a>
-        </div>
     </div>
+    
+    <a href="index.html" class="back-btn">← Back to exercises</a>
 
     <script>
         // ⚠️ ВСТАВЬ СЮДА СВОЙ URL ИЗ GOOGLE APPS SCRIPT
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzsrk5Vyp-krUWliGiHJFBLfL8zv8nha5PiqELC-TrGpPjuhlJy47coOIHL6sIWdoI/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzq7LD2L2yElgnVQN4QmXf5afInWelUyPSiP9Zz8XaLg_95wrASmSv7EShE34WHMCJU/exec';
         
         const wordInput = document.getElementById('wordInput');
         const status = document.getElementById('status');
         const canvas = document.getElementById('wordcloud');
         
+        // Создаём звёзды
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                container.appendChild(star);
+            }
+        }
+        createStars();
+        
         // Отправка слова
         async function submitWord() {
             const word = wordInput.value.trim();
             if (!word) {
-                status.textContent = 'Please type a word first!';
-                status.style.color = '#f87171';
+                status.textContent = 'Please type a word!';
+                status.style.color = 'var(--neon-pink)';
                 return;
             }
             
             status.textContent = 'Sending...';
-            status.style.color = '#fbbf24';
             
             try {
                 await fetch(SCRIPT_URL, {
@@ -194,39 +311,33 @@
                 });
                 
                 wordInput.value = '';
-                status.textContent = '✅ Added! Refreshing cloud...';
-                status.style.color = '#4ade80';
-                
-                setTimeout(loadCloud, 2000);
+                status.textContent = '✅ Added!';
+                setTimeout(() => { status.textContent = ''; }, 2000);
+                setTimeout(loadCloud, 1000);
             } catch (e) {
-                status.textContent = 'Error. Try again.';
-                status.style.color = '#f87171';
+                status.textContent = 'Error';
+                status.style.color = 'var(--neon-pink)';
             }
         }
         
-        // Загрузка облака слов
+        // Загрузка облака
         async function loadCloud() {
             try {
                 const response = await fetch(SCRIPT_URL);
                 const words = await response.json();
                 
-                console.log('Loaded words:', words);
-                
-                if (words.length === 0) {
+                if (!words || words.length === 0) {
                     WordCloud(canvas, {
                         list: [['Be the first!', 20]],
                         gridSize: 10,
                         weightFactor: 15,
-                        fontFamily: 'Comfortaa',
-                        color: function() {
-                            return ['#c084fc', '#60a5fa', '#fbbf24', '#4ade80', '#f87171'][Math.floor(Math.random() * 5)];
-                        },
+                        fontFamily: 'Orbitron',
+                        color: '#c084fc',
                         backgroundColor: 'transparent'
                     });
                     return;
                 }
                 
-                // Увеличиваем веса для красивого облака
                 const maxWeight = Math.max(...words.map(w => w[1]));
                 const scaledWords = words.map(w => [w[0], Math.max(15, (w[1] / maxWeight) * 50)]);
                 
@@ -234,12 +345,12 @@
                     list: scaledWords,
                     gridSize: 8,
                     weightFactor: 1,
-                    fontFamily: 'Comfortaa',
+                    fontFamily: 'Orbitron',
                     color: function(word, weight) {
-                        if (weight > 30) return '#c084fc';
-                        if (weight > 20) return '#60a5fa';
-                        if (weight > 15) return '#fbbf24';
-                        return '#4ade80';
+                        if (weight > 30) return '#b026ff';
+                        if (weight > 20) return '#00f3ff';
+                        if (weight > 15) return '#ff00ff';
+                        return '#39ff14';
                     },
                     backgroundColor: 'transparent',
                     rotateRatio: 0.3,
@@ -248,19 +359,18 @@
                     shrinkToFit: true
                 });
             } catch (e) {
-                console.log('Error loading cloud:', e);
+                console.error('Error:', e);
                 WordCloud(canvas, {
                     list: [['Loading...', 20]],
                     gridSize: 10,
                     weightFactor: 15,
-                    fontFamily: 'Comfortaa',
+                    fontFamily: 'Orbitron',
                     color: '#fbbf24',
                     backgroundColor: 'transparent'
                 });
             }
         }
         
-        // Enter для отправки
         wordInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') submitWord();
         });
@@ -269,14 +379,14 @@
         const formUrl = 'https://surisamner-ops.github.io/Grammar_Challenge/brainstorm-form.html';
         new QRCode(document.getElementById("qrcode"), {
             text: formUrl,
-            width: 200,
-            height: 200,
+            width: 120,
+            height: 120,
             colorDark: "#1e293b",
             colorLight: "#ffffff",
             correctLevel: QRCode.CorrectLevel.H
         });
         
-        // Загружаем облако при старте и обновляем каждые 10 секунд
+        // Загрузка при старте
         loadCloud();
         setInterval(loadCloud, 10000);
     </script>
