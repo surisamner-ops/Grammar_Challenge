@@ -136,23 +136,23 @@
             border-color: var(--neon-green);
         }
 
-        /* ПЕРСОНАЖ - ИСПРАВЛЕНО */
-        .player-character {
-            position: absolute;
-            bottom: 80px;
-            left: 5%;
-            width: 200px;
-            height: 200px;
-            z-index: 3;
-            transition: left 1.2s cubic-bezier(0.4, 0, 0.2, 1), bottom 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: visible !important;
-        }
-        .player-character svg { 
-            width: 100%; 
-            height: 100%; 
-            overflow: visible !important;
-            animation: glow 2s ease-in-out infinite, breathe 3s ease-in-out infinite;
-        }
+       .player-character {
+    position: absolute;
+    bottom: 60px;  /* Опустил ниже */
+    left: 5%;
+    width: 220px;  /* Увеличил */
+    height: 220px; /* Увеличил */
+    z-index: 10;   /* Увеличил z-index */
+    transition: left 1.2s cubic-bezier(0.4, 0, 0.2, 1), bottom 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: visible !important;
+}
+
+.player-character svg { 
+    width: 100%; 
+    height: 100%; 
+    overflow: visible !important;
+    animation: glow 2s ease-in-out infinite, breathe 3s ease-in-out infinite;
+}
         .player-character.flying { animation: characterFly 1s ease-in-out infinite; }
         .player-character.landing { animation: characterLand 0.6s ease-out; }
 
@@ -248,10 +248,17 @@
         .timer-bar.show { display: flex; }
 
         .progress-container {
-            position: sticky; top: 10px; z-index: 99; background: var(--panel-bg);
-            border: 2px solid var(--neon-purple); border-radius: 15px; padding: 12px 15px;
-            margin-bottom: 10px; backdrop-filter: blur(12px); box-shadow: 0 0 30px rgba(176, 38, 255, 0.3);
-        }
+    position: sticky;
+    top: 60px;  /* Было 10px, теперь 60px - опустилось ниже */
+    z-index: 99;
+    background: var(--panel-bg);
+    border: 2px solid var(--neon-purple);
+    border-radius: 15px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 30px rgba(176, 38, 255, 0.3);
+}
         .progress-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-family: 'Orbitron', monospace; color: var(--neon-blue); font-size: 0.9em; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
         .progress-bar-bg { width: 100%; height: 8px; background: rgba(0, 0, 0, 0.6); border-radius: 10px; overflow: hidden; border: 1px solid var(--neon-purple); }
         .progress-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--neon-purple) 0%, var(--neon-blue) 50%, var(--neon-green) 100%); border-radius: 10px; transition: width 0.5s ease-out; box-shadow: 0 0 20px var(--neon-purple); }
@@ -1100,21 +1107,56 @@
             document.getElementById('startGameBtn').textContent = 'Initialize Mission';
         }
 
-        function startGame() {
-            playSound('teleport'); showScreen('screen-game');
-            document.getElementById('playerCharacter').innerHTML = heroSVGs[selectedCharacter];
-            currentQuestions = shuffle([...verbDatabase]).slice(0, 41);
-            currentIndex = 0; score = 0; currentPlanetIndex = 0; currentLevel = 1;
-            isExerciseActive = true; tabSwitchCount = 0; errorsList = [];
-            startTime = Date.now(); timerInterval = setInterval(updateTimer, 1000);
-            loadQuestion();
-        }
+    function startGame() {
+    playSound('teleport'); 
+    showScreen('screen-game');
+    document.getElementById('playerCharacter').innerHTML = heroSVGs[selectedCharacter];
+    currentQuestions = shuffle([...verbDatabase]).slice(0, 41);
+    currentIndex = 0; 
+    score = 0; 
+    currentPlanetIndex = 0; 
+    currentLevel = 1;
+    isExerciseActive = true; 
+    tabSwitchCount = 0; 
+    errorsList = [];
+    startTime = Date.now(); 
+    timerInterval = setInterval(updateTimer, 1000);
+    
+    updateProgress();  // ← ДОБАВЬ ЭТУ СТРОКУ
+    
+    loadQuestion();
+}
+    
+    // Вставляем SVG персонажа
+    const playerChar = document.getElementById('playerCharacter');
+    playerChar.innerHTML = heroSVGs[selectedCharacter];
+    
+    currentQuestions = shuffle([...verbDatabase]).slice(0, 41);
+    currentIndex = 0; 
+    score = 0; 
+    currentPlanetIndex = 0; 
+    currentLevel = 1;
+    isExerciseActive = true; 
+    tabSwitchCount = 0; 
+    errorsList = [];
+    startTime = Date.now(); 
+    timerInterval = setInterval(updateTimer, 1000);
+    
+    // ПОКАЗЫВАЕМ "0 / 41" В НАЧАЛЕ
+    updateProgress();
+    
+    loadQuestion();
+}
 
         function updateTimer() {
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
             document.getElementById('timerDisplay').textContent = 
                 `${Math.floor(elapsed / 60).toString().padStart(2, '0')}:${(elapsed % 60).toString().padStart(2, '0')}`;
         }
+        function updateProgress() {
+    document.getElementById('progressText').textContent = `${currentIndex} / ${currentQuestions.length}`;
+    document.getElementById('progressBarFill').style.width = `${((currentIndex) / currentQuestions.length) * 100}%`;
+}
 
         function loadQuestion() {
             const q = currentQuestions[currentIndex];
@@ -1171,8 +1213,6 @@
                 document.getElementById('nextBtn').style.display = 'none';
                 setTimeout(() => document.getElementById('typeInput').focus(), 100);
             }
-            document.getElementById('progressText').textContent = `${currentIndex + 1} / ${currentQuestions.length}`;
-            document.getElementById('progressBarFill').style.width = `${((currentIndex) / currentQuestions.length) * 100}%`;
         }
 
         function selectOption(value, btnElement) {
@@ -1254,15 +1294,19 @@
             }
         }
 
-        function nextQuestion() {
-            playSound('click'); currentIndex++;
-            if (currentIndex % questionsPerPlanet === 0 && currentIndex < currentQuestions.length) {
-                currentPlanetIndex = (currentPlanetIndex + 1) % 8;
-            }
-            if (currentIndex < currentQuestions.length) loadQuestion();
-            else showResults();
-        }
-
+       function nextQuestion() {
+    playSound('click'); 
+    currentIndex++;
+    
+    updateProgress();  // ← ДОБАВЬ ЭТУ СТРОКУ
+    
+    if (currentIndex % questionsPerPlanet === 0 && currentIndex < currentQuestions.length) {
+        currentPlanetIndex = (currentPlanetIndex + 1) % 8;
+    }
+    
+    if (currentIndex < currentQuestions.length) loadQuestion();
+    else showResults();
+}
         function selectBonus(element, bonusType) {
             playSound('select');
             document.querySelectorAll('.bonus-option').forEach(opt => opt.classList.remove('selected'));
