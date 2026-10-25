@@ -53,16 +53,24 @@
             50% { opacity: 1; }
             100% { opacity: 0; transform: translateY(-100px) translateX(50px) scale(1); }
         }
+        @keyframes windowGlow {
+            0%, 100% { box-shadow: 0 0 30px rgba(192, 132, 252, 0.2), 0 0 60px rgba(192, 132, 252, 0.1); }
+            50% { box-shadow: 0 0 50px rgba(192, 132, 252, 0.4), 0 0 80px rgba(192, 132, 252, 0.2), 0 0 100px rgba(96, 165, 250, 0.15); }
+        }
+        @keyframes inputGlow {
+            0%, 100% { box-shadow: 0 0 30px rgba(192, 132, 252, 0.3); }
+            50% { box-shadow: 0 0 50px rgba(192, 132, 252, 0.5), 0 0 70px rgba(192, 132, 252, 0.3); }
+        }
         
         .container {
             position: relative;
             z-index: 2;
-            max-width: 500px;
+            max-width: 650px; /* Увеличили ширину */
             width: 100%;
             text-align: center;
         }
         h1 {
-            font-size: 1.8em;
+            font-size: 2em;
             margin-bottom: 15px;
             background: linear-gradient(90deg, #c084fc, #60a5fa);
             -webkit-background-clip: text;
@@ -70,7 +78,7 @@
         }
         .question {
             color: #c4b5fd;
-            font-size: 1.1em;
+            font-size: 1.2em;
             margin-bottom: 30px;
             line-height: 1.5;
         }
@@ -78,55 +86,58 @@
             background: rgba(255,255,255,0.06);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(192, 132, 252, 0.3);
-            border-radius: 16px;
-            padding: 25px;
+            border-radius: 24px;
+            padding: 40px; /* Увеличили отступы внутри */
             box-shadow: 0 0 30px rgba(192, 132, 252, 0.2);
+            animation: windowGlow 3s ease-in-out infinite; /* Пульсирующее свечение окна */
         }
-        .input-section input {
+        .input-section textarea {
             width: 100%;
-            padding: 15px 20px;
+            padding: 18px 25px;
             background: rgba(0,0,0,0.3);
             border: 2px solid rgba(192, 132, 252, 0.5);
-            border-radius: 50px;
+            border-radius: 16px;
             color: white;
-            font-size: 1.1em;
+            font-size: 1.2em;
             font-family: 'Comfortaa', cursive;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-align: center;
+            resize: vertical;
+            min-height: 100px; /* Многострочное поле */
             box-shadow: 0 0 30px rgba(192, 132, 252, 0.3);
             animation: inputGlow 2s ease-in-out infinite;
         }
-        @keyframes inputGlow {
-            0%, 100% { box-shadow: 0 0 30px rgba(192, 132, 252, 0.3); }
-            50% { box-shadow: 0 0 50px rgba(192, 132, 252, 0.5), 0 0 70px rgba(192, 132, 252, 0.3); }
-        }
-        .input-section input:focus {
+        .input-section textarea:focus {
             outline: none;
             border-color: #c084fc;
             box-shadow: 0 0 50px rgba(192, 132, 252, 0.6), 0 0 80px rgba(192, 132, 252, 0.4);
         }
+        .input-section textarea::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
         .input-section button {
             width: 100%;
-            padding: 15px;
+            padding: 18px;
             background: linear-gradient(135deg, #c084fc, #60a5fa);
             color: white;
             border: none;
             border-radius: 50px;
             font-family: 'Comfortaa', cursive;
             font-weight: 700;
-            font-size: 1.1em;
+            font-size: 1.2em;
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
         }
         .input-section button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 25px rgba(192, 132, 252, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 30px rgba(192, 132, 252, 0.6);
         }
         .status {
             margin-top: 15px;
             min-height: 20px;
-            font-size: 0.95em;
+            font-size: 1em;
+            font-weight: 600;
         }
         .success { color: #4ade80; }
         .error { color: #f87171; }
@@ -138,25 +149,22 @@
     
     <div class="container">
         <h1>🧠 Live Brainstorm</h1>
-        <p class="question">What words come to mind when you think about grammar?</p>
+        <p class="question">What words or phrases come to mind when you think about grammar?</p>
         
         <div class="input-section">
-            <input type="text" id="wordInput" placeholder="Type your word..." maxlength="30" autocomplete="off">
+            <textarea id="wordInput" placeholder="Type your word or phrase here..." maxlength="150" autocomplete="off" rows="3"></textarea>
             <button onclick="submitWord()">Submit ✨</button>
             <div class="status" id="status"></div>
         </div>
     </div>
 
     <script>
-        // ⚠️ ВСТАВЬ СЮДА СВОЙ URL ИЗ GOOGLE APPS SCRIPT
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzRQlr3v51D5GJ1QS7lhmmVyefuhH5HZ-49IWSwEgW0xhnyiadULpIOfPK2PCdaZUGa/exec';
         const wordInput = document.getElementById('wordInput');
         const status = document.getElementById('status');
         
-        // Создаём звёзды
         function createStars() {
             const container = document.getElementById('starsContainer');
-            // 400 звёзд
             for (let i = 0; i < 400; i++) {
                 const star = document.createElement('div');
                 star.classList.add('star');
@@ -170,7 +178,6 @@
                 star.style.animationDelay = Math.random() * 5 + 's';
                 container.appendChild(star);
             }
-            // 10 падающих звёзд
             for (let i = 0; i < 10; i++) {
                 const shootingStar = document.createElement('div');
                 shootingStar.style.position = 'absolute';
@@ -184,7 +191,6 @@
                 shootingStar.style.animation = `shootingStar ${Math.random() * 6 + 10}s ease-in-out ${Math.random() * 15}s infinite`;
                 container.appendChild(shootingStar);
             }
-            // 30 частиц
             for (let i = 0; i < 30; i++) {
                 const particle = document.createElement('div');
                 particle.style.position = 'absolute';
@@ -200,7 +206,6 @@
             }
         }
         
-        // Запускаем создание звёзд при загрузке
         window.addEventListener('load', createStars);
         
         async function submitWord() {
@@ -235,8 +240,12 @@
             }
         }
         
-        wordInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') submitWord();
+        // Enter отправляет форму, Shift + Enter делает перенос строки
+        wordInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                submitWord();
+            }
         });
         
         wordInput.focus();
