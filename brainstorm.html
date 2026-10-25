@@ -324,7 +324,7 @@
                 wordcloudDiv.appendChild(canvas);
                 
                 const maxWeight = Math.max(...words.map(w => w[1]));
-                const scaledWords = words.map(w => [w[0], Math.max(15, (w[1] / maxWeight) * 50)]);
+                const scaledWords = words.map(w => [w[0], Math.max(25, (w[1] / maxWeight) * 80)]);
                 
                 // Проверяем что WordCloud загружен
                 if (typeof WordCloud === 'undefined') {
