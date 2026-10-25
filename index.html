@@ -611,11 +611,10 @@
             transform: translateY(-5px) scale(1.1);
             box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6);
         }
-              .brainstorm-btn {
-    position: absolute;
-    left: -70px;  /* Слева от поиска */
-    top: 50%;
-    transform: translateY(-50%);
+        .brainstorm-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 190px;  /* Справа от кнопки "домой" */
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -627,11 +626,19 @@
     justify-content: center;
     box-shadow: 0 4px 20px rgba(192, 132, 252, 0.4);
     transition: all 0.3s;
-    z-index: 100;
+    z-index: 1000;
     text-decoration: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+}
+.brainstorm-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 .brainstorm-btn:hover {
-    transform: translateY(-50%) scale(1.1);
+    transform: translateY(-5px) scale(1.1);
     box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6);
 }
         .floating-element svg {
@@ -1196,10 +1203,11 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
    // Кнопка прокрутки
 const backToTopBtn = document.getElementById('backToTop');
              const homeBtn = document.querySelector('.home-btn');
+     const brainstormBtn = document.querySelector('.brainstorm-btn');
 
 // Кнопка скрыта при загрузке
 backToTopBtn.classList.remove('visible');
-
+if (brainstormBtn) brainstormBtn.classList.remove('visible');
 window.addEventListener('scroll', () => {
     const scrollHeight = document.body.scrollHeight;
     const scrollTop = window.scrollY;
@@ -1210,14 +1218,19 @@ window.addEventListener('scroll', () => {
     // Показываем кнопку только после прокрутки на 200px
     if (scrollTop > 200) {
         backToTopBtn.classList.add('visible');
+                        if (brainstormBtn) brainstormBtn.classList.add('visible');
     } else {
         backToTopBtn.classList.remove('visible');
+                        if (brainstormBtn) brainstormBtn.classList.remove('visible');
     }
             // Показываем кнопку Home после прокрутки
         if (scrollTop > 200) {
             homeBtn.classList.add('visible');
+                            if (brainstormBtn) brainstormBtn.classList.add('visible');
+            
         } else {
             homeBtn.classList.remove('visible');
+                            if (brainstormBtn) brainstormBtn.classList.remove('visible');
         }
     
     // Меняем стрелку
