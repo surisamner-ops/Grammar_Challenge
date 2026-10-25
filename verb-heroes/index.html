@@ -25,25 +25,16 @@
         }
 
         .stars-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 0;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
             background: radial-gradient(ellipse at bottom, #1b2735 0%, #0a0a0f 100%);
         }
         .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
+            position: absolute; background: white; border-radius: 50%;
             animation: twinkle var(--duration) ease-in-out infinite;
             box-shadow: 0 0 10px rgba(255,255,255,0.8);
         }
-        @keyframes twinkle { 
-            0%, 100% { opacity: 0.3; transform: scale(0.8); } 
-            50% { opacity: 1; transform: scale(1.2); } 
-        }
-
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
@@ -61,138 +52,64 @@
         @keyframes confetti { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-200px) rotate(720deg); opacity: 0; } }
         @keyframes glow { 0%, 100% { filter: drop-shadow(0 0 15px rgba(176, 38, 255, 0.6)); } 50% { filter: drop-shadow(0 0 30px rgba(0, 243, 255, 0.9)); } }
         @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
-        @keyframes planetGlow { 0%, 100% { filter: drop-shadow(0 0 20px rgba(176, 38, 255, 0.6)) drop-shadow(0 0 40px rgba(0, 243, 255, 0.3)); } 50% { filter: drop-shadow(0 0 35px rgba(176, 38, 255, 0.9)) drop-shadow(0 0 70px rgba(0, 243, 255, 0.5)); } }
+        @keyframes planetGlow { 0%, 100% { filter: drop-shadow(0 0 15px rgba(176, 38, 255, 0.6)) drop-shadow(0 0 30px rgba(0, 243, 255, 0.3)); } 50% { filter: drop-shadow(0 0 25px rgba(176, 38, 255, 0.9)) drop-shadow(0 0 50px rgba(0, 243, 255, 0.5)); } }
 
         .main-wrapper { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 10px; }
-        
-        .header { 
-            text-align: center; 
-            margin-bottom: 15px; 
-            animation: fadeInUp 1s ease-out;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
+        .header { text-align: center; margin-bottom: 15px; animation: fadeInUp 1s ease-out; text-transform: uppercase; letter-spacing: 3px; }
         .main-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 2em;
-            font-weight: 900;
+            font-family: 'Orbitron', monospace; font-size: 2em; font-weight: 900;
             background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue), var(--neon-pink), var(--neon-purple));
-            background-size: 300% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer 5s linear infinite;
-            margin-bottom: 5px;
+            background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shimmer 5s linear infinite; margin-bottom: 5px;
         }
-        .header p { 
-            font-size: 0.9em; 
-            color: var(--neon-blue);
-            font-weight: 600;
-            letter-spacing: 2px;
-        }
+        .header p { font-size: 0.9em; color: var(--neon-blue); font-weight: 600; letter-spacing: 2px; }
 
         .screen { display: none; animation: fadeInUp 0.6s ease-out; }
         .screen.active { display: block; }
 
         .card {
-            background: var(--panel-bg);
-            backdrop-filter: blur(20px);
-            border: 2px solid var(--neon-purple);
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 15px;
+            background: var(--panel-bg); backdrop-filter: blur(20px); border: 2px solid var(--neon-purple);
+            border-radius: 20px; padding: 25px; text-align: center; max-width: 800px; margin: 0 auto 15px;
             box-shadow: 0 0 40px rgba(176, 38, 255, 0.3);
         }
 
         .name-input {
-            width: 100%; max-width: 350px; padding: 12px 20px; 
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid var(--neon-blue); 
-            border-radius: 12px; 
-            color: var(--neon-blue); 
-            font-size: 1em;
-            text-align: center; 
-            margin-bottom: 15px; 
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s;
+            width: 100%; max-width: 350px; padding: 12px 20px; background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--neon-blue); border-radius: 12px; color: var(--neon-blue); font-size: 1em;
+            text-align: center; margin-bottom: 15px; font-family: 'Rajdhani', sans-serif; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s;
         }
-        .name-input:focus { 
-            outline: none; 
-            border-color: var(--neon-purple); 
-            box-shadow: 0 0 30px rgba(176, 38, 255, 0.6);
-        }
+        .name-input:focus { outline: none; border-color: var(--neon-purple); box-shadow: 0 0 30px rgba(176, 38, 255, 0.6); }
 
         .btn {
-            padding: 12px 35px; 
-            background: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-blue) 100%);
-            color: white; 
-            border: none; 
-            border-radius: 50px; 
-            font-family: 'Orbitron', monospace; 
-            font-size: 0.95em;
-            font-weight: 700; 
-            cursor: pointer; 
-            transition: all 0.3s; 
-            box-shadow: 0 0 25px rgba(176, 38, 255, 0.5);
-            margin: 8px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            padding: 12px 35px; background: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-blue) 100%);
+            color: white; border: none; border-radius: 50px; font-family: 'Orbitron', monospace; font-size: 0.95em;
+            font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 0 25px rgba(176, 38, 255, 0.5);
+            margin: 8px; text-transform: uppercase; letter-spacing: 2px;
         }
-        .btn:hover:not(:disabled) { 
-            transform: translateY(-3px) scale(1.05); 
-            box-shadow: 0 0 40px rgba(176, 38, 255, 0.8);
-        }
+        .btn:hover:not(:disabled) { transform: translateY(-3px) scale(1.05); box-shadow: 0 0 40px rgba(176, 38, 255, 0.8); }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         .character-select { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 15px 0; }
         .character-card {
-            background: rgba(176, 38, 255, 0.1); 
-            border: 2px solid var(--neon-purple);
-            border-radius: 16px; 
-            padding: 10px; 
-            cursor: pointer; 
-            transition: all 0.3s;
+            background: rgba(176, 38, 255, 0.1); border: 2px solid var(--neon-purple);
+            border-radius: 16px; padding: 10px; cursor: pointer; transition: all 0.3s;
         }
-        .character-card:hover { 
-            background: rgba(176, 38, 255, 0.2); 
-            border-color: var(--neon-blue); 
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(176, 38, 255, 0.4);
-        }
-        .character-card.selected { 
-            background: rgba(57, 255, 20, 0.2); 
-            border-color: var(--neon-green); 
-            box-shadow: 0 0 40px rgba(57, 255, 20, 0.6);
-        }
+        .character-card:hover { background: rgba(176, 38, 255, 0.2); border-color: var(--neon-blue); transform: scale(1.05); box-shadow: 0 0 30px rgba(176, 38, 255, 0.4); }
+        .character-card.selected { background: rgba(57, 255, 20, 0.2); border-color: var(--neon-green); box-shadow: 0 0 40px rgba(57, 255, 20, 0.6); }
         .character-card svg { width: 80px; height: 80px; margin: 0 auto 8px; display: block; animation: bounce 2s ease-in-out infinite; }
-        .character-card h3 { 
-            font-family: 'Orbitron', monospace; 
-            color: var(--neon-blue); 
-            font-size: 0.75em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .character-card h3 { font-family: 'Orbitron', monospace; color: var(--neon-blue); font-size: 0.75em; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* ИГРОВАЯ СЦЕНА - компактная */
+        /* ИГРОВАЯ СЦЕНА */
         .game-scene {
-            position: relative;
-            height: 320px;
-            margin-bottom: 10px;
-            overflow: visible;
+            position: relative; height: 350px; margin-bottom: 10px; overflow: visible;
             background: radial-gradient(ellipse at center, rgba(176, 38, 255, 0.1) 0%, transparent 70%);
-            border: 2px solid rgba(176, 38, 255, 0.3);
-            border-radius: 20px;
+            border: 2px solid rgba(176, 38, 255, 0.3); border-radius: 20px;
         }
 
         .planet-svg {
-            position: absolute;
-            animation: planetFloat 4s ease-in-out infinite;
-            /* СВЕЧЕНИЕ КАК У ПОРТАЛА */
-            filter: drop-shadow(0 0 20px rgba(176, 38, 255, 0.6)) drop-shadow(0 0 40px rgba(0, 243, 255, 0.3));
+            position: absolute; animation: planetFloat 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(176, 38, 255, 0.6)) drop-shadow(0 0 30px rgba(0, 243, 255, 0.3));
             animation: planetGlow 3s ease-in-out infinite;
         }
         .planet-mercury { left: 5%; bottom: 140px; width: 50px; height: 50px; animation-delay: 0s; }
@@ -205,23 +122,13 @@
         .planet-neptune { left: 95%; bottom: 130px; width: 70px; height: 70px; animation-delay: 3.5s; }
 
         .portal {
-            position: absolute;
-            right: 15px;
-            bottom: 100px;
-            width: 65px;
-            height: 100px;
-            border-radius: 45px;
-            background: radial-gradient(ellipse at center, rgba(176, 38, 255, 0.8) 0%, rgba(0, 243, 255, 0.5) 50%, transparent 70%);
-            border: 3px solid var(--neon-purple);
-            animation: portalGlow 2s ease-in-out infinite;
-            z-index: 2;
+            position: absolute; right: 15px; bottom: 100px; width: 65px; height: 100px;
+            border-radius: 45px; background: radial-gradient(ellipse at center, rgba(176, 38, 255, 0.8) 0%, rgba(0, 243, 255, 0.5) 50%, transparent 70%);
+            border: 3px solid var(--neon-purple); animation: portalGlow 2s ease-in-out infinite; z-index: 2;
         }
         .portal::before {
-            content: '';
-            position: absolute;
-            top: 6px; left: 6px; right: 6px; bottom: 6px;
-            border-radius: 37px;
-            background: radial-gradient(ellipse at center, rgba(176, 38, 255, 0.9) 0%, transparent 70%);
+            content: ''; position: absolute; top: 6px; left: 6px; right: 6px; bottom: 6px;
+            border-radius: 37px; background: radial-gradient(ellipse at center, rgba(176, 38, 255, 0.9) 0%, transparent 70%);
             animation: portalSpin 3s linear infinite;
         }
         .portal.repaired {
@@ -229,13 +136,13 @@
             border-color: var(--neon-green);
         }
 
-        /* ПЕРСОНАЖ - компактный */
+        /* ПЕРСОНАЖ - ИСПРАВЛЕНО */
         .player-character {
             position: absolute;
             bottom: 80px;
             left: 5%;
-            width: 180px;
-            height: 180px;
+            width: 200px;
+            height: 200px;
             z-index: 3;
             transition: left 1.2s cubic-bezier(0.4, 0, 0.2, 1), bottom 1.2s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: visible !important;
@@ -250,500 +157,165 @@
         .player-character.landing { animation: characterLand 0.6s ease-out; }
 
         .rocket-particle {
-            position: absolute;
-            width: 8px;
-            height: 8px;
+            position: absolute; width: 8px; height: 8px;
             background: radial-gradient(circle, var(--neon-green), var(--neon-blue));
-            border-radius: 50%;
-            pointer-events: none;
-            animation: rocketTrail 0.8s ease-out forwards;
-            z-index: 2;
-            box-shadow: 0 0 15px var(--neon-green);
+            border-radius: 50%; pointer-events: none; animation: rocketTrail 0.8s ease-out forwards;
+            z-index: 2; box-shadow: 0 0 15px var(--neon-green);
         }
-
         .confetti {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            pointer-events: none;
+            position: absolute; width: 8px; height: 8px; pointer-events: none;
             animation: confetti 1.5s ease-out forwards;
         }
-
         .floating-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             background: linear-gradient(135deg, rgba(176, 38, 255, 0.95), rgba(0, 243, 255, 0.95));
-            border: 3px solid var(--neon-blue);
-            border-radius: 20px;
-            padding: 20px 40px;
-            font-family: 'Orbitron', monospace;
-            font-size: 1.8em;
-            font-weight: 900;
-            color: white;
-            text-shadow: 0 0 30px rgba(0, 243, 255, 1);
-            box-shadow: 0 0 60px rgba(176, 38, 255, 1);
-            z-index: 1000;
-            animation: floatMessage 2s ease-out forwards;
-            pointer-events: none;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+            border: 3px solid var(--neon-blue); border-radius: 20px; padding: 20px 40px;
+            font-family: 'Orbitron', monospace; font-size: 1.8em; font-weight: 900; color: white;
+            text-shadow: 0 0 30px rgba(0, 243, 255, 1); box-shadow: 0 0 60px rgba(176, 38, 255, 1);
+            z-index: 1000; animation: floatMessage 2s ease-out forwards; pointer-events: none;
+            text-transform: uppercase; letter-spacing: 3px;
         }
-
         .star-burst {
-            position: fixed;
-            width: 30px;
-            height: 30px;
+            position: fixed; width: 30px; height: 30px;
             background: radial-gradient(circle, var(--neon-blue), var(--neon-purple));
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            animation: starBurst 1s ease-out forwards;
-            pointer-events: none;
-            z-index: 999;
+            animation: starBurst 1s ease-out forwards; pointer-events: none; z-index: 999;
             box-shadow: 0 0 30px var(--neon-blue);
         }
 
         .task-card {
-            background: var(--panel-bg);
-            backdrop-filter: blur(20px);
-            border: 2px solid var(--neon-purple);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 0 40px rgba(176, 38, 255, 0.3);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            background: var(--panel-bg); backdrop-filter: blur(20px); border: 2px solid var(--neon-purple);
+            border-radius: 20px; padding: 20px; box-shadow: 0 0 40px rgba(176, 38, 255, 0.3);
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
         }
-
         .task-left { display: flex; flex-direction: column; gap: 12px; }
         .task-right { display: flex; flex-direction: column; align-items: center; gap: 12px; }
 
         .verb-display { text-align: center; margin: 8px 0; }
-        .verb-v1 { 
-            font-family: 'Orbitron', monospace; 
-            font-size: 2em; 
-            color: var(--neon-pink); 
-            font-weight: 900; 
-            text-shadow: 0 0 30px var(--neon-pink);
-            letter-spacing: 3px;
-        }
-        
-        .sentence-box {
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid var(--neon-blue);
-            border-radius: 12px;
-            padding: 12px 15px;
-            text-align: left;
-            transition: all 0.3s;
-        }
-        .sentence-box:hover {
-            border-color: var(--neon-purple);
-            box-shadow: 0 0 20px rgba(176, 38, 255, 0.4);
-        }
-        .sentence-context { 
-            font-size: 1em; 
-            color: #e2e8f0; 
-            font-style: italic;
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-        }
-        
-        .grammar-label {
-            font-family: 'Orbitron', monospace;
-            font-size: 0.75em;
-            font-weight: 700;
-            margin-bottom: 6px;
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .grammar-label.active {
-            color: var(--neon-blue);
-            background: rgba(0, 243, 255, 0.15);
-            border: 1px solid var(--neon-blue);
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
-        }
-        .grammar-label.passive {
-            color: var(--neon-purple);
-            background: rgba(176, 38, 255, 0.15);
-            border: 1px solid var(--neon-purple);
-            box-shadow: 0 0 15px rgba(176, 38, 255, 0.3);
-        }
-        .grammar-label.perfect {
-            color: var(--neon-green);
-            background: rgba(57, 255, 20, 0.15);
-            border: 1px solid var(--neon-green);
-            box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
-        }
-        .no-passive-note { 
-            font-size: 0.75em; 
-            color: var(--neon-pink); 
-            margin-top: 6px; 
-            font-style: italic;
-            font-weight: 600;
-        }
+        .verb-v1 { font-family: 'Orbitron', monospace; font-size: 2em; color: var(--neon-pink); font-weight: 900; text-shadow: 0 0 30px var(--neon-pink); letter-spacing: 3px; }
+        .sentence-box { background: rgba(0, 0, 0, 0.6); border: 2px solid var(--neon-blue); border-radius: 12px; padding: 12px 15px; text-align: left; transition: all 0.3s; }
+        .sentence-box:hover { border-color: var(--neon-purple); box-shadow: 0 0 20px rgba(176, 38, 255, 0.4); }
+        .sentence-context { font-size: 1em; color: #e2e8f0; font-style: italic; font-family: 'Rajdhani', sans-serif; font-weight: 600; }
+        .grammar-label { font-family: 'Orbitron', monospace; font-size: 0.75em; font-weight: 700; margin-bottom: 6px; display: inline-block; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        .grammar-label.active { color: var(--neon-blue); background: rgba(0, 243, 255, 0.15); border: 1px solid var(--neon-blue); box-shadow: 0 0 15px rgba(0, 243, 255, 0.3); }
+        .grammar-label.passive { color: var(--neon-purple); background: rgba(176, 38, 255, 0.15); border: 1px solid var(--neon-purple); box-shadow: 0 0 15px rgba(176, 38, 255, 0.3); }
+        .grammar-label.perfect { color: var(--neon-green); background: rgba(57, 255, 20, 0.15); border: 1px solid var(--neon-green); box-shadow: 0 0 15px rgba(57, 255, 20, 0.3); }
+        .no-passive-note { font-size: 0.75em; color: var(--neon-pink); margin-top: 6px; font-style: italic; font-weight: 600; }
 
         .slots-container { display: flex; justify-content: center; gap: 15px; margin: 12px 0; }
         .verb-slot {
-            min-width: 110px; height: 45px; 
-            background: rgba(0, 0, 0, 0.6); 
-            border: 2px dashed var(--neon-blue);
-            border-radius: 12px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            font-family: 'Orbitron', monospace; 
-            font-weight: 700; 
-            color: var(--neon-blue); 
-            font-size: 1em;
-            cursor: pointer; 
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            min-width: 110px; height: 45px; background: rgba(0, 0, 0, 0.6); border: 2px dashed var(--neon-blue);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-family: 'Orbitron', monospace; font-weight: 700; color: var(--neon-blue); font-size: 1em;
+            cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 2px;
         }
-        .verb-slot.filled { 
-            border-style: solid; 
-            border-color: var(--neon-blue); 
-            background: rgba(0, 243, 255, 0.15);
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
-        }
-        .verb-slot.correct { 
-            border-color: var(--neon-green); 
-            background: rgba(57, 255, 20, 0.2); 
-            color: var(--neon-green); 
-            animation: pulse 0.5s ease;
-            box-shadow: 0 0 30px rgba(57, 255, 20, 0.6);
-        }
-        .verb-slot.wrong { 
-            border-color: var(--neon-pink); 
-            background: rgba(255, 0, 255, 0.2); 
-            color: var(--neon-pink); 
-            animation: shake 0.4s ease;
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.6);
-        }
+        .verb-slot.filled { border-style: solid; border-color: var(--neon-blue); background: rgba(0, 243, 255, 0.15); box-shadow: 0 0 20px rgba(0, 243, 255, 0.4); }
+        .verb-slot.correct { border-color: var(--neon-green); background: rgba(57, 255, 20, 0.2); color: var(--neon-green); animation: pulse 0.5s ease; box-shadow: 0 0 30px rgba(57, 255, 20, 0.6); }
+        .verb-slot.wrong { border-color: var(--neon-pink); background: rgba(255, 0, 255, 0.2); color: var(--neon-pink); animation: shake 0.4s ease; box-shadow: 0 0 30px rgba(255, 0, 255, 0.6); }
 
         .options-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0; width: 100%; }
         .option-btn {
-            background: rgba(176, 38, 255, 0.1); 
-            border: 2px solid var(--neon-purple); 
-            border-radius: 12px;
-            padding: 12px; 
-            color: var(--neon-blue); 
-            font-family: 'Orbitron', monospace; 
-            font-size: 0.9em;
-            font-weight: 700; 
-            cursor: pointer; 
-            transition: all 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            background: rgba(176, 38, 255, 0.1); border: 2px solid var(--neon-purple); border-radius: 12px;
+            padding: 12px; color: var(--neon-blue); font-family: 'Orbitron', monospace; font-size: 0.9em;
+            font-weight: 700; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px;
         }
-        .option-btn:hover:not(:disabled) { 
-            background: rgba(176, 38, 255, 0.3); 
-            border-color: var(--neon-blue); 
-            transform: translateY(-3px);
-            box-shadow: 0 0 25px rgba(176, 38, 255, 0.6);
-        }
-        .option-btn.selected-v2 { 
-            background: var(--neon-blue); 
-            color: var(--dark-bg); 
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 30px var(--neon-blue);
-        }
-        .option-btn.selected-v3 { 
-            background: var(--neon-purple); 
-            color: white; 
-            border-color: var(--neon-purple);
-            box-shadow: 0 0 30px var(--neon-purple);
-        }
+        .option-btn:hover:not(:disabled) { background: rgba(176, 38, 255, 0.3); border-color: var(--neon-blue); transform: translateY(-3px); box-shadow: 0 0 25px rgba(176, 38, 255, 0.6); }
+        .option-btn.selected-v2 { background: var(--neon-blue); color: var(--dark-bg); border-color: var(--neon-blue); box-shadow: 0 0 30px var(--neon-blue); }
+        .option-btn.selected-v3 { background: var(--neon-purple); color: white; border-color: var(--neon-purple); box-shadow: 0 0 30px var(--neon-purple); }
         .option-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
         .type-input {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid var(--neon-blue);
-            border-radius: 12px;
-            color: var(--neon-blue);
-            font-family: 'Orbitron', monospace;
-            font-size: 1.1em;
-            font-weight: 700;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s;
+            width: 100%; padding: 12px 15px; background: rgba(0, 0, 0, 0.6); border: 2px solid var(--neon-blue);
+            border-radius: 12px; color: var(--neon-blue); font-family: 'Orbitron', monospace; font-size: 1.1em;
+            font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s;
         }
-        .type-input:focus {
-            outline: none;
-            border-color: var(--neon-purple);
-            box-shadow: 0 0 30px rgba(176, 38, 255, 0.6);
-        }
+        .type-input:focus { outline: none; border-color: var(--neon-purple); box-shadow: 0 0 30px rgba(176, 38, 255, 0.6); }
         .type-input::placeholder { color: rgba(0, 243, 255, 0.5); }
-        .type-input.correct-answer {
-            border-color: var(--neon-green) !important;
-            color: var(--neon-green) !important;
-            box-shadow: 0 0 30px var(--neon-green) !important;
-        }
+        .type-input.correct-answer { border-color: var(--neon-green) !important; color: var(--neon-green) !important; box-shadow: 0 0 30px var(--neon-green) !important; }
 
-        .feedback-msg { 
-            margin-top: 12px; 
-            padding: 10px; 
-            border-radius: 12px; 
-            font-size: 1em; 
-            display: none; 
-            animation: pop 0.4s ease-out;
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-align: center;
-        }
-        .feedback-msg.success { 
-            background: rgba(57, 255, 20, 0.2); 
-            border: 2px solid var(--neon-green); 
-            color: var(--neon-green); 
-            display: block;
-            box-shadow: 0 0 30px rgba(57, 255, 20, 0.4);
-        }
-        .feedback-msg.hint { 
-            background: rgba(255, 0, 255, 0.2); 
-            border: 2px solid var(--neon-pink); 
-            color: var(--neon-pink); 
-            display: block;
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.4);
-        }
+        .feedback-msg { margin-top: 12px; padding: 10px; border-radius: 12px; font-size: 1em; display: none; animation: pop 0.4s ease-out; font-family: 'Orbitron', monospace; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
+        .feedback-msg.success { background: rgba(57, 255, 20, 0.2); border: 2px solid var(--neon-green); color: var(--neon-green); display: block; box-shadow: 0 0 30px rgba(57, 255, 20, 0.4); }
+        .feedback-msg.hint { background: rgba(255, 0, 255, 0.2); border: 2px solid var(--neon-pink); color: var(--neon-pink); display: block; box-shadow: 0 0 30px rgba(255, 0, 255, 0.4); }
 
-        /* TIMER и PROGRESS - компактные */
         .timer-bar {
-            position: sticky; 
-            top: 10px; 
-            z-index: 100; 
-            background: rgba(10, 10, 20, 0.95);
-            border: 2px solid var(--neon-blue); 
-            border-radius: 50px; 
-            padding: 8px 20px;
-            text-align: center; 
-            margin-bottom: 10px; 
-            font-family: 'Orbitron', monospace;
-            color: var(--neon-blue); 
-            backdrop-filter: blur(12px); 
-            display: none; 
-            align-items: center;
-            justify-content: center; 
-            gap: 12px; 
-            font-size: 1em;
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.4);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            position: sticky; top: 10px; z-index: 100; background: rgba(10, 10, 20, 0.95);
+            border: 2px solid var(--neon-blue); border-radius: 50px; padding: 8px 20px;
+            text-align: center; margin-bottom: 10px; font-family: 'Orbitron', monospace;
+            color: var(--neon-blue); backdrop-filter: blur(12px); display: none; align-items: center;
+            justify-content: center; gap: 12px; font-size: 1em; box-shadow: 0 0 30px rgba(0, 243, 255, 0.4);
+            text-transform: uppercase; letter-spacing: 2px;
         }
         .timer-bar.show { display: flex; }
 
         .progress-container {
-            position: sticky;
-            top: 10px;
-            z-index: 99;
-            background: var(--panel-bg);
-            border: 2px solid var(--neon-purple);
-            border-radius: 15px;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 0 30px rgba(176, 38, 255, 0.3);
+            position: sticky; top: 10px; z-index: 99; background: var(--panel-bg);
+            border: 2px solid var(--neon-purple); border-radius: 15px; padding: 12px 15px;
+            margin-bottom: 10px; backdrop-filter: blur(12px); box-shadow: 0 0 30px rgba(176, 38, 255, 0.3);
         }
-        .progress-info { 
-            display: flex; 
-            justify-content: space-between; 
-            margin-bottom: 8px; 
-            font-family: 'Orbitron', monospace; 
-            color: var(--neon-blue); 
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
-        }
-        .progress-bar-bg { 
-            width: 100%; 
-            height: 8px; 
-            background: rgba(0, 0, 0, 0.6); 
-            border-radius: 10px; 
-            overflow: hidden;
-            border: 1px solid var(--neon-purple);
-        }
-        .progress-bar-fill { 
-            height: 100%; 
-            width: 0%; 
-            background: linear-gradient(90deg, var(--neon-purple) 0%, var(--neon-blue) 50%, var(--neon-green) 100%); 
-            border-radius: 10px; 
-            transition: width 0.5s ease-out;
-            box-shadow: 0 0 20px var(--neon-purple);
-        }
+        .progress-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-family: 'Orbitron', monospace; color: var(--neon-blue); font-size: 0.9em; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
+        .progress-bar-bg { width: 100%; height: 8px; background: rgba(0, 0, 0, 0.6); border-radius: 10px; overflow: hidden; border: 1px solid var(--neon-purple); }
+        .progress-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--neon-purple) 0%, var(--neon-blue) 50%, var(--neon-green) 100%); border-radius: 10px; transition: width 0.5s ease-out; box-shadow: 0 0 20px var(--neon-purple); }
 
         .back-to-main {
-            position: fixed; 
-            top: 15px; 
-            left: 15px; 
-            width: 45px; 
-            height: 45px;
-            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue)); 
-            border-radius: 50%;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            color: white; 
-            text-decoration: none;
-            box-shadow: 0 0 30px rgba(176, 38, 255, 0.6); 
-            transition: all 0.3s; 
-            z-index: 100; 
-            font-size: 1.3em;
-            border: 2px solid var(--neon-blue);
+            position: fixed; top: 15px; left: 15px; width: 45px; height: 45px;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue)); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: white; text-decoration: none;
+            box-shadow: 0 0 30px rgba(176, 38, 255, 0.6); transition: all 0.3s; z-index: 100; font-size: 1.3em; border: 2px solid var(--neon-blue);
         }
-        .back-to-main:hover { 
-            transform: scale(1.15);
-            box-shadow: 0 0 40px rgba(176, 38, 255, 0.9);
-        }
+        .back-to-main:hover { transform: scale(1.15); box-shadow: 0 0 40px rgba(176, 38, 255, 0.9); }
 
         .tab-switch-warning {
-            position: fixed;
-            top: 70px;
-            right: 15px;
-            background: rgba(255, 0, 255, 0.9);
-            border: 2px solid var(--neon-pink);
-            border-radius: 50px;
-            padding: 8px 15px;
-            font-family: 'Orbitron', monospace;
-            font-size: 0.8em;
-            font-weight: 700;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 0 30px var(--neon-pink);
-            z-index: 100;
-            display: none;
-            animation: pulse 1s infinite;
+            position: fixed; top: 70px; right: 15px; background: rgba(255, 0, 255, 0.9);
+            border: 2px solid var(--neon-pink); border-radius: 50px; padding: 8px 15px;
+            font-family: 'Orbitron', monospace; font-size: 0.8em; font-weight: 700; color: white;
+            text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 30px var(--neon-pink);
+            z-index: 100; display: none; animation: pulse 1s infinite;
         }
         .tab-switch-warning.show { display: block; }
 
+        /* МУЗЫКАЛЬНАЯ КНОПКА - только mute/unmute */
         .music-control {
-            position: fixed;
-            bottom: 15px;
-            right: 15px;
-            background: rgba(176, 38, 255, 0.2);
-            border: 2px solid var(--neon-purple);
-            border-radius: 50px;
-            padding: 8px 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 25px rgba(176, 38, 255, 0.4);
+            position: fixed; bottom: 15px; right: 15px;
+            background: rgba(176, 38, 255, 0.2); border: 2px solid var(--neon-purple);
+            border-radius: 50px; padding: 8px 15px;
+            display: flex; align-items: center; gap: 8px; z-index: 100;
+            backdrop-filter: blur(10px); box-shadow: 0 0 25px rgba(176, 38, 255, 0.4);
         }
         .music-btn {
-            background: none;
-            border: none;
-            color: var(--neon-blue);
-            font-size: 1.3em;
-            cursor: pointer;
-            transition: all 0.3s;
+            background: none; border: none; color: var(--neon-blue);
+            font-size: 1.5em; cursor: pointer; transition: all 0.3s;
         }
         .music-btn:hover { transform: scale(1.3); }
-        .music-upload { display: none; }
-        .music-label {
-            background: rgba(176, 38, 255, 0.3);
-            border: 1px solid var(--neon-purple);
-            border-radius: 20px;
-            padding: 5px 12px;
-            color: var(--neon-blue);
-            font-size: 0.75em;
-            cursor: pointer;
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .music-label:hover { background: rgba(176, 38, 255, 0.5); }
 
         .level-badge {
-            position: fixed;
-            top: 70px;
-            right: 15px;
+            position: fixed; top: 70px; right: 15px;
             background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
-            border: 2px solid var(--neon-green);
-            border-radius: 50px;
-            padding: 8px 20px;
-            font-family: 'Orbitron', monospace;
-            font-size: 0.9em;
-            font-weight: 900;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            box-shadow: 0 0 30px var(--neon-green);
-            z-index: 100;
-            display: none;
-            animation: pulse 2s infinite;
+            border: 2px solid var(--neon-green); border-radius: 50px; padding: 8px 20px;
+            font-family: 'Orbitron', monospace; font-size: 0.9em; font-weight: 900; color: white;
+            text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 0 30px var(--neon-green);
+            z-index: 100; display: none; animation: pulse 2s infinite;
         }
         .level-badge.show { display: block; }
 
-        .bonus-section {
-            margin-top: 15px;
-            padding: 15px;
-            background: rgba(176, 38, 255, 0.1);
-            border: 2px solid var(--neon-purple);
-            border-radius: 16px;
-        }
-        .bonus-title {
-            font-family: 'Orbitron', monospace;
-            color: var(--neon-blue);
-            font-size: 1em;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .bonus-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 12px;
-        }
+        .bonus-section { margin-top: 15px; padding: 15px; background: rgba(176, 38, 255, 0.1); border: 2px solid var(--neon-purple); border-radius: 16px; }
+        .bonus-title { font-family: 'Orbitron', monospace; color: var(--neon-blue); font-size: 1em; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 2px; }
+        .bonus-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
         .bonus-option {
-            background: rgba(0, 0, 0, 0.4);
-            border: 2px solid var(--neon-purple);
-            border-radius: 12px;
-            padding: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 0.9em;
-            color: var(--neon-blue);
-            font-weight: 600;
+            background: rgba(0, 0, 0, 0.4); border: 2px solid var(--neon-purple); border-radius: 12px;
+            padding: 12px; cursor: pointer; transition: all 0.3s; font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9em; color: var(--neon-blue); font-weight: 600;
         }
-        .bonus-option:hover {
-            background: rgba(176, 38, 255, 0.2);
-            border-color: var(--neon-blue);
-            transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(176, 38, 255, 0.4);
-        }
-        .bonus-option.selected {
-            background: rgba(57, 255, 20, 0.2);
-            border-color: var(--neon-green);
-            color: var(--neon-green);
-            box-shadow: 0 0 25px rgba(57, 255, 20, 0.5);
-        }
-        .bonus-emoji {
-            font-size: 1.3em;
-            display: block;
-            margin-bottom: 4px;
-        }
+        .bonus-option:hover { background: rgba(176, 38, 255, 0.2); border-color: var(--neon-blue); transform: translateY(-2px); box-shadow: 0 0 20px rgba(176, 38, 255, 0.4); }
+        .bonus-option.selected { background: rgba(57, 255, 20, 0.2); border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 25px rgba(57, 255, 20, 0.5); }
+        .bonus-emoji { font-size: 1.3em; display: block; margin-bottom: 4px; }
 
-        /* МОБИЛЬНАЯ АДАПТАЦИЯ */
         @media (max-width: 768px) {
             .main-title { font-size: 1.3em; }
             .header p { font-size: 0.8em; }
             .character-select { grid-template-columns: repeat(2, 1fr); }
             .character-card svg { width: 70px; height: 70px; }
             .options-grid { grid-template-columns: repeat(2, 1fr); }
-            .game-scene { height: 280px; }
+            .game-scene { height: 300px; }
             .task-card { grid-template-columns: 1fr; }
             .planet-mercury { width: 40px; height: 40px; bottom: 120px; }
             .planet-venus { width: 55px; height: 55px; bottom: 140px; }
@@ -754,7 +326,8 @@
             .planet-uranus { width: 60px; height: 60px; bottom: 160px; }
             .planet-neptune { width: 55px; height: 55px; bottom: 110px; }
             .portal { width: 55px; height: 85px; bottom: 80px; }
-            .player-character { width: 140px; height: 140px; bottom: 60px; }
+            .player-character { width: 200px; height: 200px; bottom: 60px; overflow: visible !important; }
+            .player-character svg { overflow: visible !important; }
             .verb-v1 { font-size: 1.6em; }
             .bonus-options { grid-template-columns: 1fr; }
             .timer-bar { top: 8px; padding: 6px 15px; font-size: 0.9em; }
@@ -770,8 +343,9 @@
             .main-wrapper { padding: 5px; }
             .main-title { font-size: 1.1em; }
             .header p { font-size: 0.7em; }
-            .game-scene { height: 240px; }
-            .player-character { width: 120px; height: 120px; }
+            .game-scene { height: 260px; }
+            .player-character { width: 160px; height: 160px; bottom: 50px; overflow: visible !important; }
+            .player-character svg { overflow: visible !important; }
             .planet-mercury { width: 35px; height: 35px; }
             .planet-venus { width: 45px; height: 45px; }
             .planet-earth { width: 50px; height: 50px; }
@@ -795,13 +369,12 @@
     <div class="level-badge" id="levelBadge">Level 2: Type Mode</div>
     <div class="tab-switch-warning" id="tabWarning">Tab Switches: <span id="tabSwitchCount">0</span></div>
 
-    <audio id="bgMusic" loop>
+    <!-- МУЗЫКА ПО УМОЛЧАНИЮ -->
+    <audio id="bgMusic" loop autoplay>
         <source src="background-music.mp3" type="audio/mpeg">
     </audio>
     <div class="music-control">
-        <button class="music-btn" id="musicToggle" onclick="toggleMusic()">🔇</button>
-        <label class="music-label" for="musicUpload">Load Music</label>
-        <input type="file" id="musicUpload" class="music-upload" accept="audio/*" onchange="loadMusic(event)">
+        <button class="music-btn" id="musicToggle" onclick="toggleMusic()">🔊</button>
     </div>
 
     <div class="main-wrapper">
@@ -827,285 +400,151 @@
                 
                 <div class="character-select">
                     <div class="character-card" onclick="selectCharacter('astronaut', this)">
-                        <svg viewBox="0 0 200 220">
-                            <defs>
-                                <radialGradient id="catBody" cx="40%" cy="40%"><stop offset="0%" stop-color="#f3e8ff"/><stop offset="100%" stop-color="#a855f7"/></radialGradient>
-                                <radialGradient id="helmetGlass" cx="30%" cy="30%"><stop offset="0%" stop-color="rgba(255,255,255,0.7)"/><stop offset="100%" stop-color="rgba(96,165,250,0.3)"/></radialGradient>
-                                <filter id="softShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.25"/></filter>
-                            </defs>
-                            <rect x="60" y="130" width="80" height="45" rx="20" fill="#7c3aed" filter="url(#softShadow)"/>
-                            <ellipse cx="100" cy="165" rx="48" ry="52" fill="url(#catBody)" filter="url(#softShadow)"/>
-                            <path d="M 65 55 Q 50 15 90 35 Z" fill="#a855f7" stroke="#7c3aed" stroke-width="2"/>
-                            <path d="M 135 55 Q 150 15 110 35 Z" fill="#a855f7" stroke="#7c3aed" stroke-width="2"/>
-                            <circle cx="100" cy="85" r="52" fill="#faf5ff" filter="url(#softShadow)"/>
-                            <circle cx="100" cy="85" r="52" fill="url(#helmetGlass)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
-                            <ellipse cx="75" cy="65" rx="15" ry="8" fill="white" opacity="0.6" transform="rotate(-20 75 65)"/>
-                            <ellipse cx="80" cy="80" rx="16" ry="18" fill="#fff"/>
-                            <ellipse cx="120" cy="80" rx="16" ry="18" fill="#fff"/>
-                            <circle cx="84" cy="83" r="9" fill="#1e293b"/>
-                            <circle cx="124" cy="83" r="9" fill="#1e293b"/>
-                            <circle cx="87" cy="80" r="4" fill="#fff"/>
-                            <circle cx="127" cy="80" r="4" fill="#fff"/>
-                            <circle cx="81" cy="87" r="2" fill="#fff" opacity="0.7"/>
-                            <circle cx="121" cy="87" r="2" fill="#fff" opacity="0.7"/>
-                            <circle cx="100" cy="96" r="4" fill="#f472b6"/>
-                            <path d="M 94 102 Q 100 108 106 102" stroke="#1e293b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                            <circle cx="65" cy="95" r="7" fill="#f9a8d4" opacity="0.5"/>
-                            <circle cx="135" cy="95" r="7" fill="#f9a8d4" opacity="0.5"/>
-                            <ellipse cx="75" cy="210" rx="20" ry="14" fill="#a855f7"/>
-                            <ellipse cx="125" cy="210" rx="20" ry="14" fill="#a855f7"/>
-                            <line x1="100" y1="33" x2="100" y2="15" stroke="#c084fc" stroke-width="4" stroke-linecap="round"/>
-                            <circle cx="100" cy="10" r="7" fill="#fbbf24" filter="url(#softShadow)">
-                                <animate attributeName="r" values="7;9;7" dur="1.5s" repeatCount="indefinite"/>
-                            </circle>
+                        <svg viewBox="0 0 200 200">
+                            <circle cx="100" cy="80" r="45" fill="#e9d5ff"/>
+                            <circle cx="85" cy="70" r="8" fill="#1e293b"/>
+                            <circle cx="115" cy="70" r="8" fill="#1e293b"/>
+                            <circle cx="87" cy="68" r="3" fill="#fff"/>
+                            <circle cx="117" cy="68" r="3" fill="#fff"/>
+                            <path d="M 92 90 Q 100 96 108 90" stroke="#1e293b" stroke-width="2" fill="none"/>
+                            <ellipse cx="100" cy="130" rx="35" ry="40" fill="#c084fc"/>
+                            <circle cx="100" cy="50" r="8" fill="#fbbf24"/>
+                            <line x1="100" y1="50" x2="100" y2="35" stroke="#c084fc" stroke-width="3"/>
+                            <ellipse cx="70" cy="120" rx="10" ry="18" fill="#c084fc" transform="rotate(-20 70 120)"/>
+                            <ellipse cx="130" cy="120" rx="10" ry="18" fill="#c084fc" transform="rotate(20 130 120)"/>
+                            <ellipse cx="85" cy="170" rx="12" ry="8" fill="#a855f7"/>
+                            <ellipse cx="115" cy="170" rx="12" ry="8" fill="#a855f7"/>
                         </svg>
                         <h3>Astro Cat</h3>
                     </div>
                     <div class="character-card" onclick="selectCharacter('robot', this)">
-                        <svg viewBox="0 0 200 220">
-                            <defs>
-                                <linearGradient id="robotMetal" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#dbeafe"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
-                                <radialGradient id="robotHead" cx="30%" cy="30%"><stop offset="0%" stop-color="#f0f9ff"/><stop offset="100%" stop-color="#bfdbfe"/></radialGradient>
-                                <filter id="metalShadow"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-opacity="0.3"/></filter>
-                            </defs>
-                            <line x1="100" y1="45" x2="100" y2="20" stroke="#60a5fa" stroke-width="5" stroke-linecap="round"/>
-                            <circle cx="100" cy="15" r="8" fill="#f87171" filter="url(#metalShadow)">
-                                <animate attributeName="fill" values="#f87171;#fbbf24;#f87171" dur="2s" repeatCount="indefinite"/>
-                            </circle>
-                            <rect x="65" y="120" width="70" height="75" rx="20" fill="url(#robotMetal)" filter="url(#metalShadow)"/>
-                            <rect x="80" y="135" width="40" height="30" rx="10" fill="rgba(255,255,255,0.3)"/>
-                            <rect x="60" y="45" width="80" height="75" rx="25" fill="url(#robotHead)" filter="url(#metalShadow)"/>
-                            <rect x="70" y="55" width="60" height="50" rx="15" fill="#0f172a"/>
-                            <circle cx="88" cy="75" r="10" fill="#4ade80">
-                                <animate attributeName="ry" values="10;2;10" dur="3s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle cx="112" cy="75" r="10" fill="#4ade80">
-                                <animate attributeName="ry" values="10;2;10" dur="3s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle cx="91" cy="72" r="3" fill="#fff" opacity="0.8"/>
-                            <circle cx="115" cy="72" r="3" fill="#fff" opacity="0.8"/>
-                            <rect x="85" y="92" width="30" height="6" rx="3" fill="#4ade80" opacity="0.6"/>
-                            <rect x="35" y="130" width="22" height="50" rx="11" fill="#60a5fa" filter="url(#metalShadow)">
-                                <animateTransform attributeName="transform" type="rotate" values="0 46 130; -10 46 130; 0 46 130" dur="2s" repeatCount="indefinite"/>
-                            </rect>
-                            <rect x="143" y="130" width="22" height="50" rx="11" fill="#60a5fa" filter="url(#metalShadow)">
-                                <animateTransform attributeName="transform" type="rotate" values="0 154 130; 10 154 130; 0 154 130" dur="2s" repeatCount="indefinite"/>
-                            </rect>
-                            <rect x="75" y="195" width="20" height="22" rx="10" fill="#3b82f6"/>
-                            <rect x="105" y="195" width="20" height="22" rx="10" fill="#3b82f6"/>
+                        <svg viewBox="0 0 200 200">
+                            <rect x="70" y="50" width="60" height="50" rx="10" fill="#bfdbfe"/>
+                            <rect x="75" y="55" width="50" height="30" rx="8" fill="#0f172a"/>
+                            <circle cx="88" cy="70" r="6" fill="#4ade80"/>
+                            <circle cx="112" cy="70" r="6" fill="#4ade80"/>
+                            <rect x="85" y="90" width="30" height="4" rx="2" fill="#4ade80"/>
+                            <line x1="100" y1="50" x2="100" y2="35" stroke="#60a5fa" stroke-width="3"/>
+                            <circle cx="100" cy="30" r="5" fill="#f87171"/>
+                            <rect x="75" y="110" width="50" height="55" rx="8" fill="#60a5fa"/>
+                            <rect x="55" y="115" width="15" height="35" rx="7" fill="#60a5fa"/>
+                            <rect x="130" y="115" width="15" height="35" rx="7" fill="#60a5fa"/>
+                            <rect x="80" y="165" width="15" height="15" rx="5" fill="#3b82f6"/>
+                            <rect x="105" y="165" width="15" height="15" rx="5" fill="#3b82f6"/>
                         </svg>
                         <h3>Robo Friend</h3>
                     </div>
                     <div class="character-card" onclick="selectCharacter('alien', this)">
-                        <svg viewBox="0 0 200 220">
-                            <defs>
-                                <radialGradient id="alienSkin" cx="40%" cy="40%"><stop offset="0%" stop-color="#dcfce7"/><stop offset="100%" stop-color="#22c55e"/></radialGradient>
-                                <radialGradient id="alienEye" cx="30%" cy="30%"><stop offset="0%" stop-color="#fef08a"/><stop offset="100%" stop-color="#eab308"/></radialGradient>
-                                <filter id="alienShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.25"/></filter>
-                            </defs>
-                            <ellipse cx="100" cy="155" rx="45" ry="55" fill="url(#alienSkin)" filter="url(#alienShadow)"/>
-                            <ellipse cx="100" cy="80" rx="55" ry="60" fill="url(#alienSkin)" filter="url(#alienShadow)"/>
-                            <ellipse cx="75" cy="75" rx="20" ry="26" fill="#0f172a"/>
-                            <ellipse cx="125" cy="75" rx="20" ry="26" fill="#0f172a"/>
-                            <ellipse cx="78" cy="78" rx="12" ry="16" fill="url(#alienEye)"/>
-                            <ellipse cx="128" cy="78" rx="12" ry="16" fill="url(#alienEye)"/>
-                            <circle cx="80" cy="78" r="6" fill="#0f172a"/>
-                            <circle cx="130" cy="78" r="6" fill="#0f172a"/>
-                            <circle cx="83" cy="74" r="4" fill="#fff" opacity="0.9"/>
-                            <circle cx="133" cy="74" r="4" fill="#fff" opacity="0.9"/>
-                            <circle cx="76" cy="82" r="2" fill="#fff" opacity="0.6"/>
-                            <circle cx="126" cy="82" r="2" fill="#fff" opacity="0.6"/>
-                            <path d="M 90 105 Q 100 112 110 105" stroke="#0f172a" stroke-width="2" fill="none" stroke-linecap="round"/>
-                            <path d="M 55 140 Q 30 150 25 180" stroke="#22c55e" stroke-width="14" fill="none" stroke-linecap="round">
-                                <animateTransform attributeName="transform" type="rotate" values="0 55 140; -8 55 140; 0 55 140" dur="2s" repeatCount="indefinite"/>
-                            </path>
-                            <path d="M 145 140 Q 170 150 175 180" stroke="#22c55e" stroke-width="14" fill="none" stroke-linecap="round">
-                                <animateTransform attributeName="transform" type="rotate" values="0 145 140; 8 145 140; 0 145 140" dur="2s" repeatCount="indefinite"/>
-                            </path>
-                            <ellipse cx="75" cy="210" rx="18" ry="12" fill="#16a34a"/>
-                            <ellipse cx="125" cy="210" rx="18" ry="12" fill="#16a34a"/>
+                        <svg viewBox="0 0 200 200">
+                            <ellipse cx="100" cy="130" rx="40" ry="50" fill="#4ade80"/>
+                            <ellipse cx="100" cy="75" rx="50" ry="55" fill="#22c55e"/>
+                            <ellipse cx="80" cy="70" rx="15" ry="20" fill="#0f172a"/>
+                            <ellipse cx="120" cy="70" rx="15" ry="20" fill="#0f172a"/>
+                            <circle cx="82" cy="72" r="8" fill="#fbbf24"/>
+                            <circle cx="122" cy="72" r="8" fill="#fbbf24"/>
+                            <circle cx="84" cy="70" r="3" fill="#fff"/>
+                            <circle cx="124" cy="70" r="3" fill="#fff"/>
+                            <ellipse cx="100" cy="100" rx="10" ry="6" fill="#0f172a"/>
+                            <path d="M 60 130 Q 40 140 35 160" stroke="#22c55e" stroke-width="10" fill="none" stroke-linecap="round"/>
+                            <path d="M 140 130 Q 160 140 165 160" stroke="#22c55e" stroke-width="10" fill="none" stroke-linecap="round"/>
+                            <ellipse cx="80" cy="180" rx="12" ry="8" fill="#16a34a"/>
+                            <ellipse cx="120" cy="180" rx="12" ry="8" fill="#16a34a"/>
                         </svg>
                         <h3>Space Alien</h3>
                     </div>
                     <div class="character-card" onclick="selectCharacter('ninja', this)">
-                        <svg viewBox="0 0 200 220">
-                            <defs>
-                                <linearGradient id="ninjaSuit" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#334155"/><stop offset="100%" stop-color="#0f172a"/></linearGradient>
-                                <filter id="ninjaShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.4"/></filter>
-                            </defs>
-                            <ellipse cx="100" cy="150" rx="42" ry="55" fill="url(#ninjaSuit)" filter="url(#ninjaShadow)"/>
-                            <rect x="60" y="140" width="80" height="15" rx="5" fill="#f87171"/>
-                            <circle cx="100" cy="80" r="45" fill="url(#ninjaSuit)" filter="url(#ninjaShadow)"/>
-                            <rect x="55" y="65" width="90" height="18" rx="6" fill="#f87171"/>
-                            <path d="M 145 74 Q 165 65 175 75 Q 165 85 145 78" fill="#f87171">
-                                <animate attributeName="d" values="M 145 74 Q 165 65 175 75 Q 165 85 145 78; M 145 74 Q 165 85 175 75 Q 165 65 145 78; M 145 74 Q 165 65 175 75 Q 165 85 145 78" dur="2s" repeatCount="indefinite"/>
-                            </path>
-                            <path d="M 75 75 L 90 75 L 88 82 L 77 82 Z" fill="#fff"/>
-                            <path d="M 110 75 L 125 75 L 123 82 L 112 82 Z" fill="#fff"/>
-                            <circle cx="84" cy="78" r="3" fill="#0f172a">
-                                <animate attributeName="cx" values="84;86;84" dur="3s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle cx="119" cy="78" r="3" fill="#0f172a">
-                                <animate attributeName="cx" values="119;117;119" dur="3s" repeatCount="indefinite"/>
-                            </circle>
-                            <ellipse cx="60" cy="145" rx="14" ry="24" fill="#1e293b" transform="rotate(-15 60 145)"/>
-                            <ellipse cx="140" cy="145" rx="14" ry="24" fill="#1e293b" transform="rotate(15 140 145)"/>
-                            <line x1="130" y1="110" x2="160" y2="70" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
-                            <polygon points="160,70 164,66 156,66" fill="#fbbf24"/>
-                            <ellipse cx="78" cy="205" rx="16" ry="14" fill="#0f172a"/>
-                            <ellipse cx="122" cy="205" rx="16" ry="14" fill="#0f172a"/>
+                        <svg viewBox="0 0 200 200">
+                            <ellipse cx="100" cy="130" rx="38" ry="50" fill="#1e293b"/>
+                            <circle cx="100" cy="75" r="42" fill="#0f172a"/>
+                            <rect x="58" y="65" width="84" height="14" rx="6" fill="#f87171"/>
+                            <circle cx="85" cy="72" r="6" fill="#fff"/>
+                            <circle cx="115" cy="72" r="6" fill="#fff"/>
+                            <circle cx="85" cy="72" r="3" fill="#0f172a"/>
+                            <circle cx="115" cy="72" r="3" fill="#0f172a"/>
+                            <path d="M 142 72 Q 160 65 170 75" stroke="#f87171" stroke-width="5" fill="none"/>
+                            <ellipse cx="62" cy="130" rx="10" ry="20" fill="#1e293b" transform="rotate(-15 62 130)"/>
+                            <ellipse cx="138" cy="130" rx="10" ry="20" fill="#1e293b" transform="rotate(15 138 130)"/>
+                            <line x1="145" y1="125" x2="170" y2="95" stroke="#94a3b8" stroke-width="3"/>
+                            <ellipse cx="82" cy="180" rx="12" ry="10" fill="#0f172a"/>
+                            <ellipse cx="118" cy="180" rx="12" ry="10" fill="#0f172a"/>
                         </svg>
                         <h3>Space Ninja</h3>
                     </div>
                     <div class="character-card" onclick="selectCharacter('dragon', this)">
-                        <svg viewBox="0 0 200 220">
-                            <defs>
-                                <radialGradient id="dragonBody" cx="40%" cy="40%"><stop offset="0%" stop-color="#fecaca"/><stop offset="100%" stop-color="#dc2626"/></radialGradient>
-                                <filter id="dragonShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.3"/></filter>
-                            </defs>
-                            <path d="M 100 180 Q 140 200 160 180 Q 180 160 170 150" stroke="#dc2626" stroke-width="16" fill="none" stroke-linecap="round">
-                                <animateTransform attributeName="transform" type="rotate" values="0 100 180; 10 100 180; 0 100 180" dur="2s" repeatCount="indefinite"/>
-                            </path>
-                            <ellipse cx="100" cy="145" rx="48" ry="55" fill="url(#dragonBody)" filter="url(#dragonShadow)"/>
-                            <ellipse cx="100" cy="80" rx="52" ry="55" fill="#fee2e2" filter="url(#dragonShadow)"/>
-                            <path d="M 65 45 Q 50 20 75 30" fill="#f87171" stroke="#dc2626" stroke-width="2">
-                                <animateTransform attributeName="transform" type="rotate" values="0 65 45; -5 65 45; 0 65 45" dur="1.5s" repeatCount="indefinite"/>
-                            </path>
-                            <path d="M 135 45 Q 150 20 125 30" fill="#f87171" stroke="#dc2626" stroke-width="2">
-                                <animateTransform attributeName="transform" type="rotate" values="0 135 45; 5 135 45; 0 135 45" dur="1.5s" repeatCount="indefinite"/>
-                            </path>
-                            <circle cx="80" cy="75" r="14" fill="#fff"/>
-                            <circle cx="120" cy="75" r="14" fill="#fff"/>
-                            <circle cx="83" cy="78" r="8" fill="#0f172a">
-                                <animate attributeName="r" values="8;5;8" dur="3s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle cx="123" cy="78" r="8" fill="#0f172a">
-                                <animate attributeName="r" values="8;5;8" dur="3s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle cx="86" cy="75" r="3" fill="#fff"/>
-                            <circle cx="126" cy="75" r="3" fill="#fff"/>
-                            <circle cx="100" cy="95" r="5" fill="#f472b6"/>
-                            <path d="M 90 105 Q 100 112 110 105" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                            <path d="M 55 120 Q 25 100 30 140 Q 45 130 55 140" fill="#f87171" stroke="#dc2626" stroke-width="2">
-                                <animateTransform attributeName="transform" type="rotate" values="0 55 120; -15 55 120; 0 55 120" dur="2s" repeatCount="indefinite"/>
-                            </path>
-                            <path d="M 145 120 Q 175 100 170 140 Q 155 130 145 140" fill="#f87171" stroke="#dc2626" stroke-width="2">
-                                <animateTransform attributeName="transform" type="rotate" values="0 145 120; 15 145 120; 0 145 120" dur="2s" repeatCount="indefinite"/>
-                            </path>
-                            <ellipse cx="75" cy="205" rx="18" ry="14" fill="#b91c1c"/>
-                            <ellipse cx="125" cy="205" rx="18" ry="14" fill="#b91c1c"/>
+                        <svg viewBox="0 0 200 200">
+                            <ellipse cx="100" cy="130" rx="42" ry="50" fill="#dc2626"/>
+                            <ellipse cx="100" cy="75" rx="48" ry="52" fill="#fecaca"/>
+                            <path d="M 65 45 Q 55 25 75 35" fill="#f87171"/>
+                            <path d="M 135 45 Q 145 25 125 35" fill="#f87171"/>
+                            <circle cx="82" cy="70" r="10" fill="#fbbf24"/>
+                            <circle cx="118" cy="70" r="10" fill="#fbbf24"/>
+                            <circle cx="82" cy="70" r="6" fill="#0f172a"/>
+                            <circle cx="118" cy="70" r="6" fill="#0f172a"/>
+                            <circle cx="84" cy="68" r="2" fill="#fff"/>
+                            <circle cx="120" cy="68" r="2" fill="#fff"/>
+                            <path d="M 92 95 Q 100 102 108 95" stroke="#0f172a" stroke-width="2" fill="none"/>
+                            <path d="M 55 120 Q 30 110 35 140" stroke="#dc2626" stroke-width="10" fill="none" stroke-linecap="round"/>
+                            <path d="M 145 120 Q 170 110 165 140" stroke="#dc2626" stroke-width="10" fill="none" stroke-linecap="round"/>
+                            <ellipse cx="80" cy="180" rx="14" ry="10" fill="#b91c1c"/>
+                            <ellipse cx="120" cy="180" rx="14" ry="10" fill="#b91c1c"/>
                         </svg>
                         <h3>Fire Dragon</h3>
                     </div>
                     <div class="character-card" onclick="selectCharacter('pirate', this)">
-                        <svg viewBox="0 0 200 220">
-                            <defs>
-                                <linearGradient id="pirateCoat" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#b45309"/><stop offset="100%" stop-color="#78350f"/></linearGradient>
-                                <radialGradient id="pirateFace" cx="40%" cy="40%"><stop offset="0%" stop-color="#fcd34d"/><stop offset="100%" stop-color="#d97706"/></radialGradient>
-                                <filter id="pirateShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.3"/></filter>
-                            </defs>
-                            <ellipse cx="100" cy="150" rx="45" ry="55" fill="url(#pirateCoat)" filter="url(#pirateShadow)"/>
-                            <rect x="65" y="145" width="70" height="12" rx="4" fill="#fbbf24"/>
-                            <circle cx="100" cy="151" r="8" fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
-                            <circle cx="100" cy="80" r="48" fill="url(#pirateFace)" filter="url(#pirateShadow)"/>
-                            <path d="M 50 60 Q 100 30 150 60 L 145 75 Q 100 60 55 75 Z" fill="#0f172a"/>
-                            <rect x="70" y="60" width="60" height="10" rx="3" fill="#dc2626"/>
-                            <circle cx="80" cy="80" r="10" fill="#fff"/>
-                            <circle cx="120" cy="80" r="10" fill="#fff"/>
-                            <circle cx="82" cy="82" r="5" fill="#0f172a">
-                                <animate attributeName="cx" values="82;84;82" dur="4s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle cx="122" cy="82" r="5" fill="#0f172a">
-                                <animate attributeName="cx" values="122;120;122" dur="4s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle cx="84" cy="80" r="2" fill="#fff"/>
-                            <circle cx="124" cy="80" r="2" fill="#fff"/>
-                            <path d="M 90 100 Q 100 108 110 100" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                            <path d="M 85 110 Q 100 125 115 110" fill="#78350f" opacity="0.8"/>
-                            <path d="M 55 140 Q 30 150 25 175" stroke="#b45309" stroke-width="14" fill="none" stroke-linecap="round"/>
-                            <path d="M 145 140 Q 170 150 175 175" stroke="#b45309" stroke-width="14" fill="none" stroke-linecap="round">
-                                <animateTransform attributeName="transform" type="rotate" values="0 145 140; 15 145 140; 0 145 140" dur="2s" repeatCount="indefinite"/>
-                            </path>
-                            <line x1="170" y1="170" x2="185" y2="145" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
-                            <ellipse cx="78" cy="208" rx="18" ry="14" fill="#78350f"/>
-                            <ellipse cx="122" cy="208" rx="18" ry="14" fill="#78350f"/>
+                        <svg viewBox="0 0 200 200">
+                            <ellipse cx="100" cy="130" rx="40" ry="50" fill="#92400e"/>
+                            <circle cx="100" cy="75" r="45" fill="#fbbf24"/>
+                            <path d="M 55 55 Q 100 35 145 55 L 140 68 Q 100 55 60 68 Z" fill="#0f172a"/>
+                            <circle cx="82" cy="78" r="8" fill="#fff"/>
+                            <circle cx="118" cy="78" r="8" fill="#fff"/>
+                            <circle cx="82" cy="78" r="5" fill="#0f172a"/>
+                            <circle cx="118" cy="78" r="5" fill="#0f172a"/>
+                            <path d="M 90 95 Q 100 103 110 95" stroke="#0f172a" stroke-width="2" fill="none"/>
+                            <path d="M 58 130 Q 35 140 30 160" stroke="#92400e" stroke-width="10" fill="none" stroke-linecap="round"/>
+                            <path d="M 142 130 Q 165 140 170 160" stroke="#92400e" stroke-width="10" fill="none" stroke-linecap="round"/>
+                            <line x1="165" y1="155" x2="180" y2="135" stroke="#94a3b8" stroke-width="3"/>
+                            <ellipse cx="82" cy="180" rx="14" ry="10" fill="#78350f"/>
+                            <ellipse cx="118" cy="180" rx="14" ry="10" fill="#78350f"/>
                         </svg>
                         <h3>Space Pirate</h3>
                     </div>
                     <div class="character-card" onclick="selectCharacter('phoenix', this)">
-                        <svg viewBox="0 0 200 220">
-                            <defs>
-                                <radialGradient id="phoenixBody" cx="40%" cy="40%"><stop offset="0%" stop-color="#fef3c7"/><stop offset="50%" stop-color="#f97316"/><stop offset="100%" stop-color="#ea580c"/></radialGradient>
-                                <filter id="phoenixGlow"><feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#f97316" flood-opacity="0.4"/></filter>
-                            </defs>
-                            <ellipse cx="100" cy="145" rx="45" ry="55" fill="url(#phoenixBody)" filter="url(#phoenixGlow)"/>
-                            <ellipse cx="100" cy="80" rx="48" ry="52" fill="#ffedd5" filter="url(#phoenixGlow)"/>
-                            <circle cx="80" cy="75" r="12" fill="#fff"/>
-                            <circle cx="120" cy="75" r="12" fill="#fff"/>
-                            <circle cx="83" cy="78" r="7" fill="#0f172a">
-                                <animate attributeName="r" values="7;4;7" dur="3s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle cx="123" cy="78" r="7" fill="#0f172a">
-                                <animate attributeName="r" values="7;4;7" dur="3s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle cx="86" cy="75" r="3" fill="#fff"/>
-                            <circle cx="126" cy="75" r="3" fill="#fff"/>
-                            <path d="M 94 92 L 100 104 L 106 92 Z" fill="#f97316" stroke="#ea580c" stroke-width="1"/>
-                            <path d="M 55 60 Q 25 30 40 20 Q 65 40 75 55" fill="#f97316" opacity="0.9">
-                                <animate attributeName="d" values="M 55 60 Q 25 30 40 20 Q 65 40 75 55; M 55 60 Q 25 20 40 10 Q 65 30 75 55; M 55 60 Q 25 30 40 20 Q 65 40 75 55" dur="2s" repeatCount="indefinite"/>
-                            </path>
-                            <path d="M 145 60 Q 175 30 160 20 Q 135 40 125 55" fill="#f97316" opacity="0.9">
-                                <animate attributeName="d" values="M 145 60 Q 175 30 160 20 Q 135 40 125 55; M 145 60 Q 175 20 160 10 Q 135 30 125 55; M 145 60 Q 175 30 160 20 Q 135 40 125 55" dur="2s" repeatCount="indefinite"/>
-                            </path>
-                            <path d="M 50 150 Q 20 160 15 190" stroke="#f97316" stroke-width="14" fill="none" stroke-linecap="round">
-                                <animateTransform attributeName="transform" type="rotate" values="0 50 150; -5 50 150; 0 50 150" dur="2s" repeatCount="indefinite"/>
-                            </path>
-                            <path d="M 150 150 Q 180 160 185 190" stroke="#f97316" stroke-width="14" fill="none" stroke-linecap="round">
-                                <animateTransform attributeName="transform" type="rotate" values="0 150 150; 5 150 150; 0 150 150" dur="2s" repeatCount="indefinite"/>
-                            </path>
-                            <ellipse cx="78" cy="208" rx="16" ry="12" fill="#c2410c"/>
-                            <ellipse cx="122" cy="208" rx="16" ry="12" fill="#c2410c"/>
+                        <svg viewBox="0 0 200 200">
+                            <ellipse cx="100" cy="130" rx="40" ry="50" fill="#ea580c"/>
+                            <ellipse cx="100" cy="75" rx="45" ry="50" fill="#f97316"/>
+                            <circle cx="82" cy="70" r="10" fill="#fbbf24"/>
+                            <circle cx="118" cy="70" r="10" fill="#fbbf24"/>
+                            <circle cx="82" cy="70" r="6" fill="#0f172a"/>
+                            <circle cx="118" cy="70" r="6" fill="#0f172a"/>
+                            <circle cx="84" cy="68" r="2" fill="#fff"/>
+                            <circle cx="120" cy="68" r="2" fill="#fff"/>
+                            <path d="M 95 92 L 100 100 L 105 92 Z" fill="#f97316"/>
+                            <path d="M 55 55 Q 30 35 45 25 Q 65 45 75 55" fill="#f97316"/>
+                            <path d="M 145 55 Q 170 35 155 25 Q 135 45 125 55" fill="#f97316"/>
+                            <path d="M 50 130 Q 25 140 20 165" stroke="#f97316" stroke-width="10" fill="none" stroke-linecap="round"/>
+                            <path d="M 150 130 Q 175 140 180 165" stroke="#f97316" stroke-width="10" fill="none" stroke-linecap="round"/>
+                            <ellipse cx="82" cy="180" rx="12" ry="10" fill="#c2410c"/>
+                            <ellipse cx="118" cy="180" rx="12" ry="10" fill="#c2410c"/>
                         </svg>
                         <h3>Phoenix</h3>
                     </div>
                     <div class="character-card" onclick="selectCharacter('hero', this)">
-                        <svg viewBox="0 0 200 220">
-                            <defs>
-                                <linearGradient id="heroSuit" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#93c5fd"/><stop offset="100%" stop-color="#2563eb"/></linearGradient>
-                                <radialGradient id="heroFace" cx="40%" cy="40%"><stop offset="0%" stop-color="#f0f9ff"/><stop offset="100%" stop-color="#dbeafe"/></radialGradient>
-                                <filter id="heroShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.3"/></filter>
-                            </defs>
-                            <path d="M 55 85 Q 30 130 40 190 L 65 180 Q 60 130 70 95 Z" fill="#dc2626" opacity="0.9">
-                                <animateTransform attributeName="transform" type="rotate" values="0 55 85; -5 55 85; 0 55 85" dur="2s" repeatCount="indefinite"/>
-                            </path>
-                            <path d="M 145 85 Q 170 130 160 190 L 135 180 Q 140 130 130 95 Z" fill="#dc2626" opacity="0.9">
-                                <animateTransform attributeName="transform" type="rotate" values="0 145 85; 5 145 85; 0 145 85" dur="2s" repeatCount="indefinite"/>
-                            </path>
-                            <ellipse cx="100" cy="145" rx="42" ry="55" fill="url(#heroSuit)" filter="url(#heroShadow)"/>
-                            <polygon points="100,120 104,132 116,132 106,140 110,152 100,144 90,152 94,140 84,132 96,132" fill="#fbbf24" filter="url(#heroShadow)">
-                                <animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite"/>
-                            </polygon>
-                            <circle cx="100" cy="80" r="48" fill="url(#heroFace)" filter="url(#heroShadow)"/>
-                            <path d="M 55 65 Q 100 45 145 65 L 145 85 Q 100 70 55 85 Z" fill="#1e293b"/>
-                            <ellipse cx="80" cy="75" rx="10" ry="8" fill="#fff"/>
-                            <ellipse cx="120" cy="75" rx="10" ry="8" fill="#fff"/>
-                            <circle cx="83" cy="76" r="5" fill="#0f172a">
-                                <animate attributeName="cx" values="83;85;83" dur="3s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle cx="123" cy="76" r="5" fill="#0f172a">
-                                <animate attributeName="cx" values="123;121;123" dur="3s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle cx="85" cy="74" r="2" fill="#fff"/>
-                            <circle cx="125" cy="74" r="2" fill="#fff"/>
-                            <path d="M 90 95 Q 100 102 110 95" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                            <ellipse cx="58" cy="145" rx="14" ry="24" fill="#3b82f6" transform="rotate(-15 58 145)">
-                                <animateTransform attributeName="transform" type="rotate" values="-15 58 145; -5 58 145; -15 58 145" dur="2s" repeatCount="indefinite"/>
-                            </ellipse>
-                            <ellipse cx="142" cy="145" rx="14" ry="24" fill="#3b82f6" transform="rotate(15 142 145)">
-                                <animateTransform attributeName="transform" type="rotate" values="15 142 145; 5 142 145; 15 142 145" dur="2s" repeatCount="indefinite"/>
-                            </ellipse>
-                            <ellipse cx="78" cy="208" rx="18" ry="14" fill="#1d4ed8"/>
-                            <ellipse cx="122" cy="208" rx="18" ry="14" fill="#1d4ed8"/>
+                        <svg viewBox="0 0 200 200">
+                            <path d="M 55 85 Q 30 130 40 180 L 65 170 Q 60 130 70 95 Z" fill="#dc2626"/>
+                            <path d="M 145 85 Q 170 130 160 180 L 135 170 Q 140 130 130 95 Z" fill="#dc2626"/>
+                            <ellipse cx="100" cy="130" rx="38" ry="50" fill="#2563eb"/>
+                            <polygon points="100,115 103,125 113,125 105,131 108,141 100,135 92,141 95,131 87,125 97,125" fill="#fbbf24"/>
+                            <circle cx="100" cy="75" r="45" fill="#dbeafe"/>
+                            <path d="M 60 60 Q 100 45 140 60 L 140 78 Q 100 68 60 78 Z" fill="#1e293b"/>
+                            <circle cx="83" cy="70" r="7" fill="#fff"/>
+                            <circle cx="117" cy="70" r="7" fill="#fff"/>
+                            <circle cx="83" cy="70" r="4" fill="#0f172a"/>
+                            <circle cx="117" cy="70" r="4" fill="#0f172a"/>
+                            <path d="M 90 90 Q 100 97 110 90" stroke="#0f172a" stroke-width="2" fill="none"/>
+                            <ellipse cx="60" cy="130" rx="10" ry="20" fill="#3b82f6" transform="rotate(-15 60 130)"/>
+                            <ellipse cx="140" cy="130" rx="10" ry="20" fill="#3b82f6" transform="rotate(15 140 130)"/>
+                            <ellipse cx="82" cy="180" rx="14" ry="10" fill="#1d4ed8"/>
+                            <ellipse cx="118" cy="180" rx="14" ry="10" fill="#1d4ed8"/>
                         </svg>
                         <h3>Super Hero</h3>
                     </div>
@@ -1132,71 +571,31 @@
             </div>
 
             <div class="game-scene" id="gameScene">
-                <svg class="planet-svg planet-mercury" viewBox="0 0 100 100">
-                    <defs><radialGradient id="mercury" cx="35%" cy="35%"><stop offset="0%" stop-color="#f3f4f6"/><stop offset="50%" stop-color="#9ca3af"/><stop offset="100%" stop-color="#4b5563"/></radialGradient></defs>
-                    <circle cx="50" cy="50" r="40" fill="url(#mercury)"/>
-                    <circle cx="35" cy="40" r="8" fill="#374151" opacity="0.6"/>
-                    <circle cx="60" cy="55" r="6" fill="#374151" opacity="0.5"/>
-                </svg>
-                <svg class="planet-svg planet-venus" viewBox="0 0 100 100">
-                    <defs><radialGradient id="venus" cx="35%" cy="35%"><stop offset="0%" stop-color="#fed7aa"/><stop offset="50%" stop-color="#fb923c"/><stop offset="100%" stop-color="#c2410c"/></radialGradient></defs>
-                    <circle cx="50" cy="50" r="42" fill="url(#venus)"/>
-                    <circle cx="40" cy="45" r="10" fill="#9a3412" opacity="0.4"/>
-                </svg>
-                <svg class="planet-svg planet-earth" viewBox="0 0 100 100">
-                    <defs><radialGradient id="earth" cx="35%" cy="35%"><stop offset="0%" stop-color="#bfdbfe"/><stop offset="50%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#1e3a8a"/></radialGradient></defs>
-                    <circle cx="50" cy="50" r="44" fill="url(#earth)"/>
-                    <path d="M 30 40 Q 40 35 50 45 Q 45 55 35 50 Z" fill="#22c55e" opacity="0.7"/>
-                </svg>
-                <svg class="planet-svg planet-mars" viewBox="0 0 100 100">
-                    <defs><radialGradient id="mars" cx="35%" cy="35%"><stop offset="0%" stop-color="#fca5a5"/><stop offset="50%" stop-color="#ef4444"/><stop offset="100%" stop-color="#991b1b"/></radialGradient></defs>
-                    <circle cx="50" cy="50" r="40" fill="url(#mars)"/>
-                    <circle cx="38" cy="42" r="11" fill="#7f1d1d" opacity="0.5"/>
-                </svg>
-                <svg class="planet-svg planet-jupiter" viewBox="0 0 100 100">
-                    <defs><radialGradient id="jupiter" cx="35%" cy="35%"><stop offset="0%" stop-color="#fed7aa"/><stop offset="30%" stop-color="#f97316"/><stop offset="60%" stop-color="#d97706"/><stop offset="100%" stop-color="#92400e"/></radialGradient></defs>
-                    <circle cx="50" cy="50" r="48" fill="url(#jupiter)"/>
-                    <ellipse cx="50" cy="50" rx="42" ry="5" fill="#f59e0b" opacity="0.35"/>
-                    <circle cx="60" cy="50" r="10" fill="#dc2626" opacity="0.6"/>
-                </svg>
-                <svg class="planet-svg planet-saturn" viewBox="0 0 100 100">
-                    <defs><radialGradient id="saturn" cx="35%" cy="35%"><stop offset="0%" stop-color="#fde68a"/><stop offset="50%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#b45309"/></radialGradient></defs>
-                    <ellipse cx="50" cy="50" rx="55" ry="12" fill="none" stroke="#fbbf24" stroke-width="4" opacity="0.4" transform="rotate(-20 50 50)"/>
-                    <circle cx="50" cy="50" r="38" fill="url(#saturn)"/>
-                </svg>
-                <svg class="planet-svg planet-uranus" viewBox="0 0 100 100">
-                    <defs><radialGradient id="uranus" cx="35%" cy="35%"><stop offset="0%" stop-color="#a5f3fc"/><stop offset="50%" stop-color="#06b6d4"/><stop offset="100%" stop-color="#0e7490"/></radialGradient></defs>
-                    <circle cx="50" cy="50" r="42" fill="url(#uranus)"/>
-                    <ellipse cx="50" cy="50" rx="50" ry="10" fill="none" stroke="#67e8f9" stroke-width="3" opacity="0.5" transform="rotate(75 50 50)"/>
-                </svg>
-                <svg class="planet-svg planet-neptune" viewBox="0 0 100 100">
-                    <defs><radialGradient id="neptune" cx="35%" cy="35%"><stop offset="0%" stop-color="#bfdbfe"/><stop offset="50%" stop-color="#2563eb"/><stop offset="100%" stop-color="#1e3a8a"/></radialGradient></defs>
-                    <circle cx="50" cy="50" r="40" fill="url(#neptune)"/>
-                    <circle cx="40" cy="45" r="10" fill="#1e40af" opacity="0.5"/>
-                </svg>
-
+                <svg class="planet-svg planet-mercury" viewBox="0 0 100 100"><defs><radialGradient id="mercury" cx="35%" cy="35%"><stop offset="0%" stop-color="#f3f4f6"/><stop offset="50%" stop-color="#9ca3af"/><stop offset="100%" stop-color="#4b5563"/></radialGradient></defs><circle cx="50" cy="50" r="40" fill="url(#mercury)"/><circle cx="35" cy="40" r="8" fill="#374151" opacity="0.6"/><circle cx="60" cy="55" r="6" fill="#374151" opacity="0.5"/></svg>
+                <svg class="planet-svg planet-venus" viewBox="0 0 100 100"><defs><radialGradient id="venus" cx="35%" cy="35%"><stop offset="0%" stop-color="#fed7aa"/><stop offset="50%" stop-color="#fb923c"/><stop offset="100%" stop-color="#c2410c"/></radialGradient></defs><circle cx="50" cy="50" r="42" fill="url(#venus)"/><circle cx="40" cy="45" r="10" fill="#9a3412" opacity="0.4"/></svg>
+                <svg class="planet-svg planet-earth" viewBox="0 0 100 100"><defs><radialGradient id="earth" cx="35%" cy="35%"><stop offset="0%" stop-color="#bfdbfe"/><stop offset="50%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#1e3a8a"/></radialGradient></defs><circle cx="50" cy="50" r="44" fill="url(#earth)"/><path d="M 30 40 Q 40 35 50 45 Q 45 55 35 50 Z" fill="#22c55e" opacity="0.7"/></svg>
+                <svg class="planet-svg planet-mars" viewBox="0 0 100 100"><defs><radialGradient id="mars" cx="35%" cy="35%"><stop offset="0%" stop-color="#fca5a5"/><stop offset="50%" stop-color="#ef4444"/><stop offset="100%" stop-color="#991b1b"/></radialGradient></defs><circle cx="50" cy="50" r="40" fill="url(#mars)"/><circle cx="38" cy="42" r="11" fill="#7f1d1d" opacity="0.5"/></svg>
+                <svg class="planet-svg planet-jupiter" viewBox="0 0 100 100"><defs><radialGradient id="jupiter" cx="35%" cy="35%"><stop offset="0%" stop-color="#fed7aa"/><stop offset="30%" stop-color="#f97316"/><stop offset="60%" stop-color="#d97706"/><stop offset="100%" stop-color="#92400e"/></radialGradient></defs><circle cx="50" cy="50" r="48" fill="url(#jupiter)"/><ellipse cx="50" cy="50" rx="42" ry="5" fill="#f59e0b" opacity="0.35"/><circle cx="60" cy="50" r="10" fill="#dc2626" opacity="0.6"/></svg>
+                <svg class="planet-svg planet-saturn" viewBox="0 0 100 100"><defs><radialGradient id="saturn" cx="35%" cy="35%"><stop offset="0%" stop-color="#fde68a"/><stop offset="50%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#b45309"/></radialGradient></defs><ellipse cx="50" cy="50" rx="55" ry="12" fill="none" stroke="#fbbf24" stroke-width="4" opacity="0.4" transform="rotate(-20 50 50)"/><circle cx="50" cy="50" r="38" fill="url(#saturn)"/></svg>
+                <svg class="planet-svg planet-uranus" viewBox="0 0 100 100"><defs><radialGradient id="uranus" cx="35%" cy="35%"><stop offset="0%" stop-color="#a5f3fc"/><stop offset="50%" stop-color="#06b6d4"/><stop offset="100%" stop-color="#0e7490"/></radialGradient></defs><circle cx="50" cy="50" r="42" fill="url(#uranus)"/><ellipse cx="50" cy="50" rx="50" ry="10" fill="none" stroke="#67e8f9" stroke-width="3" opacity="0.5" transform="rotate(75 50 50)"/></svg>
+                <svg class="planet-svg planet-neptune" viewBox="0 0 100 100"><defs><radialGradient id="neptune" cx="35%" cy="35%"><stop offset="0%" stop-color="#bfdbfe"/><stop offset="50%" stop-color="#2563eb"/><stop offset="100%" stop-color="#1e3a8a"/></radialGradient></defs><circle cx="50" cy="50" r="40" fill="url(#neptune)"/><circle cx="40" cy="45" r="10" fill="#1e40af" opacity="0.5"/></svg>
                 <div class="portal" id="portal"></div>
                 <div class="player-character flying" id="playerCharacter"></div>
             </div>
 
             <div class="task-card">
                 <div class="task-left">
-                    <div class="verb-display">
-                        <div class="verb-v1" id="verbV1">wear</div>
-                    </div>
-
+                    <div class="verb-display"><div class="verb-v1" id="verbV1">wear</div></div>
                     <div class="sentence-box">
                         <span class="grammar-label active">Sentence 1 - Past Simple (Active Voice)</span>
                         <div class="sentence-context" id="sentence1">She _____ a red dress to the party.</div>
                     </div>
-
                     <div class="sentence-box">
                         <span class="grammar-label passive" id="sentence2Label">Sentence 2 - Passive Voice</span>
                         <div class="sentence-context" id="sentence2">A red dress was _____ by her.</div>
                         <div class="no-passive-note" id="noPassiveNote"></div>
                     </div>
                 </div>
-
                 <div class="task-right">
                     <div id="level1Content">
                         <div class="slots-container">
@@ -1205,15 +604,11 @@
                         </div>
                         <div class="options-grid" id="optionsGrid"></div>
                     </div>
-                    
                     <div id="level2Content" style="display: none; width: 100%;">
                         <input type="text" class="type-input" id="typeInput" placeholder="Type V2 V3 (e.g., swam swum)" autocomplete="off">
-                        <div style="font-size: 0.8em; color: var(--neon-blue); margin-top: 8px; font-family: 'Orbitron', monospace;">
-                            TYPE BOTH FORMS SEPARATED BY SPACE
-                        </div>
+                        <div style="font-size: 0.8em; color: var(--neon-blue); margin-top: 8px; font-family: 'Orbitron', monospace;">TYPE BOTH FORMS SEPARATED BY SPACE</div>
                         <div id="correctAnswerDisplay" style="display: none; margin-top: 8px; padding: 8px; background: rgba(57, 255, 20, 0.1); border: 2px solid var(--neon-green); border-radius: 10px; color: var(--neon-green); font-family: 'Orbitron', monospace; font-weight: 700; font-size: 1em;"></div>
                     </div>
-
                     <button class="btn" id="checkBtn" onclick="checkAnswer()" style="display: none;">Check Portal</button>
                     <button class="btn" id="nextBtn" onclick="nextQuestion()" style="display: none;">Continue Flying</button>
                     <div class="feedback-msg" id="feedbackMsg"></div>
@@ -1226,33 +621,17 @@
                 <div id="resultCharacter" style="margin-bottom: 10px;"></div>
                 <h2 style="font-family: 'Orbitron', monospace; color: var(--neon-blue); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 3px;">Mission Complete!</h2>
                 <p id="finalScore" style="font-size: 1.1em; color: #e2e8f0; margin-bottom: 10px;"></p>
-                
                 <div class="bonus-section" id="bonusSection">
                     <div class="bonus-title">Choose Your Reward Bonus</div>
                     <p style="color: #94a3b8; margin-bottom: 8px; font-size: 0.9em;">Select one bonus for your next test:</p>
                     <div class="bonus-options">
-                        <div class="bonus-option" onclick="selectBonus(this, 'hint_irregular')">
-                            <span class="bonus-emoji">💡</span>
-                            Hint on Irregular Verbs Test
-                        </div>
-                        <div class="bonus-option" onclick="selectBonus(this, 'hint_final')">
-                            <span class="bonus-emoji">🎯</span>
-                            Hint on Final Module Test
-                        </div>
-                        <div class="bonus-option" onclick="selectBonus(this, 'no_homework')">
-                            <span class="bonus-emoji">🎫</span>
-                            Ticket: No Homework
-                        </div>
-                        <div class="bonus-option" onclick="selectBonus(this, 'extra_point')">
-                            <span class="bonus-emoji">⭐</span>
-                            Ticket: +1 Extra Point (non-transferable)
-                        </div>
+                        <div class="bonus-option" onclick="selectBonus(this, 'hint_irregular')"><span class="bonus-emoji">💡</span>Hint on Irregular Verbs Test</div>
+                        <div class="bonus-option" onclick="selectBonus(this, 'hint_final')"><span class="bonus-emoji">🎯</span>Hint on Final Module Test</div>
+                        <div class="bonus-option" onclick="selectBonus(this, 'no_homework')"><span class="bonus-emoji"></span>Ticket: No Homework</div>
+                        <div class="bonus-option" onclick="selectBonus(this, 'extra_point')"><span class="bonus-emoji">⭐</span>Ticket: +1 Extra Point (non-transferable)</div>
                     </div>
-                    <p id="bonusNote" style="color: var(--neon-pink); font-size: 0.8em; margin-top: 8px; display: none;">
-                        Note: Extra Point ticket is personal and cannot be transferred to other students.
-                    </p>
+                    <p id="bonusNote" style="color: var(--neon-pink); font-size: 0.8em; margin-top: 8px; display: none;">Note: Extra Point ticket is personal and cannot be transferred to other students.</p>
                 </div>
-                
                 <button class="btn" id="finishBtn" onclick="finishAndSend()" disabled>Finish & Send Results</button>
                 <div class="feedback-msg" id="sendingStatus" style="margin-top: 8px;"></div>
             </div>
@@ -1261,177 +640,112 @@
 
     <script>
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        let isExerciseActive = false;
-        let tabSwitchCount = 0;
+        let isExerciseActive = false, tabSwitchCount = 0, musicPlaying = true;
         
         function playSound(type) {
             if (audioContext.state === 'suspended') audioContext.resume();
-            
             if (type === 'correct') {
-                const notes = [523.25, 659.25, 783.99, 1046.50];
-                notes.forEach((freq, i) => {
-                    const osc = audioContext.createOscillator();
-                    const gain = audioContext.createGain();
-                    osc.connect(gain); gain.connect(audioContext.destination);
-                    osc.type = 'sine';
+                [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+                    const osc = audioContext.createOscillator(), gain = audioContext.createGain();
+                    osc.connect(gain); gain.connect(audioContext.destination); osc.type = 'sine';
                     osc.frequency.setValueAtTime(freq, audioContext.currentTime + i * 0.1);
                     gain.gain.setValueAtTime(0.2, audioContext.currentTime + i * 0.1);
                     gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + i * 0.1 + 0.3);
-                    osc.start(audioContext.currentTime + i * 0.1);
-                    osc.stop(audioContext.currentTime + i * 0.1 + 0.3);
+                    osc.start(audioContext.currentTime + i * 0.1); osc.stop(audioContext.currentTime + i * 0.1 + 0.3);
                 });
             } else if (type === 'wrong') {
-                const osc = audioContext.createOscillator();
-                const gain = audioContext.createGain();
-                osc.connect(gain); gain.connect(audioContext.destination);
-                osc.type = 'sawtooth';
+                const osc = audioContext.createOscillator(), gain = audioContext.createGain();
+                osc.connect(gain); gain.connect(audioContext.destination); osc.type = 'sawtooth';
                 osc.frequency.setValueAtTime(200, audioContext.currentTime);
                 osc.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.3);
                 gain.gain.setValueAtTime(0.2, audioContext.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-                osc.start(audioContext.currentTime);
-                osc.stop(audioContext.currentTime + 0.3);
-            } else if (type === 'click') {
-                const osc = audioContext.createOscillator();
-                const gain = audioContext.createGain();
-                osc.connect(gain); gain.connect(audioContext.destination);
-                osc.type = 'sine';
+                osc.start(audioContext.currentTime); osc.stop(audioContext.currentTime + 0.3);
+            } else if (type === 'click' || type === 'select') {
+                const osc = audioContext.createOscillator(), gain = audioContext.createGain();
+                osc.connect(gain); gain.connect(audioContext.destination); osc.type = 'sine';
                 osc.frequency.setValueAtTime(800, audioContext.currentTime);
                 gain.gain.setValueAtTime(0.1, audioContext.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-                osc.start(audioContext.currentTime);
-                osc.stop(audioContext.currentTime + 0.1);
+                osc.start(audioContext.currentTime); osc.stop(audioContext.currentTime + 0.1);
             } else if (type === 'teleport') {
-                const osc = audioContext.createOscillator();
-                const gain = audioContext.createGain();
-                osc.connect(gain); gain.connect(audioContext.destination);
-                osc.type = 'sine';
+                const osc = audioContext.createOscillator(), gain = audioContext.createGain();
+                osc.connect(gain); gain.connect(audioContext.destination); osc.type = 'sine';
                 osc.frequency.setValueAtTime(400, audioContext.currentTime);
                 osc.frequency.exponentialRampToValueAtTime(1200, audioContext.currentTime + 0.5);
                 gain.gain.setValueAtTime(0.2, audioContext.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-                osc.start(audioContext.currentTime);
-                osc.stop(audioContext.currentTime + 0.5);
+                osc.start(audioContext.currentTime); osc.stop(audioContext.currentTime + 0.5);
             } else if (type === 'finish') {
-                const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
-                notes.forEach((freq, i) => {
-                    const osc = audioContext.createOscillator();
-                    const gain = audioContext.createGain();
-                    osc.connect(gain); gain.connect(audioContext.destination);
-                    osc.type = 'sine';
+                [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((freq, i) => {
+                    const osc = audioContext.createOscillator(), gain = audioContext.createGain();
+                    osc.connect(gain); gain.connect(audioContext.destination); osc.type = 'sine';
                     osc.frequency.setValueAtTime(freq, audioContext.currentTime + i * 0.15);
                     gain.gain.setValueAtTime(0.25, audioContext.currentTime + i * 0.15);
                     gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + i * 0.15 + 0.4);
-                    osc.start(audioContext.currentTime + i * 0.15);
-                    osc.stop(audioContext.currentTime + i * 0.15 + 0.4);
+                    osc.start(audioContext.currentTime + i * 0.15); osc.stop(audioContext.currentTime + i * 0.15 + 0.4);
                 });
-            } else if (type === 'select') {
-                const osc = audioContext.createOscillator();
-                const gain = audioContext.createGain();
-                osc.connect(gain); gain.connect(audioContext.destination);
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(600, audioContext.currentTime);
-                gain.gain.setValueAtTime(0.1, audioContext.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.08);
-                osc.start(audioContext.currentTime);
-                osc.stop(audioContext.currentTime + 0.08);
-            }
-        }
-
-        function loadMusic(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const url = URL.createObjectURL(file);
-                const bgMusic = document.getElementById('bgMusic');
-                bgMusic.src = url;
-                bgMusic.volume = 0.3;
-                bgMusic.play();
-                document.getElementById('musicToggle').textContent = '🔊';
             }
         }
 
         function toggleMusic() {
-            const bgMusic = document.getElementById('bgMusic');
-            const btn = document.getElementById('musicToggle');
-            if (bgMusic.paused) {
-                bgMusic.play();
-                btn.textContent = '🔊';
+            const bg = document.getElementById('bgMusic'), btn = document.getElementById('musicToggle');
+            if (musicPlaying) {
+                bg.pause(); btn.textContent = '🔇'; musicPlaying = false;
             } else {
-                bgMusic.pause();
-                btn.textContent = '🔇';
+                bg.play(); btn.textContent = '🔊'; musicPlaying = true;
             }
         }
 
         function createConfetti(x, y) {
             const colors = ['#b026ff', '#00f3ff', '#ff00ff', '#39ff14', '#fbbf24', '#e9d5ff'];
             for (let i = 0; i < 25; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = x + 'px';
-                confetti.style.top = y + 'px';
-                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                const angle = (Math.PI * 2 * i) / 25;
-                const distance = 50 + Math.random() * 150;
-                confetti.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
-                confetti.style.setProperty('--ty', Math.sin(angle) * distance - 100 + 'px');
-                document.body.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 1500);
+                const c = document.createElement('div'); c.className = 'confetti';
+                c.style.left = x + 'px'; c.style.top = y + 'px';
+                c.style.background = colors[Math.floor(Math.random() * colors.length)];
+                c.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                const angle = (Math.PI * 2 * i) / 25, dist = 50 + Math.random() * 150;
+                c.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+                c.style.setProperty('--ty', Math.sin(angle) * dist - 100 + 'px');
+                document.body.appendChild(c); setTimeout(() => c.remove(), 1500);
             }
         }
-
         function createRocketTrail(x, y) {
             for (let i = 0; i < 8; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'rocket-particle';
-                particle.style.left = (x - 10 + Math.random() * 20) + 'px';
-                particle.style.top = (y + Math.random() * 30) + 'px';
-                document.body.appendChild(particle);
-                setTimeout(() => particle.remove(), 800);
+                const p = document.createElement('div'); p.className = 'rocket-particle';
+                p.style.left = (x - 10 + Math.random() * 20) + 'px'; p.style.top = (y + Math.random() * 30) + 'px';
+                document.body.appendChild(p); setTimeout(() => p.remove(), 800);
             }
         }
-
         function showFloatingMessage(text) {
-            const msg = document.createElement('div');
-            msg.className = 'floating-message';
-            msg.textContent = text;
-            document.body.appendChild(msg);
-            setTimeout(() => msg.remove(), 2000);
+            const msg = document.createElement('div'); msg.className = 'floating-message'; msg.textContent = text;
+            document.body.appendChild(msg); setTimeout(() => msg.remove(), 2000);
         }
-
         function createStarBurst(x, y) {
             for (let i = 0; i < 12; i++) {
-                const star = document.createElement('div');
-                star.className = 'star-burst';
-                const angle = (Math.PI * 2 * i) / 12;
-                const distance = 50 + Math.random() * 80;
-                star.style.left = (x + Math.cos(angle) * distance) + 'px';
-                star.style.top = (y + Math.sin(angle) * distance) + 'px';
-                document.body.appendChild(star);
-                setTimeout(() => star.remove(), 1000);
+                const s = document.createElement('div'); s.className = 'star-burst';
+                const angle = (Math.PI * 2 * i) / 12, dist = 50 + Math.random() * 80;
+                s.style.left = (x + Math.cos(angle) * dist) + 'px'; s.style.top = (y + Math.sin(angle) * dist) + 'px';
+                document.body.appendChild(s); setTimeout(() => s.remove(), 1000);
             }
         }
 
+        // ИСПРАВЛЕННЫЕ SVG - точно такие же как в карточках выбора!
         const heroSVGs = {
-            astronaut: `<svg viewBox="0 0 200 220"><defs><radialGradient id="catBody" cx="40%" cy="40%"><stop offset="0%" stop-color="#f3e8ff"/><stop offset="100%" stop-color="#a855f7"/></radialGradient><radialGradient id="helmetGlass" cx="30%" cy="30%"><stop offset="0%" stop-color="rgba(255,255,255,0.7)"/><stop offset="100%" stop-color="rgba(96,165,250,0.3)"/></radialGradient><filter id="softShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.25"/></filter></defs><rect x="60" y="130" width="80" height="45" rx="20" fill="#7c3aed" filter="url(#softShadow)"/><ellipse cx="100" cy="165" rx="48" ry="52" fill="url(#catBody)" filter="url(#softShadow)"/><path d="M 65 55 Q 50 15 90 35 Z" fill="#a855f7" stroke="#7c3aed" stroke-width="2"/><path d="M 135 55 Q 150 15 110 35 Z" fill="#a855f7" stroke="#7c3aed" stroke-width="2"/><circle cx="100" cy="85" r="52" fill="#faf5ff" filter="url(#softShadow)"/><circle cx="100" cy="85" r="52" fill="url(#helmetGlass)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/><ellipse cx="75" cy="65" rx="15" ry="8" fill="white" opacity="0.6" transform="rotate(-20 75 65)"/><ellipse cx="80" cy="80" rx="16" ry="18" fill="#fff"/><ellipse cx="120" cy="80" rx="16" ry="18" fill="#fff"/><circle cx="84" cy="83" r="9" fill="#1e293b"/><circle cx="124" cy="83" r="9" fill="#1e293b"/><circle cx="87" cy="80" r="4" fill="#fff"/><circle cx="127" cy="80" r="4" fill="#fff"/><circle cx="81" cy="87" r="2" fill="#fff" opacity="0.7"/><circle cx="121" cy="87" r="2" fill="#fff" opacity="0.7"/><circle cx="100" cy="96" r="4" fill="#f472b6"/><path d="M 94 102 Q 100 108 106 102" stroke="#1e293b" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="65" cy="95" r="7" fill="#f9a8d4" opacity="0.5"/><circle cx="135" cy="95" r="7" fill="#f9a8d4" opacity="0.5"/><ellipse cx="75" cy="210" rx="20" ry="14" fill="#a855f7"/><ellipse cx="125" cy="210" rx="20" ry="14" fill="#a855f7"/><line x1="100" y1="33" x2="100" y2="15" stroke="#c084fc" stroke-width="4" stroke-linecap="round"/><circle cx="100" cy="10" r="7" fill="#fbbf24" filter="url(#softShadow)"><animate attributeName="r" values="7;9;7" dur="1.5s" repeatCount="indefinite"/></circle></svg>`,
-            robot: `<svg viewBox="0 0 200 220"><defs><linearGradient id="robotMetal" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#dbeafe"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient><radialGradient id="robotHead" cx="30%" cy="30%"><stop offset="0%" stop-color="#f0f9ff"/><stop offset="100%" stop-color="#bfdbfe"/></radialGradient><filter id="metalShadow"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-opacity="0.3"/></filter></defs><line x1="100" y1="45" x2="100" y2="20" stroke="#60a5fa" stroke-width="5" stroke-linecap="round"/><circle cx="100" cy="15" r="8" fill="#f87171" filter="url(#metalShadow)"><animate attributeName="fill" values="#f87171;#fbbf24;#f87171" dur="2s" repeatCount="indefinite"/></circle><rect x="65" y="120" width="70" height="75" rx="20" fill="url(#robotMetal)" filter="url(#metalShadow)"/><rect x="80" y="135" width="40" height="30" rx="10" fill="rgba(255,255,255,0.3)"/><rect x="60" y="45" width="80" height="75" rx="25" fill="url(#robotHead)" filter="url(#metalShadow)"/><rect x="70" y="55" width="60" height="50" rx="15" fill="#0f172a"/><circle cx="88" cy="75" r="10" fill="#4ade80"><animate attributeName="ry" values="10;2;10" dur="3s" repeatCount="indefinite"/></circle><circle cx="112" cy="75" r="10" fill="#4ade80"><animate attributeName="ry" values="10;2;10" dur="3s" repeatCount="indefinite"/></circle><circle cx="91" cy="72" r="3" fill="#fff" opacity="0.8"/><circle cx="115" cy="72" r="3" fill="#fff" opacity="0.8"/><rect x="85" y="92" width="30" height="6" rx="3" fill="#4ade80" opacity="0.6"/><rect x="35" y="130" width="22" height="50" rx="11" fill="#60a5fa" filter="url(#metalShadow)"><animateTransform attributeName="transform" type="rotate" values="0 46 130; -10 46 130; 0 46 130" dur="2s" repeatCount="indefinite"/></rect><rect x="143" y="130" width="22" height="50" rx="11" fill="#60a5fa" filter="url(#metalShadow)"><animateTransform attributeName="transform" type="rotate" values="0 154 130; 10 154 130; 0 154 130" dur="2s" repeatCount="indefinite"/></rect><rect x="75" y="195" width="20" height="22" rx="10" fill="#3b82f6"/><rect x="105" y="195" width="20" height="22" rx="10" fill="#3b82f6"/></svg>`,
-            alien: `<svg viewBox="0 0 200 220"><defs><radialGradient id="alienSkin" cx="40%" cy="40%"><stop offset="0%" stop-color="#dcfce7"/><stop offset="100%" stop-color="#22c55e"/></radialGradient><radialGradient id="alienEye" cx="30%" cy="30%"><stop offset="0%" stop-color="#fef08a"/><stop offset="100%" stop-color="#eab308"/></radialGradient><filter id="alienShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.25"/></filter></defs><ellipse cx="100" cy="155" rx="45" ry="55" fill="url(#alienSkin)" filter="url(#alienShadow)"/><ellipse cx="100" cy="80" rx="55" ry="60" fill="url(#alienSkin)" filter="url(#alienShadow)"/><ellipse cx="75" cy="75" rx="20" ry="26" fill="#0f172a"/><ellipse cx="125" cy="75" rx="20" ry="26" fill="#0f172a"/><ellipse cx="78" cy="78" rx="12" ry="16" fill="url(#alienEye)"/><ellipse cx="128" cy="78" rx="12" ry="16" fill="url(#alienEye)"/><circle cx="80" cy="78" r="6" fill="#0f172a"/><circle cx="130" cy="78" r="6" fill="#0f172a"/><circle cx="83" cy="74" r="4" fill="#fff" opacity="0.9"/><circle cx="133" cy="74" r="4" fill="#fff" opacity="0.9"/><circle cx="76" cy="82" r="2" fill="#fff" opacity="0.6"/><circle cx="126" cy="82" r="2" fill="#fff" opacity="0.6"/><path d="M 90 105 Q 100 112 110 105" stroke="#0f172a" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M 55 140 Q 30 150 25 180" stroke="#22c55e" stroke-width="14" fill="none" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="0 55 140; -8 55 140; 0 55 140" dur="2s" repeatCount="indefinite"/></path><path d="M 145 140 Q 170 150 175 180" stroke="#22c55e" stroke-width="14" fill="none" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="0 145 140; 8 145 140; 0 145 140" dur="2s" repeatCount="indefinite"/></path><ellipse cx="75" cy="210" rx="18" ry="12" fill="#16a34a"/><ellipse cx="125" cy="210" rx="18" ry="12" fill="#16a34a"/></svg>`,
-            ninja: `<svg viewBox="0 0 200 220"><defs><linearGradient id="ninjaSuit" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#334155"/><stop offset="100%" stop-color="#0f172a"/></linearGradient><filter id="ninjaShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.4"/></filter></defs><ellipse cx="100" cy="150" rx="42" ry="55" fill="url(#ninjaSuit)" filter="url(#ninjaShadow)"/><rect x="60" y="140" width="80" height="15" rx="5" fill="#f87171"/><circle cx="100" cy="80" r="45" fill="url(#ninjaSuit)" filter="url(#ninjaShadow)"/><rect x="55" y="65" width="90" height="18" rx="6" fill="#f87171"/><path d="M 145 74 Q 165 65 175 75 Q 165 85 145 78" fill="#f87171"><animate attributeName="d" values="M 145 74 Q 165 65 175 75 Q 165 85 145 78; M 145 74 Q 165 85 175 75 Q 165 65 145 78; M 145 74 Q 165 65 175 75 Q 165 85 145 78" dur="2s" repeatCount="indefinite"/></path><path d="M 75 75 L 90 75 L 88 82 L 77 82 Z" fill="#fff"/><path d="M 110 75 L 125 75 L 123 82 L 112 82 Z" fill="#fff"/><circle cx="84" cy="78" r="3" fill="#0f172a"><animate attributeName="cx" values="84;86;84" dur="3s" repeatCount="indefinite"/></circle><circle cx="119" cy="78" r="3" fill="#0f172a"><animate attributeName="cx" values="119;117;119" dur="3s" repeatCount="indefinite"/></circle><ellipse cx="60" cy="145" rx="14" ry="24" fill="#1e293b" transform="rotate(-15 60 145)"/><ellipse cx="140" cy="145" rx="14" ry="24" fill="#1e293b" transform="rotate(15 140 145)"/><line x1="130" y1="110" x2="160" y2="70" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/><polygon points="160,70 164,66 156,66" fill="#fbbf24"/><ellipse cx="78" cy="205" rx="16" ry="14" fill="#0f172a"/><ellipse cx="122" cy="205" rx="16" ry="14" fill="#0f172a"/></svg>`,
-            dragon: `<svg viewBox="0 0 200 220"><defs><radialGradient id="dragonBody" cx="40%" cy="40%"><stop offset="0%" stop-color="#fecaca"/><stop offset="100%" stop-color="#dc2626"/></radialGradient><filter id="dragonShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.3"/></filter></defs><path d="M 100 180 Q 140 200 160 180 Q 180 160 170 150" stroke="#dc2626" stroke-width="16" fill="none" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="0 100 180; 10 100 180; 0 100 180" dur="2s" repeatCount="indefinite"/></path><ellipse cx="100" cy="145" rx="48" ry="55" fill="url(#dragonBody)" filter="url(#dragonShadow)"/><ellipse cx="100" cy="80" rx="52" ry="55" fill="#fee2e2" filter="url(#dragonShadow)"/><path d="M 65 45 Q 50 20 75 30" fill="#f87171" stroke="#dc2626" stroke-width="2"><animateTransform attributeName="transform" type="rotate" values="0 65 45; -5 65 45; 0 65 45" dur="1.5s" repeatCount="indefinite"/></path><path d="M 135 45 Q 150 20 125 30" fill="#f87171" stroke="#dc2626" stroke-width="2"><animateTransform attributeName="transform" type="rotate" values="0 135 45; 5 135 45; 0 135 45" dur="1.5s" repeatCount="indefinite"/></path><circle cx="80" cy="75" r="14" fill="#fff"/><circle cx="120" cy="75" r="14" fill="#fff"/><circle cx="83" cy="78" r="8" fill="#0f172a"><animate attributeName="r" values="8;5;8" dur="3s" repeatCount="indefinite"/></circle><circle cx="123" cy="78" r="8" fill="#0f172a"><animate attributeName="r" values="8;5;8" dur="3s" repeatCount="indefinite"/></circle><circle cx="86" cy="75" r="3" fill="#fff"/><circle cx="126" cy="75" r="3" fill="#fff"/><circle cx="100" cy="95" r="5" fill="#f472b6"/><path d="M 90 105 Q 100 112 110 105" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M 55 120 Q 25 100 30 140 Q 45 130 55 140" fill="#f87171" stroke="#dc2626" stroke-width="2"><animateTransform attributeName="transform" type="rotate" values="0 55 120; -15 55 120; 0 55 120" dur="2s" repeatCount="indefinite"/></path><path d="M 145 120 Q 175 100 170 140 Q 155 130 145 140" fill="#f87171" stroke="#dc2626" stroke-width="2"><animateTransform attributeName="transform" type="rotate" values="0 145 120; 15 145 120; 0 145 120" dur="2s" repeatCount="indefinite"/></path><ellipse cx="75" cy="205" rx="18" ry="14" fill="#b91c1c"/><ellipse cx="125" cy="205" rx="18" ry="14" fill="#b91c1c"/></svg>`,
-            pirate: `<svg viewBox="0 0 200 220"><defs><linearGradient id="pirateCoat" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#b45309"/><stop offset="100%" stop-color="#78350f"/></linearGradient><radialGradient id="pirateFace" cx="40%" cy="40%"><stop offset="0%" stop-color="#fcd34d"/><stop offset="100%" stop-color="#d97706"/></radialGradient><filter id="pirateShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.3"/></filter></defs><ellipse cx="100" cy="150" rx="45" ry="55" fill="url(#pirateCoat)" filter="url(#pirateShadow)"/><rect x="65" y="145" width="70" height="12" rx="4" fill="#fbbf24"/><circle cx="100" cy="151" r="8" fill="#f59e0b" stroke="#b45309" stroke-width="2"/><circle cx="100" cy="80" r="48" fill="url(#pirateFace)" filter="url(#pirateShadow)"/><path d="M 50 60 Q 100 30 150 60 L 145 75 Q 100 60 55 75 Z" fill="#0f172a"/><rect x="70" y="60" width="60" height="10" rx="3" fill="#dc2626"/><circle cx="80" cy="80" r="10" fill="#fff"/><circle cx="120" cy="80" r="10" fill="#fff"/><circle cx="82" cy="82" r="5" fill="#0f172a"><animate attributeName="cx" values="82;84;82" dur="4s" repeatCount="indefinite"/></circle><circle cx="122" cy="82" r="5" fill="#0f172a"><animate attributeName="cx" values="122;120;122" dur="4s" repeatCount="indefinite"/></circle><circle cx="84" cy="80" r="2" fill="#fff"/><circle cx="124" cy="80" r="2" fill="#fff"/><path d="M 90 100 Q 100 108 110 100" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M 85 110 Q 100 125 115 110" fill="#78350f" opacity="0.8"/><path d="M 55 140 Q 30 150 25 175" stroke="#b45309" stroke-width="14" fill="none" stroke-linecap="round"/><path d="M 145 140 Q 170 150 175 175" stroke="#b45309" stroke-width="14" fill="none" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="0 145 140; 15 145 140; 0 145 140" dur="2s" repeatCount="indefinite"/></path><line x1="170" y1="170" x2="185" y2="145" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/><ellipse cx="78" cy="208" rx="18" ry="14" fill="#78350f"/><ellipse cx="122" cy="208" rx="18" ry="14" fill="#78350f"/></svg>`,
-            phoenix: `<svg viewBox="0 0 200 220"><defs><radialGradient id="phoenixBody" cx="40%" cy="40%"><stop offset="0%" stop-color="#fef3c7"/><stop offset="50%" stop-color="#f97316"/><stop offset="100%" stop-color="#ea580c"/></radialGradient><filter id="phoenixGlow"><feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#f97316" flood-opacity="0.4"/></filter></defs><ellipse cx="100" cy="145" rx="45" ry="55" fill="url(#phoenixBody)" filter="url(#phoenixGlow)"/><ellipse cx="100" cy="80" rx="48" ry="52" fill="#ffedd5" filter="url(#phoenixGlow)"/><circle cx="80" cy="75" r="12" fill="#fff"/><circle cx="120" cy="75" r="12" fill="#fff"/><circle cx="83" cy="78" r="7" fill="#0f172a"><animate attributeName="r" values="7;4;7" dur="3s" repeatCount="indefinite"/></circle><circle cx="123" cy="78" r="7" fill="#0f172a"><animate attributeName="r" values="7;4;7" dur="3s" repeatCount="indefinite"/></circle><circle cx="86" cy="75" r="3" fill="#fff"/><circle cx="126" cy="75" r="3" fill="#fff"/><path d="M 94 92 L 100 104 L 106 92 Z" fill="#f97316" stroke="#ea580c" stroke-width="1"/><path d="M 55 60 Q 25 30 40 20 Q 65 40 75 55" fill="#f97316" opacity="0.9"><animate attributeName="d" values="M 55 60 Q 25 30 40 20 Q 65 40 75 55; M 55 60 Q 25 20 40 10 Q 65 30 75 55; M 55 60 Q 25 30 40 20 Q 65 40 75 55" dur="2s" repeatCount="indefinite"/></path><path d="M 145 60 Q 175 30 160 20 Q 135 40 125 55" fill="#f97316" opacity="0.9"><animate attributeName="d" values="M 145 60 Q 175 30 160 20 Q 135 40 125 55; M 145 60 Q 175 20 160 10 Q 135 30 125 55; M 145 60 Q 175 30 160 20 Q 135 40 125 55" dur="2s" repeatCount="indefinite"/></path><path d="M 50 150 Q 20 160 15 190" stroke="#f97316" stroke-width="14" fill="none" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="0 50 150; -5 50 150; 0 50 150" dur="2s" repeatCount="indefinite"/></path><path d="M 150 150 Q 180 160 185 190" stroke="#f97316" stroke-width="14" fill="none" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="0 150 150; 5 150 150; 0 150 150" dur="2s" repeatCount="indefinite"/></path><ellipse cx="78" cy="208" rx="16" ry="12" fill="#c2410c"/><ellipse cx="122" cy="208" rx="16" ry="12" fill="#c2410c"/></svg>`,
-            hero: `<svg viewBox="0 0 200 220"><defs><linearGradient id="heroSuit" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#93c5fd"/><stop offset="100%" stop-color="#2563eb"/></linearGradient><radialGradient id="heroFace" cx="40%" cy="40%"><stop offset="0%" stop-color="#f0f9ff"/><stop offset="100%" stop-color="#dbeafe"/></radialGradient><filter id="heroShadow"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-opacity="0.3"/></filter></defs><path d="M 55 85 Q 30 130 40 190 L 65 180 Q 60 130 70 95 Z" fill="#dc2626" opacity="0.9"><animateTransform attributeName="transform" type="rotate" values="0 55 85; -5 55 85; 0 55 85" dur="2s" repeatCount="indefinite"/></path><path d="M 145 85 Q 170 130 160 190 L 135 180 Q 140 130 130 95 Z" fill="#dc2626" opacity="0.9"><animateTransform attributeName="transform" type="rotate" values="0 145 85; 5 145 85; 0 145 85" dur="2s" repeatCount="indefinite"/></path><ellipse cx="100" cy="145" rx="42" ry="55" fill="url(#heroSuit)" filter="url(#heroShadow)"/><polygon points="100,120 104,132 116,132 106,140 110,152 100,144 90,152 94,140 84,132 96,132" fill="#fbbf24" filter="url(#heroShadow)"><animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite"/></polygon><circle cx="100" cy="80" r="48" fill="url(#heroFace)" filter="url(#heroShadow)"/><path d="M 55 65 Q 100 45 145 65 L 145 85 Q 100 70 55 85 Z" fill="#1e293b"/><ellipse cx="80" cy="75" rx="10" ry="8" fill="#fff"/><ellipse cx="120" cy="75" rx="10" ry="8" fill="#fff"/><circle cx="83" cy="76" r="5" fill="#0f172a"><animate attributeName="cx" values="83;85;83" dur="3s" repeatCount="indefinite"/></circle><circle cx="123" cy="76" r="5" fill="#0f172a"><animate attributeName="cx" values="123;121;123" dur="3s" repeatCount="indefinite"/></circle><circle cx="85" cy="74" r="2" fill="#fff"/><circle cx="125" cy="74" r="2" fill="#fff"/><path d="M 90 95 Q 100 102 110 95" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="58" cy="145" rx="14" ry="24" fill="#3b82f6" transform="rotate(-15 58 145)"><animateTransform attributeName="transform" type="rotate" values="-15 58 145; -5 58 145; -15 58 145" dur="2s" repeatCount="indefinite"/></ellipse><ellipse cx="142" cy="145" rx="14" ry="24" fill="#3b82f6" transform="rotate(15 142 145)"><animateTransform attributeName="transform" type="rotate" values="15 142 145; 5 142 145; 15 142 145" dur="2s" repeatCount="indefinite"/></ellipse><ellipse cx="78" cy="208" rx="18" ry="14" fill="#1d4ed8"/><ellipse cx="122" cy="208" rx="18" ry="14" fill="#1d4ed8"/></svg>`
+            astronaut: `<svg viewBox="0 0 200 200"><circle cx="100" cy="80" r="45" fill="#e9d5ff"/><circle cx="85" cy="70" r="8" fill="#1e293b"/><circle cx="115" cy="70" r="8" fill="#1e293b"/><circle cx="87" cy="68" r="3" fill="#fff"/><circle cx="117" cy="68" r="3" fill="#fff"/><path d="M 92 90 Q 100 96 108 90" stroke="#1e293b" stroke-width="2" fill="none"/><ellipse cx="100" cy="130" rx="35" ry="40" fill="#c084fc"/><circle cx="100" cy="50" r="8" fill="#fbbf24"/><line x1="100" y1="50" x2="100" y2="35" stroke="#c084fc" stroke-width="3"/><ellipse cx="70" cy="120" rx="10" ry="18" fill="#c084fc" transform="rotate(-20 70 120)"/><ellipse cx="130" cy="120" rx="10" ry="18" fill="#c084fc" transform="rotate(20 130 120)"/><ellipse cx="85" cy="170" rx="12" ry="8" fill="#a855f7"/><ellipse cx="115" cy="170" rx="12" ry="8" fill="#a855f7"/></svg>`,
+            robot: `<svg viewBox="0 0 200 200"><rect x="70" y="50" width="60" height="50" rx="10" fill="#bfdbfe"/><rect x="75" y="55" width="50" height="30" rx="8" fill="#0f172a"/><circle cx="88" cy="70" r="6" fill="#4ade80"/><circle cx="112" cy="70" r="6" fill="#4ade80"/><rect x="85" y="90" width="30" height="4" rx="2" fill="#4ade80"/><line x1="100" y1="50" x2="100" y2="35" stroke="#60a5fa" stroke-width="3"/><circle cx="100" cy="30" r="5" fill="#f87171"/><rect x="75" y="110" width="50" height="55" rx="8" fill="#60a5fa"/><rect x="55" y="115" width="15" height="35" rx="7" fill="#60a5fa"/><rect x="130" y="115" width="15" height="35" rx="7" fill="#60a5fa"/><rect x="80" y="165" width="15" height="15" rx="5" fill="#3b82f6"/><rect x="105" y="165" width="15" height="15" rx="5" fill="#3b82f6"/></svg>`,
+            alien: `<svg viewBox="0 0 200 200"><ellipse cx="100" cy="130" rx="40" ry="50" fill="#4ade80"/><ellipse cx="100" cy="75" rx="50" ry="55" fill="#22c55e"/><ellipse cx="80" cy="70" rx="15" ry="20" fill="#0f172a"/><ellipse cx="120" cy="70" rx="15" ry="20" fill="#0f172a"/><circle cx="82" cy="72" r="8" fill="#fbbf24"/><circle cx="122" cy="72" r="8" fill="#fbbf24"/><circle cx="84" cy="70" r="3" fill="#fff"/><circle cx="124" cy="70" r="3" fill="#fff"/><ellipse cx="100" cy="100" rx="10" ry="6" fill="#0f172a"/><path d="M 60 130 Q 40 140 35 160" stroke="#22c55e" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M 140 130 Q 160 140 165 160" stroke="#22c55e" stroke-width="10" fill="none" stroke-linecap="round"/><ellipse cx="80" cy="180" rx="12" ry="8" fill="#16a34a"/><ellipse cx="120" cy="180" rx="12" ry="8" fill="#16a34a"/></svg>`,
+            ninja: `<svg viewBox="0 0 200 200"><ellipse cx="100" cy="130" rx="38" ry="50" fill="#1e293b"/><circle cx="100" cy="75" r="42" fill="#0f172a"/><rect x="58" y="65" width="84" height="14" rx="6" fill="#f87171"/><circle cx="85" cy="72" r="6" fill="#fff"/><circle cx="115" cy="72" r="6" fill="#fff"/><circle cx="85" cy="72" r="3" fill="#0f172a"/><circle cx="115" cy="72" r="3" fill="#0f172a"/><path d="M 142 72 Q 160 65 170 75" stroke="#f87171" stroke-width="5" fill="none"/><ellipse cx="62" cy="130" rx="10" ry="20" fill="#1e293b" transform="rotate(-15 62 130)"/><ellipse cx="138" cy="130" rx="10" ry="20" fill="#1e293b" transform="rotate(15 138 130)"/><line x1="145" y1="125" x2="170" y2="95" stroke="#94a3b8" stroke-width="3"/><ellipse cx="82" cy="180" rx="12" ry="10" fill="#0f172a"/><ellipse cx="118" cy="180" rx="12" ry="10" fill="#0f172a"/></svg>`,
+            dragon: `<svg viewBox="0 0 200 200"><ellipse cx="100" cy="130" rx="42" ry="50" fill="#dc2626"/><ellipse cx="100" cy="75" rx="48" ry="52" fill="#fecaca"/><path d="M 65 45 Q 55 25 75 35" fill="#f87171"/><path d="M 135 45 Q 145 25 125 35" fill="#f87171"/><circle cx="82" cy="70" r="10" fill="#fbbf24"/><circle cx="118" cy="70" r="10" fill="#fbbf24"/><circle cx="82" cy="70" r="6" fill="#0f172a"/><circle cx="118" cy="70" r="6" fill="#0f172a"/><circle cx="84" cy="68" r="2" fill="#fff"/><circle cx="120" cy="68" r="2" fill="#fff"/><path d="M 92 95 Q 100 102 108 95" stroke="#0f172a" stroke-width="2" fill="none"/><path d="M 55 120 Q 30 110 35 140" stroke="#dc2626" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M 145 120 Q 170 110 165 140" stroke="#dc2626" stroke-width="10" fill="none" stroke-linecap="round"/><ellipse cx="80" cy="180" rx="14" ry="10" fill="#b91c1c"/><ellipse cx="120" cy="180" rx="14" ry="10" fill="#b91c1c"/></svg>`,
+            pirate: `<svg viewBox="0 0 200 200"><ellipse cx="100" cy="130" rx="40" ry="50" fill="#92400e"/><circle cx="100" cy="75" r="45" fill="#fbbf24"/><path d="M 55 55 Q 100 35 145 55 L 140 68 Q 100 55 60 68 Z" fill="#0f172a"/><circle cx="82" cy="78" r="8" fill="#fff"/><circle cx="118" cy="78" r="8" fill="#fff"/><circle cx="82" cy="78" r="5" fill="#0f172a"/><circle cx="118" cy="78" r="5" fill="#0f172a"/><path d="M 90 95 Q 100 103 110 95" stroke="#0f172a" stroke-width="2" fill="none"/><path d="M 58 130 Q 35 140 30 160" stroke="#92400e" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M 142 130 Q 165 140 170 160" stroke="#92400e" stroke-width="10" fill="none" stroke-linecap="round"/><line x1="165" y1="155" x2="180" y2="135" stroke="#94a3b8" stroke-width="3"/><ellipse cx="82" cy="180" rx="14" ry="10" fill="#78350f"/><ellipse cx="118" cy="180" rx="14" ry="10" fill="#78350f"/></svg>`,
+            phoenix: `<svg viewBox="0 0 200 200"><ellipse cx="100" cy="130" rx="40" ry="50" fill="#ea580c"/><ellipse cx="100" cy="75" rx="45" ry="50" fill="#f97316"/><circle cx="82" cy="70" r="10" fill="#fbbf24"/><circle cx="118" cy="70" r="10" fill="#fbbf24"/><circle cx="82" cy="70" r="6" fill="#0f172a"/><circle cx="118" cy="70" r="6" fill="#0f172a"/><circle cx="84" cy="68" r="2" fill="#fff"/><circle cx="120" cy="68" r="2" fill="#fff"/><path d="M 95 92 L 100 100 L 105 92 Z" fill="#f97316"/><path d="M 55 55 Q 30 35 45 25 Q 65 45 75 55" fill="#f97316"/><path d="M 145 55 Q 170 35 155 25 Q 135 45 125 55" fill="#f97316"/><path d="M 50 130 Q 25 140 20 165" stroke="#f97316" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M 150 130 Q 175 140 180 165" stroke="#f97316" stroke-width="10" fill="none" stroke-linecap="round"/><ellipse cx="82" cy="180" rx="12" ry="10" fill="#c2410c"/><ellipse cx="118" cy="180" rx="12" ry="10" fill="#c2410c"/></svg>`,
+            hero: `<svg viewBox="0 0 200 200"><path d="M 55 85 Q 30 130 40 180 L 65 170 Q 60 130 70 95 Z" fill="#dc2626"/><path d="M 145 85 Q 170 130 160 180 L 135 170 Q 140 130 130 95 Z" fill="#dc2626"/><ellipse cx="100" cy="130" rx="38" ry="50" fill="#2563eb"/><polygon points="100,115 103,125 113,125 105,131 108,141 100,135 92,141 95,131 87,125 97,125" fill="#fbbf24"/><circle cx="100" cy="75" r="45" fill="#dbeafe"/><path d="M 60 60 Q 100 45 140 60 L 140 78 Q 100 68 60 78 Z" fill="#1e293b"/><circle cx="83" cy="70" r="7" fill="#fff"/><circle cx="117" cy="70" r="7" fill="#fff"/><circle cx="83" cy="70" r="4" fill="#0f172a"/><circle cx="117" cy="70" r="4" fill="#0f172a"/><path d="M 90 90 Q 100 97 110 90" stroke="#0f172a" stroke-width="2" fill="none"/><ellipse cx="60" cy="130" rx="10" ry="20" fill="#3b82f6" transform="rotate(-15 60 130)"/><ellipse cx="140" cy="130" rx="10" ry="20" fill="#3b82f6" transform="rotate(15 140 130)"/><ellipse cx="82" cy="180" rx="14" ry="10" fill="#1d4ed8"/><ellipse cx="118" cy="180" rx="14" ry="10" fill="#1d4ed8"/></svg>`
         };
 
         const planetPositions = [
-            { left: 5, bottom: 140 },
-            { left: 18, bottom: 170 },
-            { left: 32, bottom: 120 },
-            { left: 46, bottom: 180 },
-            { left: 60, bottom: 100 },
-            { left: 74, bottom: 150 },
-            { left: 86, bottom: 190 },
-            { left: 95, bottom: 130 }
+            { left: 5, bottom: 140 }, { left: 18, bottom: 170 }, { left: 32, bottom: 120 },
+            { left: 46, bottom: 180 }, { left: 60, bottom: 100 }, { left: 74, bottom: 150 },
+            { left: 86, bottom: 190 }, { left: 95, bottom: 130 }
         ];
 
         const verbDatabase = [
@@ -1478,30 +792,12 @@
             { v1: "ring", v2: "rang", v3: "rung", sentence1: "The bell _____ loudly.", sentence2: "The bell was _____ loudly.", sentence2Type: "passive", hasPassive: true }
         ];
 
-        let studentName = '';
-        let selectedCharacter = null;
-        let currentQuestions = [];
-        let currentIndex = 0;
-        let score = 0;
-        let startTime = null;
-        let timerInterval = null;
-        let selectedV2 = null;
-        let selectedV3 = null;
-        let currentPlanetIndex = 0;
-        let questionsPerPlanet = 5;
-        let currentLevel = 1;
-        let selectedBonus = null;
-        let errorsList = [];
+        let studentName = '', selectedCharacter = null, currentQuestions = [], currentIndex = 0, score = 0;
+        let startTime = null, timerInterval = null, selectedV2 = null, selectedV3 = null, currentPlanetIndex = 0;
+        let questionsPerPlanet = 5, currentLevel = 1, selectedBonus = null, errorsList = [];
+        const encouragingMessages = ["BRILLIANT!", "KEEP IT UP!", "AMAZING!", "PERFECT!", "GREAT JOB!", "EXCELLENT!", "FANTASTIC!", "SUPERB!", "WONDERFUL!", "OUTSTANDING!"];
 
-        const encouragingMessages = [
-            "BRILLIANT!", "KEEP IT UP!", "AMAZING!", "PERFECT!", "GREAT JOB!", 
-            "EXCELLENT!", "FANTASTIC!", "SUPERB!", "WONDERFUL!", "OUTSTANDING!"
-        ];
-
-        function shuffle(array) {
-            return array.sort(() => Math.random() - 0.5);
-        }
-
+        function shuffle(array) { return array.sort(() => Math.random() - 0.5); }
         function showScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
@@ -1514,17 +810,14 @@
                 nameInput.style.borderColor = 'var(--neon-pink)';
                 nameInput.style.animation = 'shake 0.4s ease';
                 setTimeout(() => { nameInput.style.borderColor = ''; nameInput.style.animation = ''; }, 400);
-                alert('Please enter your name!');
-                return;
+                alert('Please enter your name!'); return;
             }
             if (audioContext.state === 'suspended') audioContext.resume();
-            playSound('click');
-            showScreen('screen-character');
+            playSound('click'); showScreen('screen-character');
         }
 
         function selectCharacter(char, element) {
-            playSound('select');
-            selectedCharacter = char;
+            playSound('select'); selectedCharacter = char;
             document.querySelectorAll('.character-card').forEach(c => c.classList.remove('selected'));
             element.classList.add('selected');
             document.getElementById('startGameBtn').disabled = false;
@@ -1532,34 +825,23 @@
         }
 
         function startGame() {
-            playSound('teleport');
-            showScreen('screen-game');
+            playSound('teleport'); showScreen('screen-game');
             document.getElementById('playerCharacter').innerHTML = heroSVGs[selectedCharacter];
-            
             currentQuestions = shuffle([...verbDatabase]).slice(0, 41);
-            currentIndex = 0;
-            score = 0;
-            currentPlanetIndex = 0;
-            currentLevel = 1;
-            isExerciseActive = true;
-            tabSwitchCount = 0;
-            errorsList = [];
-            startTime = Date.now();
-            timerInterval = setInterval(updateTimer, 1000);
-            
+            currentIndex = 0; score = 0; currentPlanetIndex = 0; currentLevel = 1;
+            isExerciseActive = true; tabSwitchCount = 0; errorsList = [];
+            startTime = Date.now(); timerInterval = setInterval(updateTimer, 1000);
             loadQuestion();
         }
 
         function updateTimer() {
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
-            const m = Math.floor(elapsed / 60).toString().padStart(2, '0');
-            const s = (elapsed % 60).toString().padStart(2, '0');
-            document.getElementById('timerDisplay').textContent = `${m}:${s}`;
+            document.getElementById('timerDisplay').textContent = 
+                `${Math.floor(elapsed / 60).toString().padStart(2, '0')}:${(elapsed % 60).toString().padStart(2, '0')}`;
         }
 
         function loadQuestion() {
             const q = currentQuestions[currentIndex];
-            
             if (currentIndex >= 20 && currentLevel === 1) {
                 currentLevel = 2;
                 document.getElementById('levelBadge').classList.add('show');
@@ -1567,71 +849,39 @@
                 document.getElementById('level2Content').style.display = 'block';
                 showFloatingMessage("LEVEL 2 UNLOCKED!");
             }
-            
             document.getElementById('verbV1').textContent = q.v1;
             document.getElementById('sentence1').textContent = q.sentence1;
             document.getElementById('sentence2').textContent = q.sentence2;
-            
-            const label = document.getElementById('sentence2Label');
-            const note = document.getElementById('noPassiveNote');
-            
+            const label = document.getElementById('sentence2Label'), note = document.getElementById('noPassiveNote');
             if (q.sentence2Type === 'passive') {
-                label.textContent = 'Sentence 2 - Passive Voice';
-                label.className = 'grammar-label passive';
-                note.textContent = '';
+                label.textContent = 'Sentence 2 - Passive Voice'; label.className = 'grammar-label passive'; note.textContent = '';
             } else if (q.sentence2Type === 'perfect') {
-                label.textContent = 'Sentence 2 - Present Perfect (no passive form)';
-                label.className = 'grammar-label perfect';
+                label.textContent = 'Sentence 2 - Present Perfect (no passive form)'; label.className = 'grammar-label perfect';
                 note.textContent = 'Intransitive verb - cannot be used in passive voice';
             } else {
-                label.textContent = 'Sentence 2 - Past Simple (Active Voice)';
-                label.className = 'grammar-label active';
-                note.textContent = '';
+                label.textContent = 'Sentence 2 - Past Simple (Active Voice)'; label.className = 'grammar-label active'; note.textContent = '';
             }
-            
-            selectedV2 = null;
-            selectedV3 = null;
-            
+            selectedV2 = null; selectedV3 = null;
             document.getElementById('nextBtn').style.display = 'none';
             document.getElementById('feedbackMsg').style.display = 'none';
             document.getElementById('portal').classList.remove('repaired');
             document.getElementById('correctAnswerDisplay').style.display = 'none';
-            
-            const planet = planetPositions[currentPlanetIndex];
-            const player = document.getElementById('playerCharacter');
-            player.classList.remove('flying');
-            player.classList.add('landing');
-            player.style.left = planet.left + '%';
-            player.style.bottom = (planet.bottom + 20) + 'px';
-            
+            const planet = planetPositions[currentPlanetIndex], player = document.getElementById('playerCharacter');
+            player.classList.remove('flying'); player.classList.add('landing');
+            player.style.left = planet.left + '%'; player.style.bottom = (planet.bottom + 20) + 'px';
             setTimeout(() => { player.classList.remove('landing'); }, 600);
-            
             if (currentLevel === 1) {
-                updateSlots();
-                document.getElementById('checkBtn').style.display = 'none';
-                
-                let options = [];
-                if (q.v2 === q.v3) {
-                    options = [q.v2, q.v2];
-                    let allVerbs = verbDatabase.flatMap(v => [v.v2, v.v3]).filter(v => v !== q.v2);
-                    let shuffled = shuffle(allVerbs);
-                    for (let i = 0; i < 4; i++) options.push(shuffled[i]);
-                } else {
-                    options = [q.v2, q.v3];
-                    let allVerbs = verbDatabase.flatMap(v => [v.v2, v.v3]).filter(v => v !== q.v2 && v !== q.v3);
-                    let shuffled = shuffle(allVerbs);
-                    for (let i = 0; i < 4; i++) options.push(shuffled[i]);
-                }
+                updateSlots(); document.getElementById('checkBtn').style.display = 'none';
+                let options = q.v2 === q.v3 ? [q.v2, q.v2] : [q.v2, q.v3];
+                let allVerbs = verbDatabase.flatMap(v => [v.v2, v.v3]).filter(v => v !== q.v2 && (q.v2 !== q.v3 || v !== q.v3));
+                let shuffled = shuffle(allVerbs);
+                for (let i = 0; i < 4; i++) options.push(shuffled[i]);
                 options = shuffle(options);
-
-                const grid = document.getElementById('optionsGrid');
-                grid.innerHTML = '';
+                const grid = document.getElementById('optionsGrid'); grid.innerHTML = '';
                 options.forEach((opt, idx) => {
                     const btn = document.createElement('button');
-                    btn.className = 'option-btn';
-                    btn.textContent = opt;
-                    btn.dataset.value = opt;
-                    btn.dataset.index = idx;
+                    btn.className = 'option-btn'; btn.textContent = opt;
+                    btn.dataset.value = opt; btn.dataset.index = idx;
                     btn.onclick = () => selectOption(opt, btn);
                     grid.appendChild(btn);
                 });
@@ -1645,7 +895,6 @@
                 document.getElementById('nextBtn').style.display = 'none';
                 setTimeout(() => document.getElementById('typeInput').focus(), 100);
             }
-
             document.getElementById('progressText').textContent = `${currentIndex + 1} / ${currentQuestions.length}`;
             document.getElementById('progressBarFill').style.width = `${((currentIndex) / currentQuestions.length) * 100}%`;
         }
@@ -1653,163 +902,98 @@
         function selectOption(value, btnElement) {
             if (document.getElementById('nextBtn').style.display === 'inline-block') return;
             playSound('select');
-
-            if (btnElement.classList.contains('selected-v2')) {
-                selectedV2 = null;
-                btnElement.classList.remove('selected-v2');
-            } else if (btnElement.classList.contains('selected-v3')) {
-                selectedV3 = null;
-                btnElement.classList.remove('selected-v3');
-            } else if (!selectedV2) {
-                selectedV2 = value;
-                btnElement.classList.add('selected-v2');
-            } else if (!selectedV3) {
-                selectedV3 = value;
-                btnElement.classList.add('selected-v3');
-            }
+            if (btnElement.classList.contains('selected-v2')) { selectedV2 = null; btnElement.classList.remove('selected-v2'); }
+            else if (btnElement.classList.contains('selected-v3')) { selectedV3 = null; btnElement.classList.remove('selected-v3'); }
+            else if (!selectedV2) { selectedV2 = value; btnElement.classList.add('selected-v2'); }
+            else if (!selectedV3) { selectedV3 = value; btnElement.classList.add('selected-v3'); }
             updateSlots();
-            
-            if (selectedV2 && selectedV3) {
-                setTimeout(() => { checkAnswer(); }, 500);
-            }
+            if (selectedV2 && selectedV3) setTimeout(() => { checkAnswer(); }, 500);
         }
 
         function updateSlots() {
-            const slot2 = document.getElementById('slotV2');
-            const slot3 = document.getElementById('slotV3');
-            
+            const slot2 = document.getElementById('slotV2'), slot3 = document.getElementById('slotV3');
             slot2.textContent = selectedV2 ? `V2: ${selectedV2}` : 'V2: ?';
             slot2.className = selectedV2 ? 'verb-slot filled' : 'verb-slot';
-            
             slot3.textContent = selectedV3 ? `V3: ${selectedV3}` : 'V3: ?';
             slot3.className = selectedV3 ? 'verb-slot filled' : 'verb-slot';
+            document.getElementById('checkBtn').disabled = !(selectedV2 && selectedV3);
         }
 
         function clearSlot(slot) {
             if (document.getElementById('nextBtn').style.display === 'inline-block') return;
             playSound('click');
-            
             if (slot === 'v2') selectedV2 = null;
             else if (slot === 'v3') selectedV3 = null;
-            
-            document.querySelectorAll('.option-btn').forEach(btn => {
-                btn.classList.remove('selected-v2', 'selected-v3');
-            });
+            document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected-v2', 'selected-v3'));
             updateSlots();
         }
 
         function checkAnswer() {
-            const q = currentQuestions[currentIndex];
-            const feedback = document.getElementById('feedbackMsg');
-            
+            const q = currentQuestions[currentIndex], feedback = document.getElementById('feedbackMsg');
             let isCorrect = false;
-            
             if (currentLevel === 1) {
-                const slot2 = document.getElementById('slotV2');
-                const slot3 = document.getElementById('slotV3');
-                
+                const slot2 = document.getElementById('slotV2'), slot3 = document.getElementById('slotV3');
                 if (selectedV2 === q.v2 && selectedV3 === q.v3) {
-                    isCorrect = true;
-                    slot2.classList.add('correct');
-                    slot3.classList.add('correct');
+                    isCorrect = true; slot2.classList.add('correct'); slot3.classList.add('correct');
                 } else {
-                    slot2.classList.add('wrong');
-                    slot3.classList.add('wrong');
+                    slot2.classList.add('wrong'); slot3.classList.add('wrong');
                     errorsList.push({ question: q.v1, studentAnswer: `${selectedV2} / ${selectedV3}`, correctAnswer: `${q.v2} / ${q.v3}` });
                 }
             } else {
                 const input = document.getElementById('typeInput');
-                const answer = input.value.trim().toLowerCase();
-                const correctAnswer = `${q.v2} ${q.v3}`.toLowerCase();
-                
+                const answer = input.value.trim().toLowerCase(), correctAnswer = `${q.v2} ${q.v3}`.toLowerCase();
                 if (answer === correctAnswer) {
-                    isCorrect = true;
-                    input.style.borderColor = 'var(--neon-green)';
-                    input.style.boxShadow = '0 0 30px var(--neon-green)';
+                    isCorrect = true; input.style.borderColor = 'var(--neon-green)'; input.style.boxShadow = '0 0 30px var(--neon-green)';
                 } else {
-                    input.style.borderColor = 'var(--neon-pink)';
-                    input.style.boxShadow = '0 0 30px var(--neon-pink)';
+                    input.style.borderColor = 'var(--neon-pink)'; input.style.boxShadow = '0 0 30px var(--neon-pink)';
                     errorsList.push({ question: q.v1, studentAnswer: answer || '(empty)', correctAnswer: `${q.v2} ${q.v3}` });
-                    
                     const correctDisplay = document.getElementById('correctAnswerDisplay');
-                    correctDisplay.style.display = 'block';
-                    correctDisplay.textContent = `Correct answer: ${q.v2} ${q.v3}`;
-                    
-                    input.value = `${q.v2} ${q.v3}`;
-                    input.classList.add('correct-answer');
+                    correctDisplay.style.display = 'block'; correctDisplay.textContent = `Correct answer: ${q.v2} ${q.v3}`;
+                    input.value = `${q.v2} ${q.v3}`; input.classList.add('correct-answer');
                 }
             }
-            
             if (isCorrect) {
-                score++;
-                document.getElementById('portal').classList.add('repaired');
-                
+                score++; document.getElementById('portal').classList.add('repaired');
                 const player = document.getElementById('playerCharacter');
-                player.classList.remove('landing');
-                player.classList.add('flying');
-                
+                player.classList.remove('landing'); player.classList.add('flying');
                 const rect = player.getBoundingClientRect();
                 createRocketTrail(rect.left + rect.width / 2, rect.top + rect.height);
-                
                 playSound('correct');
-                
-                const randomMessage = encouragingMessages[Math.floor(Math.random() * encouragingMessages.length)];
-                showFloatingMessage(randomMessage);
-                
+                showFloatingMessage(encouragingMessages[Math.floor(Math.random() * encouragingMessages.length)]);
                 createStarBurst(rect.left + rect.width / 2, rect.top);
-                
                 feedback.className = 'feedback-msg success';
                 feedback.innerHTML = `PORTAL REPAIRED! Great job, ${studentName}!`;
-                
                 createConfetti(rect.left + rect.width / 2, rect.top);
-                
                 setTimeout(() => { nextQuestion(); }, 2000);
             } else {
-                playSound('wrong');
-                feedback.className = 'feedback-msg hint';
-                
+                playSound('wrong'); feedback.className = 'feedback-msg hint';
                 if (currentLevel === 2) {
                     feedback.innerHTML = `PORTAL MALFUNCTION! Correct answer shown above. Press Next to continue.`;
                 } else {
                     feedback.innerHTML = `PORTAL MALFUNCTION! Correct: <b>${q.v2}</b> / <b>${q.v3}</b>`;
                     document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
                 }
-                
                 document.getElementById('checkBtn').style.display = 'none';
                 document.getElementById('nextBtn').style.display = 'inline-block';
             }
         }
 
         function nextQuestion() {
-            playSound('click');
-            currentIndex++;
-            
+            playSound('click'); currentIndex++;
             if (currentIndex % questionsPerPlanet === 0 && currentIndex < currentQuestions.length) {
                 currentPlanetIndex = (currentPlanetIndex + 1) % 8;
             }
-            
-            if (currentIndex < currentQuestions.length) {
-                loadQuestion();
-            } else {
-                showResults();
-            }
+            if (currentIndex < currentQuestions.length) loadQuestion();
+            else showResults();
         }
 
         function selectBonus(element, bonusType) {
             playSound('select');
             document.querySelectorAll('.bonus-option').forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
-            selectedBonus = bonusType;
-            
-            const bonusNames = {
-                'hint_irregular': 'Hint on Irregular Verbs Test',
-                'hint_final': 'Hint on Final Module Test',
-                'no_homework': 'Ticket: No Homework',
-                'extra_point': 'Ticket: +1 Extra Point (non-transferable)'
-            };
-            
+            element.classList.add('selected'); selectedBonus = bonusType;
             document.getElementById('bonusNote').style.display = bonusType === 'extra_point' ? 'block' : 'none';
             document.getElementById('finishBtn').disabled = false;
+            const bonusNames = { 'hint_irregular': 'Hint on Irregular Verbs Test', 'hint_final': 'Hint on Final Module Test', 'no_homework': 'Ticket: No Homework', 'extra_point': 'Ticket: +1 Extra Point (non-transferable)' };
             document.getElementById('finishBtn').textContent = `Confirm: ${bonusNames[bonusType]}`;
         }
 
@@ -1817,116 +1001,54 @@
             showScreen('screen-result');
             document.getElementById('resultCharacter').innerHTML = heroSVGs[selectedCharacter];
             playSound('finish');
-            
             for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    createConfetti(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
-                }, i * 200);
+                setTimeout(() => { createConfetti(Math.random() * window.innerWidth, Math.random() * window.innerHeight); }, i * 200);
             }
-            
             const percentage = Math.round((score / currentQuestions.length) * 100);
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
             const timeSpent = `${Math.floor(elapsed / 60)}m ${elapsed % 60}s`;
-            
-            let message = '';
-            if (percentage === 100) message = 'PERFECT SCORE! You are a true Verb Hero!';
-            else if (percentage >= 80) message = 'Excellent work! Almost perfect!';
-            else if (percentage >= 60) message = 'Good job! Keep practicing!';
-            else message = 'Keep trying! Practice makes perfect!';
-            
-            document.getElementById('finalScore').innerHTML = `
-                ${message}<br><br>
-                You repaired <b>${score} out of ${currentQuestions.length}</b> portals!<br>
-                Accuracy: <b>${percentage}%</b><br>
-                Time: <b>${timeSpent}</b><br>
-                Tab Switches: <b>${tabSwitchCount}</b><br>
-                Level Reached: <b>${currentLevel === 2 ? 'Level 2 (Type Mode)' : 'Level 1'}</b>
-            `;
-            
+            let message = percentage === 100 ? 'PERFECT SCORE! You are a true Verb Hero!' : 
+                          percentage >= 80 ? 'Excellent work! Almost perfect!' : 
+                          percentage >= 60 ? 'Good job! Keep practicing!' : 'Keep trying! Practice makes perfect!';
+            document.getElementById('finalScore').innerHTML = `${message}<br><br>You repaired <b>${score} out of ${currentQuestions.length}</b> portals!<br>Accuracy: <b>${percentage}%</b><br>Time: <b>${timeSpent}</b><br>Tab Switches: <b>${tabSwitchCount}</b><br>Level Reached: <b>${currentLevel === 2 ? 'Level 2 (Type Mode)' : 'Level 1'}</b>`;
             selectedBonus = null;
             document.querySelectorAll('.bonus-option').forEach(opt => opt.classList.remove('selected'));
             document.getElementById('finishBtn').disabled = true;
             document.getElementById('finishBtn').textContent = 'Finish & Send Results';
             document.getElementById('bonusNote').style.display = 'none';
-            
             localStorage.setItem('grammar_ex_verb-heroes', 'true');
         }
 
         async function finishAndSend() {
-            if (!selectedBonus) {
-                alert('Please select a bonus first!');
-                return;
-            }
-            
+            if (!selectedBonus) { alert('Please select a bonus first!'); return; }
             const statusDiv = document.getElementById('sendingStatus');
-            statusDiv.style.display = 'block';
-            statusDiv.innerHTML = 'SENDING RESULTS...';
-            
+            statusDiv.style.display = 'block'; statusDiv.innerHTML = 'SENDING RESULTS...';
             const percentage = Math.round((score / currentQuestions.length) * 100);
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
             const timeSpent = `${Math.floor(elapsed / 60)} min ${elapsed % 60} sec`;
-
-            const bonusNames = {
-                'hint_irregular': 'Hint on Irregular Verbs Test',
-                'hint_final': 'Hint on Final Module Test',
-                'no_homework': 'Ticket: No Homework',
-                'extra_point': 'Ticket: +1 Extra Point (non-transferable)'
-            };
-
-            let errorsText = '';
-            if (errorsList.length > 0) {
-                errorsText = errorsList.map((e, idx) => `${idx + 1}. ${e.question}: student wrote "${e.studentAnswer}", correct is "${e.correctAnswer}"`).join('\n');
-            } else {
-                errorsText = 'No errors! Perfect performance!';
-            }
-
+            const bonusNames = { 'hint_irregular': 'Hint on Irregular Verbs Test', 'hint_final': 'Hint on Final Module Test', 'no_homework': 'Ticket: No Homework', 'extra_point': 'Ticket: +1 Extra Point (non-transferable)' };
+            let errorsText = errorsList.length > 0 ? errorsList.map((e, idx) => `${idx + 1}. ${e.question}: student wrote "${e.studentAnswer}", correct is "${e.correctAnswer}"`).join('\n') : 'No errors! Perfect performance!';
             const payload = { 
-                student_name: studentName, 
-                score: `${score}/${currentQuestions.length}`, 
-                percentage: `${percentage}%`, 
-                time: new Date().toLocaleString(), 
-                exercise_name: "Verb Heroes: Cyber Portal", 
-                time_spent: timeSpent, 
+                student_name: studentName, score: `${score}/${currentQuestions.length}`, percentage: `${percentage}%`, 
+                time: new Date().toLocaleString(), exercise_name: "Verb Heroes: Cyber Portal", time_spent: timeSpent, 
                 tab_switches: tabSwitchCount === 0 ? '0 (no switches)' : `${tabSwitchCount} switch(es) detected`,
-                selected_bonus: bonusNames[selectedBonus] || 'No bonus selected',
-                bonus_type: selectedBonus,
+                selected_bonus: bonusNames[selectedBonus] || 'No bonus selected', bonus_type: selectedBonus,
                 level_reached: currentLevel === 2 ? 'Level 2 (Type Mode)' : 'Level 1 (Selection Mode)',
-                errors_count: errorsList.length,
-                errors_details: errorsText,
-                errors_summary: errorsText,
+                errors_count: errorsList.length, errors_details: errorsText, errors_summary: errorsText,
                 errors_text: `BONUS: ${bonusNames[selectedBonus]}\n\nERRORS:\n${errorsText}`
             };
-
             console.log('Sending payload:', payload);
-
             const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
             const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCybdydUS2PDlskYqe2_jdbTns0MB_6e45CLWCkpr6jLB-d1zHm5ebBifFNLFoKhwr/exec';
-
             try {
-                const response = await fetch(POWER_AUTOMATE_URL, { 
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' }, 
-                    body: JSON.stringify(payload) 
-                });
+                const response = await fetch(POWER_AUTOMATE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 console.log('Teams response status:', response.status);
-                statusDiv.innerHTML += '<br>SENT TO TEAMS!';
-                statusDiv.style.color = 'var(--neon-green)';
-            } catch (error) { 
-                console.error('Teams error:', error);
-                statusDiv.innerHTML += '<br>Teams error: ' + error.message; 
-                statusDiv.style.color = 'var(--neon-pink)'; 
-            }
-
+                statusDiv.innerHTML += '<br>SENT TO TEAMS!'; statusDiv.style.color = 'var(--neon-green)';
+            } catch (error) { console.error('Teams error:', error); statusDiv.innerHTML += '<br>Teams error: ' + error.message; statusDiv.style.color = 'var(--neon-pink)'; }
             try {
-                await fetch(GOOGLE_SCRIPT_URL, { 
-                    method: 'POST', 
-                    mode: 'no-cors', 
-                    headers: { 'Content-Type': 'application/json' }, 
-                    body: JSON.stringify(payload) 
-                });
+                await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 statusDiv.innerHTML += '<br>SENT TO GOOGLE SHEETS!';
             } catch (e) { console.log('Sheets error:', e); }
-
             setTimeout(() => {
                 alert(`Mission Complete, ${studentName}!\n\nYour bonus: ${bonusNames[selectedBonus]}\n\nResults sent to teacher.`);
                 window.location.href = '../index.html';
@@ -1936,13 +1058,9 @@
         function createStars() {
             const container = document.getElementById('starsContainer');
             for (let i = 0; i < 200; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                const size = Math.random() * 3 + 1;
-                star.style.width = size + 'px';
-                star.style.height = size + 'px';
+                const star = document.createElement('div'); star.classList.add('star');
+                star.style.left = Math.random() * 100 + '%'; star.style.top = Math.random() * 100 + '%';
+                const size = Math.random() * 3 + 1; star.style.width = size + 'px'; star.style.height = size + 'px';
                 star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
                 container.appendChild(star);
             }
@@ -1954,14 +1072,17 @@
                 tabSwitchCount++;
                 document.getElementById('tabSwitchCount').textContent = tabSwitchCount;
                 document.getElementById('tabWarning').classList.add('show');
-                setTimeout(() => {
-                    document.getElementById('tabWarning').classList.remove('show');
-                }, 3000);
+                setTimeout(() => { document.getElementById('tabWarning').classList.remove('show'); }, 3000);
             }
         });
 
         window.addEventListener('DOMContentLoaded', () => {
             createStars();
+            // Автоматически запускаем музыку при загрузке
+            const bgMusic = document.getElementById('bgMusic');
+            bgMusic.volume = 0.3;
+            bgMusic.play().catch(e => console.log('Autoplay blocked:', e));
+            
             if (localStorage.getItem('grammar_ex_verb-heroes') === 'true') {
                 const badge = document.createElement('div');
                 badge.style.cssText = 'position: fixed; top: 20px; right: 20px; background: rgba(57, 255, 20, 0.2); color: var(--neon-green); border: 2px solid var(--neon-green); padding: 10px 20px; border-radius: 50px; font-family: Orbitron, monospace; font-weight: 900; z-index: 1000; text-transform: uppercase; letter-spacing: 2px;';
