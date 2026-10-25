@@ -934,15 +934,9 @@ function updateProgress() {
             document.getElementById('feedbackMsg').style.display = 'none';
             document.getElementById('portal').classList.remove('repaired');
             document.getElementById('correctAnswerDisplay').style.display = 'none';
-           const planet = getPlanetPositions()[currentPlanetIndex], player = document.getElementById('playerCharacter');
-player.classList.remove('flying'); player.classList.add('landing');
-player.style.left = planet.left + '%';
-
-if (window.innerWidth <= 768) {
-    player.style.bottom = '20px';  // На мобильных — всегда внизу
-} else {
-    player.style.bottom = (planet.bottom + 20) + 'px';  // На ПК — на планете
-}
+            const planet = planetPositions[currentPlanetIndex], player = document.getElementById('playerCharacter');
+            player.classList.remove('flying'); player.classList.add('landing');
+            player.style.left = planet.left + '%'; 
 
 // Адаптивное позиционирование
 if (window.innerWidth <= 768) {
@@ -1060,10 +1054,7 @@ if (window.innerWidth <= 768) {
 function nextQuestion() {
     playSound('click'); 
     currentIndex++;
-    updateProgress();
-    
-    // Обновляем массив позиций при смене ориентации
-    planetPositions = getPlanetPositions();
+    updateProgress();  // ← ДОБАВЬ ЭТУ СТРОКУ
     
     if (currentIndex % questionsPerPlanet === 0 && currentIndex < currentQuestions.length) {
         currentPlanetIndex = (currentPlanetIndex + 1) % 8;
@@ -1196,18 +1187,6 @@ function nextQuestion() {
         badge.style.cssText = 'position: fixed; top: 20px; right: 20px; background: rgba(57, 255, 20, 0.2); color: var(--neon-green); border: 2px solid var(--neon-green); padding: 10px 20px; border-radius: 50px; font-family: Orbitron, monospace; font-weight: 900; z-index: 1000; text-transform: uppercase; letter-spacing: 2px;';
         badge.innerHTML = 'COMPLETED';
         document.body.appendChild(badge);
-    }
-});
-        // Обработчик поворота экрана
-window.addEventListener('resize', () => {
-    const player = document.getElementById('playerCharacter');
-    if (player) {
-        if (window.innerWidth <= 768) {
-            player.style.bottom = '20px';
-        } else {
-            const planet = getPlanetPositions()[currentPlanetIndex];
-            player.style.bottom = (planet.bottom + 20) + 'px';
-        }
     }
 });
     </script>
