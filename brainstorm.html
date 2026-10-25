@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Brainstorm</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/wordcloud2.js@1.2.2/src/wordcloud2.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -19,7 +17,6 @@
             position: relative;
         }
         
-        /* Звёзды */
         .stars-bg {
             position: fixed;
             top: 0;
@@ -56,7 +53,6 @@
             background: linear-gradient(90deg, #c084fc, #60a5fa, #fbbf24);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 40px rgba(192, 132, 252, 0.5);
         }
         
         .question {
@@ -163,8 +159,9 @@
         }
         
         .back-btn {
-            display: inline-block;
-            margin-top: 25px;
+            display: block;
+            max-width: 250px;
+            margin: 25px auto 0;
             padding: 12px 30px;
             background: rgba(192, 132, 252, 0.2);
             border: 1px solid rgba(192, 132, 252, 0.4);
@@ -175,10 +172,6 @@
             font-weight: 600;
             transition: all 0.3s;
             text-align: center;
-            display: block;
-            max-width: 250px;
-            margin-left: auto;
-            margin-right: auto;
         }
         .back-btn:hover {
             background: rgba(192, 132, 252, 0.3);
@@ -192,6 +185,13 @@
             margin-top: 15px;
             min-height: 20px;
             font-weight: 600;
+        }
+        
+        .loading-msg {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 1.2em;
+            padding: 40px;
         }
         
         @media (max-width: 768px) {
@@ -224,29 +224,35 @@
     </div>
     
     <div class="container">
-        <h1>Live Brainstorm</h1>
+        <h1>🧠 Live Brainstorm</h1>
         <p class="question">What words come to mind when you think about grammar?</p>
         
         <div class="input-section">
             <input type="text" id="wordInput" placeholder="Type your word..." maxlength="30">
-            <button onclick="submitWord()">Submit </button>
+            <button onclick="submitWord()">Submit ✨</button>
         </div>
         <div class="status" id="status"></div>
         
         <div class="cloud-container">
-            <canvas id="wordcloud"></canvas>
+            <div id="wordcloud">
+                <div class="loading-msg">Loading word cloud...</div>
+            </div>
         </div>
         
         <a href="index.html" class="back-btn">← Back to exercises</a>
     </div>
 
+    <!-- Загружаем библиотеки -->
+    <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    
     <script>
-        // ⚠️ ВСТАВЬ СЮДА СВОЙ URL
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw74uqmAAm_17uviywBBN-M4ao3jkYsh_l2BKdkNEB7Ml0pF7yboarhqwK6ROtR4sBs/exec';
+        // ️ ВСТАВЬ СЮДА СВОЙ URL
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzsrk5Vyp-krUWliGiHJFBLfL8zv8nha5PiqELC-TrGpPjuhlJy47coOIHL6sIWdoI/exec';
         
         const wordInput = document.getElementById('wordInput');
         const status = document.getElementById('status');
-        const canvas = document.getElementById('wordcloud');
+        const wordcloudDiv = document.getElementById('wordcloud');
         
         // Создаём звёзды
         function createStars() {
@@ -302,20 +308,30 @@
                 const response = await fetch(SCRIPT_URL);
                 const words = await response.json();
                 
+                console.log('Words loaded:', words);
+                
                 if (!words || words.length === 0) {
-                    WordCloud(canvas, {
-                        list: [['Be the first!', 20]],
-                        gridSize: 10,
-                        weightFactor: 15,
-                        fontFamily: 'Comfortaa',
-                        color: '#c084fc',
-                        backgroundColor: 'transparent'
-                    });
+                    wordcloudDiv.innerHTML = '<div class="loading-msg">Be the first to add a word! 🌟</div>';
                     return;
                 }
                 
+                // Создаём canvas для WordCloud
+                wordcloudDiv.innerHTML = '';
+                const canvas = document.createElement('canvas');
+                canvas.id = 'wordcloudCanvas';
+                canvas.width = wordcloudDiv.offsetWidth;
+                canvas.height = wordcloudDiv.offsetHeight;
+                wordcloudDiv.appendChild(canvas);
+                
                 const maxWeight = Math.max(...words.map(w => w[1]));
                 const scaledWords = words.map(w => [w[0], Math.max(15, (w[1] / maxWeight) * 50)]);
+                
+                // Проверяем что WordCloud загружен
+                if (typeof WordCloud === 'undefined') {
+                    wordcloudDiv.innerHTML = '<div class="loading-msg">Loading library... Please wait</div>';
+                    setTimeout(loadCloud, 2000);
+                    return;
+                }
                 
                 WordCloud(canvas, {
                     list: scaledWords,
@@ -336,14 +352,7 @@
                 });
             } catch (e) {
                 console.error('Error loading cloud:', e);
-                WordCloud(canvas, {
-                    list: [['Loading...', 20]],
-                    gridSize: 10,
-                    weightFactor: 15,
-                    fontFamily: 'Comfortaa',
-                    color: '#fbbf24',
-                    backgroundColor: 'transparent'
-                });
+                wordcloudDiv.innerHTML = '<div class="loading-msg">Waiting for data... 📊</div>';
             }
         }
         
@@ -353,18 +362,22 @@
         
         // Генерация QR-кода
         const formUrl = 'https://surisamner-ops.github.io/Grammar_Challenge/brainstorm-form.html';
-        new QRCode(document.getElementById("qrcode"), {
-            text: formUrl,
-            width: 120,
-            height: 120,
-            colorDark: "#1e293b",
-            colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.H
-        });
+        if (typeof QRCode !== 'undefined') {
+            new QRCode(document.getElementById("qrcode"), {
+                text: formUrl,
+                width: 120,
+                height: 120,
+                colorDark: "#1e293b",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
         
         // Загружаем при старте
-        loadCloud();
-        setInterval(loadCloud, 10000);
+        window.addEventListener('load', () => {
+            loadCloud();
+            setInterval(loadCloud, 10000);
+        });
     </script>
 </body>
 </html>
