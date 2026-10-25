@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brainstorm - Submit Your Word</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Comfortaa', cursive;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            min-height: 100vh;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #c084fc, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .question {
+            color: #c4b5fd;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        .input-section {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 16px;
+            padding: 25px;
+        }
+        .input-section input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(0,0,0,0.3);
+            border: 2px solid rgba(192, 132, 252, 0.3);
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1em;
+            font-family: 'Comfortaa', cursive;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .input-section input:focus {
+            outline: none;
+            border-color: #c084fc;
+        }
+        .input-section button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #c084fc, #60a5fa);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Comfortaa', cursive;
+            font-weight: 700;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .input-section button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(192, 132, 252, 0.5);
+        }
+        .status {
+            margin-top: 15px;
+            min-height: 20px;
+            font-size: 0.95em;
+        }
+        .success { color: #4ade80; }
+        .error { color: #f87171; }
+        .loading { color: #fbbf24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 Live Brainstorm</h1>
+        <p class="question">What words come to mind when you think about grammar?</p>
+        
+        <div class="input-section">
+            <input type="text" id="wordInput" placeholder="Type your word..." maxlength="30" autocomplete="off">
+            <button onclick="submitWord()">Submit ✨</button>
+            <div class="status" id="status"></div>
+        </div>
+    </div>
+
+    <script>
+        // ⚠️ ВСТАВЬ СЮДА СВОЙ URL ИЗ GOOGLE APPS SCRIPT
+                const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzPphiM4dyzc0NzpACYS8CELuUsGH2WBeIINr-jNJaQbWdA68wOCNbRNWhVY7fa8buL/exec';
+        const wordInput = document.getElementById('wordInput');
+        const status = document.getElementById('status');
+        
+        async function submitWord() {
+            const word = wordInput.value.trim();
+            if (!word) {
+                status.textContent = 'Please type a word first!';
+                status.className = 'status error';
+                return;
+            }
+            
+            status.textContent = 'Sending...';
+            status.className = 'status loading';
+            
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ word: word, question: 'brainstorm' })
+                });
+                
+                wordInput.value = '';
+                status.textContent = '✅ Thank you! Your word has been added.';
+                status.className = 'status success';
+                
+                setTimeout(() => {
+                    status.textContent = '';
+                }, 3000);
+            } catch (e) {
+                status.textContent = 'Error. Please try again.';
+                status.className = 'status error';
+            }
+        }
+        
+        wordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') submitWord();
+        });
+        
+        wordInput.focus();
+    </script>
+</body>
+</html>
