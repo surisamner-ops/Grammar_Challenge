@@ -783,11 +783,11 @@
             hero: `<svg viewBox="0 0 200 200"><path d="M 55 85 Q 30 130 40 180 L 65 170 Q 60 130 70 95 Z" fill="#dc2626"/><path d="M 145 85 Q 170 130 160 180 L 135 170 Q 140 130 130 95 Z" fill="#dc2626"/><ellipse cx="100" cy="130" rx="38" ry="50" fill="#2563eb"/><polygon points="100,115 103,125 113,125 105,131 108,141 100,135 92,141 95,131 87,125 97,125" fill="#fbbf24"/><circle cx="100" cy="75" r="45" fill="#dbeafe"/><path d="M 60 60 Q 100 45 140 60 L 140 78 Q 100 68 60 78 Z" fill="#1e293b"/><circle cx="83" cy="70" r="7" fill="#fff"/><circle cx="117" cy="70" r="7" fill="#fff"/><circle cx="83" cy="70" r="4" fill="#0f172a"/><circle cx="117" cy="70" r="4" fill="#0f172a"/><path d="M 90 90 Q 100 97 110 90" stroke="#0f172a" stroke-width="2" fill="none"/><ellipse cx="60" cy="130" rx="10" ry="20" fill="#3b82f6" transform="rotate(-15 60 130)"/><ellipse cx="140" cy="130" rx="10" ry="20" fill="#3b82f6" transform="rotate(15 140 130)"/><ellipse cx="82" cy="180" rx="14" ry="10" fill="#1d4ed8"/><ellipse cx="118" cy="180" rx="14" ry="10" fill="#1d4ed8"/></svg>`
         };
 
-        const planetPositions = [
-            { left: 5, bottom: 140 }, { left: 18, bottom: 170 }, { left: 32, bottom: 120 },
-            { left: 46, bottom: 180 }, { left: 60, bottom: 100 }, { left: 74, bottom: 150 },
-            { left: 86, bottom: 190 }, { left: 95, bottom: 130 }
-        ];
+       const planetPositions = [
+    { left: 5, bottom: 80 }, { left: 18, bottom: 100 }, { left: 32, bottom: 70 },
+    { left: 46, bottom: 110 }, { left: 60, bottom: 60 }, { left: 74, bottom: 90 },
+    { left: 86, bottom: 120 }, { left: 95, bottom: 75 }
+];
 
         const verbDatabase = [
             { v1: "do", v2: "did", v3: "done", sentence1: "I _____ my homework yesterday.", sentence2: "The homework was _____ by me.", sentence2Type: "passive", hasPassive: true },
@@ -922,7 +922,14 @@ function updateProgress() {
             document.getElementById('correctAnswerDisplay').style.display = 'none';
             const planet = planetPositions[currentPlanetIndex], player = document.getElementById('playerCharacter');
             player.classList.remove('flying'); player.classList.add('landing');
-            player.style.left = planet.left + '%'; player.style.bottom = (planet.bottom + 20) + 'px';
+            player.style.left = planet.left + '%'; 
+
+// Адаптивное позиционирование
+if (window.innerWidth <= 768) {
+    player.style.bottom = '20px';  // На мобильных — внизу
+} else {
+    player.style.bottom = (planet.bottom + 20) + 'px';  // На ПК — как было
+}
             setTimeout(() => { player.classList.remove('landing'); }, 600);
             if (currentLevel === 1) {
                 updateSlots(); document.getElementById('checkBtn').style.display = 'none';
