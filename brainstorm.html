@@ -37,6 +37,15 @@
             0%, 100% { opacity: 0.3; transform: scale(0.8); }
             50% { opacity: 1; transform: scale(1.2); }
         }
+                @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        @keyframes magicParticles {
+            0% { opacity: 0; transform: translateY(0) translateX(0) scale(0); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-100px) translateX(50px) scale(1); }
+        }
         
         .container {
             position: relative;
@@ -439,6 +448,7 @@
         
         // Загружаем при старте
         window.addEventListener('load', () => {
+             createStars(); // <--- ВОТ ЭТА СТРОЧКА ВЕРНЁТ ЗВЁЗДЫ!
             loadCloud();
             setInterval(loadCloud, 10000);
         });
