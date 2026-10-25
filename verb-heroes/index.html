@@ -731,16 +731,292 @@
         }
 
         // ИСПРАВЛЕННЫЕ SVG - точно такие же как в карточках выбора!
-        const heroSVGs = {
-            astronaut: `<svg viewBox="0 0 200 200"><circle cx="100" cy="80" r="45" fill="#e9d5ff"/><circle cx="85" cy="70" r="8" fill="#1e293b"/><circle cx="115" cy="70" r="8" fill="#1e293b"/><circle cx="87" cy="68" r="3" fill="#fff"/><circle cx="117" cy="68" r="3" fill="#fff"/><path d="M 92 90 Q 100 96 108 90" stroke="#1e293b" stroke-width="2" fill="none"/><ellipse cx="100" cy="130" rx="35" ry="40" fill="#c084fc"/><circle cx="100" cy="50" r="8" fill="#fbbf24"/><line x1="100" y1="50" x2="100" y2="35" stroke="#c084fc" stroke-width="3"/><ellipse cx="70" cy="120" rx="10" ry="18" fill="#c084fc" transform="rotate(-20 70 120)"/><ellipse cx="130" cy="120" rx="10" ry="18" fill="#c084fc" transform="rotate(20 130 120)"/><ellipse cx="85" cy="170" rx="12" ry="8" fill="#a855f7"/><ellipse cx="115" cy="170" rx="12" ry="8" fill="#a855f7"/></svg>`,
-            robot: `<svg viewBox="0 0 200 200"><rect x="70" y="50" width="60" height="50" rx="10" fill="#bfdbfe"/><rect x="75" y="55" width="50" height="30" rx="8" fill="#0f172a"/><circle cx="88" cy="70" r="6" fill="#4ade80"/><circle cx="112" cy="70" r="6" fill="#4ade80"/><rect x="85" y="90" width="30" height="4" rx="2" fill="#4ade80"/><line x1="100" y1="50" x2="100" y2="35" stroke="#60a5fa" stroke-width="3"/><circle cx="100" cy="30" r="5" fill="#f87171"/><rect x="75" y="110" width="50" height="55" rx="8" fill="#60a5fa"/><rect x="55" y="115" width="15" height="35" rx="7" fill="#60a5fa"/><rect x="130" y="115" width="15" height="35" rx="7" fill="#60a5fa"/><rect x="80" y="165" width="15" height="15" rx="5" fill="#3b82f6"/><rect x="105" y="165" width="15" height="15" rx="5" fill="#3b82f6"/></svg>`,
-            alien: `<svg viewBox="0 0 200 200"><ellipse cx="100" cy="130" rx="40" ry="50" fill="#4ade80"/><ellipse cx="100" cy="75" rx="50" ry="55" fill="#22c55e"/><ellipse cx="80" cy="70" rx="15" ry="20" fill="#0f172a"/><ellipse cx="120" cy="70" rx="15" ry="20" fill="#0f172a"/><circle cx="82" cy="72" r="8" fill="#fbbf24"/><circle cx="122" cy="72" r="8" fill="#fbbf24"/><circle cx="84" cy="70" r="3" fill="#fff"/><circle cx="124" cy="70" r="3" fill="#fff"/><ellipse cx="100" cy="100" rx="10" ry="6" fill="#0f172a"/><path d="M 60 130 Q 40 140 35 160" stroke="#22c55e" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M 140 130 Q 160 140 165 160" stroke="#22c55e" stroke-width="10" fill="none" stroke-linecap="round"/><ellipse cx="80" cy="180" rx="12" ry="8" fill="#16a34a"/><ellipse cx="120" cy="180" rx="12" ry="8" fill="#16a34a"/></svg>`,
-            ninja: `<svg viewBox="0 0 200 200"><ellipse cx="100" cy="130" rx="38" ry="50" fill="#1e293b"/><circle cx="100" cy="75" r="42" fill="#0f172a"/><rect x="58" y="65" width="84" height="14" rx="6" fill="#f87171"/><circle cx="85" cy="72" r="6" fill="#fff"/><circle cx="115" cy="72" r="6" fill="#fff"/><circle cx="85" cy="72" r="3" fill="#0f172a"/><circle cx="115" cy="72" r="3" fill="#0f172a"/><path d="M 142 72 Q 160 65 170 75" stroke="#f87171" stroke-width="5" fill="none"/><ellipse cx="62" cy="130" rx="10" ry="20" fill="#1e293b" transform="rotate(-15 62 130)"/><ellipse cx="138" cy="130" rx="10" ry="20" fill="#1e293b" transform="rotate(15 138 130)"/><line x1="145" y1="125" x2="170" y2="95" stroke="#94a3b8" stroke-width="3"/><ellipse cx="82" cy="180" rx="12" ry="10" fill="#0f172a"/><ellipse cx="118" cy="180" rx="12" ry="10" fill="#0f172a"/></svg>`,
-            dragon: `<svg viewBox="0 0 200 200"><ellipse cx="100" cy="130" rx="42" ry="50" fill="#dc2626"/><ellipse cx="100" cy="75" rx="48" ry="52" fill="#fecaca"/><path d="M 65 45 Q 55 25 75 35" fill="#f87171"/><path d="M 135 45 Q 145 25 125 35" fill="#f87171"/><circle cx="82" cy="70" r="10" fill="#fbbf24"/><circle cx="118" cy="70" r="10" fill="#fbbf24"/><circle cx="82" cy="70" r="6" fill="#0f172a"/><circle cx="118" cy="70" r="6" fill="#0f172a"/><circle cx="84" cy="68" r="2" fill="#fff"/><circle cx="120" cy="68" r="2" fill="#fff"/><path d="M 92 95 Q 100 102 108 95" stroke="#0f172a" stroke-width="2" fill="none"/><path d="M 55 120 Q 30 110 35 140" stroke="#dc2626" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M 145 120 Q 170 110 165 140" stroke="#dc2626" stroke-width="10" fill="none" stroke-linecap="round"/><ellipse cx="80" cy="180" rx="14" ry="10" fill="#b91c1c"/><ellipse cx="120" cy="180" rx="14" ry="10" fill="#b91c1c"/></svg>`,
-            pirate: `<svg viewBox="0 0 200 200"><ellipse cx="100" cy="130" rx="40" ry="50" fill="#92400e"/><circle cx="100" cy="75" r="45" fill="#fbbf24"/><path d="M 55 55 Q 100 35 145 55 L 140 68 Q 100 55 60 68 Z" fill="#0f172a"/><circle cx="82" cy="78" r="8" fill="#fff"/><circle cx="118" cy="78" r="8" fill="#fff"/><circle cx="82" cy="78" r="5" fill="#0f172a"/><circle cx="118" cy="78" r="5" fill="#0f172a"/><path d="M 90 95 Q 100 103 110 95" stroke="#0f172a" stroke-width="2" fill="none"/><path d="M 58 130 Q 35 140 30 160" stroke="#92400e" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M 142 130 Q 165 140 170 160" stroke="#92400e" stroke-width="10" fill="none" stroke-linecap="round"/><line x1="165" y1="155" x2="180" y2="135" stroke="#94a3b8" stroke-width="3"/><ellipse cx="82" cy="180" rx="14" ry="10" fill="#78350f"/><ellipse cx="118" cy="180" rx="14" ry="10" fill="#78350f"/></svg>`,
-            phoenix: `<svg viewBox="0 0 200 200"><ellipse cx="100" cy="130" rx="40" ry="50" fill="#ea580c"/><ellipse cx="100" cy="75" rx="45" ry="50" fill="#f97316"/><circle cx="82" cy="70" r="10" fill="#fbbf24"/><circle cx="118" cy="70" r="10" fill="#fbbf24"/><circle cx="82" cy="70" r="6" fill="#0f172a"/><circle cx="118" cy="70" r="6" fill="#0f172a"/><circle cx="84" cy="68" r="2" fill="#fff"/><circle cx="120" cy="68" r="2" fill="#fff"/><path d="M 95 92 L 100 100 L 105 92 Z" fill="#f97316"/><path d="M 55 55 Q 30 35 45 25 Q 65 45 75 55" fill="#f97316"/><path d="M 145 55 Q 170 35 155 25 Q 135 45 125 55" fill="#f97316"/><path d="M 50 130 Q 25 140 20 165" stroke="#f97316" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M 150 130 Q 175 140 180 165" stroke="#f97316" stroke-width="10" fill="none" stroke-linecap="round"/><ellipse cx="82" cy="180" rx="12" ry="10" fill="#c2410c"/><ellipse cx="118" cy="180" rx="12" ry="10" fill="#c2410c"/></svg>`,
-            hero: `<svg viewBox="0 0 200 200"><path d="M 55 85 Q 30 130 40 180 L 65 170 Q 60 130 70 95 Z" fill="#dc2626"/><path d="M 145 85 Q 170 130 160 180 L 135 170 Q 140 130 130 95 Z" fill="#dc2626"/><ellipse cx="100" cy="130" rx="38" ry="50" fill="#2563eb"/><polygon points="100,115 103,125 113,125 105,131 108,141 100,135 92,141 95,131 87,125 97,125" fill="#fbbf24"/><circle cx="100" cy="75" r="45" fill="#dbeafe"/><path d="M 60 60 Q 100 45 140 60 L 140 78 Q 100 68 60 78 Z" fill="#1e293b"/><circle cx="83" cy="70" r="7" fill="#fff"/><circle cx="117" cy="70" r="7" fill="#fff"/><circle cx="83" cy="70" r="4" fill="#0f172a"/><circle cx="117" cy="70" r="4" fill="#0f172a"/><path d="M 90 90 Q 100 97 110 90" stroke="#0f172a" stroke-width="2" fill="none"/><ellipse cx="60" cy="130" rx="10" ry="20" fill="#3b82f6" transform="rotate(-15 60 130)"/><ellipse cx="140" cy="130" rx="10" ry="20" fill="#3b82f6" transform="rotate(15 140 130)"/><ellipse cx="82" cy="180" rx="14" ry="10" fill="#1d4ed8"/><ellipse cx="118" cy="180" rx="14" ry="10" fill="#1d4ed8"/></svg>`
-        };
+      const heroSVGs = {
+    astronaut: `<svg viewBox="0 0 200 220">
+        <defs>
+            <radialGradient id="catBodyG" cx="35%" cy="30%"><stop offset="0%" stop-color="#f5d0fe"/><stop offset="100%" stop-color="#a855f7"/></radialGradient>
+            <radialGradient id="catHeadG" cx="35%" cy="30%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#e9d5ff"/></radialGradient>
+            <filter id="catShadow"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/></filter>
+        </defs>
+        <ellipse cx="100" cy="150" rx="38" ry="45" fill="url(#catBodyG)" filter="url(#catShadow)"/>
+        <ellipse cx="85" cy="145" rx="8" ry="15" fill="#c084fc" opacity="0.6"/>
+        <ellipse cx="115" cy="145" rx="8" ry="15" fill="#c084fc" opacity="0.6"/>
+        <circle cx="100" cy="85" r="48" fill="url(#catHeadG)" filter="url(#catShadow)"/>
+        <path d="M 60 60 Q 50 30 75 45 Z" fill="#c084fc" stroke="#a855f7" stroke-width="2"/>
+        <path d="M 140 60 Q 150 30 125 45 Z" fill="#c084fc" stroke="#a855f7" stroke-width="2"/>
+        <ellipse cx="70" cy="55" rx="10" ry="15" fill="#f9a8d4" opacity="0.5"/>
+        <ellipse cx="130" cy="55" rx="10" ry="15" fill="#f9a8d4" opacity="0.5"/>
+        <ellipse cx="80" cy="80" rx="14" ry="16" fill="#fff"/>
+        <ellipse cx="120" cy="80" rx="14" ry="16" fill="#fff"/>
+        <circle cx="83" cy="82" r="8" fill="#1e293b"/>
+        <circle cx="123" cy="82" r="8" fill="#1e293b"/>
+        <circle cx="86" cy="79" r="3" fill="#fff"/>
+        <circle cx="126" cy="79" r="3" fill="#fff"/>
+        <circle cx="81" cy="84" r="1.5" fill="#fff" opacity="0.7"/>
+        <circle cx="121" cy="84" r="1.5" fill="#fff" opacity="0.7"/>
+        <ellipse cx="100" cy="98" rx="4" ry="3" fill="#f472b6"/>
+        <path d="M 94 104 Q 100 109 106 104" stroke="#1e293b" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <ellipse cx="65" cy="100" rx="8" ry="5" fill="#f9a8d4" opacity="0.4"/>
+        <ellipse cx="135" cy="100" rx="8" ry="5" fill="#f9a8d4" opacity="0.4"/>
+        <ellipse cx="75" cy="195" rx="18" ry="12" fill="#a855f7"/>
+        <ellipse cx="125" cy="195" rx="18" ry="12" fill="#a855f7"/>
+        <line x1="100" y1="37" x2="100" y2="20" stroke="#c084fc" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="100" cy="15" r="7" fill="#fbbf24" filter="url(#catShadow)">
+            <animate attributeName="r" values="7;9;7" dur="1.5s" repeatCount="indefinite"/>
+        </circle>
+    </svg>`,
+
+    robot: `<svg viewBox="0 0 200 220">
+        <defs>
+            <linearGradient id="robotBodyG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#dbeafe"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
+            <linearGradient id="robotHeadG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f0f9ff"/><stop offset="100%" stop-color="#93c5fd"/></linearGradient>
+            <filter id="robotShadow"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/></filter>
+        </defs>
+        <line x1="100" y1="45" x2="100" y2="25" stroke="#60a5fa" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="100" cy="18" r="8" fill="#f87171" filter="url(#robotShadow)">
+            <animate attributeName="fill" values="#f87171;#fbbf24;#f87171" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <rect x="68" y="115" width="64" height="70" rx="18" fill="url(#robotBodyG)" filter="url(#robotShadow)"/>
+        <rect x="82" y="130" width="36" height="25" rx="8" fill="rgba(255,255,255,0.3)"/>
+        <circle cx="100" cy="142" r="6" fill="#4ade80" opacity="0.8">
+            <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <rect x="62" y="48" width="76" height="68" rx="22" fill="url(#robotHeadG)" filter="url(#robotShadow)"/>
+        <rect x="72" y="58" width="56" height="45" rx="12" fill="#0f172a"/>
+        <circle cx="88" cy="75" r="10" fill="#4ade80">
+            <animate attributeName="ry" values="10;2;10" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="112" cy="75" r="10" fill="#4ade80">
+            <animate attributeName="ry" values="10;2;10" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="91" cy="72" r="3" fill="#fff" opacity="0.9"/>
+        <circle cx="115" cy="72" r="3" fill="#fff" opacity="0.9"/>
+        <rect x="88" y="92" width="24" height="5" rx="2" fill="#4ade80" opacity="0.7"/>
+        <rect x="38" y="125" width="22" height="45" rx="11" fill="#60a5fa" filter="url(#robotShadow)">
+            <animateTransform attributeName="transform" type="rotate" values="0 49 125; -10 49 125; 0 49 125" dur="2s" repeatCount="indefinite"/>
+        </rect>
+        <rect x="140" y="125" width="22" height="45" rx="11" fill="#60a5fa" filter="url(#robotShadow)">
+            <animateTransform attributeName="transform" type="rotate" values="0 151 125; 10 151 125; 0 151 125" dur="2s" repeatCount="indefinite"/>
+        </rect>
+        <rect x="78" y="185" width="18" height="20" rx="9" fill="#3b82f6"/>
+        <rect x="104" y="185" width="18" height="20" rx="9" fill="#3b82f6"/>
+    </svg>`,
+
+    alien: `<svg viewBox="0 0 200 220">
+        <defs>
+            <radialGradient id="alienBodyG" cx="35%" cy="30%"><stop offset="0%" stop-color="#dcfce7"/><stop offset="100%" stop-color="#22c55e"/></radialGradient>
+            <radialGradient id="alienHeadG" cx="35%" cy="30%"><stop offset="0%" stop-color="#bbf7d0"/><stop offset="100%" stop-color="#16a34a"/></radialGradient>
+            <radialGradient id="alienEyeG" cx="30%" cy="30%"><stop offset="0%" stop-color="#fef08a"/><stop offset="100%" stop-color="#eab308"/></radialGradient>
+            <filter id="alienShadow"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/></filter>
+        </defs>
+        <ellipse cx="100" cy="150" rx="42" ry="52" fill="url(#alienBodyG)" filter="url(#alienShadow)"/>
+        <ellipse cx="85" cy="145" rx="8" ry="12" fill="#16a34a" opacity="0.4"/>
+        <ellipse cx="115" cy="145" rx="8" ry="12" fill="#16a34a" opacity="0.4"/>
+        <ellipse cx="100" cy="78" rx="52" ry="58" fill="url(#alienHeadG)" filter="url(#alienShadow)"/>
+        <ellipse cx="78" cy="72" rx="18" ry="24" fill="#0f172a"/>
+        <ellipse cx="122" cy="72" rx="18" ry="24" fill="#0f172a"/>
+        <ellipse cx="80" cy="75" rx="12" ry="16" fill="url(#alienEyeG)"/>
+        <ellipse cx="124" cy="75" rx="12" ry="16" fill="url(#alienEyeG)"/>
+        <circle cx="82" cy="76" r="6" fill="#0f172a"/>
+        <circle cx="126" cy="76" r="6" fill="#0f172a"/>
+        <circle cx="85" cy="73" r="3" fill="#fff" opacity="0.9"/>
+        <circle cx="129" cy="73" r="3" fill="#fff" opacity="0.9"/>
+        <circle cx="78" cy="78" r="1.5" fill="#fff" opacity="0.6"/>
+        <circle cx="122" cy="78" r="1.5" fill="#fff" opacity="0.6"/>
+        <ellipse cx="100" cy="105" rx="10" ry="6" fill="#0f172a"/>
+        <path d="M 58 140 Q 35 150 30 175" stroke="#22c55e" stroke-width="12" fill="none" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="rotate" values="0 58 140; -8 58 140; 0 58 140" dur="2s" repeatCount="indefinite"/>
+        </path>
+        <path d="M 142 140 Q 165 150 170 175" stroke="#22c55e" stroke-width="12" fill="none" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="rotate" values="0 142 140; 8 142 140; 0 142 140" dur="2s" repeatCount="indefinite"/>
+        </path>
+        <ellipse cx="78" cy="202" rx="16" ry="10" fill="#16a34a"/>
+        <ellipse cx="122" cy="202" rx="16" ry="10" fill="#16a34a"/>
+    </svg>`,
+
+    ninja: `<svg viewBox="0 0 200 220">
+        <defs>
+            <linearGradient id="ninjaBodyG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#475569"/><stop offset="100%" stop-color="#0f172a"/></linearGradient>
+            <filter id="ninjaShadow"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.4"/></filter>
+        </defs>
+        <ellipse cx="100" cy="148" rx="40" ry="52" fill="url(#ninjaBodyG)" filter="url(#ninjaShadow)"/>
+        <ellipse cx="85" cy="145" rx="8" ry="12" fill="#1e293b" opacity="0.5"/>
+        <ellipse cx="115" cy="145" rx="8" ry="12" fill="#1e293b" opacity="0.5"/>
+        <circle cx="100" cy="78" r="44" fill="url(#ninjaBodyG)" filter="url(#ninjaShadow)"/>
+        <rect x="56" y="66" width="88" height="16" rx="7" fill="#f87171"/>
+        <path d="M 144 74 Q 165 65 175 75 Q 165 85 144 78" fill="#f87171">
+            <animate attributeName="d" values="M 144 74 Q 165 65 175 75 Q 165 85 144 78; M 144 74 Q 165 85 175 75 Q 165 65 144 78; M 144 74 Q 165 65 175 75 Q 165 85 144 78" dur="2s" repeatCount="indefinite"/>
+        </path>
+        <path d="M 75 74 L 92 74 L 90 82 L 77 82 Z" fill="#fff"/>
+        <path d="M 108 74 L 125 74 L 123 82 L 110 82 Z" fill="#fff"/>
+        <circle cx="84" cy="78" r="4" fill="#0f172a">
+            <animate attributeName="cx" values="84;86;84" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="116" cy="78" r="4" fill="#0f172a">
+            <animate attributeName="cx" values="116;114;116" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <ellipse cx="62" cy="145" rx="12" ry="22" fill="#1e293b" transform="rotate(-15 62 145)"/>
+        <ellipse cx="138" cy="145" rx="12" ry="22" fill="#1e293b" transform="rotate(15 138 145)"/>
+        <line x1="142" y1="128" x2="172" y2="95" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+        <polygon points="172,95 176,91 168,91" fill="#fbbf24"/>
+        <ellipse cx="80" cy="200" rx="14" ry="12" fill="#0f172a"/>
+        <ellipse cx="120" cy="200" rx="14" ry="12" fill="#0f172a"/>
+    </svg>`,
+
+    dragon: `<svg viewBox="0 0 200 220">
+        <defs>
+            <radialGradient id="dragonBodyG" cx="35%" cy="30%"><stop offset="0%" stop-color="#fecaca"/><stop offset="100%" stop-color="#dc2626"/></radialGradient>
+            <radialGradient id="dragonHeadG" cx="35%" cy="30%"><stop offset="0%" stop-color="#fff1f2"/><stop offset="100%" stop-color="#fee2e2"/></radialGradient>
+            <filter id="dragonShadow"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/></filter>
+        </defs>
+        <path d="M 100 180 Q 140 200 160 180 Q 175 165 168 155" stroke="#dc2626" stroke-width="14" fill="none" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="rotate" values="0 100 180; 8 100 180; 0 100 180" dur="2s" repeatCount="indefinite"/>
+        </path>
+        <ellipse cx="100" cy="145" rx="46" ry="52" fill="url(#dragonBodyG)" filter="url(#dragonShadow)"/>
+        <ellipse cx="85" cy="140" rx="10" ry="15" fill="#f87171" opacity="0.4"/>
+        <ellipse cx="115" cy="140" rx="10" ry="15" fill="#f87171" opacity="0.4"/>
+        <ellipse cx="100" cy="78" rx="50" ry="54" fill="url(#dragonHeadG)" filter="url(#dragonShadow)"/>
+        <path d="M 65 45 Q 52 22 78 32" fill="#f87171" stroke="#dc2626" stroke-width="2">
+            <animateTransform attributeName="transform" type="rotate" values="0 65 45; -5 65 45; 0 65 45" dur="1.5s" repeatCount="indefinite"/>
+        </path>
+        <path d="M 135 45 Q 148 22 122 32" fill="#f87171" stroke="#dc2626" stroke-width="2">
+            <animateTransform attributeName="transform" type="rotate" values="0 135 45; 5 135 45; 0 135 45" dur="1.5s" repeatCount="indefinite"/>
+        </path>
+        <circle cx="80" cy="74" r="13" fill="#fff"/>
+        <circle cx="120" cy="74" r="13" fill="#fff"/>
+        <circle cx="83" cy="77" r="8" fill="#0f172a">
+            <animate attributeName="r" values="8;5;8" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="123" cy="77" r="8" fill="#0f172a">
+            <animate attributeName="r" values="8;5;8" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="86" cy="74" r="3" fill="#fff"/>
+        <circle cx="126" cy="74" r="3" fill="#fff"/>
+        <circle cx="100" cy="96" r="5" fill="#f472b6"/>
+        <path d="M 90 106 Q 100 113 110 106" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M 55 120 Q 28 105 32 140 Q 45 132 55 140" fill="#f87171" stroke="#dc2626" stroke-width="2">
+            <animateTransform attributeName="transform" type="rotate" values="0 55 120; -12 55 120; 0 55 120" dur="2s" repeatCount="indefinite"/>
+        </path>
+        <path d="M 145 120 Q 172 105 168 140 Q 155 132 145 140" fill="#f87171" stroke="#dc2626" stroke-width="2">
+            <animateTransform attributeName="transform" type="rotate" values="0 145 120; 12 145 120; 0 145 120" dur="2s" repeatCount="indefinite"/>
+        </path>
+        <ellipse cx="78" cy="200" rx="16" ry="12" fill="#b91c1c"/>
+        <ellipse cx="122" cy="200" rx="16" ry="12" fill="#b91c1c"/>
+    </svg>`,
+
+    pirate: `<svg viewBox="0 0 200 220">
+        <defs>
+            <linearGradient id="pirateBodyG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#b45309"/><stop offset="100%" stop-color="#78350f"/></linearGradient>
+            <radialGradient id="pirateHeadG" cx="35%" cy="30%"><stop offset="0%" stop-color="#fde68a"/><stop offset="100%" stop-color="#d97706"/></radialGradient>
+            <filter id="pirateShadow"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/></filter>
+        </defs>
+        <ellipse cx="100" cy="148" rx="42" ry="52" fill="url(#pirateBodyG)" filter="url(#pirateShadow)"/>
+        <ellipse cx="85" cy="145" rx="8" ry="12" fill="#92400e" opacity="0.4"/>
+        <ellipse cx="115" cy="145" rx="8" ry="12" fill="#92400e" opacity="0.4"/>
+        <rect x="65" y="145" width="70" height="12" rx="4" fill="#fbbf24"/>
+        <circle cx="100" cy="151" r="8" fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
+        <circle cx="100" cy="78" r="46" fill="url(#pirateHeadG)" filter="url(#pirateShadow)"/>
+        <path d="M 52 58 Q 100 32 148 58 L 143 72 Q 100 58 57 72 Z" fill="#0f172a"/>
+        <rect x="72" y="58" width="56" height="10" rx="3" fill="#dc2626"/>
+        <circle cx="82" cy="78" r="10" fill="#fff"/>
+        <circle cx="118" cy="78" r="10" fill="#fff"/>
+        <circle cx="84" cy="80" r="6" fill="#0f172a">
+            <animate attributeName="cx" values="84;86;84" dur="4s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="120" cy="80" r="6" fill="#0f172a">
+            <animate attributeName="cx" values="120;118;120" dur="4s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="86" cy="78" r="2" fill="#fff"/>
+        <circle cx="122" cy="78" r="2" fill="#fff"/>
+        <path d="M 90 98 Q 100 106 110 98" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M 85 108 Q 100 122 115 108" fill="#78350f" opacity="0.8"/>
+        <path d="M 58 140 Q 32 150 28 175" stroke="#b45309" stroke-width="12" fill="none" stroke-linecap="round"/>
+        <path d="M 142 140 Q 168 150 172 175" stroke="#b45309" stroke-width="12" fill="none" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="rotate" values="0 142 140; 12 142 140; 0 142 140" dur="2s" repeatCount="indefinite"/>
+        </path>
+        <line x1="168" y1="170" x2="185" y2="145" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+        <ellipse cx="80" cy="200" rx="16" ry="12" fill="#78350f"/>
+        <ellipse cx="120" cy="200" rx="16" ry="12" fill="#78350f"/>
+    </svg>`,
+
+    phoenix: `<svg viewBox="0 0 200 220">
+        <defs>
+            <radialGradient id="phoenixBodyG" cx="35%" cy="30%"><stop offset="0%" stop-color="#fef3c7"/><stop offset="50%" stop-color="#f97316"/><stop offset="100%" stop-color="#ea580c"/></radialGradient>
+            <radialGradient id="phoenixHeadG" cx="35%" cy="30%"><stop offset="0%" stop-color="#ffedd5"/><stop offset="100%" stop-color="#fb923c"/></radialGradient>
+            <filter id="phoenixGlow"><feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#f97316" flood-opacity="0.4"/></filter>
+        </defs>
+        <ellipse cx="100" cy="145" rx="42" ry="52" fill="url(#phoenixBodyG)" filter="url(#phoenixGlow)"/>
+        <ellipse cx="85" cy="140" rx="8" ry="12" fill="#ea580c" opacity="0.4"/>
+        <ellipse cx="115" cy="140" rx="8" ry="12" fill="#ea580c" opacity="0.4"/>
+        <ellipse cx="100" cy="78" rx="46" ry="50" fill="url(#phoenixHeadG)" filter="url(#phoenixGlow)"/>
+        <circle cx="80" cy="74" r="12" fill="#fff"/>
+        <circle cx="120" cy="74" r="12" fill="#fff"/>
+        <circle cx="83" cy="77" r="7" fill="#0f172a">
+            <animate attributeName="r" values="7;4;7" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="123" cy="77" r="7" fill="#0f172a">
+            <animate attributeName="r" values="7;4;7" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="86" cy="74" r="3" fill="#fff"/>
+        <circle cx="126" cy="74" r="3" fill="#fff"/>
+        <path d="M 94 92 L 100 104 L 106 92 Z" fill="#f97316" stroke="#ea580c" stroke-width="1"/>
+        <path d="M 55 58 Q 28 32 42 22 Q 65 42 75 55" fill="#f97316" opacity="0.9">
+            <animate attributeName="d" values="M 55 58 Q 28 32 42 22 Q 65 42 75 55; M 55 58 Q 28 25 42 15 Q 65 35 75 55; M 55 58 Q 28 32 42 22 Q 65 42 75 55" dur="2s" repeatCount="indefinite"/>
+        </path>
+        <path d="M 145 58 Q 172 32 158 22 Q 135 42 125 55" fill="#f97316" opacity="0.9">
+            <animate attributeName="d" values="M 145 58 Q 172 32 158 22 Q 135 42 125 55; M 145 58 Q 172 25 158 15 Q 135 35 125 55; M 145 58 Q 172 32 158 22 Q 135 42 125 55" dur="2s" repeatCount="indefinite"/>
+        </path>
+        <path d="M 50 145 Q 22 155 18 185" stroke="#f97316" stroke-width="12" fill="none" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="rotate" values="0 50 145; -5 50 145; 0 50 145" dur="2s" repeatCount="indefinite"/>
+        </path>
+        <path d="M 150 145 Q 178 155 182 185" stroke="#f97316" stroke-width="12" fill="none" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="rotate" values="0 150 145; 5 150 145; 0 150 145" dur="2s" repeatCount="indefinite"/>
+        </path>
+        <ellipse cx="80" cy="200" rx="14" ry="12" fill="#c2410c"/>
+        <ellipse cx="120" cy="200" rx="14" ry="12" fill="#c2410c"/>
+    </svg>`,
+
+    hero: `<svg viewBox="0 0 200 220">
+        <defs>
+            <linearGradient id="heroBodyG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#93c5fd"/><stop offset="100%" stop-color="#2563eb"/></linearGradient>
+            <radialGradient id="heroHeadG" cx="35%" cy="30%"><stop offset="0%" stop-color="#f0f9ff"/><stop offset="100%" stop-color="#bfdbfe"/></radialGradient>
+            <filter id="heroShadow"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/></filter>
+        </defs>
+        <path d="M 55 85 Q 28 130 38 190 L 65 180 Q 60 130 70 95 Z" fill="#dc2626" opacity="0.9">
+            <animateTransform attributeName="transform" type="rotate" values="0 55 85; -5 55 85; 0 55 85" dur="2s" repeatCount="indefinite"/>
+        </path>
+        <path d="M 145 85 Q 172 130 162 190 L 135 180 Q 140 130 130 95 Z" fill="#dc2626" opacity="0.9">
+            <animateTransform attributeName="transform" type="rotate" values="0 145 85; 5 145 85; 0 145 85" dur="2s" repeatCount="indefinite"/>
+        </path>
+        <ellipse cx="100" cy="145" rx="40" ry="52" fill="url(#heroBodyG)" filter="url(#heroShadow)"/>
+        <ellipse cx="85" cy="140" rx="8" ry="12" fill="#3b82f6" opacity="0.4"/>
+        <ellipse cx="115" cy="140" rx="8" ry="12" fill="#3b82f6" opacity="0.4"/>
+        <polygon points="100,118 104,130 116,130 106,138 110,150 100,142 90,150 94,138 84,130 96,130" fill="#fbbf24" filter="url(#heroShadow)">
+            <animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite"/>
+        </polygon>
+        <circle cx="100" cy="78" r="46" fill="url(#heroHeadG)" filter="url(#heroShadow)"/>
+        <path d="M 58 62 Q 100 45 142 62 L 142 82 Q 100 68 58 82 Z" fill="#1e293b"/>
+        <ellipse cx="82" cy="74" rx="10" ry="8" fill="#fff"/>
+        <ellipse cx="118" cy="74" rx="10" ry="8" fill="#fff"/>
+        <circle cx="85" cy="75" r="5" fill="#0f172a">
+            <animate attributeName="cx" values="85;87;85" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="121" cy="75" r="5" fill="#0f172a">
+            <animate attributeName="cx" values="121;119;121" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="87" cy="73" r="2" fill="#fff"/>
+        <circle cx="123" cy="73" r="2" fill="#fff"/>
+        <path d="M 90 92 Q 100 99 110 92" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="60" cy="145" rx="12" ry="22" fill="#3b82f6" transform="rotate(-15 60 145)">
+            <animateTransform attributeName="transform" type="rotate" values="-15 60 145; -5 60 145; -15 60 145" dur="2s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="140" cy="145" rx="12" ry="22" fill="#3b82f6" transform="rotate(15 140 145)">
+            <animateTransform attributeName="transform" type="rotate" values="15 140 145; 5 140 145; 15 140 145" dur="2s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="80" cy="200" rx="16" ry="12" fill="#1d4ed8"/>
+        <ellipse cx="120" cy="200" rx="16" ry="12" fill="#1d4ed8"/>
+    </svg>`
+};
 
         const planetPositions = [
             { left: 5, bottom: 140 }, { left: 18, bottom: 170 }, { left: 32, bottom: 120 },
