@@ -6,6 +6,7 @@
     <title>Brainstorm - Word Cloud</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/wordcloud2.js@1.2.2/src/wordcloud2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -75,6 +76,31 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(192, 132, 252, 0.5);
         }
+        .qr-section {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(192, 132, 252, 0.2);
+            border-radius: 16px;
+        }
+        .qr-section h2 {
+            color: #c084fc;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(192, 132, 252, 0.4);
+        }
+        .qr-hint {
+            color: #94a3b8;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
         .cloud-container {
             background: rgba(255,255,255,0.04);
             border: 1px solid rgba(192, 132, 252, 0.2);
@@ -110,12 +136,13 @@
             margin-top: 10px;
             min-height: 20px;
         }
+        .center { text-align: center; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🧠 Live Brainstorm</h1>
-        <p class="question" id="questionText">What words come to mind when you think about grammar?</p>
+        <p class="question">What words come to mind when you think about ...?</p>
         
         <div class="input-section">
             <input type="text" id="wordInput" placeholder="Type your word..." maxlength="30">
@@ -123,18 +150,24 @@
         </div>
         <div class="status" id="status"></div>
         
+        <div class="qr-section">
+            <h2>📱 Scan to join!</h2>
+            <div id="qrcode"></div>
+            <p class="qr-hint">Open this page on your phone to participate</p>
+        </div>
+        
         <div class="cloud-container">
             <canvas id="wordcloud"></canvas>
         </div>
         
-        <div style="text-align: center;">
+        <div class="center">
             <a href="index.html" class="back-btn">← Back to exercises</a>
         </div>
     </div>
 
     <script>
-        // ⚠️ ВСТАВЬ СЮДА СВОЙ URL ИЗ ШАГА 2
-                const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzsrk5Vyp-krUWliGiHJFBLfL8zv8nha5PiqELC-TrGpPjuhlJy47coOIHL6sIWdoI/exec';
+        // ⚠️ ВСТАВЬ СЮДА СВОЙ URL ИЗ GOOGLE APPS SCRIPT
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzsrk5Vyp-krUWliGiHJFBLfL8zv8nha5PiqELC-TrGpPjuhlJy47coOIHL6sIWdoI/exec';
         
         const wordInput = document.getElementById('wordInput');
         const status = document.getElementById('status');
@@ -164,7 +197,6 @@
                 status.textContent = '✅ Added! Refreshing cloud...';
                 status.style.color = '#4ade80';
                 
-                // Обновляем облако через 2 секунды
                 setTimeout(loadCloud, 2000);
             } catch (e) {
                 status.textContent = 'Error. Try again.';
@@ -177,6 +209,8 @@
             try {
                 const response = await fetch(SCRIPT_URL);
                 const words = await response.json();
+                
+                console.log('Loaded words:', words);
                 
                 if (words.length === 0) {
                     WordCloud(canvas, {
@@ -194,7 +228,7 @@
                 
                 // Увеличиваем веса для красивого облака
                 const maxWeight = Math.max(...words.map(w => w[1]));
-                const scaledWords = words.map(w => [w[0], Math.max(10, (w[1] / maxWeight) * 50)]);
+                const scaledWords = words.map(w => [w[0], Math.max(15, (w[1] / maxWeight) * 50)]);
                 
                 WordCloud(canvas, {
                     list: scaledWords,
@@ -215,12 +249,31 @@
                 });
             } catch (e) {
                 console.log('Error loading cloud:', e);
+                WordCloud(canvas, {
+                    list: [['Loading...', 20]],
+                    gridSize: 10,
+                    weightFactor: 15,
+                    fontFamily: 'Comfortaa',
+                    color: '#fbbf24',
+                    backgroundColor: 'transparent'
+                });
             }
         }
         
         // Enter для отправки
         wordInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') submitWord();
+        });
+        
+        // Генерация QR-кода
+        const formUrl = 'https://surisamner-ops.github.io/Grammar_Challenge/brainstorm-form.html';
+        new QRCode(document.getElementById("qrcode"), {
+            text: formUrl,
+            width: 200,
+            height: 200,
+            colorDark: "#1e293b",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
         });
         
         // Загружаем облако при старте и обновляем каждые 10 секунд
