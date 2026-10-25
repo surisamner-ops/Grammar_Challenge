@@ -16,8 +16,47 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
         }
+        
+        /* Звёздный фон */
+        .stars-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        @keyframes shootingStar {
+            0% { transform: translateX(0) translateY(0) rotate(-35deg); opacity: 0; }
+            15% { opacity: 0.6; }
+            50% { opacity: 0.9; }
+            85% { opacity: 0.6; }
+            100% { transform: translateX(150vw) translateY(100vh) rotate(-35deg); opacity: 0; }
+        }
+        @keyframes magicParticles {
+            0% { opacity: 0; transform: translateY(0) translateX(0) scale(0); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-100px) translateX(50px) scale(1); }
+        }
+        
         .container {
+            position: relative;
+            z-index: 2;
             max-width: 500px;
             width: 100%;
             text-align: center;
@@ -41,22 +80,30 @@
             border: 1px solid rgba(192, 132, 252, 0.3);
             border-radius: 16px;
             padding: 25px;
+            box-shadow: 0 0 30px rgba(192, 132, 252, 0.2);
         }
         .input-section input {
             width: 100%;
             padding: 15px 20px;
             background: rgba(0,0,0,0.3);
-            border: 2px solid rgba(192, 132, 252, 0.3);
+            border: 2px solid rgba(192, 132, 252, 0.5);
             border-radius: 50px;
             color: white;
             font-size: 1.1em;
             font-family: 'Comfortaa', cursive;
             margin-bottom: 15px;
             text-align: center;
+            box-shadow: 0 0 30px rgba(192, 132, 252, 0.3);
+            animation: inputGlow 2s ease-in-out infinite;
+        }
+        @keyframes inputGlow {
+            0%, 100% { box-shadow: 0 0 30px rgba(192, 132, 252, 0.3); }
+            50% { box-shadow: 0 0 50px rgba(192, 132, 252, 0.5), 0 0 70px rgba(192, 132, 252, 0.3); }
         }
         .input-section input:focus {
             outline: none;
             border-color: #c084fc;
+            box-shadow: 0 0 50px rgba(192, 132, 252, 0.6), 0 0 80px rgba(192, 132, 252, 0.4);
         }
         .input-section button {
             width: 100%;
@@ -70,10 +117,11 @@
             font-size: 1.1em;
             cursor: pointer;
             transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
         }
         .input-section button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(192, 132, 252, 0.5);
+            box-shadow: 0 5px 25px rgba(192, 132, 252, 0.6);
         }
         .status {
             margin-top: 15px;
@@ -86,6 +134,8 @@
     </style>
 </head>
 <body>
+    <div class="stars-bg" id="starsContainer"></div>
+    
     <div class="container">
         <h1>🧠 Live Brainstorm</h1>
         <p class="question">What words come to mind when you think about grammar?</p>
@@ -99,9 +149,59 @@
 
     <script>
         // ⚠️ ВСТАВЬ СЮДА СВОЙ URL ИЗ GOOGLE APPS SCRIPT
-                const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzRQlr3v51D5GJ1QS7lhmmVyefuhH5HZ-49IWSwEgW0xhnyiadULpIOfPK2PCdaZUGa/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzRQlr3v51D5GJ1QS7lhmmVyefuhH5HZ-49IWSwEgW0xhnyiadULpIOfPK2PCdaZUGa/exec';
         const wordInput = document.getElementById('wordInput');
         const status = document.getElementById('status');
+        
+        // Создаём звёзды
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            // 400 звёзд
+            for (let i = 0; i < 400; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.setProperty('--max-opacity', Math.random() * 0.7 + 0.3);
+                star.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(star);
+            }
+            // 10 падающих звёзд
+            for (let i = 0; i < 10; i++) {
+                const shootingStar = document.createElement('div');
+                shootingStar.style.position = 'absolute';
+                shootingStar.style.width = '150px';
+                shootingStar.style.height = '1px';
+                shootingStar.style.background = 'linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.3) 30%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.3) 70%, rgba(255,255,255,0))';
+                shootingStar.style.top = Math.random() * 50 + '%';
+                shootingStar.style.left = '-' + Math.random() * 20 + '%';
+                shootingStar.style.transform = 'rotate(-35deg)';
+                shootingStar.style.filter = 'blur(0.5px)';
+                shootingStar.style.animation = `shootingStar ${Math.random() * 6 + 10}s ease-in-out ${Math.random() * 15}s infinite`;
+                container.appendChild(shootingStar);
+            }
+            // 30 частиц
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = '4px';
+                particle.style.height = '4px';
+                particle.style.background = 'rgba(192, 132, 252, 0.8)';
+                particle.style.borderRadius = '50%';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.boxShadow = '0 0 10px rgba(192, 132, 252, 0.8)';
+                particle.style.animation = `magicParticles ${Math.random() * 4 + 3}s ease-in-out ${Math.random() * 5}s infinite`;
+                container.appendChild(particle);
+            }
+        }
+        
+        // Запускаем создание звёзд при загрузке
+        window.addEventListener('load', createStars);
         
         async function submitWord() {
             const word = wordInput.value.trim();
