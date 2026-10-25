@@ -1072,6 +1072,25 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
                             <p>Master irregular verbs, stages of life, and household chores through 12 engaging tasks!</p>
                             <span class="tag">12 Tasks • Advanced</span>
                         </a>
+                        <!-- Verb Heroes: Cyber Portal -->
+<a href="verb-heroes/index.html" class="exercise-card" onclick="localStorage.setItem('lastActiveTab', 'practice'); localStorage.setItem('returnFromExercise', 'true')">
+    <span class="completed-badge" id="badge-verb-heroes">✓ Completed</span>
+    <img src="verb-heroes/screenshot.png" alt="Verb Heroes: Cyber Portal" class="game-card-image">
+    <div class="game-card-content">
+        <h3 class="game-card-title">
+            <span class="emoji">🚀</span>
+            Verb Heroes: Cyber Portal
+        </h3>
+        <p class="game-card-description">
+            Travel through space and master irregular verbs! Choose your hero, answer grammar questions, and repair portals across the galaxy.
+        </p>
+        <div class="play-button">
+            <span class="play-icon">▶</span>
+            Play Now
+        </div>
+        <div class="game-tag">Interactive Game • Irregular Verbs • Space Adventure</div>
+    </div>
+</a>
                     </div>
                 </div>
                                 <div id="use" class="tab-content">
@@ -1346,7 +1365,7 @@ window.addEventListener('DOMContentLoaded', function() {
         });
 
 function checkProgress() {
-          const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted', 'kate', 'memory-tenses', 'london', 'alison', 'annie', 'emma', 'travel-catcher', 'conditionals-l1', 'conditionals-l2', 'camping-trip', 'bristol-camping', 'paul-late', 'museum', 'dragon', 'memory-b1', 'vocab-master', 'surviving-cold', 'life-events', 'gordon', 'traveling'];
+          const exercises = ['susan', 'dana', 'violin', 'matilda', 'tictactoe', 'passive', 'ted', 'kate', 'memory-tenses', 'london', 'alison', 'annie', 'emma', 'travel-catcher', 'conditionals-l1', 'conditionals-l2', 'camping-trip', 'bristol-camping', 'paul-late', 'museum', 'dragon', 'memory-b1', 'vocab-master', 'surviving-cold', 'life-events', 'gordon', 'traveling', 'verb-heroes'];
     exercises.forEach(ex => {
         if (localStorage.getItem('grammar_ex_' + ex) === 'true') {
             const badge = document.getElementById('badge-' + ex);
