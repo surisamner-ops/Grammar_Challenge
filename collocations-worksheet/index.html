@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juliya Magic Teacher - Collocations Worksheet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c084fc;
+            --primary-light: #e9d5ff;
+            --secondary: #60a5fa;
+            --success: #4ade80;
+            --success-bg: rgba(74, 222, 128, 0.2);
+            --warning: #fbbf24;
+            --warning-bg: rgba(251, 191, 36, 0.2);
+            --error: #f87171;
+            --error-bg: rgba(248, 113, 113, 0.2);
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --text-bg: rgba(245, 245, 250, 0.98);
+            --text-dark: #1e293b;
+            --text-light: #475569;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+        }
+        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--duration) ease-in-out infinite; opacity: 0; }
+        .shooting-star { position: absolute; width: 150px; height: 2px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent); animation: shoot 5s linear infinite; opacity: 0; }
+
+        @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: var(--max-opacity); transform: scale(1.3); } }
+        @keyframes shoot { 0% { transform: translateX(-150px) translateY(150px) rotate(-45deg); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateX(100vw) translateY(-150px) rotate(-45deg); opacity: 0; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+        @keyframes pop { 0% { transform: scale(0.8); opacity: 0; } 50% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+
+        .main-wrapper { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+        .header { text-align: center; margin-bottom: 50px; animation: fadeInUp 1s ease-out; }
+        .main-title {
+            font-family: 'Comfortaa', cursive; font-size: 2.8em; font-weight: 700;
+            background: linear-gradient(90deg, #ffffff, #e9d5ff, #ffffff, #c084fc, #ffffff);
+            background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shimmer 6s linear infinite; margin-bottom: 15px; position: relative; display: inline-block;
+        }
+        .header p { font-size: 1.15em; color: #ffffff; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); max-width: 700px; margin: 0 auto; }
+
+        .welcome-form {
+            background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 24px; padding: 50px 40px; text-align: center; max-width: 500px; margin: 0 auto 50px;
+            animation: fadeInUp 0.8s ease-out; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        .welcome-form h2 { font-family: 'Comfortaa', cursive; font-size: 2em; margin-bottom: 15px; color: var(--primary); }
+        .welcome-form p { margin-bottom: 30px; color: var(--text-light); font-size: 1.05em; }
+        .name-input {
+            width: 100%; max-width: 320px; padding: 16px 24px; background: rgba(241, 245, 249, 0.9);
+            border: 2px solid rgba(192, 132, 252, 0.4); border-radius: 14px; color: var(--text-dark); font-size: 1.1em;
+            text-align: center; margin-bottom: 25px; font-family: 'Inter', sans-serif; transition: all 0.3s ease;
+        }
+        .name-input::placeholder { color: rgba(71, 85, 105, 0.5); }
+        .name-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 25px rgba(192, 132, 252, 0.4); }
+        .btn-start, .btn-finish, .btn-check {
+            padding: 16px 45px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white; border: none; border-radius: 50px; font-family: 'Comfortaa', cursive; font-size: 1.1em;
+            font-weight: 700; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(192, 132, 252, 0.4);
+        }
+        .btn-start:hover, .btn-finish:hover, .btn-check:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6); }
+
+        .timer-bar {
+            position: sticky; top: 15px; z-index: 100; background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 50px; padding: 12px 25px;
+            text-align: center; margin-bottom: 30px; font-family: 'Comfortaa', cursive; font-size: 1.1em;
+            color: var(--primary); backdrop-filter: blur(12px); display: none; align-items: center;
+            justify-content: center; gap: 20px; animation: slideIn 0.5s ease-out; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .timer-bar.show { display: flex; }
+        .tab-warning { color: var(--error); font-weight: 700; animation: pulse 1s ease-in-out infinite; background: var(--error-bg); padding: 6px 15px; border-radius: 20px; }
+
+        .task-section {
+            background: var(--bg-card); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 24px; padding: 40px; margin-bottom: 40px; animation: fadeInUp 0.8s ease-out;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15); display: none;
+        }
+        .task-section.show { display: block; }
+        .section-title { font-family: 'Comfortaa', cursive; font-size: 1.6em; color: var(--primary); text-align: center; margin-bottom: 10px; }
+        .instruction { text-align: center; color: var(--text-light); margin-bottom: 30px; font-size: 1.05em; }
+
+        /* Vocabulary Bank */
+        .vocab-bank {
+            background: rgba(192, 132, 252, 0.1);
+            border: 2px solid rgba(192, 132, 252, 0.3);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .vocab-bank h3 {
+            font-family: 'Comfortaa', cursive;
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .vocab-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .vocab-column h4 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-family: 'Comfortaa', cursive;
+        }
+        .vocab-column ol {
+            padding-left: 20px;
+            color: var(--text-dark);
+            font-size: 0.95em;
+            line-height: 1.8;
+        }
+
+        /* Match Grid */
+        .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 800px; margin: 0 auto; }
+        .match-column { display: flex; flex-direction: column; gap: 12px; }
+        .match-item {
+            background: rgba(192, 132, 252, 0.1); border: 1.5px solid rgba(192, 132, 252, 0.3); border-radius: 14px;
+            padding: 18px; text-align: center; cursor: pointer; transition: all 0.3s ease;
+            color: var(--text-dark); font-weight: 600; position: relative;
+        }
+        .match-item:hover { background: rgba(192, 132, 252, 0.2); border-color: var(--primary); transform: translateY(-3px); }
+        .match-item.selected { background: rgba(192, 132, 252, 0.35); border-color: var(--primary-light); box-shadow: 0 0 25px rgba(192, 132, 252, 0.4); }
+        .match-item.correct { background: var(--success-bg); border-color: var(--success); color: #166534; pointer-events: none; animation: pulse 0.5s ease; }
+        .match-item.wrong { animation: shake 0.4s ease; background: var(--error-bg); border-color: var(--error); }
+
+        /* Fill in gaps */
+        .fill-gaps-container {
+            background: var(--text-bg);
+            border: 1px solid rgba(192, 132, 252, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(192, 132, 252, 0.1);
+            border-radius: 12px;
+        }
+        .word-chip {
+            background: rgba(192, 132, 252, 0.2);
+            border: 1.5px solid rgba(192, 132, 252, 0.4);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: grab;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+        .word-chip:hover { background: rgba(192, 132, 252, 0.35); transform: translateY(-2px); }
+        .word-chip.used { opacity: 0.3; text-decoration: line-through; pointer-events: none; }
+        .gap-sentence {
+            margin-bottom: 15px;
+            padding: 12px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .gap-sentence .number {
+            background: var(--primary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .drop-zone {
+            min-width: 180px;
+            min-height: 36px;
+            background: rgba(192, 132, 252, 0.1);
+            border: 2px dashed rgba(192, 132, 252, 0.4);
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .drop-zone.drag-over { background: rgba(192, 132, 252, 0.3); border-color: var(--primary); }
+        .drop-zone.filled { background: rgba(74, 222, 128, 0.15); border-color: var(--success); border-style: solid; }
+        .drop-zone.wrong { background: var(--error-bg); border-color: var(--error); animation: shake 0.4s ease; }
+
+        /* Intruder task */
+        .intruder-container { display: flex; flex-direction: column; gap: 15px; max-width: 700px; margin: 0 auto; }
+        .intruder-row {
+            background: var(--text-bg);
+            border: 1px solid rgba(192, 132, 252, 0.2);
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .intruder-row .row-number {
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .intruder-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+        .intruder-option {
+            background: rgba(192, 132, 252, 0.1);
+            border: 1.5px solid rgba(192, 132, 252, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        .intruder-option:hover { background: rgba(192, 132, 252, 0.25); border-color: var(--primary); }
+        .intruder-option.selected { background: var(--success-bg); border-color: var(--success); color: #166534; pointer-events: none; }
+        .intruder-option.wrong { background: var(--error-bg); border-color: var(--error); color: #991b1b; animation: shake 0.4s ease; }
+
+        /* Error correction */
+        .error-container { display: flex; flex-direction: column; gap: 15px; max-width: 700px; margin: 0 auto; }
+        .error-row {
+            background: var(--text-bg);
+            border: 1px solid rgba(192, 132, 252, 0.2);
+            border-radius: 12px;
+            padding: 15px 20px;
+        }
+        .error-sentence {
+            margin-bottom: 10px;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        .error-word {
+            background: var(--error-bg);
+            color: #991b1b;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            text-decoration: line-through;
+        }
+        .error-input-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .error-input-row label {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+        .error-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1.5px solid rgba(192, 132, 252, 0.3);
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: 'Inter', sans-serif;
+        }
+        .error-input:focus { outline: none; border-color: var(--primary); }
+        .error-input.correct { border-color: var(--success); background: var(--success-bg); }
+        .error-input.wrong { border-color: var(--error); background: var(--error-bg); }
+
+        /* Categorization */
+        .categorization-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .category-column {
+            background: var(--text-bg);
+            border: 2px dashed rgba(192, 132, 252, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            min-height: 200px;
+        }
+        .category-column h4 {
+            font-family: 'Comfortaa', cursive;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        .category-column.drag-over { background: rgba(192, 132, 252, 0.1); border-color: var(--primary); }
+        .category-item {
+            background: rgba(192, 132, 252, 0.15);
+            border: 1.5px solid rgba(192, 132, 252, 0.4);
+            border-radius: 10px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            cursor: grab;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+        .category-item:hover { background: rgba(192, 132, 252, 0.25); transform: translateX(3px); }
+        .category-item.dragging { opacity: 0.5; }
+        .category-item.correct { background: var(--success-bg); border-color: var(--success); color: #166534; }
+        .category-item.wrong { background: var(--error-bg); border-color: var(--error); color: #991b1b; }
+        .items-pool {
+            background: rgba(192, 132, 252, 0.1);
+            border: 2px dashed rgba(192, 132, 252, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            min-height: 80px;
+        }
+
+        /* Spelling */
+        .spelling-container { display: flex; flex-direction: column; gap: 15px; max-width: 600px; margin: 0 auto; }
+        .spelling-row {
+            background: var(--text-bg);
+            border: 1px solid rgba(192, 132, 252, 0.2);
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .spelling-row .row-number {
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .spelling-word {
+            font-size: 1.2em;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--text-dark);
+        }
+        .spelling-input {
+            width: 60px;
+            padding: 8px;
+            border: 1.5px solid rgba(192, 132, 252, 0.3);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-transform: lowercase;
+        }
+        .spelling-input:focus { outline: none; border-color: var(--primary); }
+        .spelling-input.correct { border-color: var(--success); background: var(--success-bg); }
+        .spelling-input.wrong { border-color: var(--error); background: var(--error-bg); }
+
+        /* Quiz */
+        .quiz-container { display: flex; flex-direction: column; gap: 20px; max-width: 800px; margin: 0 auto; }
+        .quiz-card { background: var(--text-bg); border: 1px solid rgba(192, 132, 252, 0.2); border-radius: 16px; padding: 25px; }
+        .quiz-question { font-size: 1.1em; color: var(--text-dark); margin-bottom: 20px; line-height: 1.7; font-weight: 500; }
+        .options-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .option-btn {
+            background: rgba(192, 132, 252, 0.1); border: 1.5px solid rgba(192, 132, 252, 0.3); border-radius: 12px;
+            padding: 14px; color: var(--text-dark); font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-align: center;
+        }
+        .option-btn:hover:not(:disabled) { background: rgba(192, 132, 252, 0.25); border-color: var(--primary); }
+        .option-btn.correct { background: var(--success-bg); border-color: var(--success); color: #166534; pointer-events: none; animation: pulse 0.5s ease; }
+        .option-btn.wrong { background: var(--error-bg); border-color: var(--error); color: #991b1b; animation: shake 0.4s ease; }
+        .option-btn:disabled { cursor: not-allowed; opacity: 0.5; }
+
+        /* Personalization */
+        .personalization-container { display: flex; flex-direction: column; gap: 15px; max-width: 800px; margin: 0 auto; }
+        .personalization-row {
+            background: var(--text-bg);
+            border: 1px solid rgba(192, 132, 252, 0.2);
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .personalization-row .row-number {
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .personalization-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1.5px solid rgba(192, 132, 252, 0.3);
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: 'Inter', sans-serif;
+        }
+        .personalization-input:focus { outline: none; border-color: var(--primary); }
+        .personalization-select {
+            padding: 10px 15px;
+            border: 1.5px solid rgba(192, 132, 252, 0.3);
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: 'Inter', sans-serif;
+            background: white;
+            min-width: 200px;
+        }
+        .personalization-select:focus { outline: none; border-color: var(--primary); }
+
+        .feedback-msg { margin-top: 15px; padding: 15px; border-radius: 12px; font-size: 0.95em; display: none; animation: pop 0.4s ease-out; border-left: 4px solid; }
+        .feedback-msg.success { background: var(--success-bg); border-left-color: var(--success); color: #166534; display: block; }
+        .feedback-msg.hint { background: var(--warning-bg); border-left-color: var(--warning); color: #92400e; display: block; }
+
+        .result-message { text-align: center; padding: 20px; border-radius: 16px; margin-top: 25px; font-size: 1.15em; font-weight: 600; display: none; }
+        .result-message.success { background: var(--success-bg); border: 1px solid var(--success); color: #166534; display: block; }
+
+        .final-score {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .final-score h2 {
+            font-family: 'Comfortaa', cursive;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        .final-score .score-number {
+            font-size: 4em;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .sending-status { text-align: center; margin-top: 15px; font-size: 0.95em; color: var(--text-light); display: none; }
+        .sending-status.show { display: block; }
+
+        @media (max-width: 768px) {
+            .main-title { font-size: 2em; }
+            .match-grid, .options-grid { grid-template-columns: 1fr; }
+            .vocab-columns, .categorization-container { grid-template-columns: 1fr; }
+            .task-section { padding: 25px; }
+            .intruder-options { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="starsContainer"></div>
+
+    <div class="main-wrapper">
+        <div class="header">
+            <h1 class="main-title">✨ Collocations Magic ✨</h1>
+            <p>Master St. Petersburg & Hermitage vocabulary! Enter your name to begin.</p>
+        </div>
+
+        <div class="welcome-form" id="welcomeForm">
+            <h2>Welcome!</h2>
+            <p>Please enter your name to start the worksheet</p>
+            <input type="text" class="name-input" id="studentName" placeholder="Your name">
+            <br><br>
+            <button class="btn-start" onclick="startExercise()">Start Worksheet 🚀</button>
+        </div>
+
+        <div class="timer-bar" id="timerBar">
+            <span>⏱️</span>
+            <span id="timerDisplay">00:00</span>
+            <span id="tabWarning" class="tab-warning" style="display: none;">
+                ⚠️ Tab switches: <span id="tabSwitchCount">0</span>
+            </span>
+        </div>
+
+        <!-- Vocabulary Bank -->
+        <div class="task-section" id="vocabBank">
+            <h2 class="section-title"> Vocabulary Bank</h2>
+            <div class="vocab-bank">
+                <h3>Key Collocations from the Texts</h3>
+                <div class="vocab-columns">
+                    <div class="vocab-column">
+                        <h4>️ Saint Petersburg</h4>
+                        <ol>
+                            <li>architectural and artistic treasures</li>
+                            <li>world-famous attractions</li>
+                            <li>cultural capital</li>
+                            <li>extraordinary fate</li>
+                            <li>bustle with life and intrigue</li>
+                            <li>essential part</li>
+                            <li>architectural make-up</li>
+                            <li>technological masterpieces</li>
+                            <li>vast areas of green space</li>
+                            <li>spellbound by culture and beauty</li>
+                        </ol>
+                    </div>
+                    <div class="vocab-column">
+                        <h4>🎨 State Hermitage Museum</h4>
+                        <ol>
+                            <li>visitor attraction</li>
+                            <li>prestigious museum</li>
+                            <li>must-see (for first-time travellers)</li>
+                            <li>reward repeat visits</li>
+                            <li>Impressionist masterpieces</li>
+                            <li>guided tour</li>
+                            <li>the bulk of the collection</li>
+                            <li>vast stocks</li>
+                            <li>triumphal arch</li>
+                            <li>a wealth of (paintings)</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 1: Match the halves -->
+        <div class="task-section" id="task1">
+            <h2 class="section-title">Task 1. Match the halves</h2>
+            <p class="instruction">Click a word/phrase on the left, then its matching half on the right.</p>
+            <div class="match-grid" id="matchGrid1"></div>
+        </div>
+
+        <!-- Task 2: Fill in the gaps -->
+        <div class="task-section" id="task2">
+            <h2 class="section-title">Task 2. Fill in the gaps</h2>
+            <p class="instruction">Drag a phrase from the word bank into the correct gap. Each phrase can be used only once.</p>
+            <div class="fill-gaps-container">
+                <div class="word-bank" id="wordBank2"></div>
+                <div id="gapSentences2"></div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn-check" onclick="checkTask2()">Check Answers ✓</button>
+            </div>
+            <div class="feedback-msg" id="task2Feedback"></div>
+        </div>
+
+        <!-- Task 3: Find the intruder -->
+        <div class="task-section" id="task3">
+            <h2 class="section-title">Task 3. Find the intruder</h2>
+            <p class="instruction">Click the ONLY correct collocation in each row.</p>
+            <div class="intruder-container" id="intruderContainer"></div>
+            <div class="feedback-msg" id="task3Feedback"></div>
+        </div>
+
+        <!-- Task 4: Error Correction -->
+        <div class="task-section" id="task4">
+            <h2 class="section-title">Task 4. Error Correction</h2>
+            <p class="instruction">Type the correct word to replace the crossed-out one.</p>
+            <div class="error-container" id="errorContainer"></div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn-check" onclick="checkTask4()">Check Answers ✓</button>
+            </div>
+            <div class="feedback-msg" id="task4Feedback"></div>
+        </div>
+
+        <!-- Task 5: Russian-English Matching -->
+        <div class="task-section" id="task5">
+            <h2 class="section-title">Task 5. Russian-English Matching</h2>
+            <p class="instruction">Click an English collocation on the left, then its Russian translation on the right.</p>
+            <div class="match-grid" id="matchGrid5"></div>
+        </div>
+
+        <!-- Task 6: Sentence Transformation -->
+        <div class="task-section" id="task6">
+            <h2 class="section-title">Task 6. Sentence Transformation</h2>
+            <p class="instruction">Complete the second sentence using the word in brackets. Write 2-4 words.</p>
+            <div class="error-container" id="transformationContainer"></div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn-check" onclick="checkTask6()">Check Answers ✓</button>
+            </div>
+            <div class="feedback-msg" id="task6Feedback"></div>
+        </div>
+
+        <!-- Task 7: Categorization -->
+        <div class="task-section" id="task7">
+            <h2 class="section-title">Task 7. Categorization</h2>
+            <p class="instruction">Drag each collocation into the correct category: A) City & Architecture, B) Museum & Art, or C) Tourism & Travel.</p>
+            <div class="items-pool" id="itemsPool7"></div>
+            <div class="categorization-container">
+                <div class="category-column" id="categoryA" data-category="A">
+                    <h4>A) City & Architecture</h4>
+                </div>
+                <div class="category-column" id="categoryB" data-category="B">
+                    <h4>B) Museum & Art</h4>
+                </div>
+                <div class="category-column" id="categoryC" data-category="C">
+                    <h4>C) Tourism & Travel</h4>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn-check" onclick="checkTask7()">Check Answers ✓</button>
+            </div>
+            <div class="feedback-msg" id="task7Feedback"></div>
+        </div>
+
+        <!-- Task 8: Complete the phrase -->
+        <div class="task-section" id="task8">
+            <h2 class="section-title">Task 8. Complete the phrase (Spelling)</h2>
+            <p class="instruction">Type the missing letters to complete each collocation.</p>
+            <div class="spelling-container" id="spellingContainer"></div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn-check" onclick="checkTask8()">Check Answers ✓</button>
+            </div>
+            <div class="feedback-msg" id="task8Feedback"></div>
+        </div>
+
+        <!-- Task 9: Mini-Quiz -->
+        <div class="task-section" id="task9">
+            <h2 class="section-title">Task 9. Mini-Quiz: Multiple Choice</h2>
+            <p class="instruction">Choose the only correct option to complete each sentence.</p>
+            <div class="quiz-container" id="quizContainer9"></div>
+        </div>
+
+        <!-- Task 10: Personalization -->
+        <div class="task-section" id="task10">
+            <h2 class="section-title">Task 10. Personalization</h2>
+            <p class="instruction">Choose a collocation and write a true sentence about your hometown. (Checked by teacher)</p>
+            <div class="personalization-container" id="personalizationContainer"></div>
+            <div class="feedback-msg success" style="display: block; margin-top: 20px;">
+                💡 <em>Tip: Make sure your sentences are grammatically correct and use the collocations accurately!</em>
+            </div>
+        </div>
+
+        <!-- Final Task -->
+        <div class="task-section" id="finalTask" style="text-align: center;">
+            <h2 class="section-title">🚀 Worksheet Complete!</h2>
+            <div class="final-score">
+                <h2>Your Final Score</h2>
+                <div class="score-number" id="finalScoreDisplay">0 / 0</div>
+                <p id="finalPercentage">0%</p>
+            </div>
+            <p class="instruction" id="finalMessage">Great job! Review your answers with your teacher.</p>
+            <button class="btn-finish" onclick="finishAndSend()">📤 Send Results to Teacher</button>
+            <div class="sending-status" id="sendingStatus"></div>
+            <div class="result-message" id="finalResultMessage"></div>
+        </div>
+    </div>
+
+    <script>
+        // URLs for sending data
+        const POWER_AUTOMATE_URL = 'https://default50bef10a64ce4efab7ceef7facd9c8.97.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/80320cf3242145f38cf2a9fe697b1bcf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pmVjt3_a2XgjEk7CxztVzXYwdUnHTs1Po59jq45gcyw';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCybdydUS2PDlskYqe2_jdbTns0MB_6e45CLWCkpr6jLB-d1zHm5ebBifFNLFoKhwr/exec';
+
+        let totalScore = 0;
+        let maxPossibleScore = 0;
+        let tabSwitchCount = 0;
+        let isExerciseActive = false;
+        let startTime = null;
+        let timerInterval = null;
+        let draggedElement = null;
+        let selectedLeft = null, selectedRight = null;
+
+        const encouragingWords = [" Amazing!", "✨ Brilliant!", " Wonderful!", "⭐ Outstanding!", " Perfect!"];
+        function getRandomEncouragement() { return encouragingWords[Math.floor(Math.random() * encouragingWords.length)]; }
+
+        // DATA: Task 1 Match
+        const matchData1 = [
+            { id: 1, left: "1. architectural", right: "c) make-up" },
+            { id: 2, left: "2. technological", right: "e) masterpieces" },
+            { id: 3, left: "3. guided", right: "a) tour" },
+            { id: 4, left: "4. the bulk of", right: "b) the collection" },
+            { id: 5, left: "5. a wealth of", right: "d) paintings" }
+        ];
+
+        // DATA: Task 2 Fill in gaps
+        const task2Data = [
+            { sentence: "The Hermitage is an absolute _______________ for anyone visiting St. Petersburg.", answer: "must-see", id: 1 },
+            { sentence: "St. Petersburg is widely recognized as Russia's _______________.", answer: "cultural capital", id: 2 },
+            { sentence: "The museum's new exhibition features _______________ modern art.", answer: "a wealth of", id: 3 },
+            { sentence: "Even at midnight, the streets of the city continue to _______________ life and intrigue.", answer: "bustle with", id: 4 },
+            { sentence: "Tourists are often _______________ the stunning architecture of the Winter Palace.", answer: "spellbound by", id: 5 }
+        ];
+        const task2Words = ["must-see", "cultural capital", "a wealth of", "bustle with", "spellbound by"];
+
+        // DATA: Task 3 Intruder
+        const task3Data = [
+            { correct: "guided tour", options: ["guided tour", "led tour", "directed tour"] },
+            { correct: "world-famous attractions", options: ["world-known attractions", "world-famous attractions", "world-big attractions"] },
+            { correct: "the bulk of the collection", options: ["the main of the collection", "the most of the collection", "the bulk of the collection"] },
+            { correct: "vast areas", options: ["vast areas", "wide areas", "broad areas"] }
+        ];
+
+        // DATA: Task 4 Error Correction
+        const task4Data = [
+            { sentence: 'The Hermitage is one of the most famous visitor <span class="error-word">places</span> in the world.', answer: "attractions" },
+            { sentence: 'You should take a <span class="error-word">led</span> tour to see all the highlights.', answer: "guided" },
+            { sentence: 'The city has <span class="error-word">wide</span> areas of green space.', answer: "vast" },
+            { sentence: 'The main part of the paintings is called <span class="error-word">the main of</span> the collection.', answer: "the bulk of" }
+        ];
+
+        // DATA: Task 5 Match (Russian-English)
+        const matchData5 = [
+            { id: 1, left: "1. architectural make-up", right: "c) архитектурный облик" },
+            { id: 2, left: "2. reward repeat visits", right: "a) стоять того, чтобы приходить снова" },
+            { id: 3, left: "3. bustle with life and intrigue", right: "d) кипеть жизнью и интригами" },
+            { id: 4, left: "4. technological masterpieces", right: "e) технические шедевры" },
+            { id: 5, left: "5. a wealth of", right: "b) множество / обилие" }
+        ];
+
+        // DATA: Task 6 Sentence Transformation - IMPROVED VERSION
+        const task6Data = [
+            { 
+                original: "Most of the Hermitage collection is kept in the Winter Palace.", 
+                keyword: "BULK",
+                instruction: "Rewrite using the word in brackets:",
+                transformed: "_______________ the Hermitage collection is kept in the Winter Palace.",
+                answer: "The bulk of"
+            },
+            { 
+                original: "If you come to St. Petersburg for the first time, you have to see it.", 
+                keyword: "MUST",
+                instruction: "Rewrite using the word in brackets:",
+                transformed: "It is a _______________ for first-time travellers.",
+                answer: "must-see"
+            },
+            { 
+                original: "The city possesses very large parks and gardens.", 
+                keyword: "VAST",
+                instruction: "Rewrite using the word in brackets:",
+                transformed: "The city possesses _______________ of green space.",
+                answer: "vast areas"
+            }
+        ];
+
+        // DATA: Task 7 Categorization
+        const task7Data = [
+            { text: "Impressionist masterpieces", category: "B" },
+            { text: "world-famous attractions", category: "C" },
+            { text: "architectural make-up", category: "A" },
+            { text: "guided tour", category: "C" },
+            { text: "the bulk of the collection", category: "B" },
+            { text: "technological masterpieces", category: "A" }
+        ];
+
+        // DATA: Task 8 Spelling
+        const task8Data = [
+            { word: "arch_tect_ral", missing: ["i", "u"], answer: "architectural" },
+            { word: "world-f_m_ous", missing: ["a", "o"], answer: "world-famous" },
+            { word: "extr_ord_nary", missing: ["a", "i"], answer: "extraordinary" },
+            { word: "tech_ol_gical", missing: ["n", "o"], answer: "technological" },
+            { word: "pr_st_gious", missing: ["e", "i"], answer: "prestigious" }
+        ];
+
+        // DATA: Task 9 Quiz
+        const task9Data = [
+            { question: "The museum has __________ of unique paintings from the 19th century.", options: ["a wealth", "a bulk", "a vast"], correct: "a wealth" },
+            { question: "St. Petersburg's __________ includes over 500 bridges.", options: ["architectural tours", "architectural make-up", "architectural fate"], correct: "architectural make-up" },
+            { question: "To see everything, you definitely need to book a __________.", options: ["led tour", "directed tour", "guided tour"], correct: "guided tour" }
+        ];
+
+        // DATA: Task 10 Personalization
+        const task10Words = ["world-famous attractions", "vast areas", "cultural capital", "must-see", "guided tour"];
+
+        function initAll() {
+            initMatchTask('matchGrid1', matchData1, 'task1');
+            initTask2();
+            initTask3();
+            initTask4();
+            initMatchTask('matchGrid5', matchData5, 'task5');
+            initTask6();
+            initTask7();
+            initTask8();
+            initTask9();
+            initTask10();
+        }
+
+        function initMatchTask(gridId, data, taskKey) {
+            const grid = document.getElementById(gridId);
+            grid.innerHTML = '';
+            const leftCol = document.createElement('div'); leftCol.className = 'match-column';
+            const rightCol = document.createElement('div'); rightCol.className = 'match-column';
+            maxPossibleScore += data.length;
+            
+            const leftItems = [...data].sort(() => Math.random() - 0.5);
+            const rightItems = [...data].sort(() => Math.random() - 0.5);
+            
+            leftItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'match-item'; div.textContent = item.left;
+                div.dataset.id = item.id; div.dataset.side = 'left';
+                div.addEventListener('click', () => handleMatch(div, 'left', taskKey, data));
+                leftCol.appendChild(div);
+            });
+            rightItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'match-item'; div.textContent = item.right;
+                div.dataset.id = item.id; div.dataset.side = 'right';
+                div.addEventListener('click', () => handleMatch(div, 'right', taskKey, data));
+                rightCol.appendChild(div);
+            });
+            grid.appendChild(leftCol); grid.appendChild(rightCol);
+        }
+
+        function handleMatch(el, side, taskKey, data) {
+            if (el.classList.contains('correct')) return;
+            if (side === 'left') { if (selectedLeft) selectedLeft.classList.remove('selected'); selectedLeft = el; el.classList.add('selected'); }
+            else { if (selectedRight) selectedRight.classList.remove('selected'); selectedRight = el; el.classList.add('selected'); }
+
+            if (selectedLeft && selectedRight) {
+                if (selectedLeft.dataset.id === selectedRight.dataset.id) {
+                    selectedLeft.classList.add('correct'); selectedRight.classList.add('correct');
+                    selectedLeft.classList.remove('selected'); selectedRight.classList.remove('selected');
+                    selectedLeft = null; selectedRight = null; totalScore++;
+                } else {
+                    selectedLeft.classList.add('wrong'); selectedRight.classList.add('wrong');
+                    setTimeout(() => {
+                        if (selectedLeft) { selectedLeft.classList.remove('wrong', 'selected'); selectedLeft = null; }
+                        if (selectedRight) { selectedRight.classList.remove('wrong', 'selected'); selectedRight = null; }
+                    }, 500);
+                }
+            }
+        }
+
+        function initTask2() {
+            const wordBank = document.getElementById('wordBank2');
+            const gapSentences = document.getElementById('gapSentences2');
+            wordBank.innerHTML = '';
+            gapSentences.innerHTML = '';
+            maxPossibleScore += task2Data.length;
+
+            const shuffledWords = [...task2Words].sort(() => Math.random() - 0.5);
+            shuffledWords.forEach(word => {
+                const chip = document.createElement('div');
+                chip.className = 'word-chip';
+                chip.textContent = word;
+                chip.draggable = true;
+                chip.dataset.word = word;
+                chip.addEventListener('dragstart', e => { draggedElement = e.target; e.target.classList.add('dragging'); });
+                chip.addEventListener('dragend', e => { e.target.classList.remove('dragging'); });
+                wordBank.appendChild(chip);
+            });
+
+            task2Data.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'gap-sentence';
+                row.innerHTML = `
+                    <div class="number">${index + 1}</div>
+                    <div style="flex: 1;">${item.sentence.replace('_______________', '<div class="drop-zone" data-answer="' + item.answer + '" data-task="2"></div>')}</div>
+                `;
+                gapSentences.appendChild(row);
+            });
+
+            document.querySelectorAll('#task2 .drop-zone').forEach(zone => {
+                zone.addEventListener('dragover', e => { e.preventDefault(); e.currentTarget.classList.add('drag-over'); });
+                zone.addEventListener('dragleave', e => { e.currentTarget.classList.remove('drag-over'); });
+                zone.addEventListener('drop', e => {
+                    e.preventDefault(); e.currentTarget.classList.remove('drag-over');
+                    if (draggedElement && draggedElement.classList.contains('word-chip')) {
+                        e.currentTarget.textContent = draggedElement.dataset.word;
+                        e.currentTarget.classList.add('filled');
+                        e.currentTarget.dataset.filled = draggedElement.dataset.word;
+                        draggedElement.classList.add('used');
+                    }
+                });
+                zone.addEventListener('click', e => {
+                    if (e.currentTarget.classList.contains('filled')) {
+                        const word = e.currentTarget.dataset.filled;
+                        const chip = document.querySelector(`.word-chip[data-word="${word}"]`);
+                        if (chip) chip.classList.remove('used');
+                        e.currentTarget.textContent = '';
+                        e.currentTarget.classList.remove('filled');
+                        delete e.currentTarget.dataset.filled;
+                    }
+                });
+            });
+        }
+
+        function checkTask2() {
+            const feedback = document.getElementById('task2Feedback');
+            let correctCount = 0;
+            document.querySelectorAll('#task2 .drop-zone').forEach(zone => {
+                if (zone.dataset.filled === zone.dataset.answer) {
+                    zone.classList.remove('wrong'); zone.classList.add('filled'); correctCount++;
+                } else if (zone.dataset.filled) {
+                    zone.classList.add('wrong');
+                }
+            });
+            if (correctCount === task2Data.length) {
+                feedback.className = 'feedback-msg success';
+                feedback.innerHTML = `${getRandomEncouragement()} All gaps are correct!`;
+                totalScore += correctCount;
+            } else {
+                feedback.className = 'feedback-msg hint';
+                feedback.innerHTML = `You got ${correctCount}/${task2Data.length} correct. Red gaps are incorrect. Click a wrong gap to remove it and try again!`;
+            }
+            feedback.style.display = 'block';
+        }
+
+        function initTask3() {
+            const container = document.getElementById('intruderContainer');
+            container.innerHTML = '';
+            maxPossibleScore += task3Data.length;
+
+            task3Data.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'intruder-row';
+                row.innerHTML = `<div class="row-number">${index + 1}</div><div class="intruder-options"></div>`;
+                const optionsDiv = row.querySelector('.intruder-options');
+                
+                const shuffledOptions = [...item.options].sort(() => Math.random() - 0.5);
+                shuffledOptions.forEach(opt => {
+                    const btn = document.createElement('div');
+                    btn.className = 'intruder-option';
+                    btn.textContent = opt;
+                    btn.addEventListener('click', () => {
+                        const siblings = optionsDiv.querySelectorAll('.intruder-option');
+                        siblings.forEach(s => { s.classList.remove('selected', 'wrong'); s.style.pointerEvents = 'none'; });
+                        
+                        if (opt === item.correct) {
+                            btn.classList.add('selected');
+                            totalScore++;
+                        } else {
+                            btn.classList.add('wrong');
+                            siblings.forEach(s => { if (s.textContent === item.correct) s.classList.add('selected'); });
+                        }
+                    });
+                    optionsDiv.appendChild(btn);
+                });
+                container.appendChild(row);
+            });
+        }
+
+        function initTask4() {
+            const container = document.getElementById('errorContainer');
+            container.innerHTML = '';
+            maxPossibleScore += task4Data.length;
+
+            task4Data.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'error-row';
+                row.innerHTML = `
+                    <div class="error-sentence">${index + 1}. ${item.sentence}</div>
+                    <div class="error-input-row">
+                        <label>Correction:</label>
+                        <input type="text" class="error-input" data-answer="${item.answer}" placeholder="Type the correct word...">
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function checkTask4() {
+            const feedback = document.getElementById('task4Feedback');
+            let correctCount = 0;
+            document.querySelectorAll('#task4 .error-input').forEach(input => {
+                const userAnswer = input.value.trim().toLowerCase();
+                const correctAnswer = input.dataset.answer.toLowerCase();
+                if (userAnswer === correctAnswer) {
+                    input.classList.remove('wrong'); input.classList.add('correct'); correctCount++;
+                } else if (userAnswer) {
+                    input.classList.add('wrong');
+                }
+            });
+            if (correctCount === task4Data.length) {
+                feedback.className = 'feedback-msg success';
+                feedback.innerHTML = `${getRandomEncouragement()} All corrections are right!`;
+                totalScore += correctCount;
+            } else {
+                feedback.className = 'feedback-msg hint';
+                feedback.innerHTML = `You got ${correctCount}/${task4Data.length} correct. Check the red fields!`;
+            }
+            feedback.style.display = 'block';
+        }
+
+        // IMPROVED Task 6: Sentence Transformation
+        function initTask6() {
+            const container = document.getElementById('transformationContainer');
+            container.innerHTML = '';
+            maxPossibleScore += task6Data.length;
+
+            task6Data.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'error-row';
+                card.style.background = 'white';
+                card.style.border = '2px solid rgba(192, 132, 252, 0.3)';
+                
+                card.innerHTML = `
+                    <div style="margin-bottom: 12px;">
+                        <strong style="color: var(--primary); font-size: 1.1em;">${index + 1}.</strong> 
+                        <span style="color: var(--text-dark);">${item.original}</span>
+                    </div>
+                    <div style="background: rgba(192, 132, 252, 0.1); padding: 10px 15px; border-radius: 8px; margin-bottom: 12px;">
+                        <strong style="color: var(--primary);">Use the word:</strong> 
+                        <span style="background: var(--primary); color: white; padding: 3px 10px; border-radius: 6px; font-weight: 700;">(${item.keyword})</span>
+                    </div>
+                    <div style="margin-bottom: 10px; color: var(--text-light); font-size: 0.9em;">
+                        ${item.instruction}
+                    </div>
+                    <div class="error-input-row" style="background: var(--text-bg); padding: 15px; border-radius: 10px;">
+                        <span style="color: var(--primary); font-weight: 700; font-size: 1.2em;">→</span>
+                        <div style="flex: 1; display: flex; align-items: center; gap: 5px; flex-wrap: wrap;">
+                            <span style="color: var(--text-dark);">${item.transformed.split('_______________')[0]}</span>
+                            <input type="text" class="error-input" data-answer="${item.answer}" placeholder="your answer" style="min-width: 150px; max-width: 250px;">
+                            <span style="color: var(--text-dark);">${item.transformed.split('_______________')[1] || ''}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function checkTask6() {
+            const feedback = document.getElementById('task6Feedback');
+            let correctCount = 0;
+            document.querySelectorAll('#task6 .error-input').forEach(input => {
+                const userAnswer = input.value.trim().toLowerCase();
+                const correctAnswer = input.dataset.answer.toLowerCase();
+                if (userAnswer === correctAnswer) {
+                    input.classList.remove('wrong'); input.classList.add('correct'); correctCount++;
+                } else if (userAnswer) {
+                    input.classList.add('wrong');
+                }
+            });
+            if (correctCount === task6Data.length) {
+                feedback.className = 'feedback-msg success';
+                feedback.innerHTML = `${getRandomEncouragement()} All transformations are perfect!`;
+                totalScore += correctCount;
+            } else {
+                feedback.className = 'feedback-msg hint';
+                feedback.innerHTML = `You got ${correctCount}/${task6Data.length} correct. Check the red fields!`;
+            }
+            feedback.style.display = 'block';
+        }
+
+        function initTask7() {
+            const pool = document.getElementById('itemsPool7');
+            pool.innerHTML = '';
+            maxPossibleScore += task7Data.length;
+
+            const shuffledItems = [...task7Data].sort(() => Math.random() - 0.5);
+            shuffledItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'category-item';
+                div.textContent = item.text;
+                div.dataset.category = item.category;
+                div.draggable = true;
+                div.addEventListener('dragstart', e => { draggedElement = e.target; e.target.classList.add('dragging'); });
+                div.addEventListener('dragend', e => { e.target.classList.remove('dragging'); });
+                pool.appendChild(div);
+            });
+
+            document.querySelectorAll('.category-column').forEach(col => {
+                col.addEventListener('dragover', e => { e.preventDefault(); e.currentTarget.classList.add('drag-over'); });
+                col.addEventListener('dragleave', e => { e.currentTarget.classList.remove('drag-over'); });
+                col.addEventListener('drop', e => {
+                    e.preventDefault(); e.currentTarget.classList.remove('drag-over');
+                    if (draggedElement && draggedElement.classList.contains('category-item')) {
+                        e.currentTarget.appendChild(draggedElement);
+                    }
+                });
+            });
+        }
+
+        function checkTask7() {
+            const feedback = document.getElementById('task7Feedback');
+            let correctCount = 0;
+            document.querySelectorAll('.category-column').forEach(col => {
+                const category = col.dataset.category;
+                col.querySelectorAll('.category-item').forEach(item => {
+                    if (item.dataset.category === category) {
+                        item.classList.remove('wrong'); item.classList.add('correct'); correctCount++;
+                    } else {
+                        item.classList.add('wrong');
+                    }
+                });
+            });
+            if (correctCount === task7Data.length) {
+                feedback.className = 'feedback-msg success';
+                feedback.innerHTML = `${getRandomEncouragement()} All items are in the correct categories!`;
+                totalScore += correctCount;
+            } else {
+                feedback.className = 'feedback-msg hint';
+                feedback.innerHTML = `You got ${correctCount}/${task7Data.length} correct. Red items are in the wrong category!`;
+            }
+            feedback.style.display = 'block';
+        }
+
+        function initTask8() {
+            const container = document.getElementById('spellingContainer');
+            container.innerHTML = '';
+            maxPossibleScore += task8Data.reduce((sum, item) => sum + item.missing.length, 0);
+
+            task8Data.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'spelling-row';
+                let wordHtml = item.word;
+                item.missing.forEach((_, i) => {
+                    wordHtml = wordHtml.replace('_', `<input type="text" class="spelling-input" data-answer="${item.missing[i]}" maxlength="1" data-task="8">`);
+                });
+                row.innerHTML = `
+                    <div class="row-number">${index + 1}</div>
+                    <div class="spelling-word">${wordHtml}</div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function checkTask8() {
+            const feedback = document.getElementById('task8Feedback');
+            let correctCount = 0;
+            let totalInputs = 0;
+            document.querySelectorAll('#task8 .spelling-input').forEach(input => {
+                totalInputs++;
+                const userAnswer = input.value.trim().toLowerCase();
+                const correctAnswer = input.dataset.answer.toLowerCase();
+                if (userAnswer === correctAnswer) {
+                    input.classList.remove('wrong'); input.classList.add('correct'); correctCount++;
+                } else if (userAnswer) {
+                    input.classList.add('wrong');
+                }
+            });
+            if (correctCount === totalInputs) {
+                feedback.className = 'feedback-msg success';
+                feedback.innerHTML = `${getRandomEncouragement()} All letters are correct!`;
+                totalScore += correctCount;
+            } else {
+                feedback.className = 'feedback-msg hint';
+                feedback.innerHTML = `You got ${correctCount}/${totalInputs} letters correct. Check the red fields!`;
+            }
+            feedback.style.display = 'block';
+        }
+
+        function initTask9() {
+            const container = document.getElementById('quizContainer9');
+            container.innerHTML = '';
+            maxPossibleScore += task9Data.length;
+
+            task9Data.forEach((item, index) => {
+                const card = document.createElement('div'); card.className = 'quiz-card';
+                const qDiv = document.createElement('div'); qDiv.className = 'quiz-question'; qDiv.innerHTML = `<strong>${index + 1}.</strong> ${item.question}`;
+                const optDiv = document.createElement('div'); optDiv.className = 'options-grid';
+                
+                const shuffledOptions = [...item.options].sort(() => Math.random() - 0.5);
+                shuffledOptions.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn'; btn.textContent = opt;
+                    btn.addEventListener('click', () => {
+                        const buttons = card.querySelectorAll('.option-btn');
+                        buttons.forEach(b => b.disabled = true);
+                        
+                        if (opt === item.correct) {
+                            btn.classList.add('correct'); totalScore++;
+                        } else {
+                            btn.classList.add('wrong');
+                            buttons.forEach(b => { if (b.textContent === item.correct) b.classList.add('correct'); });
+                        }
+                    });
+                    optDiv.appendChild(btn);
+                });
+                card.appendChild(qDiv); card.appendChild(optDiv);
+                container.appendChild(card);
+            });
+        }
+
+        function initTask10() {
+            const container = document.getElementById('personalizationContainer');
+            container.innerHTML = '';
+
+            for (let i = 1; i <= 3; i++) {
+                const row = document.createElement('div');
+                row.className = 'personalization-row';
+                row.innerHTML = `
+                    <div class="row-number">${i}</div>
+                    <select class="personalization-select">
+                        <option value="">Choose a collocation...</option>
+                        ${task10Words.map(w => `<option value="${w}">${w}</option>`).join('')}
+                    </select>
+                    <input type="text" class="personalization-input" placeholder="Write your sentence here...">
+                `;
+                container.appendChild(row);
+            }
+        }
+
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            for (let i = 0; i < 150; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px'; star.style.height = size + 'px';
+                star.style.setProperty('--duration', (Math.random() * 4 + 2) + 's');
+                star.style.setProperty('--max-opacity', Math.random() * 0.8 + 0.2);
+                container.appendChild(star);
+            }
+            for (let i = 0; i < 5; i++) {
+                const shootingStar = document.createElement('div');
+                shootingStar.classList.add('shooting-star');
+                shootingStar.style.top = Math.random() * 50 + '%';
+                shootingStar.style.left = '-' + Math.random() * 20 + '%';
+                shootingStar.style.animationDelay = (Math.random() * 10 + i * 3) + 's';
+                container.appendChild(shootingStar);
+            }
+        }
+
+        function startExercise() {
+            const name = document.getElementById('studentName').value.trim();
+            if (!name) { alert('Please enter your name! '); return; }
+            document.getElementById('welcomeForm').style.display = 'none';
+            document.getElementById('timerBar').classList.add('show');
+            document.getElementById('vocabBank').classList.add('show');
+            for (let i = 1; i <= 10; i++) document.getElementById('task' + i).classList.add('show');
+            document.getElementById('finalTask').classList.add('show');
+            startTime = Date.now();
+            isExerciseActive = true;
+            timerInterval = setInterval(updateTimer, 1000);
+            initAll();
+            document.getElementById('vocabBank').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateTimer() {
+            if (!isExerciseActive) return;
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            document.getElementById('timerDisplay').textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+        }
+
+        document.addEventListener('visibilitychange', function() {
+            if (!isExerciseActive) return;
+            if (document.hidden) {
+                tabSwitchCount++;
+                document.getElementById('tabSwitchCount').textContent = tabSwitchCount;
+                document.getElementById('tabWarning').style.display = 'inline';
+                alert('️ WARNING: You left the exercise tab!\n\nThis has been recorded.\nTab switches: ' + tabSwitchCount);
+            }
+        });
+
+        // Function to send results to Teams and Google Sheets
+        async function finishAndSend() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const timeSpent = `${Math.floor(elapsed / 60)} min ${elapsed % 60} sec`;
+            const percentage = Math.round((totalScore / maxPossibleScore) * 100);
+            const statusDiv = document.getElementById('sendingStatus');
+            statusDiv.classList.add('show'); 
+            statusDiv.innerHTML = '📤 Sending results to Teams and Google Sheets...';
+            
+            const payload = { 
+                student_name: document.getElementById('studentName').value,
+                score: `${totalScore}/${maxPossibleScore}`, 
+                percentage: `${percentage}%`, 
+                time: new Date().toLocaleString(), 
+                exercise_name: "Collocations Worksheet - St. Petersburg & Hermitage", 
+                time_spent: timeSpent, 
+                tab_switches: tabSwitchCount === 0 ? '0 (no switches)' : `${tabSwitchCount} switch(es) detected ⚠️`
+            };
+
+            try {
+                await fetch(POWER_AUTOMATE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                statusDiv.innerHTML += '<br>✅ Results sent to Microsoft Teams!';
+            } catch (error) { 
+                console.error('Teams error:', error);
+                statusDiv.innerHTML += '<br>❌ Teams error (check console)';
+            }
+
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                statusDiv.innerHTML += '<br>✅ Results sent to Google Sheets!';
+            } catch (e) { 
+                console.error('Sheets error:', e);
+            }
+
+            document.getElementById('finalScoreDisplay').textContent = `${totalScore} / ${maxPossibleScore}`;
+            document.getElementById('finalPercentage').textContent = `${percentage}%`;
+            
+            let message = '';
+            if (percentage >= 90) message = '🏆 Legend! You are a collocations master!';
+            else if (percentage >= 70) message = '🎯 Pro Player! Great job!';
+            else if (percentage >= 50) message = '👍 Good effort! Keep practicing!';
+            else message = ' Keep going! Review the Vocabulary Bank and try again!';
+            document.getElementById('finalMessage').textContent = message;
+            
+            document.getElementById('finalResultMessage').className = `result-message ${percentage >= 80 ? 'success' : 'hint'}`;
+            document.getElementById('finalResultMessage').innerHTML = `🎉 <b>${getRandomEncouragement()}</b><br>Your score: <b>${totalScore} / ${maxPossibleScore}</b> (${percentage}%)<br>Time: ${timeSpent}`;
+            document.getElementById('finalResultMessage').style.display = 'block';
+            
+            localStorage.setItem('collocations_worksheet_completed', 'true');
+            isExerciseActive = false;
+            clearInterval(timerInterval);
+            setTimeout(() => { statusDiv.classList.remove('show'); }, 8000);
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        // Calculate final score when user scrolls to final task
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    document.getElementById('finalScoreDisplay').textContent = `${totalScore} / ${maxPossibleScore}`;
+                    const percentage = Math.round((totalScore / maxPossibleScore) * 100);
+                    document.getElementById('finalPercentage').textContent = `${percentage}%`;
+                    
+                    let message = '';
+                    if (percentage >= 90) message = '🏆 Legend! You are a collocations master!';
+                    else if (percentage >= 70) message = '🎯 Pro Player! Great job!';
+                    else if (percentage >= 50) message = '👍 Good effort! Keep practicing!';
+                    else message = '💪 Keep going! Review the Vocabulary Bank and try again!';
+                    document.getElementById('finalMessage').textContent = message;
+                }
+            });
+        }, { threshold: 0.5 });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            observer.observe(document.getElementById('finalTask'));
+            if (localStorage.getItem('collocations_worksheet_completed') === 'true') {
+                const form = document.getElementById('welcomeForm');
+                if (form) {
+                    form.querySelector('h2').innerHTML = '✨ Welcome Back! ✨';
+                    form.querySelector('p').textContent = "You've already completed this worksheet. You can try again!";
+                }
+            }
+        });
+    </script>
+</body>
+</html>
