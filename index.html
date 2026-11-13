@@ -1172,13 +1172,14 @@ a.exercise-card:has(.game-card-image) h3.game-card-title {
                             <p>Master St. Petersburg & Hermitage vocabulary! Drag, drop, match, and spell your way to success.</p>
                             <span class="tag">10 Tasks • Interactive Worksheet</span>
                         </a>
-                                       <div class="task-card" id="card-cultural-awareness">
-    <h3>Cultural Awareness (USE)</h3>
-    <p>Read the text and complete 6 challenging tasks.</p>
-    <!-- Сюда добавим значок -->
-    <span id="badge-cultural" class="completed-badge" style="display: none;">✅ Completed</span>
-    <a href="ссылка_на_этот_html_файл.html" class="btn-start">Start Task</a>
-</div>
+                                       <!-- Cultural Awareness (USE) -->
+<a href="cultural-awareness/index.html" class="exercise-card" onclick="localStorage.setItem('lastActiveTab', 'use'); localStorage.setItem('returnFromExercise', 'true')">
+    <span class="completed-badge" id="badge-cultural">✓ Completed</span>
+    <div class="emoji">🌍</div>
+    <h2>Cultural Awareness</h2>
+    <p>Explore Russia & China through 6 challenging tasks: headings, True/False, vocabulary, advanced words, and reading!</p>
+    <span class="tag">6 Tasks • USE Format</span>
+</a>
                                          
                     </div>
                 </div>
